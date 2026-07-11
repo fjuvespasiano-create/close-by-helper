@@ -8,6 +8,7 @@ import { SearchBar } from "@/components/site/SearchBar";
 import { CategoryIcon } from "@/components/site/CategoryIcon";
 import { CompanyCard, toCompanyCardData } from "@/components/site/CompanyCard";
 import { CitySwitch } from "@/components/site/CitySwitch";
+import { FeaturedCouponsCard } from "@/components/site/FeaturedCouponsCard";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { categoriesQueryOptions, featuredCompaniesQueryOptions } from "@/lib/queries";
 import { PUBLIC_SERVICE_CATEGORIES } from "@/lib/publicServices";
@@ -197,6 +198,11 @@ function Home() {
 
       {/* REPRESENTANTES */}
       <RepresentativesWidget />
+
+      {/* CUPONS EM DESTAQUE */}
+      <FeaturedCouponsCard citySlug={city} />
+
+
 
       {/* PUBLIC SERVICES */}
       <section className="container mx-auto px-4 py-14">
