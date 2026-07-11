@@ -226,7 +226,7 @@ function CompanyPage() {
   const breadcrumbs = [
     { to: "/", label: "Início" },
     company.cities ? { to: `/cidades/${company.cities.slug}`, label: company.cities.name } : null,
-    services[0] && company.company_categories[0]?.categories ? { to: `/categoria/${company.company_categories[0].categories.slug}`, label: services[0] } : null,
+    categoryNames[0] && company.company_categories[0]?.categories ? { to: `/categoria/${company.company_categories[0].categories.slug}`, label: categoryNames[0] } : null,
     { to: null, label: company.name },
   ].filter(Boolean) as { to: string | null; label: string }[];
 
