@@ -139,8 +139,9 @@ function AdminPublicServices() {
 
   const cityById = useMemo(() => new Map((cities.data ?? []).map((c) => [c.id, c.name])), [cities.data]);
 
+  const scrapeFn = useServerFn(runServicesScrapeFn);
   const scrape = useMutation({
-    mutationFn: useServerFn(runServicesScrapeFn),
+    mutationFn: async () => scrapeFn(),
     onSuccess: (report) => {
       qc.invalidateQueries({ queryKey: ["admin-public-services"] });
       qc.invalidateQueries({ queryKey: ["public-services"] });
