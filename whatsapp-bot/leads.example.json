@@ -1,0 +1,20 @@
+[
+  {
+    "nome": "João Silva",
+    "telefone": "5531999990001",
+    "condominio": "Residencial Jardim Vespasiano",
+    "status": "Liberado"
+  },
+  {
+    "nome": "Maria Souza",
+    "telefone": "5531999990002",
+    "condominio": "Edifício Central Lapa",
+    "status": "Pendente"
+  },
+  {
+    "nome": "Carlos Pereira",
+    "telefone": "5531999990003",
+    "condominio": "Residencial Jardim Vespasiano",
+    "status": "Liberado"
+  }
+]
