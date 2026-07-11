@@ -1675,6 +1675,86 @@ export type Database = {
           },
         ]
       }
+      procurements: {
+        Row: {
+          agency: string | null
+          city_id: string
+          content_hash: string | null
+          created_at: string
+          deadline_date: string | null
+          estimated_value: number | null
+          external_id: string | null
+          files: Json
+          id: string
+          modality: string | null
+          object: string | null
+          opening_date: string | null
+          process_number: string | null
+          publish_date: string | null
+          raw_excerpt: string | null
+          scraped_at: string
+          source_site: string
+          source_url: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          agency?: string | null
+          city_id: string
+          content_hash?: string | null
+          created_at?: string
+          deadline_date?: string | null
+          estimated_value?: number | null
+          external_id?: string | null
+          files?: Json
+          id?: string
+          modality?: string | null
+          object?: string | null
+          opening_date?: string | null
+          process_number?: string | null
+          publish_date?: string | null
+          raw_excerpt?: string | null
+          scraped_at?: string
+          source_site: string
+          source_url: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          agency?: string | null
+          city_id?: string
+          content_hash?: string | null
+          created_at?: string
+          deadline_date?: string | null
+          estimated_value?: number | null
+          external_id?: string | null
+          files?: Json
+          id?: string
+          modality?: string | null
+          object?: string | null
+          opening_date?: string | null
+          process_number?: string | null
+          publish_date?: string | null
+          raw_excerpt?: string | null
+          scraped_at?: string
+          source_site?: string
+          source_url?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "procurements_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
