@@ -71,7 +71,7 @@ export const CompanyCard = memo(function CompanyCard({ company }: { company: Com
           <img
             src={company.banner_url}
             alt={company.name}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.08]"
             loading="lazy"
             decoding="async"
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
