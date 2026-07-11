@@ -54,7 +54,11 @@ export function registerServiceWorker() {
     emit();
   });
 
-  window.addEventListener("load", () => {
+  const start = () => {
+    const ric: (cb: () => void) => void =
+      (window as unknown as { requestIdleCallback?: (cb: () => void) => void }).requestIdleCallback ??
+      ((cb: () => void) => setTimeout(cb, 1));
+    ric(() => {
     navigator.serviceWorker
       .register("/sw.js", { scope: "/" })
       .then((reg) => {
