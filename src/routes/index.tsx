@@ -154,8 +154,8 @@ function Home() {
             <h2 className="font-display text-2xl font-bold md:text-3xl">Resolva com a cidade</h2>
             <p className="mt-1 text-muted-foreground">Saúde, educação, segurança e prefeitura — endereço, telefone e horário em 2 toques.</p>
           </div>
-          <Link to="/servicos-publicos" search={{}} className="hidden text-sm font-medium text-primary hover:underline md:inline-flex">
-            Ver todos
+          <Link to="/servicos-publicos" search={{}} className="group hidden items-center gap-1 text-sm font-medium text-primary hover:underline md:inline-flex">
+            Ver todos <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
         <div className="reveal-grid grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
