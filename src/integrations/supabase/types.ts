@@ -2114,6 +2114,7 @@ export type Database = {
           id: string
           name: string | null
           onboarding_completed_at: string | null
+          onboarding_version: string | null
           state: string | null
           updated_at: string
         }
@@ -2124,6 +2125,7 @@ export type Database = {
           id: string
           name?: string | null
           onboarding_completed_at?: string | null
+          onboarding_version?: string | null
           state?: string | null
           updated_at?: string
         }
@@ -2134,6 +2136,7 @@ export type Database = {
           id?: string
           name?: string | null
           onboarding_completed_at?: string | null
+          onboarding_version?: string | null
           state?: string | null
           updated_at?: string
         }
@@ -2246,6 +2249,10 @@ export type Database = {
           phone_secondary: string | null
           subtype: string | null
           updated_at: string
+          verification_status: string
+          verified_at: string | null
+          verified_by: string | null
+          verified_source: string | null
           website: string | null
           whatsapp: string | null
         }
@@ -2269,6 +2276,10 @@ export type Database = {
           phone_secondary?: string | null
           subtype?: string | null
           updated_at?: string
+          verification_status?: string
+          verified_at?: string | null
+          verified_by?: string | null
+          verified_source?: string | null
           website?: string | null
           whatsapp?: string | null
         }
@@ -2292,6 +2303,10 @@ export type Database = {
           phone_secondary?: string | null
           subtype?: string | null
           updated_at?: string
+          verification_status?: string
+          verified_at?: string | null
+          verified_by?: string | null
+          verified_source?: string | null
           website?: string | null
           whatsapp?: string | null
         }
@@ -3227,6 +3242,10 @@ export type Database = {
       }
     }
     Functions: {
+      admin_restore_table_tx: {
+        Args: { _mode?: string; _rows: Json; _table: string }
+        Returns: Json
+      }
       get_weekly_ranking: {
         Args: never
         Returns: {

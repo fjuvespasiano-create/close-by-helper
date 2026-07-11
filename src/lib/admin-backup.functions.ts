@@ -164,6 +164,11 @@ export const adminRestoreBackup = createServerFn({ method: "POST" })
     const selected = new Set(data.tables ?? BACKUP_TABLES);
     const results: Array<{ table: string; inserted: number; error?: string }> = [];
 
+    // Restauração transacional por tabela via RPC PL/pgSQL.
+    // A função `admin_restore_table_tx` executa DELETE (quando mode=replace)
+    // + INSERT numa única transação: se qualquer statement falhar, o Postgres
+    // faz ROLLBACK automático — a tabela nunca fica em estado parcial.
+    const BATCH = 500;
     for (const table of BACKUP_TABLES) {
       if (!selected.has(table)) continue;
       const rows = data.payload.tables[table];
@@ -172,31 +177,25 @@ export const adminRestoreBackup = createServerFn({ method: "POST" })
         continue;
       }
 
-      if (data.mode === "replace") {
-        const { error: delErr } = await supabaseAdmin
-          .from(table)
-          .delete()
-          .not("id", "is", null);
-        if (delErr) {
-          results.push({ table, inserted: 0, error: `delete: ${delErr.message}` });
-          continue;
-        }
-      }
-
-      // Batch upserts to avoid huge payloads.
-      const BATCH = 500;
       let inserted = 0;
       let firstError: string | undefined;
+      // No modo replace, o 1º lote leva o DELETE atômico + 1º INSERT juntos.
+      // Lotes seguintes rodam em upsert (a limpeza já ocorreu na 1ª transação).
       for (let i = 0; i < rows.length; i += BATCH) {
         const chunk = rows.slice(i, i + BATCH);
-        const { error } = await supabaseAdmin
-          .from(table)
-          .upsert(chunk as any, { onConflict: "id" });
+        const chunkMode = data.mode === "replace" && i === 0 ? "replace" : "upsert";
+        const { data: rpc, error } = await (supabaseAdmin as unknown as {
+          rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: { inserted?: number } | null; error: { message: string } | null }>;
+        }).rpc("admin_restore_table_tx", {
+          _table: table,
+          _rows: chunk,
+          _mode: chunkMode,
+        });
         if (error) {
           firstError = error.message;
           break;
         }
-        inserted += chunk.length;
+        inserted += rpc?.inserted ?? chunk.length;
       }
       results.push({ table, inserted, error: firstError });
     }
