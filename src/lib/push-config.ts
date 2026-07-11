@@ -1,7 +1,7 @@
 // Public VAPID key — safe to expose to the browser (that's the whole point).
-// Paired with server-side VAPID_PRIVATE_KEY (secret).
+// Paired with server-side VAPID_PRIVATE_KEY (secret). MUST bater com o par no backend.
 export const VAPID_PUBLIC_KEY =
-  "BD2I3H4esBIRpwD9M3hnUHPLW-QiNAwyJRVNfv5WI-gYO_8g73RMxoGbx1AuFj0R_vxwMxPsqHF1x5eKPVohEf8";
+  "BGy1egLnuC9d2mMd-poJQFGUGRJpx62hNsP6b_5V9l8YYbuZyHXi_7UHKUewiqsWKxwieK9XuiMs3Nkufs-gIC0";
 
 export const NOTIFICATION_CATEGORIES = [
   { key: "promocao", label: "Promoções", emoji: "🎉" },

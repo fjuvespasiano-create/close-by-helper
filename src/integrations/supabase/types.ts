@@ -2266,6 +2266,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_push_counter: {
+        Args: { _counter: string; _notification_id: string }
+        Returns: undefined
+      }
       nearest_city: {
         Args: { _lat: number; _lng: number }
         Returns: {
