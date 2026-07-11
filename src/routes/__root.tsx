@@ -141,7 +141,14 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
-    registerServiceWorker();
+    const w = window as unknown as { requestIdleCallback?: (cb: () => void) => number };
+    const id = w.requestIdleCallback
+      ? w.requestIdleCallback(() => registerServiceWorker())
+      : window.setTimeout(() => registerServiceWorker(), 1200);
+    return () => {
+      const wc = window as unknown as { cancelIdleCallback?: (id: number) => void };
+      wc.cancelIdleCallback ? wc.cancelIdleCallback(id) : window.clearTimeout(id);
+    };
   }, []);
 
   useEffect(() => {
