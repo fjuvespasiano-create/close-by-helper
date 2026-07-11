@@ -124,6 +124,32 @@ function Mensagens() {
     },
   });
 
+  // === PRESENCE: mostra se o outro lado está online na conversa aberta.
+  useEffect(() => {
+    if (!activeThread || !userId) return;
+    const otherId = activeThread.sellerId === userId ? activeThread.buyerId : activeThread.sellerId;
+    const channel = supabase.channel(`mk-presence-${activeThread.key}`, {
+      config: { presence: { key: userId } },
+    });
+    channel
+      .on("presence", { event: "sync" }, () => {
+        const state = channel.presenceState();
+        setOtherOnline(Object.keys(state).includes(otherId));
+      })
+      .subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          await channel.track({ online_at: new Date().toISOString() });
+        }
+      });
+    return () => { supabase.removeChannel(channel); setOtherOnline(false); };
+  }, [activeThread, userId]);
+
+  // Auto-scroll ao final quando novas mensagens chegam / conversa muda.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [threadMsgsQ.data, active]);
+
   async function send() {
     if (!activeThread || !userId || draft.trim().length < 2) return;
     const { error } = await supabase.from("listing_messages").insert({
