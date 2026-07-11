@@ -100,7 +100,7 @@ function RepresentativePage() {
             <div className="flex-1 min-w-0">
               <h1 className="text-3xl font-bold tracking-tight">{rep.name}</h1>
               <div className="flex flex-wrap gap-2 mt-2">
-                <Badge>{ROLE_LABEL[rep.role]}</Badge>
+                <Badge>{ROLE_LABEL[rep.role as keyof typeof ROLE_LABEL]}</Badge>
                 {rep.party && <Badge variant="secondary">{rep.party}</Badge>}
               </div>
               {rep.bio && <p className="text-muted-foreground mt-3 max-w-2xl">{rep.bio}</p>}
