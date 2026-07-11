@@ -22,9 +22,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
-import cavernaImg from "@/assets/roteiro-caverna.jpg";
-import gastronomiaImg from "@/assets/roteiro-gastronomia.jpg";
-import ecoturismoImg from "@/assets/roteiro-ecoturismo.jpg";
+import cavernaAsset from "@/assets/roteiro-caverna.jpg.asset.json";
+import gastronomiaAsset from "@/assets/roteiro-gastronomia.jpg.asset.json";
+import ecoturismoAsset from "@/assets/roteiro-ecoturismo.jpg.asset.json";
+const cavernaImg = cavernaAsset.url;
+const gastronomiaImg = gastronomiaAsset.url;
+const ecoturismoImg = ecoturismoAsset.url;
 
 export const Route = createFileRoute("/roteiro-turistico")({
   head: () => ({
