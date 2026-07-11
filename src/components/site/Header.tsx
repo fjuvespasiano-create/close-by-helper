@@ -39,6 +39,7 @@ const NAV_ICONS: Record<string, IconType> = {
   "/buscar": Building2,
   "/eventos": Calendar,
   "/o-que-fazer": Compass,
+  "/roteiro-turistico": Compass,
   "/marketplace": ShoppingBag,
   "/transporte": Bus,
   "/empregos": Briefcase,

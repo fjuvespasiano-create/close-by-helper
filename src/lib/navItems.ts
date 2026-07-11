@@ -10,6 +10,7 @@ export const DEFAULT_NAV_ITEMS: NavItem[] = [
   { to: "/buscar", label: "Empresas" },
   { to: "/eventos", label: "Eventos" },
   { to: "/o-que-fazer", label: "O que fazer" },
+  { to: "/roteiro-turistico", label: "Roteiro" },
   { to: "/marketplace", label: "Marketplace" },
   { to: "/transporte", label: "Transporte" },
   { to: "/empregos", label: "Empregos" },
