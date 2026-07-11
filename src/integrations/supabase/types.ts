@@ -799,6 +799,84 @@ export type Database = {
           },
         ]
       }
+      coupons: {
+        Row: {
+          category: string | null
+          city_id: string | null
+          code: string
+          company_id: string | null
+          created_at: string
+          description: string | null
+          discount_label: string | null
+          discount_percent: number | null
+          id: string
+          image_url: string | null
+          is_sponsored: boolean
+          link_url: string | null
+          status: string
+          terms: string | null
+          title: string
+          updated_at: string
+          valid_from: string | null
+          valid_to: string | null
+        }
+        Insert: {
+          category?: string | null
+          city_id?: string | null
+          code: string
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          discount_label?: string | null
+          discount_percent?: number | null
+          id?: string
+          image_url?: string | null
+          is_sponsored?: boolean
+          link_url?: string | null
+          status?: string
+          terms?: string | null
+          title: string
+          updated_at?: string
+          valid_from?: string | null
+          valid_to?: string | null
+        }
+        Update: {
+          category?: string | null
+          city_id?: string | null
+          code?: string
+          company_id?: string | null
+          created_at?: string
+          description?: string | null
+          discount_label?: string | null
+          discount_percent?: number | null
+          id?: string
+          image_url?: string | null
+          is_sponsored?: boolean
+          link_url?: string | null
+          status?: string
+          terms?: string | null
+          title?: string
+          updated_at?: string
+          valid_from?: string | null
+          valid_to?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupons_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "coupons_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       editorial_posts: {
         Row: {
           campaign: string | null
@@ -2068,11 +2146,16 @@ export type Database = {
       }
       promotions: {
         Row: {
+          category: string | null
+          city_id: string | null
           company_id: string
           cover_image: string | null
           created_at: string
           description: string | null
+          discount_percent: number | null
           id: string
+          image_url: string | null
+          link_url: string | null
           price_from: number | null
           price_to: number | null
           slug: string
@@ -2083,11 +2166,16 @@ export type Database = {
           valid_to: string | null
         }
         Insert: {
+          category?: string | null
+          city_id?: string | null
           company_id: string
           cover_image?: string | null
           created_at?: string
           description?: string | null
+          discount_percent?: number | null
           id?: string
+          image_url?: string | null
+          link_url?: string | null
           price_from?: number | null
           price_to?: number | null
           slug: string
@@ -2098,11 +2186,16 @@ export type Database = {
           valid_to?: string | null
         }
         Update: {
+          category?: string | null
+          city_id?: string | null
           company_id?: string
           cover_image?: string | null
           created_at?: string
           description?: string | null
+          discount_percent?: number | null
           id?: string
+          image_url?: string | null
+          link_url?: string | null
           price_from?: number | null
           price_to?: number | null
           slug?: string
@@ -2113,6 +2206,13 @@ export type Database = {
           valid_to?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "promotions_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "promotions_company_id_fkey"
             columns: ["company_id"]
