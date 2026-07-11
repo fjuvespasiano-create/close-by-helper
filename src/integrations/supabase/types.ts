@@ -799,6 +799,62 @@ export type Database = {
           },
         ]
       }
+      editorial_posts: {
+        Row: {
+          campaign: string | null
+          caption: string
+          city: string | null
+          company_id: string | null
+          created_at: string
+          format: string
+          id: string
+          notes: string | null
+          publish_date: string
+          status: string
+          tags: string[] | null
+          theme: string
+          updated_at: string
+        }
+        Insert: {
+          campaign?: string | null
+          caption: string
+          city?: string | null
+          company_id?: string | null
+          created_at?: string
+          format?: string
+          id?: string
+          notes?: string | null
+          publish_date: string
+          status?: string
+          tags?: string[] | null
+          theme: string
+          updated_at?: string
+        }
+        Update: {
+          campaign?: string | null
+          caption?: string
+          city?: string | null
+          company_id?: string | null
+          created_at?: string
+          format?: string
+          id?: string
+          notes?: string | null
+          publish_date?: string
+          status?: string
+          tags?: string[] | null
+          theme?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "editorial_posts_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       emergency_contacts: {
         Row: {
           active: boolean
