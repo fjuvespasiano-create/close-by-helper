@@ -15,10 +15,10 @@ import { useSiteContent } from "@/lib/siteContent";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AgendaAqui — o app de Vespasiano e São José da Lapa" },
-      { name: "description", content: "Encontre em segundos hospital, escola, delegacia, prefeitura e as empresas mais bem avaliadas de Vespasiano e São José da Lapa. Grátis, feito por quem mora aqui." },
-      { property: "og:title", content: "AgendaAqui — tudo da sua cidade num só app" },
-      { property: "og:description", content: "Serviços públicos, emergência e as empresas de confiança de Vespasiano e São José da Lapa. Endereço, telefone e avaliações reais." },
+      { title: "AgendaAqui — a cidade inteira de Vespasiano e São José da Lapa no seu bolso" },
+      { name: "description", content: "Encontre em 2 toques hospital, escola, delegacia, prefeitura, plantão 24h e as empresas mais bem avaliadas de Vespasiano e São José da Lapa. Grátis, atualizado, feito por quem mora aqui." },
+      { property: "og:title", content: "AgendaAqui — a cidade inteira num só app" },
+      { property: "og:description", content: "Serviços públicos, emergência 24h e as empresas de confiança da região. Avaliações reais dos vizinhos, endereço e telefone à mão." },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -111,12 +111,12 @@ function Home() {
               <Siren className="h-6 w-6" />
             </div>
             <div className="min-w-0">
-              <div className="font-display text-lg font-bold text-foreground">Plantão e Emergência 24h</div>
-              <div className="mt-0.5 text-sm text-muted-foreground">Acesso rápido a SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão.</div>
+              <div className="font-display text-lg font-bold text-foreground">Emergência? Todos os números 24h aqui.</div>
+              <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — 1 toque para ligar.</div>
             </div>
           </div>
           <div className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-0.5">
-            Ver números <ArrowRight className="h-4 w-4" />
+            Ver agora <ArrowRight className="h-4 w-4" />
           </div>
         </Link>
       </section>
@@ -125,8 +125,8 @@ function Home() {
       <section className="container mx-auto px-4 py-14">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <h2 className="font-display text-2xl font-bold md:text-3xl">Serviços da cidade</h2>
-            <p className="mt-1 text-muted-foreground">Saúde, educação, segurança e prefeitura. Endereço, telefone e horário em segundos.</p>
+            <h2 className="font-display text-2xl font-bold md:text-3xl">Resolva com a cidade</h2>
+            <p className="mt-1 text-muted-foreground">Saúde, educação, segurança e prefeitura — endereço, telefone e horário em 2 toques.</p>
           </div>
           <Link to="/servicos-publicos" search={{}} className="hidden text-sm font-medium text-primary hover:underline md:inline-flex">
             Ver todos
@@ -174,8 +174,8 @@ function Home() {
       <section className="container mx-auto px-4 py-14">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <h2 className="font-display text-2xl font-bold md:text-3xl">As preferidas da vizinhança</h2>
-            <p className="mt-1 text-muted-foreground">Escolhidas pelos moradores nas melhores avaliações.</p>
+            <h2 className="font-display text-2xl font-bold md:text-3xl">As queridinhas da vizinhança</h2>
+            <p className="mt-1 text-muted-foreground">Escolhidas por quem mora aqui, com base em avaliações reais.</p>
           </div>
           <Link to="/buscar" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
             Ver tudo <ArrowRight className="h-4 w-4" />
@@ -195,9 +195,9 @@ function Home() {
           <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
           <div className="relative flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Sua empresa nesta lista</h3>
+              <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Sua empresa aparecendo aqui</h3>
               <p className="mt-2 max-w-xl text-white/95">
-                Cadastro grátis em 2 minutos, sem cartão. Apareça para quem já procura seu serviço em {cityName} e receba contatos direto no WhatsApp.
+                Cadastro em 2 minutos, sem cartão e sem taxa. Fique visível para quem já procura seu serviço em {cityName} e receba os contatos direto no seu WhatsApp.
               </p>
             </div>
             <Link

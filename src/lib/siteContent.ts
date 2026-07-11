@@ -49,9 +49,9 @@ export type SiteContent = {
 };
 
 export const DEFAULT_SITE_CONTENT: SiteContent = {
-  brand: { name: "AgendaAqui", tagline: "O app da sua cidade" },
+  brand: { name: "AgendaAqui", tagline: "A cidade inteira no seu bolso" },
   header: {
-    cta_label: "Anunciar minha empresa",
+    cta_label: "Anunciar grátis",
     panel_label: "Meu painel",
     admin_label: "Admin",
     login_label: "Entrar",
@@ -59,42 +59,42 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
   },
   footer: {
     about_text:
-      "O guia local de Vespasiano e São José da Lapa. Serviços públicos, telefones de emergência e empresas de confiança — tudo num só app, sempre à mão.",
-    nav_title: "Navegue pelo app",
-    biz_title: "Para donos de empresa",
+      "O guia oficial dos moradores de Vespasiano e São José da Lapa. Serviços públicos, plantão 24h e as empresas mais bem avaliadas da região — grátis, num só lugar.",
+    nav_title: "Explore o app",
+    biz_title: "Para o seu negócio",
     copyright: "AgendaAqui — feito na cidade, para a cidade.",
     location: "Vespasiano · São José da Lapa · MG",
   },
   newsletter: {
-    title: "Fique por dentro da cidade",
-    description: "Novidades, dicas e alertas úteis toda semana. Sem spam, cancele quando quiser.",
+    title: "Receba o que importa na sua cidade",
+    description: "Alertas de plantão, promoções da vizinhança e novidades da região — 1 e-mail por semana, zero spam.",
     email_placeholder: "seu melhor e-mail",
     name_placeholder: "Seu nome (opcional)",
     button_label: "Quero receber",
   },
   home: {
-    hero_overline: "O app da cidade",
+    hero_overline: "O app oficial da cidade",
     hero_title: "Tudo o que sua cidade oferece, num só app",
     hero_subtitle:
-      "Encontre em segundos: hospital, escola, delegacia, prefeitura e as empresas mais bem avaliadas de Vespasiano e São José da Lapa.",
-    cta_title: "Coloque sua empresa no mapa da cidade",
+      "Hospital, escola, delegacia, prefeitura e as empresas mais bem avaliadas de Vespasiano e São José da Lapa — em 2 toques, sempre atualizado.",
+    cta_title: "Sua empresa vista pela cidade inteira",
     cta_subtitle:
-      "Cadastro grátis em 2 minutos. Apareça para vizinhos que já procuram seu serviço e receba contatos direto no WhatsApp.",
+      "Cadastro em 2 minutos, sem cartão. Apareça para quem já procura seu serviço aqui do lado e receba contatos direto no WhatsApp.",
     cta_button: "Anunciar grátis agora",
   },
   about: {
     title: "O que é o AgendaAqui",
-    subtitle: "O jeito mais fácil de resolver o dia a dia na sua cidade.",
-    p1: "Nasceu para acabar com aquela pergunta chata: \u201Ca quem eu ligo?\u201D. Em um único app, você tem serviços públicos, telefones de emergência e um guia com as melhores empresas de Vespasiano e São José da Lapa.",
-    p2: "Cada indicação passa por avaliações reais de moradores. Você contrata com segurança, e negócios locais ganham visibilidade justa — sem intermediários e sem taxas escondidas.",
-    p3: "Grátis para usar. Grátis para anunciar. Se você mora aqui ou empreende aqui, este app foi feito para você.",
+    subtitle: "O jeito mais rápido de resolver o dia a dia na sua cidade — sem grupo de WhatsApp e sem \u201Cquem indica?\u201D.",
+    p1: "O AgendaAqui nasceu para acabar com a pergunta \u201Ca quem eu ligo?\u201D. Em um único app, você acessa serviços públicos, telefones de emergência e um guia com as empresas de confiança de Vespasiano e São José da Lapa — organizados por categoria, distância e nota real dos vizinhos.",
+    p2: "Cada indicação passa por avaliações de moradores reais, com fotos e comentários abertos. Você contrata com tranquilidade, e o negócio local ganha visibilidade justa — sem intermediários, sem comissão sobre venda e sem taxa escondida.",
+    p3: "Grátis para usar. Grátis para anunciar. Se você mora aqui ou empreende aqui, o AgendaAqui foi feito para você.",
   },
   contact: {
     title: "Fale com a gente",
-    subtitle: "Sugestões, parcerias ou algo travando? Respondemos em até 24h.",
+    subtitle: "Dúvida, sugestão, parceria ou algo travando? A gente responde em até 24 horas úteis.",
     email: "contato@agendaaqui.online",
     whatsapp_url: "https://wa.me/55319980252882",
-    whatsapp_label: "WhatsApp: +55 31 99802-52882 (horário comercial)",
+    whatsapp_label: "WhatsApp: +55 31 99802-52882 (seg. a sex., 9h às 18h)",
   },
 };
 

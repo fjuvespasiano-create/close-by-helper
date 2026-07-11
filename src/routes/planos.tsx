@@ -14,8 +14,8 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/planos")({
   head: () => ({
     meta: [
-      { title: "Anuncie sua empresa — AgendaAqui" },
-      { name: "description", content: "Coloque seu negócio na frente de quem já procura o seu serviço em Vespasiano e São José da Lapa. Cadastro grátis, sem cartão." },
+      { title: "Anuncie sua empresa grátis — AgendaAqui" },
+      { name: "description", content: "Apareça para quem já procura seu serviço em Vespasiano e São José da Lapa. Cadastro em 2 minutos, sem cartão, sem fidelidade. Contatos direto no seu WhatsApp." },
       { property: "og:title", content: "Apareça no app da cidade — AgendaAqui" },
       { property: "og:url", content: "/planos" },
     ],
@@ -29,36 +29,36 @@ const PLANS = [
     id: "basico",
     name: "Grátis",
     price: "R$ 0",
-    subtitle: "Comece a receber clientes hoje",
+    subtitle: "Comece a receber contatos hoje mesmo",
     cta: "Criar meu perfil grátis",
     icon: Star,
     accent: false,
     features: [
-      "Perfil no app da cidade",
-      "Até 3 fotos",
+      "Seu perfil no app oficial da cidade",
+      "Até 3 fotos do seu trabalho",
       "Até 2 categorias e 2 projetos",
       "Até 3 perguntas frequentes",
-      "WhatsApp e ligação com 1 toque",
-      "Receba avaliações de clientes reais",
+      "Botão de WhatsApp e ligação com 1 toque",
+      "Avaliações de clientes reais, sem moderação suspeita",
     ],
   },
   {
     id: "premium",
     name: "Premium",
     price: "R$ 149/mês",
-    subtitle: "Todos os benefícios que fazem o cliente escolher você",
-    cta: "Assinar Premium",
+    subtitle: "Mais visibilidade, mais confiança, mais contatos",
+    cta: "Quero ser Premium",
     icon: Crown,
     accent: true,
     features: [
-      "Selo Verificado automático",
+      "Selo Verificado — o cliente confia antes de ligar",
       "Selos Top atendimento, Especialista e Entrega garantida",
-      "Prioridade nas buscas e destaque na home",
+      "Prioridade na busca e destaque na home da cidade",
       "Fotos, projetos, categorias e FAQs ilimitados",
-      "Banner no perfil da empresa",
-      "Estatísticas avançadas de visitas e cliques",
-      "Consultor dedicado por WhatsApp",
-      "Card destacado nas listagens",
+      "Banner personalizado no topo do seu perfil",
+      "Relatórios de visitas, cliques e origem dos contatos",
+      "Consultor dedicado no seu WhatsApp",
+      "Card destacado nas listagens (fica na frente da concorrência)",
     ],
   },
 ] as const;
@@ -100,9 +100,9 @@ function PlanosPage() {
       <section className="border-b border-border bg-gradient-to-br from-primary to-primary-dark text-primary-foreground">
         <div className="container mx-auto px-4 py-16 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] ring-1 ring-white/20 backdrop-blur">Para donos de empresa</span>
-          <h1 className="mt-4 font-display text-4xl font-extrabold md:text-5xl">Apareça para quem já procura o seu serviço</h1>
+          <h1 className="mt-4 font-display text-4xl font-extrabold md:text-5xl">Apareça para quem já quer contratar hoje</h1>
           <p className="mx-auto mt-3 max-w-2xl text-white/90">
-            Vizinhos de Vespasiano e São José da Lapa usam o AgendaAqui todo dia para achar quem resolve. Escolha como quer aparecer — o cadastro leva 2 minutos.
+            Todos os dias, vizinhos de Vespasiano e São José da Lapa entram no AgendaAqui para achar quem resolve. Escolha como quer aparecer — o cadastro leva 2 minutos e é grátis.
           </p>
         </div>
       </section>
@@ -147,15 +147,15 @@ function PlanosPage() {
         </div>
 
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          Sem multa, sem fidelidade. Cancele quando quiser direto no painel.
+          Sem multa, sem fidelidade, sem letras miúdas. Cancele quando quiser, direto no painel.
         </p>
       </section>
 
       <Dialog open={!!open} onOpenChange={(o) => !o && setOpen(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Plano {open && PLANS.find((p) => p.id === open)?.name} — fale com a gente</DialogTitle>
-            <DialogDescription>Conte um pouco sobre seu negócio. Retornamos no seu WhatsApp em até 24h úteis.</DialogDescription>
+            <DialogTitle>Plano {open && PLANS.find((p) => p.id === open)?.name} — vamos conversar</DialogTitle>
+            <DialogDescription>Conta rapidinho sobre o seu negócio. A gente te chama no WhatsApp em até 24h úteis.</DialogDescription>
           </DialogHeader>
           <form onSubmit={submit} className="space-y-3">
             <div>
