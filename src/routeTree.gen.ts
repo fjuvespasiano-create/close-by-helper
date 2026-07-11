@@ -71,6 +71,7 @@ import { Route as AdminPushHistoricoRouteImport } from './routes/admin.push.hist
 import { Route as AdminPushIdRouteImport } from './routes/admin.push.$id'
 import { Route as PainelAnunciosIdEditarRouteImport } from './routes/painel.anuncios.$id.editar'
 import { Route as ApiPublicPushTrackRouteImport } from './routes/api/public/push/track'
+import { Route as ApiPublicPushResubscribeRouteImport } from './routes/api/public/push/resubscribe'
 
 const TransporteRoute = TransporteRouteImport.update({
   id: '/transporte',
@@ -383,6 +384,12 @@ const ApiPublicPushTrackRoute = ApiPublicPushTrackRouteImport.update({
   path: '/api/public/push/track',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPushResubscribeRoute =
+  ApiPublicPushResubscribeRouteImport.update({
+    id: '/api/public/push/resubscribe',
+    path: '/api/public/push/resubscribe',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -445,6 +452,7 @@ export interface FileRoutesByFullPath {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
 }
@@ -506,6 +514,7 @@ export interface FileRoutesByTo {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push': typeof AdminPushIndexRoute
+  '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
 }
@@ -571,6 +580,7 @@ export interface FileRoutesById {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
 }
@@ -637,6 +647,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
   fileRoutesByTo: FileRoutesByTo
@@ -698,6 +709,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push'
+    | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
   id:
@@ -762,6 +774,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
   fileRoutesById: FileRoutesById
@@ -792,6 +805,7 @@ export interface RootRouteChildren {
   EventosSlugRoute: typeof EventosSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
+  ApiPublicPushResubscribeRoute: typeof ApiPublicPushResubscribeRoute
   ApiPublicPushTrackRoute: typeof ApiPublicPushTrackRoute
 }
 
@@ -1231,6 +1245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPushTrackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/push/resubscribe': {
+      id: '/api/public/push/resubscribe'
+      path: '/api/public/push/resubscribe'
+      fullPath: '/api/public/push/resubscribe'
+      preLoaderRoute: typeof ApiPublicPushResubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1398,6 +1419,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosSlugRoute: EventosSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
+  ApiPublicPushResubscribeRoute: ApiPublicPushResubscribeRoute,
   ApiPublicPushTrackRoute: ApiPublicPushTrackRoute,
 }
 export const routeTree = rootRouteImport
