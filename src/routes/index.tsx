@@ -200,7 +200,8 @@ function Home() {
       <RepresentativesWidget />
 
       {/* CUPONS EM DESTAQUE */}
-      <FeaturedCouponsCard citySlug={city?.slug} />
+      <FeaturedCouponsCard citySlug={city} />
+
 
 
       {/* PUBLIC SERVICES */}
