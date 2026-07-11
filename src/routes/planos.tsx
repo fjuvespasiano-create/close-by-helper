@@ -147,15 +147,15 @@ function PlanosPage() {
         </div>
 
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          Sem multa, sem fidelidade. Cancele quando quiser direto no painel.
+          Sem multa, sem fidelidade, sem letras miúdas. Cancele quando quiser, direto no painel.
         </p>
       </section>
 
       <Dialog open={!!open} onOpenChange={(o) => !o && setOpen(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Plano {open && PLANS.find((p) => p.id === open)?.name} — fale com a gente</DialogTitle>
-            <DialogDescription>Conte um pouco sobre seu negócio. Retornamos no seu WhatsApp em até 24h úteis.</DialogDescription>
+            <DialogTitle>Plano {open && PLANS.find((p) => p.id === open)?.name} — vamos conversar</DialogTitle>
+            <DialogDescription>Conta rapidinho sobre o seu negócio. A gente te chama no WhatsApp em até 24h úteis.</DialogDescription>
           </DialogHeader>
           <form onSubmit={submit} className="space-y-3">
             <div>
