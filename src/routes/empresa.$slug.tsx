@@ -71,6 +71,7 @@ type Company = {
   video_url: string | null;
   coverage_cities: string[] | null;
   differentials: string[] | null;
+  services_offered: string[] | null;
   badges: string[] | null;
   certifications: Certifications | null;
   quality_scores: QualityScores | null;
@@ -190,10 +191,13 @@ function CompanyPage() {
     ? `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(shareUrl)}`
     : "";
 
-  // Highlights derived from categories
-  const services = company.company_categories
+  // Services: merge specific services_offered with category names
+  const categoryNames = company.company_categories
     .map((cc) => cc.categories?.name)
     .filter((x): x is string => !!x);
+  const services = Array.from(
+    new Set([...(company.services_offered ?? []), ...categoryNames].filter(Boolean))
+  );
 
   // Payment methods (default common set; could be dynamic later)
   const paymentMethods = [
