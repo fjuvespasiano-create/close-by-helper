@@ -66,7 +66,7 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
           const categories = (await fetchAll(
             "categories",
             "id,slug,name,icon,sort,is_active",
-          )) as Array<Record<string, unknown>>;
+          )) as never[];
           if (categories.length) {
             const { error } = await supabaseAdmin
               .from("categories")
@@ -78,7 +78,7 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
           // 3) companies (todas as colunas seguras)
           const companyCols =
             "id,slug,name,tagline,description,phone,whatsapp,email,address,zip,city_id,lat,lng,website,instagram,facebook,hours,logo_url,banner_url,plan,featured,status,is_verified,rating,review_count,video_url,badges,price_range,founded_year";
-          const companies = (await fetchAll("companies", companyCols)) as Array<Record<string, unknown>>;
+          const companies = (await fetchAll("companies", companyCols)) as never[];
           const companyIds = new Set(companies.map((c) => c.id as string));
           if (companies.length) {
             // upsert em batches de 500 para não estourar limites
@@ -113,7 +113,7 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
           const media = (await fetchAll(
             "company_media",
             "id,company_id,type,url,caption,sort,created_at",
-          )) as Array<Record<string, unknown>>;
+          )) as never[];
           const mediaFiltered = media.filter((m) => companyIds.has(m.company_id as string));
           if (mediaFiltered.length) {
             const { error } = await supabaseAdmin
