@@ -1,22 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 /**
- * Endpoint público que dispara o scraper de atividades legislativas/executivas
- * (câmaras + prefeituras + DOM-MG). Chamado por pg_cron diariamente às 04:30 UTC.
- * Protegido por header `apikey` (chave publishable do Supabase).
+ * Endpoint que dispara o scraper de atividades legislativas/executivas.
+ * Protegido por CRON_SECRET (header `x-cron-secret`).
  */
 export const Route = createFileRoute("/api/public/hooks/sync-representatives")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const expected = process.env.SUPABASE_PUBLISHABLE_KEY;
-        const provided = request.headers.get("apikey");
-        if (!expected || provided !== expected) {
-          return new Response(JSON.stringify({ ok: false, error: "unauthorized" }), {
-            status: 401,
-            headers: { "Content-Type": "application/json" },
-          });
-        }
+        const { checkCronAuth } = await import("@/lib/cron-auth.server");
+        const unauth = checkCronAuth(request);
+        if (unauth) return unauth;
         try {
           const { runRepresentativesScrape } = await import("@/lib/representatives-scrape.server");
           const report = await runRepresentativesScrape();
