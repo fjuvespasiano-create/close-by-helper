@@ -14,6 +14,20 @@ import { PUBLIC_SERVICE_CATEGORIES } from "@/lib/publicServices";
 import { useSelectedCity, CITY_OPTIONS } from "@/hooks/useSelectedCity";
 import { useSiteContent } from "@/lib/siteContent";
 import heroCityAsset from "@/assets/hero-city.jpg.asset.json";
+import heroVespasianoAsset from "@/assets/hero-vespasiano.jpg.asset.json";
+import heroSjlAsset from "@/assets/hero-sao-jose-da-lapa.jpg.asset.json";
+
+const HERO_BY_CITY: Record<string, { url: string; alt: string }> = {
+  "vespasiano": {
+    url: heroVespasianoAsset.url,
+    alt: "Vista aérea de Vespasiano ao entardecer, com a Serra do Cipó ao fundo",
+  },
+  "sao-jose-da-lapa": {
+    url: heroSjlAsset.url,
+    alt: "Vista aérea de São José da Lapa ao entardecer, com a formação rochosa da Lapa em destaque",
+  },
+};
+const HERO_FALLBACK = { url: heroCityAsset.url, alt: "Vista aérea de Vespasiano e São José da Lapa ao entardecer" };
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -83,20 +97,24 @@ function Home() {
   const cats = useQuery(categoriesQueryOptions);
   const featured = useQuery(featuredCompaniesQueryOptions(8));
 
+  const hero = HERO_BY_CITY[city] ?? HERO_FALLBACK;
+
   return (
     <SiteLayout>
       {/* HERO */}
       <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden bg-primary text-primary-foreground">
-        {/* Background image */}
+        {/* Background image — troca com fade conforme a cidade detectada */}
         <img
-          src={heroCityAsset.url}
-          alt="Vista aérea de Vespasiano e São José da Lapa ao entardecer, com montanhas ao fundo"
+          key={hero.url}
+          src={hero.url}
+          alt={hero.alt}
           width={1600}
           height={1008}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full animate-fade-in object-cover"
         />
+
         {/* Layered overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/75 to-primary/95 mix-blend-multiply" />
         <div className="absolute inset-0 opacity-[0.12] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:28px_28px]" />
