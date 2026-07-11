@@ -86,8 +86,8 @@ function Home() {
   return (
     <SiteLayout>
       {/* HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-primary-dark text-primary-foreground">
-        {/* Hero image (LCP): imagem de fundo responsiva com overlay para contraste do texto */}
+      <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden bg-primary text-primary-foreground">
+        {/* Background image */}
         <img
           src={heroCityAsset.url}
           alt="Vista aérea de Vespasiano e São José da Lapa ao entardecer, com montanhas ao fundo"
@@ -95,30 +95,63 @@ function Home() {
           height={1008}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-luminosity"
+          className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/85 via-primary/75 to-primary-dark/90" />
-        <div className="absolute inset-0 opacity-[0.15] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:28px_28px]" />
-        <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-accent/25 blur-3xl" />
-        <div className="container relative mx-auto px-4 py-16 md:py-24">
-          <div className="mx-auto max-w-3xl text-center animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] ring-1 ring-white/20 backdrop-blur">
-              <Sparkles className="h-3.5 w-3.5" /> {site.home.hero_overline}
+        {/* Layered overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/75 to-primary/95 mix-blend-multiply" />
+        <div className="absolute inset-0 opacity-[0.12] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:28px_28px]" />
+        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute -bottom-32 -right-32 h-[28rem] w-[28rem] rounded-full bg-accent/30 blur-3xl" />
+
+        {/* Content */}
+        <div className="container relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 py-20 text-center md:py-28">
+          {/* Badge */}
+          <div className="animate-fade-up">
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+              </span>
+              {site.home.hero_overline}
             </span>
-            <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.05] md:text-6xl lg:text-7xl">
-              {site.home.hero_title.replace(/\{city\}|sua cidade/i, "").trim() || "Tudo sobre"} <span className="md:whitespace-nowrap bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">{cityName}</span>
-            </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base text-white/85 md:text-lg">
-              {site.home.hero_subtitle}
-            </p>
-            <div className="mt-7 flex justify-center"><CitySwitch onDark /></div>
           </div>
-          <div className="mx-auto mt-10 max-w-3xl">
-            <SearchBar />
+
+          {/* Headline */}
+          <h1 className="mt-8 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
+            {site.home.hero_title.replace(/\{city\}|sua cidade/i, "").trim() || "Tudo o que oferece, num só app"}{" "}
+            <span className="bg-gradient-to-r from-accent via-accent to-orange-300 bg-clip-text text-transparent md:whitespace-nowrap">
+              {cityName}
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-blue-50/90 md:text-xl">
+            {site.home.hero_subtitle}
+          </p>
+
+          {/* Control center */}
+          <div className="mt-10 flex w-full max-w-2xl flex-col items-center gap-6">
+            <div className="inline-flex rounded-2xl border border-white/10 bg-black/20 p-1.5 backdrop-blur-xl">
+              <CitySwitch onDark />
+            </div>
+
+            <div className="w-full">
+              <SearchBar />
+            </div>
+
+            <nav aria-label="Atalhos rápidos" className="flex flex-wrap justify-center gap-x-8 gap-y-2 pt-1 text-sm text-white/60">
+              <Link to="/emergencia" className="transition-colors hover:text-accent">Emergência 24h</Link>
+              <Link to="/servicos-publicos" search={{ cat: "saude" }} className="transition-colors hover:text-accent">Postos de saúde</Link>
+              <Link to="/servicos-publicos" search={{ cat: "educacao" }} className="transition-colors hover:text-accent">Vagas escolares</Link>
+              <Link to="/agora" className="transition-colors hover:text-accent">Eventos hoje</Link>
+            </nav>
           </div>
         </div>
+
+        {/* Bottom fade */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
       </section>
+
 
       {/* EMERGENCY CTA */}
       <section className="container relative z-10 mx-auto -mt-8 px-4 md:-mt-10">
