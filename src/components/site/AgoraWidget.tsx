@@ -12,7 +12,7 @@ export function AgoraWidget() {
     queryKey: ["agora-widget", city],
     queryFn: () => fetchAgoraFeed(city, 6),
     staleTime: 120_000,
-    refetchInterval: 180_000,
+    gcTime: 5 * 60_000,
   });
 
   if (!data || data.length === 0) return null;

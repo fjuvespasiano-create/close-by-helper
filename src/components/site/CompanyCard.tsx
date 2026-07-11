@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "@tanstack/react-router";
 import { MapPin, Star, BadgeCheck, Crown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -43,7 +44,7 @@ export function toCompanyCardData(co: CompanyListItem): CompanyCardData {
 }
 
 
-export function CompanyCard({ company }: { company: CompanyCardData }) {
+export const CompanyCard = memo(function CompanyCard({ company }: { company: CompanyCardData }) {
   const limits = getPlanLimits(company.plan);
   const isPremium = limits.cardVariant !== "default";
   const isFeatured = limits.cardVariant === "featured";
@@ -143,4 +144,4 @@ export function CompanyCard({ company }: { company: CompanyCardData }) {
       </div>
     </Link>
   );
-}
+});
