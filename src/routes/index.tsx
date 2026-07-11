@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, Siren, Sparkles } from "lucide-react";
+import { ArrowRight, Siren } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { AgoraWidget } from "@/components/site/AgoraWidget";
 import { RepresentativesWidget } from "@/components/site/RepresentativesWidget";
