@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { PWAInstallPrompt } from "./PWAInstallPrompt";
 import { BackButton } from "./BackButton";
+import { OnboardingWizard } from "./OnboardingWizard";
 import { useCityAutoDetect } from "@/hooks/useCityAutoDetect";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
@@ -14,6 +15,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <Footer />
       <PWAInstallPrompt />
+      <OnboardingWizard />
     </div>
   );
 }
