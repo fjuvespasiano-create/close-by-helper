@@ -131,12 +131,17 @@ function AnalyticsAnunciosPage() {
 
   // Overview metrics
   const overview = useMemo(() => {
-    const impressions = events.filter((e) => e.name === "ad_impression").length;
-    const clicks = events.filter((e) => e.name === "ad_click").length;
+    const impressions = scopedEvents.filter((e) => e.name === "ad_impression").length;
+    const clicks = scopedEvents.filter((e) => e.name === "ad_click").length;
     const ctr = impressions > 0 ? (clicks / impressions) * 100 : 0;
 
+    const prevImp = scopedPrev.filter((e) => e.name === "ad_impression").length;
+    const prevClk = scopedPrev.filter((e) => e.name === "ad_click").length;
+    const impDelta = prevImp ? ((impressions - prevImp) / prevImp) * 100 : impressions > 0 ? 100 : 0;
+    const clkDelta = prevClk ? ((clicks - prevClk) / prevClk) * 100 : clicks > 0 ? 100 : 0;
+
     const byCampaign = new Map<string, { impressions: number; clicks: number }>();
-    for (const e of events) {
+    for (const e of scopedEvents) {
       if (!e.entity_id) continue;
       const s = byCampaign.get(e.entity_id) ?? { impressions: 0, clicks: 0 };
       if (e.name === "ad_impression") s.impressions++;
@@ -146,13 +151,20 @@ function AnalyticsAnunciosPage() {
     const top = Array.from(byCampaign.entries())
       .map(([id, v]) => {
         const c = campaigns.find((x) => x.id === id);
-        return { id, name: c?.name ?? "—", ...v, ctr: v.impressions ? (v.clicks / v.impressions) * 100 : 0 };
+        return {
+          id,
+          name: c?.name ?? "—",
+          city: c?.city_slug ?? "—",
+          placement: c?.placement ?? "—",
+          ...v,
+          ctr: v.impressions ? (v.clicks / v.impressions) * 100 : 0,
+        };
       })
-      .sort((a, b) => b.clicks - a.clicks)
-      .slice(0, 10);
+      .sort((a, b) => b.clicks - a.clicks);
 
-    return { impressions, clicks, ctr, top };
-  }, [events, campaigns]);
+    return { impressions, clicks, ctr, top, impDelta, clkDelta };
+  }, [scopedEvents, scopedPrev, campaigns]);
+
 
   // Selected campaign metrics
   const report = useMemo(() => {
