@@ -11,6 +11,7 @@ import { categoriesQueryOptions, featuredCompaniesQueryOptions } from "@/lib/que
 import { PUBLIC_SERVICE_CATEGORIES } from "@/lib/publicServices";
 import { useSelectedCity, CITY_OPTIONS } from "@/hooks/useSelectedCity";
 import { useSiteContent } from "@/lib/siteContent";
+import heroCityAsset from "@/assets/hero-city.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,9 +20,15 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Encontre em 2 toques hospital, escola, delegacia, prefeitura, plantão 24h e as empresas mais bem avaliadas de Vespasiano e São José da Lapa. Grátis, atualizado, feito por quem mora aqui." },
       { property: "og:title", content: "AgenddaAqui — a cidade inteira num só app" },
       { property: "og:description", content: "Serviços públicos, emergência 24h e as empresas de confiança da região. Avaliações reais dos vizinhos, endereço e telefone à mão." },
+      { property: "og:image", content: heroCityAsset.url },
       { property: "og:url", content: "/" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: heroCityAsset.url },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "/" },
+      { rel: "preload", as: "image", href: heroCityAsset.url, fetchpriority: "high" },
+    ],
   }),
   component: Home,
   loader: ({ context }) => {
@@ -78,6 +85,17 @@ function Home() {
     <SiteLayout>
       {/* HERO */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-primary-dark text-primary-foreground">
+        {/* Hero image (LCP): imagem de fundo responsiva com overlay para contraste do texto */}
+        <img
+          src={heroCityAsset.url}
+          alt="Vista aérea de Vespasiano e São José da Lapa ao entardecer, com montanhas ao fundo"
+          width={1600}
+          height={1008}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover opacity-40 mix-blend-luminosity"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/85 via-primary/75 to-primary-dark/90" />
         <div className="absolute inset-0 opacity-[0.15] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:28px_28px]" />
         <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-accent/25 blur-3xl" />
