@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
+import { PageTransition } from "@/components/site/PageTransition";
 
 const BugReportButton = lazy(() =>
   import("@/components/qa/BugReportButton").then((m) => ({ default: m.BugReportButton })),
