@@ -1,28 +1,52 @@
 /**
- * Configurações centrais do bot.
- * Ajuste template, delays e caminho dos leads conforme necessidade.
+ * Configurações centrais do bot — foco em anti-ban profissional.
+ * Todas as constantes aqui podem ser sobrescritas via variáveis de ambiente.
  */
 module.exports = {
-  // Caminho para o arquivo de leads (JSON). Pode ser trocado por consulta a banco.
   leadsFile: process.env.LEADS_FILE || "./leads.json",
-
-  // Diretório onde a sessão do WhatsApp Web será persistida (evita re-scan do QR).
   sessionDir: process.env.SESSION_DIR || "./.wwebjs_auth",
+  optOutFile: process.env.OPTOUT_FILE || "./data/optout.json",
+  warmupFile: process.env.WARMUP_FILE || "./data/warmup.json",
+  logFile: process.env.LOG_FILE || "./logs/report.jsonl",
 
-  // Template com placeholders {chave}. Todas as chaves do lead são substituídas.
-  messageTemplate:
-    "Olá, {nome}! 👋\n\n" +
-    "Seu acesso ao {condominio} está com status: *{status}*.\n\n" +
-    "Qualquer dúvida, responda esta mensagem.\n\n" +
-    "— Portaria AgenddaAqui",
-
-  // Delay aleatório entre envios (anti-ban). Valores em milissegundos.
-  minDelayMs: 15_000,
-  maxDelayMs: 30_000,
-
-  // Country code padrão caso o telefone venha sem DDI.
   defaultCountryCode: "55",
 
-  // Arquivo de log de resultados.
-  logFile: "./logs/report.jsonl",
+  // Template com placeholders {chave} e spintax {opt1|opt2|opt3}.
+  // Sorteio de spintax é aplicado ANTES da substituição de variáveis.
+  messageTemplate:
+    "{Olá|Oi|Bom dia|Boa tarde}, {nome}! {Tudo bem?|Como vai?|Espero que esteja bem.}\n\n" +
+    "Seu acesso ao *{condominio}* está com status: *{status}*.\n\n" +
+    "{Qualquer dúvida|Se precisar de algo|Em caso de dúvidas}, é só responder esta mensagem — a portaria te atende.\n\n" +
+    "— Equipe AgenddaAqui\n\n" +
+    "_Caso não queira mais receber avisos por aqui, responda com a palavra *SAIR*._",
+
+  // === RITMO DE ENVIO (Estratégia 1) ===
+  // Delay aleatório entre mensagens (ms).
+  minDelayMs: 20_000,
+  maxDelayMs: 40_000,
+
+  // Simulação de digitação antes do envio (ms).
+  minTypingMs: 3_000,
+  maxTypingMs: 5_000,
+
+  // Pausa longa a cada N mensagens.
+  batchSize: 18, // sortear entre 15 e 20 seria ideal; usamos ponto médio
+  minLongPauseMs: 5 * 60 * 1000, // 5 min
+  maxLongPauseMs: 10 * 60 * 1000, // 10 min
+
+  // === WARM-UP (Estratégia 2) ===
+  // Curva de aquecimento por dia desde o início. Após o último índice,
+  // aplica-se dailyLimitAfterWarmup.
+  warmupSchedule: [
+    // Semana 1 (dias 1–7): sem envios ativos — bot só responde (não implementado aqui).
+    0, 0, 0, 0, 0, 0, 0,
+    // Semana 2 (dias 8–14): rampa suave
+    15, 25, 40, 60, 80, 100, 120,
+    // Semana 3 (dias 15–21): rampa até volume-alvo
+    150, 200, 250, 300, 400, 500, 600,
+  ],
+  dailyLimitAfterWarmup: 800,
+
+  // Palavras que disparam opt-out automático quando o lead responde.
+  optOutKeywords: ["sair", "parar", "cancelar", "descadastrar", "stop", "unsubscribe"],
 };
