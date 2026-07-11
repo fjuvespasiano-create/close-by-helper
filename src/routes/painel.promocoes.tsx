@@ -365,9 +365,54 @@ function PromotionDialog({
             <Input type="number" min={0} max={100} value={discount} onChange={(e) => setDiscount(e.target.value)} />
           </div>
           <div className="sm:col-span-2">
-            <Label>Imagem (URL)</Label>
-            <Input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://…" />
+            <Label>Imagem da promoção</Label>
+            <div className="mt-1 space-y-2">
+              {imageUrl ? (
+                <div className="relative overflow-hidden rounded-md border border-border">
+                  <img src={imageUrl} alt="Preview" className="h-40 w-full object-cover" />
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    className="absolute right-2 top-2"
+                    onClick={() => setImageUrl("")}
+                  >
+                    <X className="mr-1 h-3 w-3" /> Remover
+                  </Button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => fileRef.current?.click()}
+                  disabled={uploading}
+                  className="flex h-32 w-full flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-border bg-muted/30 text-sm text-muted-foreground transition hover:border-primary hover:bg-primary/5 disabled:opacity-60"
+                >
+                  {uploading ? (
+                    <><Loader2 className="h-5 w-5 animate-spin" /> Enviando…</>
+                  ) : (
+                    <><ImagePlus className="h-6 w-6" /> Clique para enviar (JPG/PNG, máx 5MB)</>
+                  )}
+                </button>
+              )}
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => handleFile(e.target.files?.[0] ?? null)}
+              />
+              <details className="text-xs text-muted-foreground">
+                <summary className="cursor-pointer hover:text-foreground">Ou usar URL externa</summary>
+                <Input
+                  className="mt-2"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  placeholder="https://…"
+                />
+              </details>
+            </div>
           </div>
+
           <div className="sm:col-span-2">
             <Label>Link externo</Label>
             <Input value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} placeholder="https://…" />
