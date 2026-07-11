@@ -76,6 +76,7 @@ import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configura
 import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminAnunciosRouteImport } from './routes/admin.anuncios'
+import { Route as AdminAnalyticsAnunciosRouteImport } from './routes/admin.analytics-anuncios'
 import { Route as AdminPushIndexRouteImport } from './routes/admin.push.index'
 import { Route as PainelNotificacoesPreferenciasRouteImport } from './routes/painel.notificacoes.preferencias'
 import { Route as PainelEmpresasNovaRouteImport } from './routes/painel.empresas.nova'
@@ -434,6 +435,11 @@ const AdminAnunciosRoute = AdminAnunciosRouteImport.update({
   path: '/anuncios',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAnalyticsAnunciosRoute = AdminAnalyticsAnunciosRouteImport.update({
+  id: '/analytics-anuncios',
+  path: '/analytics-anuncios',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPushIndexRoute = AdminPushIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -580,6 +586,7 @@ export interface FileRoutesByFullPath {
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
   '/vespasiano': typeof VespasianoRoute
+  '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -668,6 +675,7 @@ export interface FileRoutesByTo {
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
   '/vespasiano': typeof VespasianoRoute
+  '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -759,6 +767,7 @@ export interface FileRoutesById {
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
   '/vespasiano': typeof VespasianoRoute
+  '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -852,6 +861,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/transporte'
     | '/vespasiano'
+    | '/admin/analytics-anuncios'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
@@ -940,6 +950,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/transporte'
     | '/vespasiano'
+    | '/admin/analytics-anuncios'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
@@ -1030,6 +1041,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/transporte'
     | '/vespasiano'
+    | '/admin/analytics-anuncios'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
@@ -1614,6 +1626,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnunciosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/analytics-anuncios': {
+      id: '/admin/analytics-anuncios'
+      path: '/analytics-anuncios'
+      fullPath: '/admin/analytics-anuncios'
+      preLoaderRoute: typeof AdminAnalyticsAnunciosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/push/': {
       id: '/admin/push/'
       path: '/'
@@ -1792,6 +1811,7 @@ const AdminPushRouteWithChildren = AdminPushRoute._addFileChildren(
 )
 
 interface AdminRouteChildren {
+  AdminAnalyticsAnunciosRoute: typeof AdminAnalyticsAnunciosRoute
   AdminAnunciosRoute: typeof AdminAnunciosRoute
   AdminBlogRoute: typeof AdminBlogRoute
   AdminCidadesRoute: typeof AdminCidadesRoute
@@ -1814,6 +1834,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalyticsAnunciosRoute: AdminAnalyticsAnunciosRoute,
   AdminAnunciosRoute: AdminAnunciosRoute,
   AdminBlogRoute: AdminBlogRoute,
   AdminCidadesRoute: AdminCidadesRoute,
