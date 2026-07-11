@@ -1,0 +1,1 @@
+ALTER TABLE public.companies ADD COLUMN IF NOT EXISTS services_offered text[] NOT NULL DEFAULT '{}'::text[];

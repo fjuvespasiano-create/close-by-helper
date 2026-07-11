@@ -479,6 +479,7 @@ export type Database = {
           response_time_minutes: number | null
           review_count: number
           services_completed: number | null
+          services_offered: string[]
           slug: string
           status: string
           tagline: string | null
@@ -533,6 +534,7 @@ export type Database = {
           response_time_minutes?: number | null
           review_count?: number
           services_completed?: number | null
+          services_offered?: string[]
           slug: string
           status?: string
           tagline?: string | null
@@ -587,6 +589,7 @@ export type Database = {
           response_time_minutes?: number | null
           review_count?: number
           services_completed?: number | null
+          services_offered?: string[]
           slug?: string
           status?: string
           tagline?: string | null
