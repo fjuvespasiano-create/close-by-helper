@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { useAdmin } from "@/hooks/use-admin";
+import { useUnreadMessagesCount } from "@/hooks/useUnreadMessages";
 import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Building2, Mail, Star, User, Heart, Bell, Trophy, Package, MessageCircle } from "lucide-react";
 
@@ -25,6 +26,7 @@ const NAV: { to: "/painel" | "/painel/empresas" | "/painel/leads" | "/painel/ava
 function PanelLayout() {
   const { loading, userId } = useAdmin();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const unread = useUnreadMessagesCount();
 
   if (loading) {
     return (
@@ -52,6 +54,7 @@ function PanelLayout() {
           <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Meu painel</div>
           {NAV.map((n) => {
             const active = n.exact ? pathname === n.to : pathname.startsWith(n.to);
+            const showBadge = n.to === "/painel/mensagens" && unread > 0;
             return (
               <Link
                 key={n.to}
@@ -60,7 +63,18 @@ function PanelLayout() {
                   active ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
                 }`}
               >
-                <n.icon className="h-4 w-4" /> {n.label}
+                <n.icon className="h-4 w-4" />
+                <span className="flex-1">{n.label}</span>
+                {showBadge ? (
+                  <span
+                    aria-label={`${unread} mensagens não lidas`}
+                    className={`inline-flex min-w-[20px] items-center justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                      active ? "bg-primary-foreground text-primary" : "bg-primary text-primary-foreground"
+                    }`}
+                  >
+                    {unread > 99 ? "99+" : unread}
+                  </span>
+                ) : null}
               </Link>
             );
           })}
