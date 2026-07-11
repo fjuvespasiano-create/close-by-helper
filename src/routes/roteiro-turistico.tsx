@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import {
   Mountain,
   UtensilsCrossed,
@@ -14,11 +15,16 @@ import {
   Info,
   ArrowLeft,
   Compass,
+  ExternalLink,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import cavernaImg from "@/assets/roteiro-caverna.jpg";
+import gastronomiaImg from "@/assets/roteiro-gastronomia.jpg";
+import ecoturismoImg from "@/assets/roteiro-ecoturismo.jpg";
 
 export const Route = createFileRoute("/roteiro-turistico")({
   head: () => ({
@@ -40,86 +46,85 @@ export const Route = createFileRoute("/roteiro-turistico")({
       {
         property: "og:description",
         content:
-          "Descubra um destino encantador a poucos minutos de Confins: cavernas, comida mineira, história e ecoturismo. Ideal para fim de semana ou bate-volta.",
+          "Descubra um destino encantador a poucos minutos de Confins: cavernas, comida mineira, história e ecoturismo.",
       },
+      { property: "og:image", content: ecoturismoImg },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: RoteiroTuristicoPage,
 });
 
-interface Categoria {
-  icon: typeof Mountain;
-  label: string;
-  color: string;
+interface Attraction {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  image_url: string | null;
+  link_url: string | null;
+  meta: string | null;
+  tag: string | null;
+  sort_order: number;
 }
 
-const categorias: Categoria[] = [
-  { icon: Zap, label: "Adrenalina e Esporte", color: "from-red-500/20 to-orange-500/20" },
-  { icon: Users, label: "Família e Lazer", color: "from-blue-500/20 to-cyan-500/20" },
-  { icon: UtensilsCrossed, label: "Roteiro Gastronômico", color: "from-amber-500/20 to-yellow-500/20" },
-  { icon: Landmark, label: "História e Cultura", color: "from-purple-500/20 to-pink-500/20" },
-  { icon: CalendarDays, label: "Eventos Locais", color: "from-emerald-500/20 to-teal-500/20" },
+async function fetchAttractions(): Promise<Attraction[]> {
+  const { data, error } = await supabase
+    .from("tourist_attractions")
+    .select("id,title,description,category,image_url,link_url,meta,tag,sort_order")
+    .eq("is_active", true)
+    .order("sort_order", { ascending: true })
+    .order("title", { ascending: true });
+  if (error) throw error;
+  return (data ?? []) as Attraction[];
+}
+
+const categoriaIcones: Record<string, typeof Mountain> = {
+  aventura: Zap,
+  familia: Users,
+  gastronomia: UtensilsCrossed,
+  historia: Landmark,
+  eventos: CalendarDays,
+  natureza: TreePine,
+  geral: Compass,
+};
+
+const categorias = [
+  { key: "aventura", icon: Zap, label: "Adrenalina e Esporte", color: "from-red-500/20 to-orange-500/20" },
+  { key: "familia", icon: Users, label: "Família e Lazer", color: "from-blue-500/20 to-cyan-500/20" },
+  { key: "gastronomia", icon: UtensilsCrossed, label: "Roteiro Gastronômico", color: "from-amber-500/20 to-yellow-500/20" },
+  { key: "historia", icon: Landmark, label: "História e Cultura", color: "from-purple-500/20 to-pink-500/20" },
+  { key: "eventos", icon: CalendarDays, label: "Eventos Locais", color: "from-emerald-500/20 to-teal-500/20" },
 ];
 
-interface Atracao {
-  icon: typeof Mountain;
-  titulo: string;
-  descricao: string;
-}
-
-const atracoes: Atracao[] = [
+const destaquesEstaticos = [
   {
     icon: Mountain,
     titulo: "Exploração de Cavernas",
-    descricao:
-      "Visite formações rochosas únicas e deslumbrantes que dão nome a São José da Lapa.",
+    descricao: "Visite formações rochosas únicas e deslumbrantes que dão nome a São José da Lapa.",
+    imagem: cavernaImg,
   },
   {
     icon: UtensilsCrossed,
     titulo: "Gastronomia Mineira Raiz",
-    descricao:
-      "Saboreie pratos tradicionais em restaurantes acolhedores, com tempero de fogão a lenha.",
-  },
-  {
-    icon: Landmark,
-    titulo: "Imersão Histórica",
-    descricao:
-      "Conheça o patrimônio, igrejas centenárias e as histórias que formaram a região.",
+    descricao: "Saboreie pratos tradicionais em restaurantes acolhedores, com tempero de fogão a lenha.",
+    imagem: gastronomiaImg,
   },
   {
     icon: TreePine,
     titulo: "Ecoturismo e Natureza",
-    descricao:
-      "Desfrute de trilhas, cachoeiras e paisagens naturais preservadas do carste mineiro.",
-  },
-  {
-    icon: Zap,
-    titulo: "Atividades de Aventura",
-    descricao:
-      "Rapel, tirolesa e trilhas para os amantes de adrenalina e esportes ao ar livre.",
-  },
-  {
-    icon: Users,
-    titulo: "Lazer em Família",
-    descricao:
-      "Praças, parques e opções de diversão pensadas para todas as idades.",
+    descricao: "Trilhas, cachoeiras e paisagens preservadas do carste mineiro em plena Serra do Cipó.",
+    imagem: ecoturismoImg,
   },
 ];
 
-interface Bloco {
-  icon: typeof Sunrise;
-  periodo: string;
-  atividade: string;
-}
-
-const dia1: Bloco[] = [
+const dia1 = [
   { icon: Sunrise, periodo: "Manhã", atividade: "Visita a uma das cavernas de São José da Lapa." },
   { icon: Sun, periodo: "Almoço", atividade: "Experiência gastronômica com culinária mineira em Vespasiano." },
   { icon: Sun, periodo: "Tarde", atividade: "Passeio pelo centro histórico de Vespasiano e ponto cultural." },
   { icon: Sunset, periodo: "Fim de Tarde", atividade: "Atividade de ecoturismo em área de preservação." },
 ];
 
-const dia2: Bloco[] = [
+const dia2 = [
   { icon: Sunrise, periodo: "Manhã", atividade: "Atividade esportiva ou de aventura (trilha, rapel, etc.)." },
   { icon: Sun, periodo: "Almoço", atividade: "Degustação de produtos locais ou restaurante com vista panorâmica." },
   { icon: Sunset, periodo: "Tarde", atividade: "Compras de artesanato ou revisita a um local preferido." },
@@ -132,22 +137,34 @@ const observacoes = [
 ];
 
 function RoteiroTuristicoPage() {
+  const { data: attractions = [] } = useQuery({
+    queryKey: ["tourist-attractions"],
+    queryFn: fetchAttractions,
+    staleTime: 60_000,
+  });
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b bg-gradient-to-br from-primary/10 via-background to-accent/10">
-        <div className="absolute inset-0 -z-10 opacity-40">
-          <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-primary/30 blur-3xl" />
-          <div className="absolute top-20 right-0 h-80 w-80 rounded-full bg-accent/30 blur-3xl" />
+      {/* Hero com imagem real */}
+      <section className="relative overflow-hidden border-b">
+        <div className="absolute inset-0 -z-10">
+          <img
+            src={ecoturismoImg}
+            alt="Serra do Cipó e paisagem natural de Minas Gerais"
+            className="h-full w-full object-cover"
+            width={1600}
+            height={900}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/40" />
         </div>
-        <div className="mx-auto max-w-6xl px-4 py-12 md:py-20">
+        <div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
           <Button asChild variant="ghost" size="sm" className="mb-6 -ml-2">
             <Link to="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Voltar ao início
             </Link>
           </Button>
-          <Badge variant="secondary" className="mb-4">
+          <Badge variant="secondary" className="mb-4 backdrop-blur">
             <Compass className="mr-1 h-3 w-3" />
             Roteiro turístico
           </Badge>
@@ -157,7 +174,7 @@ function RoteiroTuristicoPage() {
               Aventura, cultura e sabores mineiros
             </span>
           </h1>
-          <p className="mt-6 max-w-3xl text-lg text-muted-foreground md:text-xl">
+          <p className="mt-6 max-w-3xl text-lg text-foreground/80 md:text-xl">
             Descubra um destino encantador a poucos minutos do Aeroporto de
             Confins, combinando cavernas impressionantes, autêntica comida
             mineira, rica história e ecoturismo. Ideal para um fim de semana
@@ -201,28 +218,36 @@ function RoteiroTuristicoPage() {
         </div>
       </section>
 
-      {/* Atrações */}
+      {/* Destaques com imagens reais */}
       <section className="border-y bg-muted/30">
         <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
-          <h2 className="text-2xl font-bold md:text-3xl">
-            Atrações e atividades sugeridas
-          </h2>
+          <h2 className="text-2xl font-bold md:text-3xl">Destaques da região</h2>
           <p className="mt-2 text-muted-foreground">
-            Uma seleção do que a região tem de melhor para oferecer.
+            O que a região tem de mais icônico para você viver.
           </p>
-          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {atracoes.map((a) => {
-              const Icon = a.icon;
+          <div className="mt-6 grid gap-6 md:grid-cols-3">
+            {destaquesEstaticos.map((d) => {
+              const Icon = d.icon;
               return (
-                <Card key={a.titulo} className="transition-all hover:-translate-y-0.5 hover:shadow-lg">
-                  <CardHeader className="pb-3">
-                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <Icon className="h-5 w-5" />
+                <Card key={d.titulo} className="overflow-hidden transition-all hover:-translate-y-1 hover:shadow-xl">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <img
+                      src={d.imagem}
+                      alt={d.titulo}
+                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                      width={1600}
+                      height={900}
+                    />
+                    <div className="absolute left-3 top-3 rounded-lg bg-background/90 p-2 shadow backdrop-blur">
+                      <Icon className="h-5 w-5 text-primary" />
                     </div>
-                    <CardTitle className="mt-3 text-lg">{a.titulo}</CardTitle>
+                  </div>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg">{d.titulo}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">{a.descricao}</p>
+                    <p className="text-sm text-muted-foreground">{d.descricao}</p>
                   </CardContent>
                 </Card>
               );
@@ -231,7 +256,61 @@ function RoteiroTuristicoPage() {
         </div>
       </section>
 
-      {/* Roteiro */}
+      {/* Atrações cadastradas (dinâmicas) */}
+      {attractions.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 py-12 md:py-16">
+          <h2 className="text-2xl font-bold md:text-3xl">Atrações cadastradas</h2>
+          <p className="mt-2 text-muted-foreground">
+            Lugares recomendados por quem conhece a região.
+          </p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {attractions.map((a) => {
+              const Icon = categoriaIcones[a.category] ?? Compass;
+              return (
+                <Card key={a.id} className="overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                  {a.image_url && (
+                    <div className="aspect-[16/10] overflow-hidden">
+                      <img
+                        src={a.image_url}
+                        alt={a.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <Icon className="h-4 w-4" />
+                      </div>
+                      {a.tag && <Badge variant="secondary">{a.tag}</Badge>}
+                    </div>
+                    <CardTitle className="mt-2 text-lg">{a.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <p className="text-sm text-muted-foreground">{a.description}</p>
+                    {a.meta && (
+                      <p className="text-xs text-muted-foreground">📍 {a.meta}</p>
+                    )}
+                    {a.link_url && (
+                      <a
+                        href={a.link_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                      >
+                        Saber mais <ExternalLink className="h-3 w-3" />
+                      </a>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* Roteiro 2 dias */}
       <section className="mx-auto max-w-6xl px-4 py-12 md:py-16">
         <h2 className="text-2xl font-bold md:text-3xl">Sugestão de roteiro</h2>
         <p className="mt-2 text-muted-foreground">
@@ -244,7 +323,7 @@ function RoteiroTuristicoPage() {
             { titulo: "Dia 2", subtitulo: "Aventura e experiências locais", blocos: dia2 },
           ].map((dia) => (
             <Card key={dia.titulo} className="overflow-hidden">
-              <CardHeader className="bg-gradient-to-br from-primary/10 to-accent/10 border-b">
+              <CardHeader className="border-b bg-gradient-to-br from-primary/10 to-accent/10">
                 <Badge variant="outline" className="w-fit border-primary/40 text-primary">
                   {dia.titulo}
                 </Badge>
