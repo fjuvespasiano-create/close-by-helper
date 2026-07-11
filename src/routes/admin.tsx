@@ -12,6 +12,7 @@ const NAV: { to: "/admin" | "/admin/empresas" | "/admin/servicos-publicos" | "/a
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/cidades", label: "Cidades", icon: MapPin },
   { to: "/admin/servicos-publicos", label: "Serviços Públicos", icon: Landmark },
+  { to: "/admin/scraper-vespasiano", label: "Scraper Vespasiano", icon: Download },
   { to: "/admin/emergencia", label: "Emergência", icon: Siren },
   { to: "/admin/empresas", label: "Empresas", icon: Building2 },
   { to: "/admin/eventos", label: "Eventos", icon: CalendarDays },
