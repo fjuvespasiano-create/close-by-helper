@@ -250,6 +250,7 @@ export async function runBusScrape(): Promise<{
     logRow.errors = cityReport.errors;
     await supabaseAdmin.from("bus_sync_logs").insert({
       ...logRow,
+      errors: logRow.errors as unknown as never,
       started_at: startedAt,
       finished_at: new Date().toISOString(),
     });
