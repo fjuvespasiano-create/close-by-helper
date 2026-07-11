@@ -41,6 +41,15 @@ function AdminEmpresas() {
       qc.invalidateQueries({ queryKey: ["admin-stats"] });
     } catch (e) { toast.error((e as Error).message); }
   }
+  async function togglePremium(id: string, currentPlan: string | null) {
+    const isPremium = currentPlan === "premium";
+    try {
+      await adminUpdateCompany(id, { plan: isPremium ? "free" : "premium" });
+      toast.success(isPremium ? "Premium removido" : "Empresa marcada como Premium");
+      qc.invalidateQueries({ queryKey: ["admin-companies"] });
+      qc.invalidateQueries({ queryKey: ["admin-stats"] });
+    } catch (e) { toast.error((e as Error).message); }
+  }
   async function toggleVerified(id: string, current: boolean) {
     try {
       await adminUpdateCompany(id, { is_verified: !current });
