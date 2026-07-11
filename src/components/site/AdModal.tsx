@@ -189,7 +189,12 @@ export function AdModal() {
       meta: { device: window.matchMedia("(max-width: 768px)").matches ? "mobile" : "desktop" },
     });
     markSeen(ad.id);
+    // Fecha o modal após o clique — evita banner "pendurado" quando o link
+    // abre em nova aba (target=_blank).
+    setVisible(false);
+    if (timers.current.tick) window.clearInterval(timers.current.tick);
   }
+
 
   if (!ad || !visible) return null;
 
