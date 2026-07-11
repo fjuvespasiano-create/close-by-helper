@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransporteRouteImport } from './routes/transporte'
+import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicosPublicosRouteImport } from './routes/servicos-publicos'
@@ -77,12 +78,18 @@ import { Route as ApiPublicPushTrackRouteImport } from './routes/api/public/push
 import { Route as ApiPublicPushResubscribeRouteImport } from './routes/api/public/push/resubscribe'
 import { Route as ApiPublicHooksSyncOriginalRouteImport } from './routes/api/public/hooks/sync-original'
 import { Route as ApiPublicHooksScrapeServicesRouteImport } from './routes/api/public/hooks/scrape-services'
+import { Route as ApiPublicHooksScrapeProcurementsRouteImport } from './routes/api/public/hooks/scrape-procurements'
 import { Route as ApiPublicHooksPushSchedulerRouteImport } from './routes/api/public/hooks/push-scheduler'
 import { Route as ApiPublicHooksJobsSyncRouteImport } from './routes/api/public/hooks/jobs-sync'
 
 const TransporteRoute = TransporteRouteImport.update({
   id: '/transporte',
   path: '/transporte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TransparenciaRoute = TransparenciaRouteImport.update({
+  id: '/transparencia',
+  path: '/transparencia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SobreRoute = SobreRouteImport.update({
@@ -424,6 +431,12 @@ const ApiPublicHooksScrapeServicesRoute =
     path: '/api/public/hooks/scrape-services',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksScrapeProcurementsRoute =
+  ApiPublicHooksScrapeProcurementsRouteImport.update({
+    id: '/api/public/hooks/scrape-procurements',
+    path: '/api/public/hooks/scrape-procurements',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksPushSchedulerRoute =
   ApiPublicHooksPushSchedulerRouteImport.update({
     id: '/api/public/hooks/push-scheduler',
@@ -455,6 +468,7 @@ export interface FileRoutesByFullPath {
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -502,6 +516,7 @@ export interface FileRoutesByFullPath {
   '/admin/push/': typeof AdminPushIndexRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
+  '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
@@ -525,6 +540,7 @@ export interface FileRoutesByTo {
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -571,6 +587,7 @@ export interface FileRoutesByTo {
   '/admin/push': typeof AdminPushIndexRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
+  '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
@@ -597,6 +614,7 @@ export interface FileRoutesById {
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -644,6 +662,7 @@ export interface FileRoutesById {
   '/admin/push/': typeof AdminPushIndexRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
+  '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
@@ -671,6 +690,7 @@ export interface FileRouteTypes {
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/transparencia'
     | '/transporte'
     | '/admin/blog'
     | '/admin/cidades'
@@ -718,6 +738,7 @@ export interface FileRouteTypes {
     | '/admin/push/'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
+    | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
     | '/api/public/push/resubscribe'
@@ -741,6 +762,7 @@ export interface FileRouteTypes {
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/transparencia'
     | '/transporte'
     | '/admin/blog'
     | '/admin/cidades'
@@ -787,6 +809,7 @@ export interface FileRouteTypes {
     | '/admin/push'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
+    | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
     | '/api/public/push/resubscribe'
@@ -812,6 +835,7 @@ export interface FileRouteTypes {
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/transparencia'
     | '/transporte'
     | '/admin/blog'
     | '/admin/cidades'
@@ -859,6 +883,7 @@ export interface FileRouteTypes {
     | '/admin/push/'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
+    | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
     | '/api/public/push/resubscribe'
@@ -885,6 +910,7 @@ export interface RootRouteChildren {
   ServicosPublicosRoute: typeof ServicosPublicosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
+  TransparenciaRoute: typeof TransparenciaRoute
   TransporteRoute: typeof TransporteRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
@@ -895,6 +921,7 @@ export interface RootRouteChildren {
   EventosIndexRoute: typeof EventosIndexRoute
   ApiPublicHooksJobsSyncRoute: typeof ApiPublicHooksJobsSyncRoute
   ApiPublicHooksPushSchedulerRoute: typeof ApiPublicHooksPushSchedulerRoute
+  ApiPublicHooksScrapeProcurementsRoute: typeof ApiPublicHooksScrapeProcurementsRoute
   ApiPublicHooksScrapeServicesRoute: typeof ApiPublicHooksScrapeServicesRoute
   ApiPublicHooksSyncOriginalRoute: typeof ApiPublicHooksSyncOriginalRoute
   ApiPublicPushResubscribeRoute: typeof ApiPublicPushResubscribeRoute
@@ -908,6 +935,13 @@ declare module '@tanstack/react-router' {
       path: '/transporte'
       fullPath: '/transporte'
       preLoaderRoute: typeof TransporteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/transparencia': {
+      id: '/transparencia'
+      path: '/transparencia'
+      fullPath: '/transparencia'
+      preLoaderRoute: typeof TransparenciaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sobre': {
@@ -1379,6 +1413,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHooksScrapeServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/scrape-procurements': {
+      id: '/api/public/hooks/scrape-procurements'
+      path: '/api/public/hooks/scrape-procurements'
+      fullPath: '/api/public/hooks/scrape-procurements'
+      preLoaderRoute: typeof ApiPublicHooksScrapeProcurementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/push-scheduler': {
       id: '/api/public/hooks/push-scheduler'
       path: '/api/public/hooks/push-scheduler'
@@ -1567,6 +1608,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicosPublicosRoute: ServicosPublicosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
+  TransparenciaRoute: TransparenciaRoute,
   TransporteRoute: TransporteRoute,
   BlogSlugRoute: BlogSlugRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,
@@ -1577,6 +1619,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosIndexRoute: EventosIndexRoute,
   ApiPublicHooksJobsSyncRoute: ApiPublicHooksJobsSyncRoute,
   ApiPublicHooksPushSchedulerRoute: ApiPublicHooksPushSchedulerRoute,
+  ApiPublicHooksScrapeProcurementsRoute: ApiPublicHooksScrapeProcurementsRoute,
   ApiPublicHooksScrapeServicesRoute: ApiPublicHooksScrapeServicesRoute,
   ApiPublicHooksSyncOriginalRoute: ApiPublicHooksSyncOriginalRoute,
   ApiPublicPushResubscribeRoute: ApiPublicPushResubscribeRoute,
