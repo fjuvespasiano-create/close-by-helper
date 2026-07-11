@@ -206,6 +206,11 @@ export function AdModal() {
       aria-label={`Anúncio: ${ad.name}`}
       className={`fixed z-[70] w-[320px] max-w-[92vw] overflow-hidden rounded-2xl border border-border bg-card shadow-2xl animate-scale-in ${positionClass}`}
     >
+      {ad.is_premium && (
+        <div className="absolute left-2 top-2 z-10 inline-flex items-center gap-1 rounded-full bg-amber-500/95 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white shadow">
+          <Crown className="h-3 w-3" /> Premium
+        </div>
+      )}
       <button
         type="button"
         onClick={close}
