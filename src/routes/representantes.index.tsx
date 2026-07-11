@@ -24,7 +24,7 @@ function initials(name: string): string {
 }
 
 function RepresentativesListPage() {
-  const { citySlug } = useSelectedCity();
+  const { city: citySlug } = useSelectedCity();
   const [role, setRole] = useState<"all" | Representative["role"]>("all");
   const [party, setParty] = useState<string>("all");
   const [subscribeOpen, setSubscribeOpen] = useState(false);

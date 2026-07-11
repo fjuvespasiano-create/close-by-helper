@@ -32,7 +32,7 @@ function timeAgo(iso: string): string {
 }
 
 function FeedPage() {
-  const { citySlug } = useSelectedCity();
+  const { city: citySlug } = useSelectedCity();
   const [kind, setKind] = useState<"all" | ActivityKind>("all");
   const [status, setStatus] = useState<"all" | ActivityStatus>("all");
   const [tick, setTick] = useState(0);

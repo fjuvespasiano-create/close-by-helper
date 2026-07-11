@@ -17,7 +17,7 @@ function timeAgo(iso: string): string {
 }
 
 export function RepresentativesWidget() {
-  const { citySlug } = useSelectedCity();
+  const { city: citySlug } = useSelectedCity();
   const cityName = citySlug === "vespasiano" ? "Vespasiano" : "São José da Lapa";
 
   const { data: items = [], isLoading } = useQuery({

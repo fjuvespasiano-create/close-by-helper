@@ -12,7 +12,7 @@ export const Route = createFileRoute("/representantes/ranking")({
 });
 
 function RankingPage() {
-  const { citySlug } = useSelectedCity();
+  const { city: citySlug } = useSelectedCity();
   const cityName = citySlug === "vespasiano" ? "Vespasiano" : "São José da Lapa";
   const monthName = new Date().toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
 
