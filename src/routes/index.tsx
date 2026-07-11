@@ -199,6 +199,10 @@ function Home() {
       {/* REPRESENTANTES */}
       <RepresentativesWidget />
 
+      {/* CUPONS EM DESTAQUE */}
+      <FeaturedCouponsCard citySlug={city?.slug} />
+
+
       {/* PUBLIC SERVICES */}
       <section className="container mx-auto px-4 py-14">
         <div className="mb-6 flex items-end justify-between gap-4">
