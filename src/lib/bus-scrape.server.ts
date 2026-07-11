@@ -184,7 +184,7 @@ export async function runBusScrape(): Promise<{
   } = { ok: true, cities: [] };
 
   for (const city of CITIES) {
-    const logRow = { city_slug: city.slug, lines_found: 0, lines_updated: 0, errors: [] as unknown[], status: "ok" };
+    const logRow = { city_slug: city.slug, lines_found: 0, lines_updated: 0, errors: [] as string[], status: "ok" };
     const cityReport = { city: city.slug, lines_found: 0, lines_updated: 0, errors: [] as string[] };
     const startedAt = new Date().toISOString();
 
