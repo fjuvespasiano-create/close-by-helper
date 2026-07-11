@@ -195,9 +195,9 @@ function Home() {
           <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
           <div className="relative flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Sua empresa nesta lista</h3>
+              <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Sua empresa aparecendo aqui</h3>
               <p className="mt-2 max-w-xl text-white/95">
-                Cadastro grátis em 2 minutos, sem cartão. Apareça para quem já procura seu serviço em {cityName} e receba contatos direto no WhatsApp.
+                Cadastro em 2 minutos, sem cartão e sem taxa. Fique visível para quem já procura seu serviço em {cityName} e receba os contatos direto no seu WhatsApp.
               </p>
             </div>
             <Link
