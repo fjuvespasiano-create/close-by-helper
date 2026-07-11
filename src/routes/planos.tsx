@@ -14,8 +14,8 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/planos")({
   head: () => ({
     meta: [
-      { title: "Anuncie sua empresa — AgendaAqui" },
-      { name: "description", content: "Coloque seu negócio na frente de quem já procura o seu serviço em Vespasiano e São José da Lapa. Cadastro grátis, sem cartão." },
+      { title: "Anuncie sua empresa grátis — AgendaAqui" },
+      { name: "description", content: "Apareça para quem já procura seu serviço em Vespasiano e São José da Lapa. Cadastro em 2 minutos, sem cartão, sem fidelidade. Contatos direto no seu WhatsApp." },
       { property: "og:title", content: "Apareça no app da cidade — AgendaAqui" },
       { property: "og:url", content: "/planos" },
     ],
