@@ -36,16 +36,19 @@ export const adminUpsertJobSource = createServerFn({ method: "POST" })
   .inputValidator((raw: unknown) => SourceInput.parse(raw))
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const payload = data as any;
     if (data.id) {
-      const { error } = await context.supabase.from("job_sources").update(data).eq("id", data.id);
+      const { error } = await context.supabase.from("job_sources").update(payload).eq("id", data.id);
       if (error) throw new Error(error.message);
       return { id: data.id };
     }
     const { data: row, error } = await context.supabase
-      .from("job_sources").insert(data).select("id").single();
+      .from("job_sources").insert(payload).select("id").single();
     if (error) throw new Error(error.message);
     return { id: row.id };
   });
+
 
 export const adminDeleteJobSource = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

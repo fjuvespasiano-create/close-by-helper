@@ -73,6 +73,7 @@ import { Route as PainelAnunciosIdEditarRouteImport } from './routes/painel.anun
 import { Route as ApiPublicPushTrackRouteImport } from './routes/api/public/push/track'
 import { Route as ApiPublicPushResubscribeRouteImport } from './routes/api/public/push/resubscribe'
 import { Route as ApiPublicHooksPushSchedulerRouteImport } from './routes/api/public/hooks/push-scheduler'
+import { Route as ApiPublicHooksJobsSyncRouteImport } from './routes/api/public/hooks/jobs-sync'
 
 const TransporteRoute = TransporteRouteImport.update({
   id: '/transporte',
@@ -397,6 +398,11 @@ const ApiPublicHooksPushSchedulerRoute =
     path: '/api/public/hooks/push-scheduler',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksJobsSyncRoute = ApiPublicHooksJobsSyncRouteImport.update({
+  id: '/api/public/hooks/jobs-sync',
+  path: '/api/public/hooks/jobs-sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -459,6 +465,7 @@ export interface FileRoutesByFullPath {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
@@ -522,6 +529,7 @@ export interface FileRoutesByTo {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push': typeof AdminPushIndexRoute
+  '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
@@ -589,6 +597,7 @@ export interface FileRoutesById {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
@@ -657,6 +666,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
@@ -720,6 +730,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push'
+    | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
@@ -786,6 +797,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
@@ -818,6 +830,7 @@ export interface RootRouteChildren {
   EventosSlugRoute: typeof EventosSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
+  ApiPublicHooksJobsSyncRoute: typeof ApiPublicHooksJobsSyncRoute
   ApiPublicHooksPushSchedulerRoute: typeof ApiPublicHooksPushSchedulerRoute
   ApiPublicPushResubscribeRoute: typeof ApiPublicPushResubscribeRoute
   ApiPublicPushTrackRoute: typeof ApiPublicPushTrackRoute
@@ -1273,6 +1286,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHooksPushSchedulerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/jobs-sync': {
+      id: '/api/public/hooks/jobs-sync'
+      path: '/api/public/hooks/jobs-sync'
+      fullPath: '/api/public/hooks/jobs-sync'
+      preLoaderRoute: typeof ApiPublicHooksJobsSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1440,6 +1460,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosSlugRoute: EventosSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
+  ApiPublicHooksJobsSyncRoute: ApiPublicHooksJobsSyncRoute,
   ApiPublicHooksPushSchedulerRoute: ApiPublicHooksPushSchedulerRoute,
   ApiPublicPushResubscribeRoute: ApiPublicPushResubscribeRoute,
   ApiPublicPushTrackRoute: ApiPublicPushTrackRoute,
