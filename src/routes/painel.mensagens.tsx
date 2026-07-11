@@ -216,18 +216,28 @@ function Mensagens() {
           ) : (
             <>
               {listingQ.data ? (
-                <Link to="/marketplace/$slug" params={{ slug: listingQ.data.slug }}
-                  className="flex items-center gap-3 border-b p-3 hover:bg-muted/50">
-                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded bg-muted">
-                    {listingQ.data.images[0] ? <img src={listingQ.data.images[0]} alt="" className="h-full w-full object-cover" /> : null}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold">{listingQ.data.title}</p>
-                    <p className="text-xs text-muted-foreground">Ver anúncio</p>
-                  </div>
-                </Link>
+                <div className="flex items-center gap-3 border-b p-3">
+                  <Link to="/marketplace/$slug" params={{ slug: listingQ.data.slug }} className="flex min-w-0 flex-1 items-center gap-3 hover:opacity-80">
+                    <div className="h-12 w-12 shrink-0 overflow-hidden rounded bg-muted">
+                      {listingQ.data.images[0] ? <img src={listingQ.data.images[0]} alt="" className="h-full w-full object-cover" /> : null}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold">{listingQ.data.title}</p>
+                      <p className="text-xs text-muted-foreground">Ver anúncio</p>
+                    </div>
+                  </Link>
+                  <span
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                      otherOnline ? "bg-green-500/10 text-green-700 dark:text-green-400" : "bg-muted text-muted-foreground"
+                    }`}
+                    title={otherOnline ? "Está online agora" : "Offline"}
+                  >
+                    <Circle className={`h-2 w-2 ${otherOnline ? "fill-green-500 text-green-500" : "fill-muted-foreground text-muted-foreground"}`} />
+                    {otherOnline ? "Online" : "Offline"}
+                  </span>
+                </div>
               ) : null}
-              <div className="flex-1 space-y-2 overflow-y-auto p-3">
+              <div ref={scrollRef} className="flex-1 space-y-2 overflow-y-auto p-3">
                 {(threadMsgsQ.data ?? []).map((m) => {
                   const mine = m.sender_id === userId;
                   return (
