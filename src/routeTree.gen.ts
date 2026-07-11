@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VespasianoRouteImport } from './routes/vespasiano'
 import { Route as TransporteRouteImport } from './routes/transporte'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as SobreRouteImport } from './routes/sobre'
@@ -97,6 +98,11 @@ import { Route as ApiPublicHooksScrapeEventsRouteImport } from './routes/api/pub
 import { Route as ApiPublicHooksPushSchedulerRouteImport } from './routes/api/public/hooks/push-scheduler'
 import { Route as ApiPublicHooksJobsSyncRouteImport } from './routes/api/public/hooks/jobs-sync'
 
+const VespasianoRoute = VespasianoRouteImport.update({
+  id: '/vespasiano',
+  path: '/vespasiano',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TransporteRoute = TransporteRouteImport.update({
   id: '/transporte',
   path: '/transporte',
@@ -567,6 +573,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
+  '/vespasiano': typeof VespasianoRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -653,6 +660,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
+  '/vespasiano': typeof VespasianoRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -742,6 +750,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
+  '/vespasiano': typeof VespasianoRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -833,6 +842,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/transporte'
+    | '/vespasiano'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
@@ -919,6 +929,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/transporte'
+    | '/vespasiano'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
@@ -1007,6 +1018,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/transporte'
+    | '/vespasiano'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
@@ -1097,6 +1109,7 @@ export interface RootRouteChildren {
   SobreRoute: typeof SobreRoute
   TransparenciaRoute: typeof TransparenciaRoute
   TransporteRoute: typeof TransporteRouteWithChildren
+  VespasianoRoute: typeof VespasianoRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
   CidadesSlugRoute: typeof CidadesSlugRoute
@@ -1120,6 +1133,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vespasiano': {
+      id: '/vespasiano'
+      path: '/vespasiano'
+      fullPath: '/vespasiano'
+      preLoaderRoute: typeof VespasianoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/transporte': {
       id: '/transporte'
       path: '/transporte'
@@ -1942,6 +1962,7 @@ const rootRouteChildren: RootRouteChildren = {
   SobreRoute: SobreRoute,
   TransparenciaRoute: TransparenciaRoute,
   TransporteRoute: TransporteRouteWithChildren,
+  VespasianoRoute: VespasianoRoute,
   BlogSlugRoute: BlogSlugRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,
   CidadesSlugRoute: CidadesSlugRoute,
