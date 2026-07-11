@@ -715,6 +715,53 @@ export type Database = {
         }
         Relationships: []
       }
+      event_sync_logs: {
+        Row: {
+          city_id: string | null
+          created_at: string
+          duration_ms: number | null
+          error: string | null
+          id: string
+          items_found: number
+          items_new: number
+          items_updated: number
+          source: string
+          status: string
+        }
+        Insert: {
+          city_id?: string | null
+          created_at?: string
+          duration_ms?: number | null
+          error?: string | null
+          id?: string
+          items_found?: number
+          items_new?: number
+          items_updated?: number
+          source: string
+          status: string
+        }
+        Update: {
+          city_id?: string | null
+          created_at?: string
+          duration_ms?: number | null
+          error?: string | null
+          id?: string
+          items_found?: number
+          items_new?: number
+          items_updated?: number
+          source?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_sync_logs_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       events: {
         Row: {
           category_id: string | null
@@ -723,14 +770,18 @@ export type Database = {
           cover_image: string | null
           created_at: string
           created_by: string | null
+          dedupe_hash: string | null
           description: string | null
           end_at: string | null
           event_type: string | null
+          external_id: string | null
           id: string
           location: string | null
           price_max: number | null
           price_min: number | null
           slug: string
+          source: string | null
+          source_url: string | null
           start_at: string
           status: Database["public"]["Enums"]["publish_status"]
           ticket_url: string | null
@@ -744,14 +795,18 @@ export type Database = {
           cover_image?: string | null
           created_at?: string
           created_by?: string | null
+          dedupe_hash?: string | null
           description?: string | null
           end_at?: string | null
           event_type?: string | null
+          external_id?: string | null
           id?: string
           location?: string | null
           price_max?: number | null
           price_min?: number | null
           slug: string
+          source?: string | null
+          source_url?: string | null
           start_at: string
           status?: Database["public"]["Enums"]["publish_status"]
           ticket_url?: string | null
@@ -765,14 +820,18 @@ export type Database = {
           cover_image?: string | null
           created_at?: string
           created_by?: string | null
+          dedupe_hash?: string | null
           description?: string | null
           end_at?: string | null
           event_type?: string | null
+          external_id?: string | null
           id?: string
           location?: string | null
           price_max?: number | null
           price_min?: number | null
           slug?: string
+          source?: string | null
+          source_url?: string | null
           start_at?: string
           status?: Database["public"]["Enums"]["publish_status"]
           ticket_url?: string | null
