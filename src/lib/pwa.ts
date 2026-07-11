@@ -79,17 +79,24 @@ export function registerServiceWorker() {
   if (typeof window === "undefined") return;
   if (!("serviceWorker" in navigator)) return;
 
+  // Install prompt listeners são baratos e não registram nada — deixamos ativos
+  // em qualquer contexto para que a UI de "instalar app" reflita a realidade.
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e as BeforeInstallPromptEvent;
+    emit();
+  });
+  window.addEventListener("appinstalled", () => {
+    deferredPrompt = null;
+    emit();
+  });
+
   if (!shouldRegisterSW()) {
     // Limpa SW residual — evita cache antigo servindo HTML obsoleto no preview.
     void unregisterOwnServiceWorkers();
     return;
   }
 
-
-  window.addEventListener("appinstalled", () => {
-    deferredPrompt = null;
-    emit();
-  });
 
   const start = () => {
     const ric: (cb: () => void) => void =
