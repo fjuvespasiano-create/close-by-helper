@@ -79,7 +79,7 @@ export const Route = createFileRoute("/api/public/push/track")({
           await supabaseAdmin.from("push_deliveries").update(patch).eq("id", delivery_id);
           if (counter && deliv.notification_id) {
             // H5: incremento atômico via RPC (fallback para read+write se RPC ausente)
-            const { error: rpcErr } = await supabaseAdmin.rpc("increment_push_counter", {
+            const { error: rpcErr } = await (supabaseAdmin.rpc as unknown as (fn: string, args: Record<string, unknown>) => Promise<{ error: { message: string } | null }>)("increment_push_counter", {
               _notification_id: deliv.notification_id, _counter: counter,
             });
             if (rpcErr) {
