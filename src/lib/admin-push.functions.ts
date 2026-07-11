@@ -38,6 +38,7 @@ const ComposeSchema = z.object({
   buttons: z.array(ButtonSchema).max(2).nullish(),
   audience: AudienceSchema,
   template_id: z.string().uuid().nullish(),
+  scheduled_at: z.string().datetime().nullish(),
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

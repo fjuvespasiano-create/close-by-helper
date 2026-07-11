@@ -72,6 +72,7 @@ import { Route as AdminPushIdRouteImport } from './routes/admin.push.$id'
 import { Route as PainelAnunciosIdEditarRouteImport } from './routes/painel.anuncios.$id.editar'
 import { Route as ApiPublicPushTrackRouteImport } from './routes/api/public/push/track'
 import { Route as ApiPublicPushResubscribeRouteImport } from './routes/api/public/push/resubscribe'
+import { Route as ApiPublicHooksPushSchedulerRouteImport } from './routes/api/public/hooks/push-scheduler'
 
 const TransporteRoute = TransporteRouteImport.update({
   id: '/transporte',
@@ -390,6 +391,12 @@ const ApiPublicPushResubscribeRoute =
     path: '/api/public/push/resubscribe',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksPushSchedulerRoute =
+  ApiPublicHooksPushSchedulerRouteImport.update({
+    id: '/api/public/hooks/push-scheduler',
+    path: '/api/public/hooks/push-scheduler',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -452,6 +459,7 @@ export interface FileRoutesByFullPath {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
@@ -514,6 +522,7 @@ export interface FileRoutesByTo {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push': typeof AdminPushIndexRoute
+  '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
@@ -580,6 +589,7 @@ export interface FileRoutesById {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
@@ -647,6 +657,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
@@ -709,6 +720,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push'
+    | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
@@ -774,6 +786,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
@@ -805,6 +818,7 @@ export interface RootRouteChildren {
   EventosSlugRoute: typeof EventosSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
+  ApiPublicHooksPushSchedulerRoute: typeof ApiPublicHooksPushSchedulerRoute
   ApiPublicPushResubscribeRoute: typeof ApiPublicPushResubscribeRoute
   ApiPublicPushTrackRoute: typeof ApiPublicPushTrackRoute
 }
@@ -1252,6 +1266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPushResubscribeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/push-scheduler': {
+      id: '/api/public/hooks/push-scheduler'
+      path: '/api/public/hooks/push-scheduler'
+      fullPath: '/api/public/hooks/push-scheduler'
+      preLoaderRoute: typeof ApiPublicHooksPushSchedulerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1419,6 +1440,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosSlugRoute: EventosSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
+  ApiPublicHooksPushSchedulerRoute: ApiPublicHooksPushSchedulerRoute,
   ApiPublicPushResubscribeRoute: ApiPublicPushResubscribeRoute,
   ApiPublicPushTrackRoute: ApiPublicPushTrackRoute,
 }
