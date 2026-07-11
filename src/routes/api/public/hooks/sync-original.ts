@@ -57,7 +57,7 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
             "id,slug,name,state,lat,lng,is_active",
           )) as never[];
           if (cities.length) {
-            const { error } = await supabaseAdmin.from("cities").upsert(cities, { onConflict: "slug" });
+            const { error } = await supabaseAdmin.from("cities").upsert(cities as never, { onConflict: "slug" });
             if (error) throw new Error(`cities upsert: ${error.message}`);
           }
           report.cities = cities.length;
@@ -70,7 +70,7 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
           if (categories.length) {
             const { error } = await supabaseAdmin
               .from("categories")
-              .upsert(categories, { onConflict: "slug" });
+              .upsert(categories as never, { onConflict: "slug" });
             if (error) throw new Error(`categories upsert: ${error.message}`);
           }
           report.categories = categories.length;
@@ -118,7 +118,7 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
           if (mediaFiltered.length) {
             const { error } = await supabaseAdmin
               .from("company_media")
-              .upsert(mediaFiltered, { onConflict: "id" });
+              .upsert(mediaFiltered as never, { onConflict: "id" });
             if (error) throw new Error(`company_media upsert: ${error.message}`);
           }
           report.company_media = mediaFiltered.length;
