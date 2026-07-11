@@ -144,14 +144,24 @@ export const listQaTickets = createServerFn({ method: "POST" })
     const { data: rows, error } = await q;
     if (error) throw new Error(error.message);
 
-    // stats
-    const { data: statRows } = await supabase.from("qa_tickets").select("status, priority, created_at");
+    // Stats via count queries paralelas — não trafega linhas e não sofre com o
+    // corte default de 1000 do PostgREST.
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const todayIso = startOfDay.toISOString();
+    const [totalRes, pendentesRes, resolvidosRes, criticosRes, hojeRes] = await Promise.all([
+      supabase.from("qa_tickets").select("*", { count: "exact", head: true }),
+      supabase.from("qa_tickets").select("*", { count: "exact", head: true }).not("status", "in", "(corrigido,publicado,fechado)"),
+      supabase.from("qa_tickets").select("*", { count: "exact", head: true }).in("status", ["corrigido", "publicado"]),
+      supabase.from("qa_tickets").select("*", { count: "exact", head: true }).eq("priority", "critica"),
+      supabase.from("qa_tickets").select("*", { count: "exact", head: true }).gte("created_at", todayIso),
+    ]);
     const stats = {
-      total: statRows?.length ?? 0,
-      pendentes: statRows?.filter((r) => !["corrigido","publicado","fechado"].includes(r.status ?? "")).length ?? 0,
-      resolvidos: statRows?.filter((r) => ["corrigido","publicado"].includes(r.status ?? "")).length ?? 0,
-      criticos: statRows?.filter((r) => r.priority === "critica").length ?? 0,
-      hoje: statRows?.filter((r) => new Date(r.created_at!).toDateString() === new Date().toDateString()).length ?? 0,
+      total: totalRes.count ?? 0,
+      pendentes: pendentesRes.count ?? 0,
+      resolvidos: resolvidosRes.count ?? 0,
+      criticos: criticosRes.count ?? 0,
+      hoje: hojeRes.count ?? 0,
     };
     return { rows: rows ?? [], stats };
   });
@@ -171,12 +181,17 @@ export const getQaTicket = createServerFn({ method: "POST" })
     ]);
     let screenshotSignedUrl: string | null = null;
     if (ticket.screenshot_url) {
-      try {
-        const path = ticket.screenshot_url;
-        const { data: signed } = await supabase.storage.from("qa-attachments").createSignedUrl(path, 3600);
-        screenshotSignedUrl = signed?.signedUrl ?? null;
-      } catch {
-        screenshotSignedUrl = null;
+      const raw = ticket.screenshot_url;
+      // Registros legados podem ter URL absoluta — não assinar nesses casos.
+      if (/^https?:\/\//i.test(raw)) {
+        screenshotSignedUrl = raw;
+      } else {
+        try {
+          const { data: signed } = await supabase.storage.from("qa-attachments").createSignedUrl(raw, 3600);
+          screenshotSignedUrl = signed?.signedUrl ?? null;
+        } catch {
+          screenshotSignedUrl = null;
+        }
       }
     }
     return { ticket, comments: comments ?? [], events: events ?? [], screenshotSignedUrl };
