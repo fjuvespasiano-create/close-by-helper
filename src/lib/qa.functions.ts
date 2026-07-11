@@ -171,12 +171,17 @@ export const getQaTicket = createServerFn({ method: "POST" })
     ]);
     let screenshotSignedUrl: string | null = null;
     if (ticket.screenshot_url) {
-      try {
-        const path = ticket.screenshot_url;
-        const { data: signed } = await supabase.storage.from("qa-attachments").createSignedUrl(path, 3600);
-        screenshotSignedUrl = signed?.signedUrl ?? null;
-      } catch {
-        screenshotSignedUrl = null;
+      const raw = ticket.screenshot_url;
+      // Registros legados podem ter URL absoluta — não assinar nesses casos.
+      if (/^https?:\/\//i.test(raw)) {
+        screenshotSignedUrl = raw;
+      } else {
+        try {
+          const { data: signed } = await supabase.storage.from("qa-attachments").createSignedUrl(raw, 3600);
+          screenshotSignedUrl = signed?.signedUrl ?? null;
+        } catch {
+          screenshotSignedUrl = null;
+        }
       }
     }
     return { ticket, comments: comments ?? [], events: events ?? [], screenshotSignedUrl };
