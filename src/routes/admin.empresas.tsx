@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Trash2, Eye, ChevronLeft, ChevronRight, Pencil } from "lucide-react";
+import { Trash2, Eye, ChevronLeft, ChevronRight, Pencil, Crown, Star } from "lucide-react";
 
 export const Route = createFileRoute("/admin/empresas")({
   component: AdminEmpresas,
@@ -37,6 +37,15 @@ function AdminEmpresas() {
     try {
       await adminUpdateCompany(id, { plan: newPlan });
       toast.success("Plano atualizado");
+      qc.invalidateQueries({ queryKey: ["admin-companies"] });
+      qc.invalidateQueries({ queryKey: ["admin-stats"] });
+    } catch (e) { toast.error((e as Error).message); }
+  }
+  async function togglePremium(id: string, currentPlan: string | null) {
+    const isPremium = currentPlan === "premium";
+    try {
+      await adminUpdateCompany(id, { plan: isPremium ? "free" : "premium" });
+      toast.success(isPremium ? "Premium removido" : "Empresa marcada como Premium");
       qc.invalidateQueries({ queryKey: ["admin-companies"] });
       qc.invalidateQueries({ queryKey: ["admin-stats"] });
     } catch (e) { toast.error((e as Error).message); }
@@ -128,17 +137,30 @@ function AdminEmpresas() {
                 </td>
                 <td className="px-4 py-3 text-muted-foreground">{c.cities?.name ?? "—"}</td>
                 <td className="px-4 py-3">
-                  <Select value={c.plan ?? "free"} onValueChange={(v) => changePlan(c.id, v)}>
-                    <SelectTrigger className="h-8 w-32"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="free">Grátis</SelectItem>
-                      <SelectItem value="premium">Premium</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <button
+                    onClick={() => togglePremium(c.id, c.plan)}
+                    title={c.plan === "premium" ? "Remover Premium" : "Tornar Premium"}
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 transition hover:opacity-80"
+                  >
+                    <Crown className={`h-3.5 w-3.5 ${c.plan === "premium" ? "text-amber-500 fill-amber-500" : "text-muted-foreground"}`} />
+                    <Badge
+                      variant={c.plan === "premium" ? "default" : "outline"}
+                      className={c.plan === "premium" ? "bg-amber-500 hover:bg-amber-500 text-white" : ""}
+                    >
+                      {c.plan === "premium" ? "Premium" : "Grátis"}
+                    </Badge>
+                  </button>
                 </td>
                 <td className="px-4 py-3">
-                  <button onClick={() => toggleFeatured(c.id, !!c.featured)} title="Alternar destaque">
-                    <Badge variant={c.featured ? "default" : "outline"}>{c.featured ? "Destaque" : "—"}</Badge>
+                  <button
+                    onClick={() => toggleFeatured(c.id, !!c.featured)}
+                    title={c.featured ? "Remover destaque" : "Marcar como destaque"}
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 transition hover:opacity-80"
+                  >
+                    <Star className={`h-3.5 w-3.5 ${c.featured ? "text-primary fill-primary" : "text-muted-foreground"}`} />
+                    <Badge variant={c.featured ? "default" : "outline"}>
+                      {c.featured ? "Destaque" : "—"}
+                    </Badge>
                   </button>
                 </td>
                 <td className="px-4 py-3">
