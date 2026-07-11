@@ -144,6 +144,9 @@ function Home() {
       {/* AGORA NA CIDADE */}
       <AgoraWidget />
 
+      {/* REPRESENTANTES */}
+      <RepresentativesWidget />
+
       {/* PUBLIC SERVICES */}
       <section className="container mx-auto px-4 py-14">
         <div className="mb-6 flex items-end justify-between gap-4">
