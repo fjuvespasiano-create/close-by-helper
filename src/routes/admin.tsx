@@ -8,7 +8,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminLayout,
 });
 
-const NAV: { to: "/admin" | "/admin/empresas" | "/admin/servicos-publicos" | "/admin/emergencia" | "/admin/cidades" | "/admin/planos" | "/admin/leads" | "/admin/blog" | "/admin/duplicados" | "/admin/eventos" | "/admin/menu" | "/admin/textos" | "/admin/push" | "/admin/empregos" | "/admin/turismo" | "/admin/qa" | "/admin/anuncios" | "/admin/configuracoes"; label: string; icon: typeof LayoutDashboard; exact?: boolean }[] = [
+const NAV: { to: "/admin" | "/admin/empresas" | "/admin/servicos-publicos" | "/admin/emergencia" | "/admin/cidades" | "/admin/planos" | "/admin/leads" | "/admin/blog" | "/admin/duplicados" | "/admin/eventos" | "/admin/menu" | "/admin/textos" | "/admin/push" | "/admin/empregos" | "/admin/turismo" | "/admin/qa" | "/admin/anuncios" | "/admin/scraper-vespasiano" | "/admin/configuracoes"; label: string; icon: typeof LayoutDashboard; exact?: boolean }[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/cidades", label: "Cidades", icon: MapPin },
   { to: "/admin/servicos-publicos", label: "Serviços Públicos", icon: Landmark },
