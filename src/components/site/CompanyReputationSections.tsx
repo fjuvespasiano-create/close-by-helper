@@ -83,7 +83,7 @@ export function ReputationRing({ inputs, overrideScore }: { inputs: ReputationIn
     <section className={`rounded-xl border border-border bg-gradient-to-br ${meta.bg} p-6`}>
       <div className="flex items-center gap-2">
         <Trophy className="h-5 w-5 text-primary" />
-        <h2 className="font-display text-xl font-bold">Reputação AgendaAqui</h2>
+        <h2 className="font-display text-xl font-bold">Reputação AgenddaAqui</h2>
       </div>
       <div className="mt-4 flex flex-col items-center gap-6 md:flex-row md:items-start">
         <div className="relative flex shrink-0 items-center justify-center">
@@ -199,7 +199,7 @@ export function CompanyTimeline({
   if (foundedYear) events.push({ year: String(foundedYear), title: "Fundação da empresa", description: `Início das atividades em ${foundedYear}.`, icon: Sparkles });
   if (createdAt) {
     const y = new Date(createdAt).getFullYear();
-    events.push({ year: String(y), title: "Entrada no AgendaAqui", description: "Perfil publicado na plataforma.", icon: Calendar });
+    events.push({ year: String(y), title: "Entrada no AgenddaAqui", description: "Perfil publicado na plataforma.", icon: Calendar });
   }
   if (isVerified) events.push({ year: "★", title: "Empresa verificada", description: "Passou pela conferência de dados e documentos.", icon: Verified });
   if (servicesCompleted && servicesCompleted >= 100) {

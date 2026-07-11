@@ -10,9 +10,9 @@ import { fetchEventCategories, fetchPublishedEvents } from "@/lib/events";
 export const Route = createFileRoute("/eventos/")({
   head: () => ({
     meta: [
-      { title: "Eventos e shows — AgendaAqui" },
+      { title: "Eventos e shows — AgenddaAqui" },
       { name: "description", content: "Agenda de eventos, shows e atrações em Vespasiano e São José da Lapa." },
-      { property: "og:title", content: "Eventos e shows — AgendaAqui" },
+      { property: "og:title", content: "Eventos e shows — AgenddaAqui" },
     ],
     links: [{ rel: "canonical", href: "/eventos" }],
   }),

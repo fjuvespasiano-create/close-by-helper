@@ -37,7 +37,7 @@ function PushDashboard() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="font-display text-xl font-semibold">Visão geral</h2>
-          <p className="text-sm text-muted-foreground">Métricas em tempo real da Central AgendaAqui Connect.</p>
+          <p className="text-sm text-muted-foreground">Métricas em tempo real da Central AgenddaAqui Connect.</p>
         </div>
         <Link to="/admin/push/novo"><Button><Send className="mr-2 h-4 w-4" /> Novo envio</Button></Link>
       </div>

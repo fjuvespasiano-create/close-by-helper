@@ -44,7 +44,7 @@ export const detectCityByIP = createServerFn({ method: "GET" }).handler(async ()
 
   try {
     const resp = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`, {
-      headers: { "User-Agent": "AgendaAqui/1.0" },
+      headers: { "User-Agent": "AgenddaAqui/1.0" },
     });
     if (!resp.ok) return { slug: null, name: null };
     const geo = (await resp.json()) as { latitude?: number; longitude?: number; city?: string };

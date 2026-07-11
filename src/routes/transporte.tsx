@@ -34,7 +34,7 @@ export const Route = createFileRoute("/transporte")({
         content:
           "Linhas municipais e metropolitanas (DER-MG) que operam em Vespasiano e São José da Lapa: horários, tarifas, itinerários e operadoras.",
       },
-      { property: "og:title", content: "Transporte Público — AgendaAqui" },
+      { property: "og:title", content: "Transporte Público — AgenddaAqui" },
       {
         property: "og:description",
         content:

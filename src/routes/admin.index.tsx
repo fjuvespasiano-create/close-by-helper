@@ -22,7 +22,7 @@ function Dashboard() {
   return (
     <div>
       <h1 className="font-display text-2xl font-bold">Dashboard</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Visão geral do AgendaAqui</p>
+      <p className="mt-1 text-sm text-muted-foreground">Visão geral do AgenddaAqui</p>
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((c) => (
           <div key={c.label} className="rounded-xl border border-border bg-card p-5">

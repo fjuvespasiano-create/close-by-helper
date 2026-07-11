@@ -15,9 +15,9 @@ import { useSiteContent } from "@/lib/siteContent";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AgendaAqui — a cidade inteira de Vespasiano e São José da Lapa no seu bolso" },
+      { title: "AgenddaAqui — a cidade inteira de Vespasiano e São José da Lapa no seu bolso" },
       { name: "description", content: "Encontre em 2 toques hospital, escola, delegacia, prefeitura, plantão 24h e as empresas mais bem avaliadas de Vespasiano e São José da Lapa. Grátis, atualizado, feito por quem mora aqui." },
-      { property: "og:title", content: "AgendaAqui — a cidade inteira num só app" },
+      { property: "og:title", content: "AgenddaAqui — a cidade inteira num só app" },
       { property: "og:description", content: "Serviços públicos, emergência 24h e as empresas de confiança da região. Avaliações reais dos vizinhos, endereço e telefone à mão." },
       { property: "og:url", content: "/" },
     ],

@@ -21,9 +21,9 @@ import {
 export const Route = createFileRoute("/marketplace")({
   head: () => ({
     meta: [
-      { title: "Marketplace — Compre e venda perto de você | AgendaAqui" },
+      { title: "Marketplace — Compre e venda perto de você | AgenddaAqui" },
       { name: "description", content: "Anúncios de produtos e serviços em Vespasiano e São José da Lapa. Compre e venda sem taxas, direto com o vendedor." },
-      { property: "og:title", content: "Marketplace local — AgendaAqui" },
+      { property: "og:title", content: "Marketplace local — AgenddaAqui" },
       { property: "og:description", content: "Compre e venda perto de você, sem taxas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

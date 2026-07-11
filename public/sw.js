@@ -1,4 +1,4 @@
-/* AgendaAqui Service Worker — PWA offline + push notifications */
+/* AgenddaAqui Service Worker — PWA offline + push notifications */
 const VERSION = 'v1.2.0';
 const STATIC_CACHE = `static-${VERSION}`;
 const RUNTIME_CACHE = `runtime-${VERSION}`;
@@ -114,10 +114,10 @@ async function notifyClientsPlaySound(soundUrl) {
 self.addEventListener('push', (event) => {
   let data = {};
   try { data = event.data ? event.data.json() : {}; }
-  catch { data = { title: 'AgendaAqui', body: event.data ? event.data.text() : '' }; }
+  catch { data = { title: 'AgenddaAqui', body: event.data ? event.data.text() : '' }; }
 
   const isHigh = data.priority === 'high' || data.critical === true;
-  const title = data.title || (isHigh ? 'Novo Alerta Crítico!' : 'AgendaAqui');
+  const title = data.title || (isHigh ? 'Novo Alerta Crítico!' : 'AgenddaAqui');
   const actions = Array.isArray(data.buttons)
     ? data.buttons.slice(0, 2).map((b, i) => ({ action: `btn_${i}`, title: b.label || `Ação ${i + 1}` }))
     : [];

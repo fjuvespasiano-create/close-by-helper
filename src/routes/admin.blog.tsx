@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/blog")({
-  head: () => ({ meta: [{ title: "Blog — Admin AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Blog — Admin AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: AdminBlog,
 });
 
@@ -139,7 +139,7 @@ function AdminBlog() {
       excerpt: p.excerpt || null,
       content: contentStr,
       featured_image: p.cover_url || null,
-      author_name: p.author_name || "Equipe AgendaAqui",
+      author_name: p.author_name || "Equipe AgenddaAqui",
       status: (p.published ? "published" : "draft") as "published" | "draft",
       published_at: p.published ? (p.published_at ?? new Date().toISOString()) : null,
       meta_title: p.meta_title || null,
@@ -188,7 +188,7 @@ function AdminBlog() {
           <h1 className="font-display text-2xl font-bold">Blog</h1>
           <p className="text-sm text-muted-foreground">Crie, edite e publique artigos otimizados para SEO (mínimo {MIN_CONTENT_CHARS.toLocaleString("pt-BR")} caracteres).</p>
         </div>
-        <Button onClick={() => { setEditing({ published: false, author_name: "Equipe AgendaAqui", keywords: [] }); setKeywordsInput(""); }} className="gap-1">
+        <Button onClick={() => { setEditing({ published: false, author_name: "Equipe AgenddaAqui", keywords: [] }); setKeywordsInput(""); }} className="gap-1">
           <Plus className="h-4 w-4" /> Novo post
         </Button>
       </div>

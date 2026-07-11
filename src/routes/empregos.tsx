@@ -12,9 +12,9 @@ import { Briefcase, MapPin, Wifi, ExternalLink, Building2, Search } from "lucide
 export const Route = createFileRoute("/empregos")({
   head: () => ({
     meta: [
-      { title: "Empregos em Vespasiano e região — AgendaAqui" },
+      { title: "Empregos em Vespasiano e região — AgenddaAqui" },
       { name: "description", content: "Vagas de emprego atualizadas em Vespasiano, São José da Lapa e oportunidades remotas. Busque por área, cidade e nível de experiência." },
-      { property: "og:title", content: "Empregos em Vespasiano e região — AgendaAqui" },
+      { property: "og:title", content: "Empregos em Vespasiano e região — AgenddaAqui" },
       { property: "og:description", content: "Vagas atualizadas na sua cidade e oportunidades remotas." },
     ],
   }),

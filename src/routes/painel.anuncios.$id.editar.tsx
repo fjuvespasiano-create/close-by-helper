@@ -5,7 +5,7 @@ import { useCurrentUserId } from "@/lib/favorites";
 import { ListingForm, fetchOwnListing } from "@/components/panel/ListingForm";
 
 export const Route = createFileRoute("/painel/anuncios/$id/editar")({
-  head: () => ({ meta: [{ title: "Editar anúncio — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Editar anúncio — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: Editar,
 });
 

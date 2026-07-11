@@ -4,7 +4,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { LayoutDashboard, Building2, BadgePercent, Settings, Mail, Landmark, Siren, MapPin, Newspaper, CalendarDays, Menu as MenuIcon, Type, Bell, Bug, Copy, Briefcase } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Painel Admin — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Painel Admin — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: AdminLayout,
 });
 
@@ -47,7 +47,7 @@ function AdminLayout() {
           <p className="mt-2 text-muted-foreground">
             {isAuthed
               ? "Sua conta não tem permissão de administrador. Fale com a equipe se acredita que isso é um engano."
-              : "Esta área é exclusiva para administradores do AgendaAqui. Entre com uma conta de admin para continuar."}
+              : "Esta área é exclusiva para administradores do AgenddaAqui. Entre com uma conta de admin para continuar."}
           </p>
           <Link
             to={isAuthed ? "/painel" : "/auth"}

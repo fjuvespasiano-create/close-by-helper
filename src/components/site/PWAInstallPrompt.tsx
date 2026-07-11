@@ -109,7 +109,7 @@ export function PWAInstallPrompt() {
               <Download className="h-5 w-5" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-foreground">Instalar AgendaAqui</p>
+              <p className="text-sm font-semibold text-foreground">Instalar AgenddaAqui</p>
               <p className="mt-0.5 text-xs text-muted-foreground">
                 Acesso rápido, funciona offline e recebe notificações.
               </p>

@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/painel/ranking")({
-  head: () => ({ meta: [{ title: "Ranking semanal — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Ranking semanal — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: RankingPage,
 });
 

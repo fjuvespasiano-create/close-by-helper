@@ -24,11 +24,11 @@ export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Entrar ou criar conta grátis — AgendaAqui" },
+      { title: "Entrar ou criar conta grátis — AgenddaAqui" },
       {
         name: "description",
         content:
-          "Sua conta gratuita no AgendaAqui: avalie empresas, salve favoritos e gerencie seu negócio na cidade. Leva menos de 1 minuto.",
+          "Sua conta gratuita no AgenddaAqui: avalie empresas, salve favoritos e gerencie seu negócio na cidade. Leva menos de 1 minuto.",
       },
       { property: "og:url", content: "/auth" },
     ],
@@ -165,7 +165,7 @@ function AuthPage() {
     <SiteLayout>
       <div className="container mx-auto flex max-w-md flex-col px-4 py-16">
         <div className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
-          <h1 className="font-display text-2xl font-bold">Bem-vindo ao AgendaAqui</h1>
+          <h1 className="font-display text-2xl font-bold">Bem-vindo ao AgenddaAqui</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Sua conta grátis para avaliar empresas, salvar favoritos e cuidar do seu negócio na cidade.
           </p>

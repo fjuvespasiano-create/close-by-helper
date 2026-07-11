@@ -7,10 +7,10 @@ import { Badge } from "@/components/ui/badge";
 export const Route = createFileRoute("/reputacao")({
   head: () => ({
     meta: [
-      { title: "Reputação AgendaAqui — Como verificamos as empresas" },
-      { name: "description", content: "Entenda como o AgendaAqui verifica empresas, quais informações são checadas e as medidas de segurança que protegem sua busca por serviços." },
-      { property: "og:title", content: "Reputação AgendaAqui — Empresas verificadas" },
-      { property: "og:description", content: "Selo Verificado, checagem de identidade, moderação de avaliações e segurança de dados na AgendaAqui." },
+      { title: "Reputação AgenddaAqui — Como verificamos as empresas" },
+      { name: "description", content: "Entenda como o AgenddaAqui verifica empresas, quais informações são checadas e as medidas de segurança que protegem sua busca por serviços." },
+      { property: "og:title", content: "Reputação AgenddaAqui — Empresas verificadas" },
+      { property: "og:description", content: "Selo Verificado, checagem de identidade, moderação de avaliações e segurança de dados na AgenddaAqui." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -25,12 +25,12 @@ function ReputationPage() {
       <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-surface to-background p-8 md:p-14">
         <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/10 blur-3xl" aria-hidden />
         <div className="relative">
-          <Badge className="mb-4 bg-accent/15 text-accent hover:bg-accent/20">Reputação AgendaAqui</Badge>
+          <Badge className="mb-4 bg-accent/15 text-accent hover:bg-accent/20">Reputação AgenddaAqui</Badge>
           <h1 className="font-display text-3xl font-extrabold leading-tight md:text-5xl">
             Empresas verificadas.<br />Escolhas com confiança.
           </h1>
           <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
-            A opção <strong>Reputação AgendaAqui</strong> é o nosso processo de verificação e curadoria
+            A opção <strong>Reputação AgenddaAqui</strong> é o nosso processo de verificação e curadoria
             que ajuda você a contratar prestadores de serviço com mais segurança em São José da Lapa,
             Vespasiano e região.
           </p>
@@ -142,7 +142,7 @@ function ReputationPage() {
           </Card>
         </div>
         <p className="mt-4 text-xs text-muted-foreground">
-          Esta página é mantida pela equipe do AgendaAqui e descreve práticas atuais da plataforma.
+          Esta página é mantida pela equipe do AgenddaAqui e descreve práticas atuais da plataforma.
           Não constitui certificação por terceiros. Para saber como tratamos dados pessoais, consulte
           nossa política de privacidade.
         </p>
@@ -161,7 +161,7 @@ function ReputationPage() {
                 o selo Verificado ou remover o anúncio.
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
-                <Button asChild><Link to="/contato">Falar com o AgendaAqui</Link></Button>
+                <Button asChild><Link to="/contato">Falar com o AgenddaAqui</Link></Button>
                 <Button asChild variant="outline"><Link to="/emergencia">Emergências</Link></Button>
               </div>
             </div>
@@ -189,7 +189,7 @@ function ReputationPage() {
               {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
             </div>
             <p className="mt-3 text-sm italic text-muted-foreground">
-              "Achei uma empresa aqui pelo AgendaAqui, vi o selo, chamei pelo WhatsApp e deu tudo certo.
+              "Achei uma empresa aqui pelo AgenddaAqui, vi o selo, chamei pelo WhatsApp e deu tudo certo.
               Bem melhor do que sair procurando no grupo do bairro."
             </p>
             <div className="mt-3 text-sm font-semibold">Mariana R.</div>

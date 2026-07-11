@@ -49,7 +49,7 @@ export type SiteContent = {
 };
 
 export const DEFAULT_SITE_CONTENT: SiteContent = {
-  brand: { name: "AgendaAqui", tagline: "A cidade inteira no seu bolso" },
+  brand: { name: "AgenddaAqui", tagline: "A cidade inteira no seu bolso" },
   header: {
     cta_label: "Anunciar grátis",
     panel_label: "Meu painel",
@@ -62,7 +62,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
       "O guia oficial dos moradores de Vespasiano e São José da Lapa. Serviços públicos, plantão 24h e as empresas mais bem avaliadas da região — grátis, num só lugar.",
     nav_title: "Explore o app",
     biz_title: "Para o seu negócio",
-    copyright: "AgendaAqui — feito na cidade, para a cidade.",
+    copyright: "AgenddaAqui — feito na cidade, para a cidade.",
     location: "Vespasiano · São José da Lapa · MG",
   },
   newsletter: {
@@ -83,11 +83,11 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     cta_button: "Anunciar grátis agora",
   },
   about: {
-    title: "O que é o AgendaAqui",
+    title: "O que é o AgenddaAqui",
     subtitle: "O jeito mais rápido de resolver o dia a dia na sua cidade — sem grupo de WhatsApp e sem \u201Cquem indica?\u201D.",
-    p1: "O AgendaAqui nasceu para acabar com a pergunta \u201Ca quem eu ligo?\u201D. Em um único app, você acessa serviços públicos, telefones de emergência e um guia com as empresas de confiança de Vespasiano e São José da Lapa — organizados por categoria, distância e nota real dos vizinhos.",
+    p1: "O AgenddaAqui nasceu para acabar com a pergunta \u201Ca quem eu ligo?\u201D. Em um único app, você acessa serviços públicos, telefones de emergência e um guia com as empresas de confiança de Vespasiano e São José da Lapa — organizados por categoria, distância e nota real dos vizinhos.",
     p2: "Cada indicação passa por avaliações de moradores reais, com fotos e comentários abertos. Você contrata com tranquilidade, e o negócio local ganha visibilidade justa — sem intermediários, sem comissão sobre venda e sem taxa escondida.",
-    p3: "Grátis para usar. Grátis para anunciar. Se você mora aqui ou empreende aqui, o AgendaAqui foi feito para você.",
+    p3: "Grátis para usar. Grátis para anunciar. Se você mora aqui ou empreende aqui, o AgenddaAqui foi feito para você.",
   },
   contact: {
     title: "Fale com a gente",

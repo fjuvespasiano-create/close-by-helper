@@ -96,7 +96,7 @@ const BADGE_META: Record<string, { label: string; icon: typeof Trophy; className
   top_atendimento: { label: "Top atendimento", icon: Award, className: "border-blue-400 bg-blue-50 text-blue-700" },
   entrega_garantida: { label: "Entrega garantida", icon: ShieldCheck, className: "border-emerald-400 bg-emerald-50 text-emerald-700" },
   especialista: { label: "Especialista", icon: Crown, className: "border-purple-400 bg-purple-50 text-purple-700" },
-  parceiro: { label: "Parceiro AgendaAqui", icon: Sparkles, className: "border-primary/40 bg-primary/5 text-primary" },
+  parceiro: { label: "Parceiro AgenddaAqui", icon: Sparkles, className: "border-primary/40 bg-primary/5 text-primary" },
   top_10: { label: "Top 10 da cidade", icon: Trophy, className: "border-amber-400 bg-amber-50 text-amber-700" },
 };
 

@@ -27,7 +27,7 @@ function AdminPushLayout() {
       <div className="container mx-auto px-4 py-8">
         <header className="mb-6">
           <h1 className="font-display text-2xl font-bold">🔔 Central de Notificações</h1>
-          <p className="text-sm text-muted-foreground">Envie, agende e acompanhe todas as comunicações push do AgendaAqui.</p>
+          <p className="text-sm text-muted-foreground">Envie, agende e acompanhe todas as comunicações push do AgenddaAqui.</p>
         </header>
         <nav className="mb-6 flex flex-wrap items-center gap-2 border-b border-border pb-2">
           {NAV.map((n) => {
