@@ -6,24 +6,113 @@
   <title>Sem conexão — AgenddaAqui</title>
   <link rel="manifest" href="/manifest.webmanifest" />
   <meta name="theme-color" content="#0057FF" />
+  <link rel="icon" href="/icons/icon-192.png" />
   <style>
-    :root { color-scheme: light dark; }
+    :root { color-scheme: light dark; --brand:#0057FF; --brand-dark:#003BB5; --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --border:#e2e8f0; --success:#16a34a; --danger:#dc2626; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#0b1220; --card:#111a2e; --text:#f8fafc; --muted:#94a3b8; --border:#1e293b; }
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #0f172a; padding: 24px; }
-    .card { max-width: 420px; text-align: center; background: white; border-radius: 20px; padding: 40px 28px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); }
-    .icon { width: 72px; height: 72px; margin: 0 auto 16px; border-radius: 20px; background: linear-gradient(135deg,#0057FF,#003BB5); display:flex; align-items:center; justify-content:center; color:white; font-size:36px; }
-    h1 { margin: 0 0 8px; font-size: 22px; }
-    p { margin: 0 0 20px; color: #475569; font-size: 15px; line-height: 1.5; }
-    button { background:#0057FF; color:white; border:0; padding: 12px 22px; border-radius: 12px; font-weight:600; cursor:pointer; font-size:15px; }
-    button:hover { background:#003BB5; }
+    body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); padding:20px; }
+    .wrap { max-width:520px; width:100%; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:32px 24px; box-shadow:0 10px 40px rgba(0,0,0,0.08); }
+    .icon { width:72px; height:72px; margin:0 auto 16px; border-radius:20px; background:linear-gradient(135deg,var(--brand),var(--brand-dark)); display:flex; align-items:center; justify-content:center; color:white; font-size:36px; }
+    h1 { margin:0 0 8px; font-size:22px; text-align:center; }
+    .lead { margin:0 0 20px; color:var(--muted); font-size:15px; line-height:1.5; text-align:center; }
+    .status { display:flex; align-items:center; justify-content:center; gap:8px; font-size:13px; color:var(--muted); margin-bottom:20px; }
+    .dot { width:10px; height:10px; border-radius:50%; background:var(--danger); }
+    .dot.online { background:var(--success); }
+    .actions { display:flex; gap:10px; margin-bottom:24px; }
+    .btn { flex:1; padding:12px 18px; border-radius:12px; font-weight:600; font-size:15px; cursor:pointer; border:0; text-align:center; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:6px; }
+    .btn-primary { background:var(--brand); color:white; }
+    .btn-primary:hover { background:var(--brand-dark); }
+    .btn-secondary { background:transparent; color:var(--text); border:1px solid var(--border); }
+    .section-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); margin:0 0 10px; }
+    .contacts { display:flex; flex-direction:column; gap:8px; }
+    .contact { display:flex; align-items:center; gap:12px; padding:12px 14px; border:1px solid var(--border); border-radius:12px; text-decoration:none; color:var(--text); transition:background .15s; }
+    .contact:hover { background:rgba(0,87,255,0.05); }
+    .contact-icon { width:36px; height:36px; border-radius:10px; background:rgba(0,87,255,0.1); color:var(--brand); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+    .contact-body { flex:1; min-width:0; }
+    .contact-label { font-size:13px; color:var(--muted); margin:0; }
+    .contact-value { font-size:15px; font-weight:600; margin:2px 0 0; }
+    .hours { font-size:12px; color:var(--muted); text-align:center; margin-top:16px; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="icon">📍</div>
-    <h1>Você está offline</h1>
-    <p>Não foi possível carregar esta página. Verifique sua conexão com a internet e tente novamente.</p>
-    <button onclick="location.reload()">Tentar novamente</button>
+  <div class="wrap">
+    <div class="card">
+      <div class="icon">📡</div>
+      <h1>Você está offline</h1>
+      <p class="lead">Não conseguimos carregar esta página. Verifique sua conexão e tente novamente — os contatos abaixo funcionam sem internet.</p>
+
+      <div class="status">
+        <span class="dot" id="statusDot"></span>
+        <span id="statusText">Sem conexão detectada</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="location.reload()">Tentar novamente</button>
+        <a class="btn btn-secondary" href="/">Início</a>
+      </div>
+
+      <p class="section-title">Contatos de emergência</p>
+      <div class="contacts">
+        <a class="contact" href="tel:190">
+          <span class="contact-icon">🚔</span>
+          <div class="contact-body">
+            <p class="contact-label">Polícia Militar</p>
+            <p class="contact-value">190</p>
+          </div>
+        </a>
+        <a class="contact" href="tel:192">
+          <span class="contact-icon">🚑</span>
+          <div class="contact-body">
+            <p class="contact-label">SAMU</p>
+            <p class="contact-value">192</p>
+          </div>
+        </a>
+        <a class="contact" href="tel:193">
+          <span class="contact-icon">🚒</span>
+          <div class="contact-body">
+            <p class="contact-label">Bombeiros</p>
+            <p class="contact-value">193</p>
+          </div>
+        </a>
+        <a class="contact" href="tel:+553136291500">
+          <span class="contact-icon">🏛️</span>
+          <div class="contact-body">
+            <p class="contact-label">Prefeitura de Vespasiano</p>
+            <p class="contact-value">(31) 3629-1500</p>
+          </div>
+        </a>
+        <a class="contact" href="tel:+553136817070">
+          <span class="contact-icon">🏛️</span>
+          <div class="contact-body">
+            <p class="contact-label">Prefeitura de São José da Lapa</p>
+            <p class="contact-value">(31) 3681-7070</p>
+          </div>
+        </a>
+      </div>
+
+      <p class="hours">Horário administrativo: seg-sex, 8h–17h</p>
+    </div>
   </div>
+
+  <script>
+    function updateStatus() {
+      var dot = document.getElementById('statusDot');
+      var text = document.getElementById('statusText');
+      if (navigator.onLine) {
+        dot.classList.add('online');
+        text.textContent = 'Conexão restaurada — recarregue a página';
+      } else {
+        dot.classList.remove('online');
+        text.textContent = 'Sem conexão detectada';
+      }
+    }
+    updateStatus();
+    window.addEventListener('online', function () { updateStatus(); location.reload(); });
+    window.addEventListener('offline', updateStatus);
+  </script>
 </body>
 </html>
