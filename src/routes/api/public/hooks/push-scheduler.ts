@@ -1,5 +1,5 @@
 // Cron hook: processa notificações agendadas + retry de falhas transitórias.
-// Chamado pelo pg_cron a cada minuto. Autenticado via header `apikey` = publishable key.
+// Autenticado via header `x-cron-secret` (CRON_SECRET).
 import { createFileRoute } from "@tanstack/react-router";
 
 const cors = { "Content-Type": "application/json" } as const;
@@ -8,14 +8,9 @@ export const Route = createFileRoute("/api/public/hooks/push-scheduler")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const expected = process.env.SUPABASE_PUBLISHABLE_KEY;
-        const provided = request.headers.get("apikey") ?? request.headers.get("x-api-key");
-        if (!expected || provided !== expected) {
-          return new Response(JSON.stringify({ error: "unauthorized" }), {
-            status: 401,
-            headers: cors,
-          });
-        }
+        const { checkCronAuth } = await import("@/lib/cron-auth.server");
+        const unauth = checkCronAuth(request);
+        if (unauth) return unauth;
 
         try {
           const { supabaseAdmin } = await import("@/integrations/supabase/client.server");

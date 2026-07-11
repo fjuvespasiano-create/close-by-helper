@@ -2,21 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 
 /**
  * Endpoint público (sob demanda + cron) que dispara o scraper de eventos
- * do TripAdvisor para Vespasiano e São José da Lapa. Protegido pelo header
- * `apikey` (chave publishable do Supabase) — mesmo padrão dos demais hooks.
+ * do TripAdvisor. Protegido por CRON_SECRET (header `x-cron-secret`).
  */
 export const Route = createFileRoute("/api/public/hooks/scrape-events")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const expected = process.env.SUPABASE_PUBLISHABLE_KEY;
-        const provided = request.headers.get("apikey");
-        if (!expected || provided !== expected) {
-          return new Response(JSON.stringify({ ok: false, error: "unauthorized" }), {
-            status: 401,
-            headers: { "Content-Type": "application/json" },
-          });
-        }
+        const { checkCronAuth } = await import("@/lib/cron-auth.server");
+        const unauth = checkCronAuth(request);
+        if (unauth) return unauth;
 
         try {
           const { runEventsScrape } = await import("@/lib/events-scrape.server");
