@@ -43,6 +43,7 @@ import { Route as PainelAnunciosRouteImport } from './routes/painel.anuncios'
 import { Route as MarketplaceSlugRouteImport } from './routes/marketplace.$slug'
 import { Route as EventosSlugRouteImport } from './routes/eventos.$slug'
 import { Route as EmpresaSlugRouteImport } from './routes/empresa.$slug'
+import { Route as EmpregosIdRouteImport } from './routes/empregos.$id'
 import { Route as CidadesSlugRouteImport } from './routes/cidades.$slug'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -55,6 +56,7 @@ import { Route as AdminMenuRouteImport } from './routes/admin.menu'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 import { Route as AdminEmpresasRouteImport } from './routes/admin.empresas'
+import { Route as AdminEmpregosRouteImport } from './routes/admin.empregos'
 import { Route as AdminEmergenciaRouteImport } from './routes/admin.emergencia'
 import { Route as AdminDuplicadosRouteImport } from './routes/admin.duplicados'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
@@ -73,6 +75,7 @@ import { Route as PainelAnunciosIdEditarRouteImport } from './routes/painel.anun
 import { Route as ApiPublicPushTrackRouteImport } from './routes/api/public/push/track'
 import { Route as ApiPublicPushResubscribeRouteImport } from './routes/api/public/push/resubscribe'
 import { Route as ApiPublicHooksPushSchedulerRouteImport } from './routes/api/public/hooks/push-scheduler'
+import { Route as ApiPublicHooksJobsSyncRouteImport } from './routes/api/public/hooks/jobs-sync'
 
 const TransporteRoute = TransporteRouteImport.update({
   id: '/transporte',
@@ -244,6 +247,11 @@ const EmpresaSlugRoute = EmpresaSlugRouteImport.update({
   path: '/empresa/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmpregosIdRoute = EmpregosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => EmpregosRoute,
+} as any)
 const CidadesSlugRoute = CidadesSlugRouteImport.update({
   id: '/cidades/$slug',
   path: '/cidades/$slug',
@@ -302,6 +310,11 @@ const AdminEventosRoute = AdminEventosRouteImport.update({
 const AdminEmpresasRoute = AdminEmpresasRouteImport.update({
   id: '/empresas',
   path: '/empresas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEmpregosRoute = AdminEmpregosRouteImport.update({
+  id: '/empregos',
+  path: '/empregos',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminEmergenciaRoute = AdminEmergenciaRouteImport.update({
@@ -397,6 +410,11 @@ const ApiPublicHooksPushSchedulerRoute =
     path: '/api/public/hooks/push-scheduler',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksJobsSyncRoute = ApiPublicHooksJobsSyncRouteImport.update({
+  id: '/api/public/hooks/jobs-sync',
+  path: '/api/public/hooks/jobs-sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -405,7 +423,7 @@ export interface FileRoutesByFullPath {
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
   '/emergencia': typeof EmergenciaRoute
-  '/empregos': typeof EmpregosRoute
+  '/empregos': typeof EmpregosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/marketplace': typeof MarketplaceRouteWithChildren
   '/o-que-fazer': typeof OQueFazerRoute
@@ -422,6 +440,7 @@ export interface FileRoutesByFullPath {
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
   '/admin/emergencia': typeof AdminEmergenciaRoute
+  '/admin/empregos': typeof AdminEmpregosRoute
   '/admin/empresas': typeof AdminEmpresasRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -434,6 +453,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
+  '/empregos/$id': typeof EmpregosIdRoute
   '/empresa/$slug': typeof EmpresaSlugRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/marketplace/$slug': typeof MarketplaceSlugRoute
@@ -459,6 +479,7 @@ export interface FileRoutesByFullPath {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
@@ -470,7 +491,7 @@ export interface FileRoutesByTo {
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
   '/emergencia': typeof EmergenciaRoute
-  '/empregos': typeof EmpregosRoute
+  '/empregos': typeof EmpregosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/marketplace': typeof MarketplaceRouteWithChildren
   '/o-que-fazer': typeof OQueFazerRoute
@@ -486,6 +507,7 @@ export interface FileRoutesByTo {
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
   '/admin/emergencia': typeof AdminEmergenciaRoute
+  '/admin/empregos': typeof AdminEmpregosRoute
   '/admin/empresas': typeof AdminEmpresasRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -497,6 +519,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
+  '/empregos/$id': typeof EmpregosIdRoute
   '/empresa/$slug': typeof EmpresaSlugRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/marketplace/$slug': typeof MarketplaceSlugRoute
@@ -522,6 +545,7 @@ export interface FileRoutesByTo {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push': typeof AdminPushIndexRoute
+  '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
@@ -535,7 +559,7 @@ export interface FileRoutesById {
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
   '/emergencia': typeof EmergenciaRoute
-  '/empregos': typeof EmpregosRoute
+  '/empregos': typeof EmpregosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/marketplace': typeof MarketplaceRouteWithChildren
   '/o-que-fazer': typeof OQueFazerRoute
@@ -552,6 +576,7 @@ export interface FileRoutesById {
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
   '/admin/emergencia': typeof AdminEmergenciaRoute
+  '/admin/empregos': typeof AdminEmpregosRoute
   '/admin/empresas': typeof AdminEmpresasRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -564,6 +589,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
+  '/empregos/$id': typeof EmpregosIdRoute
   '/empresa/$slug': typeof EmpresaSlugRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/marketplace/$slug': typeof MarketplaceSlugRoute
@@ -589,6 +615,7 @@ export interface FileRoutesById {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
@@ -620,6 +647,7 @@ export interface FileRouteTypes {
     | '/admin/configuracoes'
     | '/admin/duplicados'
     | '/admin/emergencia'
+    | '/admin/empregos'
     | '/admin/empresas'
     | '/admin/eventos'
     | '/admin/leads'
@@ -632,6 +660,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/cidades/$slug'
+    | '/empregos/$id'
     | '/empresa/$slug'
     | '/eventos/$slug'
     | '/marketplace/$slug'
@@ -657,6 +686,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
@@ -684,6 +714,7 @@ export interface FileRouteTypes {
     | '/admin/configuracoes'
     | '/admin/duplicados'
     | '/admin/emergencia'
+    | '/admin/empregos'
     | '/admin/empresas'
     | '/admin/eventos'
     | '/admin/leads'
@@ -695,6 +726,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/cidades/$slug'
+    | '/empregos/$id'
     | '/empresa/$slug'
     | '/eventos/$slug'
     | '/marketplace/$slug'
@@ -720,6 +752,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push'
+    | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
@@ -749,6 +782,7 @@ export interface FileRouteTypes {
     | '/admin/configuracoes'
     | '/admin/duplicados'
     | '/admin/emergencia'
+    | '/admin/empregos'
     | '/admin/empresas'
     | '/admin/eventos'
     | '/admin/leads'
@@ -761,6 +795,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/cidades/$slug'
+    | '/empregos/$id'
     | '/empresa/$slug'
     | '/eventos/$slug'
     | '/marketplace/$slug'
@@ -786,6 +821,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
@@ -799,7 +835,7 @@ export interface RootRouteChildren {
   BuscarRoute: typeof BuscarRoute
   ContatoRoute: typeof ContatoRoute
   EmergenciaRoute: typeof EmergenciaRoute
-  EmpregosRoute: typeof EmpregosRoute
+  EmpregosRoute: typeof EmpregosRouteWithChildren
   FavoritosRoute: typeof FavoritosRoute
   MarketplaceRoute: typeof MarketplaceRouteWithChildren
   OQueFazerRoute: typeof OQueFazerRoute
@@ -818,6 +854,7 @@ export interface RootRouteChildren {
   EventosSlugRoute: typeof EventosSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
+  ApiPublicHooksJobsSyncRoute: typeof ApiPublicHooksJobsSyncRoute
   ApiPublicHooksPushSchedulerRoute: typeof ApiPublicHooksPushSchedulerRoute
   ApiPublicPushResubscribeRoute: typeof ApiPublicPushResubscribeRoute
   ApiPublicPushTrackRoute: typeof ApiPublicPushTrackRoute
@@ -1063,6 +1100,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmpresaSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/empregos/$id': {
+      id: '/empregos/$id'
+      path: '/$id'
+      fullPath: '/empregos/$id'
+      preLoaderRoute: typeof EmpregosIdRouteImport
+      parentRoute: typeof EmpregosRoute
+    }
     '/cidades/$slug': {
       id: '/cidades/$slug'
       path: '/cidades/$slug'
@@ -1145,6 +1189,13 @@ declare module '@tanstack/react-router' {
       path: '/empresas'
       fullPath: '/admin/empresas'
       preLoaderRoute: typeof AdminEmpresasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/empregos': {
+      id: '/admin/empregos'
+      path: '/empregos'
+      fullPath: '/admin/empregos'
+      preLoaderRoute: typeof AdminEmpregosRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/emergencia': {
@@ -1273,6 +1324,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHooksPushSchedulerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/jobs-sync': {
+      id: '/api/public/hooks/jobs-sync'
+      path: '/api/public/hooks/jobs-sync'
+      fullPath: '/api/public/hooks/jobs-sync'
+      preLoaderRoute: typeof ApiPublicHooksJobsSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1302,6 +1360,7 @@ interface AdminRouteChildren {
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminDuplicadosRoute: typeof AdminDuplicadosRoute
   AdminEmergenciaRoute: typeof AdminEmergenciaRoute
+  AdminEmpregosRoute: typeof AdminEmpregosRoute
   AdminEmpresasRoute: typeof AdminEmpresasRoute
   AdminEventosRoute: typeof AdminEventosRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
@@ -1320,6 +1379,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminDuplicadosRoute: AdminDuplicadosRoute,
   AdminEmergenciaRoute: AdminEmergenciaRoute,
+  AdminEmpregosRoute: AdminEmpregosRoute,
   AdminEmpresasRoute: AdminEmpresasRoute,
   AdminEventosRoute: AdminEventosRoute,
   AdminLeadsRoute: AdminLeadsRoute,
@@ -1333,6 +1393,18 @@ const AdminRouteChildren: AdminRouteChildren = {
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface EmpregosRouteChildren {
+  EmpregosIdRoute: typeof EmpregosIdRoute
+}
+
+const EmpregosRouteChildren: EmpregosRouteChildren = {
+  EmpregosIdRoute: EmpregosIdRoute,
+}
+
+const EmpregosRouteWithChildren = EmpregosRoute._addFileChildren(
+  EmpregosRouteChildren,
+)
 
 interface MarketplaceRouteChildren {
   MarketplaceSlugRoute: typeof MarketplaceSlugRoute
@@ -1421,7 +1493,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuscarRoute: BuscarRoute,
   ContatoRoute: ContatoRoute,
   EmergenciaRoute: EmergenciaRoute,
-  EmpregosRoute: EmpregosRoute,
+  EmpregosRoute: EmpregosRouteWithChildren,
   FavoritosRoute: FavoritosRoute,
   MarketplaceRoute: MarketplaceRouteWithChildren,
   OQueFazerRoute: OQueFazerRoute,
@@ -1440,6 +1512,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosSlugRoute: EventosSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
+  ApiPublicHooksJobsSyncRoute: ApiPublicHooksJobsSyncRoute,
   ApiPublicHooksPushSchedulerRoute: ApiPublicHooksPushSchedulerRoute,
   ApiPublicPushResubscribeRoute: ApiPublicPushResubscribeRoute,
   ApiPublicPushTrackRoute: ApiPublicPushTrackRoute,

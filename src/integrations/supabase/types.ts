@@ -829,6 +829,187 @@ export type Database = {
           },
         ]
       }
+      job_sources: {
+        Row: {
+          config: Json
+          created_at: string
+          endpoint_url: string | null
+          id: string
+          is_active: boolean
+          kind: string
+          last_sync_at: string | null
+          last_sync_message: string | null
+          last_sync_status: string | null
+          name: string
+          slug: string
+          sync_frequency_minutes: number
+          updated_at: string
+        }
+        Insert: {
+          config?: Json
+          created_at?: string
+          endpoint_url?: string | null
+          id?: string
+          is_active?: boolean
+          kind: string
+          last_sync_at?: string | null
+          last_sync_message?: string | null
+          last_sync_status?: string | null
+          name: string
+          slug: string
+          sync_frequency_minutes?: number
+          updated_at?: string
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          endpoint_url?: string | null
+          id?: string
+          is_active?: boolean
+          kind?: string
+          last_sync_at?: string | null
+          last_sync_message?: string | null
+          last_sync_status?: string | null
+          name?: string
+          slug?: string
+          sync_frequency_minutes?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      job_sync_logs: {
+        Row: {
+          errors: number
+          fetched: number
+          finished_at: string | null
+          id: string
+          inserted: number
+          message: string | null
+          source_id: string | null
+          started_at: string
+          status: string
+          updated: number
+        }
+        Insert: {
+          errors?: number
+          fetched?: number
+          finished_at?: string | null
+          id?: string
+          inserted?: number
+          message?: string | null
+          source_id?: string | null
+          started_at?: string
+          status?: string
+          updated?: number
+        }
+        Update: {
+          errors?: number
+          fetched?: number
+          finished_at?: string | null
+          id?: string
+          inserted?: number
+          message?: string | null
+          source_id?: string | null
+          started_at?: string
+          status?: string
+          updated?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_sync_logs_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "job_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          apply_url: string | null
+          category: string | null
+          company_name: string | null
+          created_at: string
+          description: string | null
+          employment_type: string | null
+          experience_level: string | null
+          expires_at: string | null
+          external_id: string | null
+          id: string
+          is_active: boolean
+          is_remote: boolean
+          location_city: string | null
+          location_state: string | null
+          posted_at: string | null
+          raw: Json | null
+          salary_currency: string | null
+          salary_max: number | null
+          salary_min: number | null
+          source_id: string | null
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          apply_url?: string | null
+          category?: string | null
+          company_name?: string | null
+          created_at?: string
+          description?: string | null
+          employment_type?: string | null
+          experience_level?: string | null
+          expires_at?: string | null
+          external_id?: string | null
+          id?: string
+          is_active?: boolean
+          is_remote?: boolean
+          location_city?: string | null
+          location_state?: string | null
+          posted_at?: string | null
+          raw?: Json | null
+          salary_currency?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          source_id?: string | null
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          apply_url?: string | null
+          category?: string | null
+          company_name?: string | null
+          created_at?: string
+          description?: string | null
+          employment_type?: string | null
+          experience_level?: string | null
+          expires_at?: string | null
+          external_id?: string | null
+          id?: string
+          is_active?: boolean
+          is_remote?: boolean
+          location_city?: string | null
+          location_state?: string | null
+          posted_at?: string | null
+          raw?: Json | null
+          salary_currency?: string | null
+          salary_max?: number | null
+          salary_min?: number | null
+          source_id?: string | null
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "job_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           company_id: string
