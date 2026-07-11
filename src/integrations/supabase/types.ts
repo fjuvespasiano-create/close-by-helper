@@ -19,6 +19,7 @@ export type Database = {
           active: boolean
           city_slug: string | null
           clicks: number
+          company_id: string | null
           created_at: string
           delay_seconds: number
           display_seconds: number
@@ -29,6 +30,7 @@ export type Database = {
           link_url: string
           name: string
           placement: string
+          route_patterns: string[]
           scroll_trigger_percent: number
           starts_at: string | null
           updated_at: string
@@ -38,6 +40,7 @@ export type Database = {
           active?: boolean
           city_slug?: string | null
           clicks?: number
+          company_id?: string | null
           created_at?: string
           delay_seconds?: number
           display_seconds?: number
@@ -48,6 +51,7 @@ export type Database = {
           link_url: string
           name: string
           placement?: string
+          route_patterns?: string[]
           scroll_trigger_percent?: number
           starts_at?: string | null
           updated_at?: string
@@ -57,6 +61,7 @@ export type Database = {
           active?: boolean
           city_slug?: string | null
           clicks?: number
+          company_id?: string | null
           created_at?: string
           delay_seconds?: number
           display_seconds?: number
@@ -67,12 +72,21 @@ export type Database = {
           link_url?: string
           name?: string
           placement?: string
+          route_patterns?: string[]
           scroll_trigger_percent?: number
           starts_at?: string | null
           updated_at?: string
           weight?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "ad_campaigns_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       analytics_events: {
         Row: {
