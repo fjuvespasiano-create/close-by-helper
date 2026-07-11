@@ -74,11 +74,16 @@ async function listAll() {
 function AdminAds() {
   const qc = useQueryClient();
   const list = useQuery({ queryKey: ["admin-ads"], queryFn: listAll });
+  const companies = useQuery({ queryKey: ["admin-ads-companies"], queryFn: listCompanies });
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<FormState>(empty);
 
   const save = useMutation({
     mutationFn: async () => {
+      const routes = form.route_patterns
+        .split(/[\n,]/)
+        .map((s) => s.trim())
+        .filter(Boolean);
       const payload = {
         name: form.name.trim(),
         image_url: form.image_url.trim(),
@@ -92,6 +97,8 @@ function AdminAds() {
         starts_at: form.starts_at || null,
         ends_at: form.ends_at || null,
         active: form.active,
+        route_patterns: routes,
+        company_id: form.company_id || null,
       };
       if (!payload.name || !payload.image_url || !payload.link_url) {
         throw new Error("Nome, imagem e link são obrigatórios");
@@ -154,9 +161,12 @@ function AdminAds() {
       starts_at: row.starts_at ? row.starts_at.slice(0, 16) : "",
       ends_at: row.ends_at ? row.ends_at.slice(0, 16) : "",
       active: row.active,
+      route_patterns: Array.isArray(row.route_patterns) ? row.route_patterns.join("\n") : "",
+      company_id: row.company_id ?? "",
     });
     setOpen(true);
   }
+
 
   return (
     <div className="space-y-4">
