@@ -5,12 +5,12 @@ import { cn } from "@/lib/utils";
 
 export function BackButton({ className }: { className?: string }) {
   const router = useRouter();
-  const [pathname, setPathname] = useState<string>(() =>
-    typeof window !== "undefined" ? window.location.pathname : "/",
-  );
+  const [hydrated, setHydrated] = useState(false);
+  const [pathname, setPathname] = useState<string>("/");
   const [canGoBack, setCanGoBack] = useState(false);
 
   useEffect(() => {
+    setHydrated(true);
     setPathname(window.location.pathname);
     setCanGoBack(window.history.length > 1);
     const unsub = router.subscribe("onResolved", () => {
@@ -20,7 +20,7 @@ export function BackButton({ className }: { className?: string }) {
     return () => unsub();
   }, [router]);
 
-  if (pathname === "/") return null;
+  if (!hydrated || pathname === "/") return null;
 
   function handleClick() {
     if (typeof window !== "undefined" && canGoBack && document.referrer !== window.location.href) {

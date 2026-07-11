@@ -150,12 +150,16 @@ function AuthPage() {
       const result = await lovable.auth.signInWithOAuth("google", {
         redirect_uri: window.location.origin,
       });
-      if (result.error) {
-        toast.error("Não conseguimos entrar com o Google agora. Tente de novo em instantes.");
+      const oauthError = (result as { error?: unknown }).error;
+      if (oauthError) {
+        const msg = typeof oauthError === "string" ? oauthError : (oauthError as { message?: string })?.message;
+        console.error("[auth] Google OAuth error", oauthError);
+        toast.error(msg ? `Google: ${msg}` : "Não conseguimos entrar com o Google agora. Tente de novo em instantes.");
       }
     } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
       console.error("[auth] Google OAuth failed", err);
-      toast.error("Não conseguimos entrar com o Google agora. Tente de novo em instantes.");
+      toast.error(msg ? `Google: ${msg}` : "Não conseguimos entrar com o Google agora. Tente de novo em instantes.");
     } finally {
       setOauthLoading(false);
     }
