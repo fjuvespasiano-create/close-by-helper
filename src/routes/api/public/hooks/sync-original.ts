@@ -78,15 +78,15 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
           // 3) companies (todas as colunas seguras)
           const companyCols =
             "id,slug,name,tagline,description,phone,whatsapp,email,address,zip,city_id,lat,lng,website,instagram,facebook,hours,logo_url,banner_url,plan,featured,status,is_verified,rating,review_count,video_url,badges,price_range,founded_year";
-          const companies = (await fetchAll("companies", companyCols)) as never[];
-          const companyIds = new Set(companies.map((c) => c.id as string));
+          const companies = (await fetchAll("companies", companyCols)) as Array<{ id: string }>;
+          const companyIds = new Set(companies.map((c) => c.id));
           if (companies.length) {
             // upsert em batches de 500 para não estourar limites
             for (let i = 0; i < companies.length; i += 500) {
               const batch = companies.slice(i, i + 500);
               const { error } = await supabaseAdmin
                 .from("companies")
-                .upsert(batch, { onConflict: "slug" });
+                .upsert(batch as never, { onConflict: "slug" });
               if (error) throw new Error(`companies upsert batch ${i}: ${error.message}`);
             }
           }
