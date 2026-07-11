@@ -75,23 +75,43 @@ export function AdModal() {
   const [ad, setAd] = useState<Ad | null>(null);
   const [visible, setVisible] = useState(false);
   const [countdown, setCountdown] = useState(0);
-  const timers = useRef<{ show?: number; tick?: number }>({});
+  // Refs separadas evitam sobrescrever o setTimeout do delay com o de auto-close.
+  const delayTimer = useRef<number | null>(null);
+  const closeTimer = useRef<number | null>(null);
+  const tickInterval = useRef<number | null>(null);
+  const visibleRef = useRef(false);
+
+  useEffect(() => {
+    visibleRef.current = visible;
+  }, [visible]);
+
+  function clearAllTimers() {
+    if (delayTimer.current) { window.clearTimeout(delayTimer.current); delayTimer.current = null; }
+    if (closeTimer.current) { window.clearTimeout(closeTimer.current); closeTimer.current = null; }
+    if (tickInterval.current) { window.clearInterval(tickInterval.current); tickInterval.current = null; }
+  }
 
   // Fetch active ads for this city, then filter by current route + boost Premium weight.
   useEffect(() => {
+    // Não trocar de anúncio durante uma exibição — respeita a impressão em curso.
+    if (visibleRef.current) return;
     let cancelled = false;
     (async () => {
       const nowIso = new Date().toISOString();
-      const { data, error } = await supabase
+      let query = supabase
         .from("ad_campaigns")
         .select(
           "id,name,image_url,link_url,delay_seconds,scroll_trigger_percent,display_seconds,placement,weight,city_slug,route_patterns,company_id,companies:company_id(plan,status,plan_expires_at)",
         )
         .eq("active", true)
-        .or(`city_slug.is.null,city_slug.eq.${city}`)
         .or(`starts_at.is.null,starts_at.lte.${nowIso}`)
         .or(`ends_at.is.null,ends_at.gte.${nowIso}`)
         .limit(40);
+      // Só aplica filtro por cidade quando temos slug — evita cláusula malformada.
+      if (city) query = query.or(`city_slug.is.null,city_slug.eq.${city}`);
+      else query = query.is("city_slug", null);
+
+      const { data, error } = await query;
       if (cancelled || error || !data?.length) return;
 
       const enriched: Ad[] = data
@@ -117,7 +137,7 @@ export function AdModal() {
             is_premium: premiumActive,
           };
         })
-        .filter((a) => matchesRoute(pathname, a.route_patterns) && !alreadySeen(a.id));
+        .filter((a) => a.image_url && a.link_url && matchesRoute(pathname, a.route_patterns) && !alreadySeen(a.id));
 
       const picked = pickWeighted(enriched);
       if (picked) setAd(picked);
@@ -135,6 +155,8 @@ export function AdModal() {
     const show = () => {
       if (triggered) return;
       triggered = true;
+      // Delay já cumpriu seu papel — libera a ref para o setTimeout de fechamento.
+      if (delayTimer.current) { window.clearTimeout(delayTimer.current); delayTimer.current = null; }
       setVisible(true);
       setCountdown(ad.display_seconds);
       void supabase.rpc("track_ad_event", { _ad_id: ad.id, _kind: "impression" });
@@ -144,17 +166,14 @@ export function AdModal() {
         entity_id: ad.id,
         meta: { device: window.matchMedia("(max-width: 768px)").matches ? "mobile" : "desktop" },
       });
-      timers.current.tick = window.setInterval(() => {
+      tickInterval.current = window.setInterval(() => {
         setCountdown((c) => (c > 0 ? c - 1 : 0));
       }, 1000);
-      // Auto-close após display_seconds — separado do updater para evitar
-      // side-effects dentro de setState (bug do React StrictMode).
-      timers.current.show = window.setTimeout(() => {
+      closeTimer.current = window.setTimeout(() => {
         close();
       }, Math.max(1, ad.display_seconds) * 1000);
-
     };
-    timers.current.show = window.setTimeout(show, Math.max(0, ad.delay_seconds) * 1000);
+    delayTimer.current = window.setTimeout(show, Math.max(0, ad.delay_seconds) * 1000);
 
     const onScroll = () => {
       if (triggered || !ad.scroll_trigger_percent) return;
@@ -167,14 +186,13 @@ export function AdModal() {
     }
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (timers.current.show) window.clearTimeout(timers.current.show);
-      if (timers.current.tick) window.clearInterval(timers.current.tick);
+      clearAllTimers();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ad]);
 
   function close() {
-    if (timers.current.tick) window.clearInterval(timers.current.tick);
+    clearAllTimers();
     setVisible(false);
     if (ad) markSeen(ad.id);
   }
@@ -189,10 +207,17 @@ export function AdModal() {
       meta: { device: window.matchMedia("(max-width: 768px)").matches ? "mobile" : "desktop" },
     });
     markSeen(ad.id);
-    // Fecha o modal após o clique — evita banner "pendurado" quando o link
-    // abre em nova aba (target=_blank).
+    // Fecha o modal e cancela auto-close/tick pendentes.
+    clearAllTimers();
     setVisible(false);
-    if (timers.current.tick) window.clearInterval(timers.current.tick);
+  }
+
+  function onImgError() {
+    // Imagem quebrada = anúncio inútil. Marca como visto para não reinserir.
+    if (ad) markSeen(ad.id);
+    clearAllTimers();
+    setVisible(false);
+    setAd(null);
   }
 
 
