@@ -130,7 +130,10 @@ function AdminTurismo() {
     const { error } = form.id
       ? await supabase.from("tourist_attractions").update(payload).eq("id", form.id)
       : await supabase.from("tourist_attractions").insert(payload);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success(form.id ? "Atração atualizada" : "Atração criada");
     setEditing(null);
     qc.invalidateQueries({ queryKey: ["admin-tourist-attractions"] });

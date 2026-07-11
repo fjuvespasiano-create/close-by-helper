@@ -57,6 +57,7 @@ import { Route as EmpregosIdRouteImport } from './routes/empregos.$id'
 import { Route as CidadesSlugRouteImport } from './routes/cidades.$slug'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminTurismoRouteImport } from './routes/admin.turismo'
 import { Route as AdminTextosRouteImport } from './routes/admin.textos'
 import { Route as AdminServicosPublicosRouteImport } from './routes/admin.servicos-publicos'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
@@ -336,6 +337,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminTurismoRoute = AdminTurismoRouteImport.update({
+  id: '/turismo',
+  path: '/turismo',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminTextosRoute = AdminTextosRouteImport.update({
   id: '/textos',
   path: '/textos',
@@ -577,6 +583,7 @@ export interface FileRoutesByFullPath {
   '/admin/qa': typeof AdminQaRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/textos': typeof AdminTextosRoute
+  '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
@@ -661,6 +668,7 @@ export interface FileRoutesByTo {
   '/admin/qa': typeof AdminQaRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/textos': typeof AdminTextosRoute
+  '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
@@ -750,6 +758,7 @@ export interface FileRoutesById {
   '/admin/qa': typeof AdminQaRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/textos': typeof AdminTextosRoute
+  '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
@@ -840,6 +849,7 @@ export interface FileRouteTypes {
     | '/admin/qa'
     | '/admin/servicos-publicos'
     | '/admin/textos'
+    | '/admin/turismo'
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/cidades/$slug'
@@ -924,6 +934,7 @@ export interface FileRouteTypes {
     | '/admin/qa'
     | '/admin/servicos-publicos'
     | '/admin/textos'
+    | '/admin/turismo'
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/cidades/$slug'
@@ -1012,6 +1023,7 @@ export interface FileRouteTypes {
     | '/admin/qa'
     | '/admin/servicos-publicos'
     | '/admin/textos'
+    | '/admin/turismo'
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/cidades/$slug'
@@ -1444,6 +1456,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/turismo': {
+      id: '/admin/turismo'
+      path: '/turismo'
+      fullPath: '/admin/turismo'
+      preLoaderRoute: typeof AdminTurismoRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/textos': {
       id: '/admin/textos'
       path: '/textos'
@@ -1750,6 +1769,7 @@ interface AdminRouteChildren {
   AdminQaRoute: typeof AdminQaRoute
   AdminServicosPublicosRoute: typeof AdminServicosPublicosRoute
   AdminTextosRoute: typeof AdminTextosRoute
+  AdminTurismoRoute: typeof AdminTurismoRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -1770,6 +1790,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminQaRoute: AdminQaRoute,
   AdminServicosPublicosRoute: AdminServicosPublicosRoute,
   AdminTextosRoute: AdminTextosRoute,
+  AdminTurismoRoute: AdminTurismoRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
