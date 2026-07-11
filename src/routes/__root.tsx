@@ -6,15 +6,22 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  ClientOnly,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { registerServiceWorker } from "@/lib/pwa";
 import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
-import { BugReportButton } from "@/components/qa/BugReportButton";
+
+const BugReportButton = lazy(() =>
+  import("@/components/qa/BugReportButton").then((m) => ({ default: m.BugReportButton })),
+);
+
+const SUPABASE_ORIGIN = (import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? "";
+
 
 function NotFoundComponent() {
   return (
