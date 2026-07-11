@@ -100,9 +100,9 @@ function PlanosPage() {
       <section className="border-b border-border bg-gradient-to-br from-primary to-primary-dark text-primary-foreground">
         <div className="container mx-auto px-4 py-16 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] ring-1 ring-white/20 backdrop-blur">Para donos de empresa</span>
-          <h1 className="mt-4 font-display text-4xl font-extrabold md:text-5xl">Apareça para quem já procura o seu serviço</h1>
+          <h1 className="mt-4 font-display text-4xl font-extrabold md:text-5xl">Apareça para quem já quer contratar hoje</h1>
           <p className="mx-auto mt-3 max-w-2xl text-white/90">
-            Vizinhos de Vespasiano e São José da Lapa usam o AgendaAqui todo dia para achar quem resolve. Escolha como quer aparecer — o cadastro leva 2 minutos.
+            Todos os dias, vizinhos de Vespasiano e São José da Lapa entram no AgendaAqui para achar quem resolve. Escolha como quer aparecer — o cadastro leva 2 minutos e é grátis.
           </p>
         </div>
       </section>
