@@ -6,7 +6,7 @@
 // removed because that key is public (shipped in the client bundle).
 
 export function checkCronAuth(request: Request): Response | null {
-  const expected = process.env.CRON_SECRET;
+  const expected = process.env.CRON_HOOK_SECRET ?? process.env.CRON_SECRET;
   if (!expected) {
     return new Response(
       JSON.stringify({ error: "server_misconfigured", detail: "CRON_SECRET not set" }),
