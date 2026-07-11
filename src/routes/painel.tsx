@@ -85,6 +85,7 @@ function PanelLayout() {
           <Outlet />
         </div>
       </div>
+      <PanelOnboardingWizard userId={userId} />
     </SiteLayout>
   );
 }
