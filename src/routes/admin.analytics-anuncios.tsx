@@ -447,16 +447,23 @@ function AnalyticsAnunciosPage() {
   );
 }
 
-function MetricCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function MetricCard({ icon, label, value, delta }: { icon: React.ReactNode; label: string; value: string; delta?: number }) {
+  const up = (delta ?? 0) >= 0;
   return (
     <div className="rounded-xl border bg-card p-4">
       <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
         {icon} {label}
       </div>
       <div className="mt-2 text-2xl font-bold">{value}</div>
+      {typeof delta === "number" && (
+        <div className={`mt-1 text-xs font-medium ${up ? "text-emerald-600" : "text-red-600"}`}>
+          {up ? "▲" : "▼"} {Math.abs(delta).toFixed(1)}% vs período anterior
+        </div>
+      )}
     </div>
   );
 }
+
 
 function ReportKPI({ label, value, sub }: { label: string; value: string; sub: string }) {
   return (
