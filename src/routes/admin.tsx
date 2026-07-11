@@ -22,6 +22,7 @@ type AdminPath =
   | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/calendario-editorial"
   | "/admin/promocoes"
   | "/admin/scraper-vespasiano" | "/admin/scraper-sjl"
+  | "/admin/backup"
   | "/admin/configuracoes";
 
 type NavItem = { to: AdminPath; label: string; icon: typeof LayoutDashboard; exact?: boolean };
