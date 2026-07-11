@@ -13,6 +13,7 @@ import { Route as TransporteRouteImport } from './routes/transporte'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicosPublicosRouteImport } from './routes/servicos-publicos'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReputacaoRouteImport } from './routes/reputacao'
 import { Route as PromocoesRouteImport } from './routes/promocoes'
 import { Route as PlanosRouteImport } from './routes/planos'
@@ -96,6 +97,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ServicosPublicosRoute = ServicosPublicosRouteImport.update({
   id: '/servicos-publicos',
   path: '/servicos-publicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReputacaoRoute = ReputacaoRouteImport.update({
@@ -438,6 +444,7 @@ export interface FileRoutesByFullPath {
   '/planos': typeof PlanosRoute
   '/promocoes': typeof PromocoesRoute
   '/reputacao': typeof ReputacaoRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -506,6 +513,7 @@ export interface FileRoutesByTo {
   '/planos': typeof PlanosRoute
   '/promocoes': typeof PromocoesRoute
   '/reputacao': typeof ReputacaoRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -576,6 +584,7 @@ export interface FileRoutesById {
   '/planos': typeof PlanosRoute
   '/promocoes': typeof PromocoesRoute
   '/reputacao': typeof ReputacaoRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -648,6 +657,7 @@ export interface FileRouteTypes {
     | '/planos'
     | '/promocoes'
     | '/reputacao'
+    | '/reset-password'
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
@@ -716,6 +726,7 @@ export interface FileRouteTypes {
     | '/planos'
     | '/promocoes'
     | '/reputacao'
+    | '/reset-password'
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
@@ -785,6 +796,7 @@ export interface FileRouteTypes {
     | '/planos'
     | '/promocoes'
     | '/reputacao'
+    | '/reset-password'
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
@@ -856,6 +868,7 @@ export interface RootRouteChildren {
   PlanosRoute: typeof PlanosRoute
   PromocoesRoute: typeof PromocoesRoute
   ReputacaoRoute: typeof ReputacaoRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ServicosPublicosRoute: typeof ServicosPublicosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
@@ -902,6 +915,13 @@ declare module '@tanstack/react-router' {
       path: '/servicos-publicos'
       fullPath: '/servicos-publicos'
       preLoaderRoute: typeof ServicosPublicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reputacao': {
@@ -1522,6 +1542,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlanosRoute: PlanosRoute,
   PromocoesRoute: PromocoesRoute,
   ReputacaoRoute: ReputacaoRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ServicosPublicosRoute: ServicosPublicosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
