@@ -90,12 +90,12 @@ self.addEventListener('fetch', (event) => {
 });
 
 // ---------- Push notifications ----------
-function track(deliveryId, event) {
-  if (!deliveryId) return Promise.resolve();
+function track(deliveryId, event, token) {
+  if (!deliveryId || !token) return Promise.resolve();
   return fetch('/api/public/push/track', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ delivery_id: deliveryId, event }),
+    body: JSON.stringify({ delivery_id: deliveryId, event, token }),
     keepalive: true,
   }).catch(() => {});
 }
