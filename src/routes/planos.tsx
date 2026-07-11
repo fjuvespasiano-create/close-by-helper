@@ -106,7 +106,7 @@ function PlanosPage() {
         @keyframes planos-gradient-shift { 0%,100% { background-position: 0% 50%;} 50% { background-position: 100% 50%;} }
         @keyframes planos-shine { 0% { transform: translateX(-120%) skewX(-20deg);} 100% { transform: translateX(220%) skewX(-20deg);} }
         @keyframes planos-crown-float { 0%,100% { transform: translateY(0) rotate(-2deg);} 50% { transform: translateY(-4px) rotate(2deg);} }
-        @keyframes planos-badge-pulse { 0%,100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0.55);} 50% { box-shadow: 0 0 0 10px hsl(var(--accent) / 0);} }
+        @keyframes planos-badge-pulse { 0%,100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 55%, transparent);} 50% { box-shadow: 0 0 0 10px color-mix(in oklab, var(--accent) 0%, transparent);} }
 
         .planos-fade { opacity: 0; animation: planos-fade-up .7s cubic-bezier(.22,.61,.36,1) forwards; }
         .planos-hero { position: relative; overflow: hidden; }
@@ -114,24 +114,24 @@ function PlanosPage() {
           content: ""; position: absolute; border-radius: 9999px; filter: blur(60px);
           pointer-events: none; opacity: .35; will-change: transform;
         }
-        .planos-hero::before { width: 420px; height: 420px; background: hsl(var(--accent)); top: -140px; left: -80px; animation: planos-hero-blob 12s ease-in-out infinite; }
-        .planos-hero::after { width: 380px; height: 380px; background: hsl(var(--primary-foreground) / 0.35); bottom: -160px; right: -60px; animation: planos-hero-blob 14s ease-in-out infinite reverse; }
+        .planos-hero::before { width: 420px; height: 420px; background: var(--accent); top: -140px; left: -80px; animation: planos-hero-blob 12s ease-in-out infinite; }
+        .planos-hero::after { width: 380px; height: 380px; background: color-mix(in oklab, var(--primary-foreground) 35%, transparent); bottom: -160px; right: -60px; animation: planos-hero-blob 14s ease-in-out infinite reverse; }
 
         .planos-card { position: relative; transition: transform .45s cubic-bezier(.22,.61,.36,1), box-shadow .45s ease, border-color .3s ease; }
         .planos-card:hover { transform: translateY(-8px); }
-        .planos-card--free:hover { box-shadow: 0 20px 45px -25px hsl(var(--primary) / 0.35); border-color: hsl(var(--primary) / 0.4); }
+        .planos-card--free:hover { box-shadow: 0 20px 45px -25px color-mix(in oklab, var(--primary) 35%, transparent); border-color: color-mix(in oklab, var(--primary) 40%, transparent); }
 
         .planos-card--premium { background:
-          linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-          linear-gradient(120deg, hsl(var(--accent)), hsl(var(--primary)), hsl(var(--accent))) border-box;
+          linear-gradient(var(--card), var(--card)) padding-box,
+          linear-gradient(120deg, var(--accent), var(--primary), var(--accent)) border-box;
           background-size: 100% 100%, 220% 220%;
           border: 2px solid transparent;
           animation: planos-gradient-shift 8s ease infinite;
         }
-        .planos-card--premium:hover { box-shadow: 0 30px 60px -25px hsl(var(--accent) / 0.55); }
+        .planos-card--premium:hover { box-shadow: 0 30px 60px -25px color-mix(in oklab, var(--accent) 55%, transparent); }
         .planos-card--premium::after {
           content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
-          background: radial-gradient(600px circle at var(--mx,50%) var(--my,0%), hsl(var(--accent) / 0.18), transparent 40%);
+          background: radial-gradient(600px circle at var(--mx,50%) var(--my,0%), color-mix(in oklab, var(--accent) 18%, transparent), transparent 40%);
           opacity: 0; transition: opacity .4s ease;
         }
         .planos-card--premium:hover::after { opacity: 1; }
@@ -140,25 +140,26 @@ function PlanosPage() {
         .planos-crown { animation: planos-crown-float 3.2s ease-in-out infinite; transform-origin: center; }
 
         .planos-feature { opacity: 0; animation: planos-fade-up .5s ease forwards; }
-        .planos-check { display: inline-flex; align-items: center; justify-content: center; height: 20px; width: 20px; border-radius: 9999px; background: hsl(var(--primary) / 0.12); color: hsl(var(--primary)); transition: transform .25s ease, background .25s ease; flex-shrink: 0; margin-top: 2px; }
-        .planos-card--premium .planos-check { background: hsl(var(--accent) / 0.18); color: hsl(var(--accent)); }
+        .planos-check { display: inline-flex; align-items: center; justify-content: center; height: 20px; width: 20px; border-radius: 9999px; background: color-mix(in oklab, var(--primary) 12%, transparent); color: var(--primary); transition: transform .25s ease, background .25s ease; flex-shrink: 0; margin-top: 2px; }
+        .planos-card--premium .planos-check { background: color-mix(in oklab, var(--accent) 18%, transparent); color: var(--accent); }
         .planos-feature:hover .planos-check { transform: scale(1.15) rotate(-6deg); }
 
         .planos-btn-shine { position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .3s ease; }
-        .planos-btn-shine:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -12px hsl(var(--primary) / 0.5); }
+        .planos-btn-shine:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -12px color-mix(in oklab, var(--primary) 50%, transparent); }
         .planos-btn-shine::before {
           content: ""; position: absolute; inset: 0;
-          background: linear-gradient(90deg, transparent, hsl(var(--primary-foreground) / 0.35), transparent);
+          background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--primary-foreground) 35%, transparent), transparent);
           transform: translateX(-120%) skewX(-20deg); pointer-events: none;
         }
         .planos-btn-shine:hover::before { animation: planos-shine .9s ease forwards; }
-        .planos-card--premium .planos-btn-shine:hover { box-shadow: 0 14px 32px -12px hsl(var(--accent) / 0.6); }
+        .planos-card--premium .planos-btn-shine:hover { box-shadow: 0 14px 32px -12px color-mix(in oklab, var(--accent) 60%, transparent); }
 
         @media (prefers-reduced-motion: reduce) {
           .planos-fade, .planos-feature, .planos-badge, .planos-crown, .planos-hero::before, .planos-hero::after, .planos-card--premium { animation: none !important; opacity: 1 !important; }
           .planos-card:hover { transform: none; }
         }
       `}</style>
+
 
       <section className="planos-hero border-b border-border bg-gradient-to-br from-primary via-primary to-primary-dark text-primary-foreground">
         <div className="container relative z-10 mx-auto px-4 py-16 text-center sm:py-20">
