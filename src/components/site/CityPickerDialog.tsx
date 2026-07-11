@@ -19,15 +19,23 @@ export function CityPickerDialog({ trigger }: { trigger?: React.ReactNode }) {
 
   async function useGPS() {
     setDetecting(true);
-    const res = await runGPS();
-    setDetecting(false);
-    if (res?.slug) {
-      toast.success(`Cidade detectada: ${res.name}`);
-      setOpen(false);
-    } else {
-      toast.error("Não foi possível detectar sua cidade");
+    try {
+      const res = await runGPS();
+      if (res.ok) {
+        if (res.slug) {
+          toast.success(`Cidade detectada: ${res.name}`);
+          setOpen(false);
+        } else {
+          toast.warning("Nenhuma cidade próxima cadastrada. Escolha manualmente abaixo.");
+        }
+      } else {
+        toast.error(res.message);
+      }
+    } finally {
+      setDetecting(false);
     }
   }
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
