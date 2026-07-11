@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle, Circle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useCurrentUserId } from "@/lib/favorites";
 import { Button } from "@/components/ui/button";
@@ -30,6 +30,36 @@ function Mensagens() {
   const qc = useQueryClient();
   const [active, setActive] = useState<ThreadKey | null>(null);
   const [draft, setDraft] = useState("");
+  const [otherOnline, setOtherOnline] = useState(false);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  // === REALTIME: escuta INSERT/UPDATE em listing_messages e revalida caches.
+  // RLS já garante que só recebemos linhas onde somos comprador/vendedor.
+  useEffect(() => {
+    if (!userId) return;
+    const channel = supabase
+      .channel(`mk-msgs-${userId}`)
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "listing_messages" },
+        () => {
+          qc.invalidateQueries({ queryKey: ["mk", "msgs", userId] });
+          if (active) qc.invalidateQueries({ queryKey: ["mk", "thread", active] });
+          qc.invalidateQueries({ queryKey: ["mk", "unread-count", userId] });
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "listing_messages" },
+        () => {
+          qc.invalidateQueries({ queryKey: ["mk", "msgs", userId] });
+          if (active) qc.invalidateQueries({ queryKey: ["mk", "thread", active] });
+          qc.invalidateQueries({ queryKey: ["mk", "unread-count", userId] });
+        },
+      )
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [userId, active, qc]);
 
   const msgsQ = useQuery({
     queryKey: ["mk", "msgs", userId],
@@ -93,6 +123,32 @@ function Mensagens() {
       return data ? toListing(data) : null;
     },
   });
+
+  // === PRESENCE: mostra se o outro lado está online na conversa aberta.
+  useEffect(() => {
+    if (!activeThread || !userId) return;
+    const otherId = activeThread.sellerId === userId ? activeThread.buyerId : activeThread.sellerId;
+    const channel = supabase.channel(`mk-presence-${activeThread.key}`, {
+      config: { presence: { key: userId } },
+    });
+    channel
+      .on("presence", { event: "sync" }, () => {
+        const state = channel.presenceState();
+        setOtherOnline(Object.keys(state).includes(otherId));
+      })
+      .subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          await channel.track({ online_at: new Date().toISOString() });
+        }
+      });
+    return () => { supabase.removeChannel(channel); setOtherOnline(false); };
+  }, [activeThread, userId]);
+
+  // Auto-scroll ao final quando novas mensagens chegam / conversa muda.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [threadMsgsQ.data, active]);
 
   async function send() {
     if (!activeThread || !userId || draft.trim().length < 2) return;
@@ -160,18 +216,28 @@ function Mensagens() {
           ) : (
             <>
               {listingQ.data ? (
-                <Link to="/marketplace/$slug" params={{ slug: listingQ.data.slug }}
-                  className="flex items-center gap-3 border-b p-3 hover:bg-muted/50">
-                  <div className="h-12 w-12 shrink-0 overflow-hidden rounded bg-muted">
-                    {listingQ.data.images[0] ? <img src={listingQ.data.images[0]} alt="" className="h-full w-full object-cover" /> : null}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold">{listingQ.data.title}</p>
-                    <p className="text-xs text-muted-foreground">Ver anúncio</p>
-                  </div>
-                </Link>
+                <div className="flex items-center gap-3 border-b p-3">
+                  <Link to="/marketplace/$slug" params={{ slug: listingQ.data.slug }} className="flex min-w-0 flex-1 items-center gap-3 hover:opacity-80">
+                    <div className="h-12 w-12 shrink-0 overflow-hidden rounded bg-muted">
+                      {listingQ.data.images[0] ? <img src={listingQ.data.images[0]} alt="" className="h-full w-full object-cover" /> : null}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold">{listingQ.data.title}</p>
+                      <p className="text-xs text-muted-foreground">Ver anúncio</p>
+                    </div>
+                  </Link>
+                  <span
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                      otherOnline ? "bg-green-500/10 text-green-700 dark:text-green-400" : "bg-muted text-muted-foreground"
+                    }`}
+                    title={otherOnline ? "Está online agora" : "Offline"}
+                  >
+                    <Circle className={`h-2 w-2 ${otherOnline ? "fill-green-500 text-green-500" : "fill-muted-foreground text-muted-foreground"}`} />
+                    {otherOnline ? "Online" : "Offline"}
+                  </span>
+                </div>
               ) : null}
-              <div className="flex-1 space-y-2 overflow-y-auto p-3">
+              <div ref={scrollRef} className="flex-1 space-y-2 overflow-y-auto p-3">
                 {(threadMsgsQ.data ?? []).map((m) => {
                   const mine = m.sender_id === userId;
                   return (
