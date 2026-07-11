@@ -82,6 +82,12 @@ export function AdModal() {
       setVisible(true);
       setCountdown(ad.display_seconds);
       void supabase.rpc("track_ad_event", { _ad_id: ad.id, _kind: "impression" });
+      void supabase.from("analytics_events").insert({
+        name: "ad_impression",
+        entity_type: "ad_campaign",
+        entity_id: ad.id,
+        meta: { device: window.matchMedia("(max-width: 768px)").matches ? "mobile" : "desktop" },
+      });
       timers.current.tick = window.setInterval(() => {
         setCountdown((c) => {
           if (c <= 1) {
