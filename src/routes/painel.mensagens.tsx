@@ -30,6 +30,36 @@ function Mensagens() {
   const qc = useQueryClient();
   const [active, setActive] = useState<ThreadKey | null>(null);
   const [draft, setDraft] = useState("");
+  const [otherOnline, setOtherOnline] = useState(false);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  // === REALTIME: escuta INSERT/UPDATE em listing_messages e revalida caches.
+  // RLS já garante que só recebemos linhas onde somos comprador/vendedor.
+  useEffect(() => {
+    if (!userId) return;
+    const channel = supabase
+      .channel(`mk-msgs-${userId}`)
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "listing_messages" },
+        () => {
+          qc.invalidateQueries({ queryKey: ["mk", "msgs", userId] });
+          if (active) qc.invalidateQueries({ queryKey: ["mk", "thread", active] });
+          qc.invalidateQueries({ queryKey: ["mk", "unread-count", userId] });
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "listing_messages" },
+        () => {
+          qc.invalidateQueries({ queryKey: ["mk", "msgs", userId] });
+          if (active) qc.invalidateQueries({ queryKey: ["mk", "thread", active] });
+          qc.invalidateQueries({ queryKey: ["mk", "unread-count", userId] });
+        },
+      )
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [userId, active, qc]);
 
   const msgsQ = useQuery({
     queryKey: ["mk", "msgs", userId],
