@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { X, Crown } from "lucide-react";
+import { useRouterState } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useSelectedCity } from "@/hooks/useSelectedCity";
 
@@ -12,9 +13,14 @@ type Ad = {
   scroll_trigger_percent: number;
   display_seconds: number;
   placement: "bottom-right" | "bottom-center" | "center";
+  weight: number | null;
+  route_patterns: string[] | null;
+  company_id: string | null;
+  is_premium: boolean;
 };
 
 const DISMISS_HOURS = 12;
+const PREMIUM_WEIGHT_MULTIPLIER = 3;
 
 function alreadySeen(id: string) {
   try {
@@ -35,12 +41,29 @@ function markSeen(id: string) {
   }
 }
 
-function pickWeighted<T extends { weight?: number | null }>(items: T[]): T | null {
+/** Matches a URL pathname against a pattern list. Empty list = matches everywhere.
+ *  Patterns support a trailing `*` wildcard (e.g. `/empresa/*` matches `/empresa/foo`). */
+function matchesRoute(pathname: string, patterns: string[] | null | undefined) {
+  if (!patterns || patterns.length === 0) return true;
+  return patterns.some((raw) => {
+    const p = raw.trim();
+    if (!p) return false;
+    if (p.endsWith("*")) return pathname.startsWith(p.slice(0, -1));
+    return pathname === p;
+  });
+}
+
+function effectiveWeight(ad: { weight: number | null; is_premium: boolean }) {
+  const base = Math.max(1, ad.weight ?? 1);
+  return ad.is_premium ? base * PREMIUM_WEIGHT_MULTIPLIER : base;
+}
+
+function pickWeighted(items: Ad[]): Ad | null {
   if (!items.length) return null;
-  const total = items.reduce((s, it) => s + Math.max(1, it.weight ?? 1), 0);
+  const total = items.reduce((s, it) => s + effectiveWeight(it), 0);
   let r = Math.random() * total;
   for (const it of items) {
-    r -= Math.max(1, it.weight ?? 1);
+    r -= effectiveWeight(it);
     if (r <= 0) return it;
   }
   return items[items.length - 1];
@@ -48,29 +71,62 @@ function pickWeighted<T extends { weight?: number | null }>(items: T[]): T | nul
 
 export function AdModal() {
   const { city } = useSelectedCity();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [ad, setAd] = useState<Ad | null>(null);
   const [visible, setVisible] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const timers = useRef<{ show?: number; tick?: number }>({});
 
-  // Fetch a random active ad for this city (or global)
+  // Fetch active ads for this city, then filter by current route + boost Premium weight.
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      const nowIso = new Date().toISOString();
       const { data, error } = await supabase
         .from("ad_campaigns")
-        .select("id,name,image_url,link_url,delay_seconds,scroll_trigger_percent,display_seconds,placement,weight,city_slug")
+        .select(
+          "id,name,image_url,link_url,delay_seconds,scroll_trigger_percent,display_seconds,placement,weight,city_slug,route_patterns,company_id,companies:company_id(plan,status,plan_expires_at)",
+        )
+        .eq("active", true)
         .or(`city_slug.is.null,city_slug.eq.${city}`)
-        .limit(20);
+        .or(`starts_at.is.null,starts_at.lte.${nowIso}`)
+        .or(`ends_at.is.null,ends_at.gte.${nowIso}`)
+        .limit(40);
       if (cancelled || error || !data?.length) return;
-      const pool = data.filter((a) => !alreadySeen(a.id));
-      const picked = pickWeighted(pool);
-      if (picked) setAd(picked as Ad);
+
+      const enriched: Ad[] = data
+        .map((row) => {
+          const company = row.companies as { plan?: string | null; status?: string | null; plan_expires_at?: string | null } | null;
+          const premiumActive =
+            !!company &&
+            company.plan === "premium" &&
+            company.status === "active" &&
+            (!company.plan_expires_at || new Date(company.plan_expires_at) > new Date());
+          return {
+            id: row.id,
+            name: row.name,
+            image_url: row.image_url,
+            link_url: row.link_url,
+            delay_seconds: row.delay_seconds,
+            scroll_trigger_percent: row.scroll_trigger_percent,
+            display_seconds: row.display_seconds,
+            placement: row.placement as Ad["placement"],
+            weight: row.weight,
+            route_patterns: row.route_patterns,
+            company_id: row.company_id,
+            is_premium: premiumActive,
+          };
+        })
+        .filter((a) => matchesRoute(pathname, a.route_patterns) && !alreadySeen(a.id));
+
+      const picked = pickWeighted(enriched);
+      if (picked) setAd(picked);
     })();
     return () => {
       cancelled = true;
     };
-  }, [city]);
+  }, [city, pathname]);
+
 
   // Trigger by delay OR scroll depth
   useEffect(() => {
