@@ -16,6 +16,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicosPublicosRouteImport } from './routes/servicos-publicos'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReputacaoRouteImport } from './routes/reputacao'
+import { Route as RepresentantesRouteImport } from './routes/representantes'
 import { Route as PromocoesRouteImport } from './routes/promocoes'
 import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PainelRouteImport } from './routes/painel'
@@ -30,10 +31,14 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AgoraRouteImport } from './routes/agora'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RepresentantesIndexRouteImport } from './routes/representantes.index'
 import { Route as PainelIndexRouteImport } from './routes/painel.index'
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as RepresentantesRankingRouteImport } from './routes/representantes.ranking'
+import { Route as RepresentantesFeedRouteImport } from './routes/representantes.feed'
+import { Route as RepresentantesIdRouteImport } from './routes/representantes.$id'
 import { Route as PainelRankingRouteImport } from './routes/painel.ranking'
 import { Route as PainelPerfilRouteImport } from './routes/painel.perfil'
 import { Route as PainelNotificacoesRouteImport } from './routes/painel.notificacoes'
@@ -77,6 +82,9 @@ import { Route as AdminPushIdRouteImport } from './routes/admin.push.$id'
 import { Route as PainelAnunciosIdEditarRouteImport } from './routes/painel.anuncios.$id.editar'
 import { Route as ApiPublicPushTrackRouteImport } from './routes/api/public/push/track'
 import { Route as ApiPublicPushResubscribeRouteImport } from './routes/api/public/push/resubscribe'
+import { Route as ApiPublicHooksWhatsappWeeklyDigestRouteImport } from './routes/api/public/hooks/whatsapp-weekly-digest'
+import { Route as ApiPublicHooksWhatsappOptOutRouteImport } from './routes/api/public/hooks/whatsapp-opt-out'
+import { Route as ApiPublicHooksSyncRepresentativesRouteImport } from './routes/api/public/hooks/sync-representatives'
 import { Route as ApiPublicHooksSyncOriginalRouteImport } from './routes/api/public/hooks/sync-original'
 import { Route as ApiPublicHooksScrapeServicesRouteImport } from './routes/api/public/hooks/scrape-services'
 import { Route as ApiPublicHooksScrapeProcurementsRouteImport } from './routes/api/public/hooks/scrape-procurements'
@@ -117,6 +125,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const ReputacaoRoute = ReputacaoRouteImport.update({
   id: '/reputacao',
   path: '/reputacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RepresentantesRoute = RepresentantesRouteImport.update({
+  id: '/representantes',
+  path: '/representantes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PromocoesRoute = PromocoesRouteImport.update({
@@ -189,6 +202,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RepresentantesIndexRoute = RepresentantesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RepresentantesRoute,
+} as any)
 const PainelIndexRoute = PainelIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -208,6 +226,21 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const RepresentantesRankingRoute = RepresentantesRankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
+  getParentRoute: () => RepresentantesRoute,
+} as any)
+const RepresentantesFeedRoute = RepresentantesFeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
+  getParentRoute: () => RepresentantesRoute,
+} as any)
+const RepresentantesIdRoute = RepresentantesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => RepresentantesRoute,
 } as any)
 const PainelRankingRoute = PainelRankingRouteImport.update({
   id: '/ranking',
@@ -426,6 +459,24 @@ const ApiPublicPushResubscribeRoute =
     path: '/api/public/push/resubscribe',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksWhatsappWeeklyDigestRoute =
+  ApiPublicHooksWhatsappWeeklyDigestRouteImport.update({
+    id: '/api/public/hooks/whatsapp-weekly-digest',
+    path: '/api/public/hooks/whatsapp-weekly-digest',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicHooksWhatsappOptOutRoute =
+  ApiPublicHooksWhatsappOptOutRouteImport.update({
+    id: '/api/public/hooks/whatsapp-opt-out',
+    path: '/api/public/hooks/whatsapp-opt-out',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicHooksSyncRepresentativesRoute =
+  ApiPublicHooksSyncRepresentativesRouteImport.update({
+    id: '/api/public/hooks/sync-representatives',
+    path: '/api/public/hooks/sync-representatives',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksSyncOriginalRoute =
   ApiPublicHooksSyncOriginalRouteImport.update({
     id: '/api/public/hooks/sync-original',
@@ -477,6 +528,7 @@ export interface FileRoutesByFullPath {
   '/painel': typeof PainelRouteWithChildren
   '/planos': typeof PlanosRoute
   '/promocoes': typeof PromocoesRoute
+  '/representantes': typeof RepresentantesRouteWithChildren
   '/reputacao': typeof ReputacaoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/servicos-publicos': typeof ServicosPublicosRoute
@@ -515,10 +567,14 @@ export interface FileRoutesByFullPath {
   '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/representantes/$id': typeof RepresentantesIdRoute
+  '/representantes/feed': typeof RepresentantesFeedRoute
+  '/representantes/ranking': typeof RepresentantesRankingRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/painel/': typeof PainelIndexRoute
+  '/representantes/': typeof RepresentantesIndexRoute
   '/admin/push/$id': typeof AdminPushIdRoute
   '/admin/push/historico': typeof AdminPushHistoricoRoute
   '/admin/push/novo': typeof AdminPushNovoRoute
@@ -534,6 +590,9 @@ export interface FileRoutesByFullPath {
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
+  '/api/public/hooks/sync-representatives': typeof ApiPublicHooksSyncRepresentativesRoute
+  '/api/public/hooks/whatsapp-opt-out': typeof ApiPublicHooksWhatsappOptOutRoute
+  '/api/public/hooks/whatsapp-weekly-digest': typeof ApiPublicHooksWhatsappWeeklyDigestRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
@@ -588,10 +647,14 @@ export interface FileRoutesByTo {
   '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/representantes/$id': typeof RepresentantesIdRoute
+  '/representantes/feed': typeof RepresentantesFeedRoute
+  '/representantes/ranking': typeof RepresentantesRankingRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/eventos': typeof EventosIndexRoute
   '/painel': typeof PainelIndexRoute
+  '/representantes': typeof RepresentantesIndexRoute
   '/admin/push/$id': typeof AdminPushIdRoute
   '/admin/push/historico': typeof AdminPushHistoricoRoute
   '/admin/push/novo': typeof AdminPushNovoRoute
@@ -607,6 +670,9 @@ export interface FileRoutesByTo {
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
+  '/api/public/hooks/sync-representatives': typeof ApiPublicHooksSyncRepresentativesRoute
+  '/api/public/hooks/whatsapp-opt-out': typeof ApiPublicHooksWhatsappOptOutRoute
+  '/api/public/hooks/whatsapp-weekly-digest': typeof ApiPublicHooksWhatsappWeeklyDigestRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
@@ -627,6 +693,7 @@ export interface FileRoutesById {
   '/painel': typeof PainelRouteWithChildren
   '/planos': typeof PlanosRoute
   '/promocoes': typeof PromocoesRoute
+  '/representantes': typeof RepresentantesRouteWithChildren
   '/reputacao': typeof ReputacaoRoute
   '/reset-password': typeof ResetPasswordRoute
   '/servicos-publicos': typeof ServicosPublicosRoute
@@ -665,10 +732,14 @@ export interface FileRoutesById {
   '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/representantes/$id': typeof RepresentantesIdRoute
+  '/representantes/feed': typeof RepresentantesFeedRoute
+  '/representantes/ranking': typeof RepresentantesRankingRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/eventos/': typeof EventosIndexRoute
   '/painel/': typeof PainelIndexRoute
+  '/representantes/': typeof RepresentantesIndexRoute
   '/admin/push/$id': typeof AdminPushIdRoute
   '/admin/push/historico': typeof AdminPushHistoricoRoute
   '/admin/push/novo': typeof AdminPushNovoRoute
@@ -684,6 +755,9 @@ export interface FileRoutesById {
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
+  '/api/public/hooks/sync-representatives': typeof ApiPublicHooksSyncRepresentativesRoute
+  '/api/public/hooks/whatsapp-opt-out': typeof ApiPublicHooksWhatsappOptOutRoute
+  '/api/public/hooks/whatsapp-weekly-digest': typeof ApiPublicHooksWhatsappWeeklyDigestRoute
   '/api/public/push/resubscribe': typeof ApiPublicPushResubscribeRoute
   '/api/public/push/track': typeof ApiPublicPushTrackRoute
   '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
@@ -705,6 +779,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/planos'
     | '/promocoes'
+    | '/representantes'
     | '/reputacao'
     | '/reset-password'
     | '/servicos-publicos'
@@ -743,10 +818,14 @@ export interface FileRouteTypes {
     | '/painel/notificacoes'
     | '/painel/perfil'
     | '/painel/ranking'
+    | '/representantes/$id'
+    | '/representantes/feed'
+    | '/representantes/ranking'
     | '/admin/'
     | '/blog/'
     | '/eventos/'
     | '/painel/'
+    | '/representantes/'
     | '/admin/push/$id'
     | '/admin/push/historico'
     | '/admin/push/novo'
@@ -762,6 +841,9 @@ export interface FileRouteTypes {
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
+    | '/api/public/hooks/sync-representatives'
+    | '/api/public/hooks/whatsapp-opt-out'
+    | '/api/public/hooks/whatsapp-weekly-digest'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
@@ -816,10 +898,14 @@ export interface FileRouteTypes {
     | '/painel/notificacoes'
     | '/painel/perfil'
     | '/painel/ranking'
+    | '/representantes/$id'
+    | '/representantes/feed'
+    | '/representantes/ranking'
     | '/admin'
     | '/blog'
     | '/eventos'
     | '/painel'
+    | '/representantes'
     | '/admin/push/$id'
     | '/admin/push/historico'
     | '/admin/push/novo'
@@ -835,6 +921,9 @@ export interface FileRouteTypes {
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
+    | '/api/public/hooks/sync-representatives'
+    | '/api/public/hooks/whatsapp-opt-out'
+    | '/api/public/hooks/whatsapp-weekly-digest'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
@@ -854,6 +943,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/planos'
     | '/promocoes'
+    | '/representantes'
     | '/reputacao'
     | '/reset-password'
     | '/servicos-publicos'
@@ -892,10 +982,14 @@ export interface FileRouteTypes {
     | '/painel/notificacoes'
     | '/painel/perfil'
     | '/painel/ranking'
+    | '/representantes/$id'
+    | '/representantes/feed'
+    | '/representantes/ranking'
     | '/admin/'
     | '/blog/'
     | '/eventos/'
     | '/painel/'
+    | '/representantes/'
     | '/admin/push/$id'
     | '/admin/push/historico'
     | '/admin/push/novo'
@@ -911,6 +1005,9 @@ export interface FileRouteTypes {
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
+    | '/api/public/hooks/sync-representatives'
+    | '/api/public/hooks/whatsapp-opt-out'
+    | '/api/public/hooks/whatsapp-weekly-digest'
     | '/api/public/push/resubscribe'
     | '/api/public/push/track'
     | '/painel/anuncios/$id/editar'
@@ -931,6 +1028,7 @@ export interface RootRouteChildren {
   PainelRoute: typeof PainelRouteWithChildren
   PlanosRoute: typeof PlanosRoute
   PromocoesRoute: typeof PromocoesRoute
+  RepresentantesRoute: typeof RepresentantesRouteWithChildren
   ReputacaoRoute: typeof ReputacaoRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ServicosPublicosRoute: typeof ServicosPublicosRoute
@@ -951,6 +1049,9 @@ export interface RootRouteChildren {
   ApiPublicHooksScrapeProcurementsRoute: typeof ApiPublicHooksScrapeProcurementsRoute
   ApiPublicHooksScrapeServicesRoute: typeof ApiPublicHooksScrapeServicesRoute
   ApiPublicHooksSyncOriginalRoute: typeof ApiPublicHooksSyncOriginalRoute
+  ApiPublicHooksSyncRepresentativesRoute: typeof ApiPublicHooksSyncRepresentativesRoute
+  ApiPublicHooksWhatsappOptOutRoute: typeof ApiPublicHooksWhatsappOptOutRoute
+  ApiPublicHooksWhatsappWeeklyDigestRoute: typeof ApiPublicHooksWhatsappWeeklyDigestRoute
   ApiPublicPushResubscribeRoute: typeof ApiPublicPushResubscribeRoute
   ApiPublicPushTrackRoute: typeof ApiPublicPushTrackRoute
 }
@@ -1004,6 +1105,13 @@ declare module '@tanstack/react-router' {
       path: '/reputacao'
       fullPath: '/reputacao'
       preLoaderRoute: typeof ReputacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/representantes': {
+      id: '/representantes'
+      path: '/representantes'
+      fullPath: '/representantes'
+      preLoaderRoute: typeof RepresentantesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/promocoes': {
@@ -1104,6 +1212,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/representantes/': {
+      id: '/representantes/'
+      path: '/'
+      fullPath: '/representantes/'
+      preLoaderRoute: typeof RepresentantesIndexRouteImport
+      parentRoute: typeof RepresentantesRoute
+    }
     '/painel/': {
       id: '/painel/'
       path: '/'
@@ -1131,6 +1246,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/representantes/ranking': {
+      id: '/representantes/ranking'
+      path: '/ranking'
+      fullPath: '/representantes/ranking'
+      preLoaderRoute: typeof RepresentantesRankingRouteImport
+      parentRoute: typeof RepresentantesRoute
+    }
+    '/representantes/feed': {
+      id: '/representantes/feed'
+      path: '/feed'
+      fullPath: '/representantes/feed'
+      preLoaderRoute: typeof RepresentantesFeedRouteImport
+      parentRoute: typeof RepresentantesRoute
+    }
+    '/representantes/$id': {
+      id: '/representantes/$id'
+      path: '/$id'
+      fullPath: '/representantes/$id'
+      preLoaderRoute: typeof RepresentantesIdRouteImport
+      parentRoute: typeof RepresentantesRoute
     }
     '/painel/ranking': {
       id: '/painel/ranking'
@@ -1433,6 +1569,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPushResubscribeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/whatsapp-weekly-digest': {
+      id: '/api/public/hooks/whatsapp-weekly-digest'
+      path: '/api/public/hooks/whatsapp-weekly-digest'
+      fullPath: '/api/public/hooks/whatsapp-weekly-digest'
+      preLoaderRoute: typeof ApiPublicHooksWhatsappWeeklyDigestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/whatsapp-opt-out': {
+      id: '/api/public/hooks/whatsapp-opt-out'
+      path: '/api/public/hooks/whatsapp-opt-out'
+      fullPath: '/api/public/hooks/whatsapp-opt-out'
+      preLoaderRoute: typeof ApiPublicHooksWhatsappOptOutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/sync-representatives': {
+      id: '/api/public/hooks/sync-representatives'
+      path: '/api/public/hooks/sync-representatives'
+      fullPath: '/api/public/hooks/sync-representatives'
+      preLoaderRoute: typeof ApiPublicHooksSyncRepresentativesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/sync-original': {
       id: '/api/public/hooks/sync-original'
       path: '/api/public/hooks/sync-original'
@@ -1630,6 +1787,24 @@ const PainelRouteChildren: PainelRouteChildren = {
 const PainelRouteWithChildren =
   PainelRoute._addFileChildren(PainelRouteChildren)
 
+interface RepresentantesRouteChildren {
+  RepresentantesIdRoute: typeof RepresentantesIdRoute
+  RepresentantesFeedRoute: typeof RepresentantesFeedRoute
+  RepresentantesRankingRoute: typeof RepresentantesRankingRoute
+  RepresentantesIndexRoute: typeof RepresentantesIndexRoute
+}
+
+const RepresentantesRouteChildren: RepresentantesRouteChildren = {
+  RepresentantesIdRoute: RepresentantesIdRoute,
+  RepresentantesFeedRoute: RepresentantesFeedRoute,
+  RepresentantesRankingRoute: RepresentantesRankingRoute,
+  RepresentantesIndexRoute: RepresentantesIndexRoute,
+}
+
+const RepresentantesRouteWithChildren = RepresentantesRoute._addFileChildren(
+  RepresentantesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -1645,6 +1820,7 @@ const rootRouteChildren: RootRouteChildren = {
   PainelRoute: PainelRouteWithChildren,
   PlanosRoute: PlanosRoute,
   PromocoesRoute: PromocoesRoute,
+  RepresentantesRoute: RepresentantesRouteWithChildren,
   ReputacaoRoute: ReputacaoRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ServicosPublicosRoute: ServicosPublicosRoute,
@@ -1665,6 +1841,11 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicHooksScrapeProcurementsRoute: ApiPublicHooksScrapeProcurementsRoute,
   ApiPublicHooksScrapeServicesRoute: ApiPublicHooksScrapeServicesRoute,
   ApiPublicHooksSyncOriginalRoute: ApiPublicHooksSyncOriginalRoute,
+  ApiPublicHooksSyncRepresentativesRoute:
+    ApiPublicHooksSyncRepresentativesRoute,
+  ApiPublicHooksWhatsappOptOutRoute: ApiPublicHooksWhatsappOptOutRoute,
+  ApiPublicHooksWhatsappWeeklyDigestRoute:
+    ApiPublicHooksWhatsappWeeklyDigestRoute,
   ApiPublicPushResubscribeRoute: ApiPublicPushResubscribeRoute,
   ApiPublicPushTrackRoute: ApiPublicPushTrackRoute,
 }

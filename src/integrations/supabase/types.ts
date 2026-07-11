@@ -2382,6 +2382,228 @@ export type Database = {
           },
         ]
       }
+      representative_activities: {
+        Row: {
+          city_id: string
+          created_at: string
+          dedupe_hash: string
+          description: string | null
+          id: string
+          kind: Database["public"]["Enums"]["representative_activity_kind"]
+          occurred_at: string
+          raw_payload: Json | null
+          representative_id: string | null
+          source_name: string | null
+          source_url: string | null
+          status:
+            | Database["public"]["Enums"]["representative_activity_status"]
+            | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          city_id: string
+          created_at?: string
+          dedupe_hash: string
+          description?: string | null
+          id?: string
+          kind: Database["public"]["Enums"]["representative_activity_kind"]
+          occurred_at: string
+          raw_payload?: Json | null
+          representative_id?: string | null
+          source_name?: string | null
+          source_url?: string | null
+          status?:
+            | Database["public"]["Enums"]["representative_activity_status"]
+            | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          city_id?: string
+          created_at?: string
+          dedupe_hash?: string
+          description?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["representative_activity_kind"]
+          occurred_at?: string
+          raw_payload?: Json | null
+          representative_id?: string | null
+          source_name?: string | null
+          source_url?: string | null
+          status?:
+            | Database["public"]["Enums"]["representative_activity_status"]
+            | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "representative_activities_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "representative_activities_representative_id_fkey"
+            columns: ["representative_id"]
+            isOneToOne: false
+            referencedRelation: "representatives"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      representative_attendance: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          present: boolean
+          representative_id: string
+          session_date: string
+          session_type: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          present?: boolean
+          representative_id: string
+          session_date: string
+          session_type?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          present?: boolean
+          representative_id?: string
+          session_date?: string
+          session_type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "representative_attendance_representative_id_fkey"
+            columns: ["representative_id"]
+            isOneToOne: false
+            referencedRelation: "representatives"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      representative_sync_logs: {
+        Row: {
+          city_id: string | null
+          created_at: string
+          duration_ms: number | null
+          error: string | null
+          id: string
+          items_found: number
+          items_new: number
+          items_updated: number
+          source: string
+          status: string
+        }
+        Insert: {
+          city_id?: string | null
+          created_at?: string
+          duration_ms?: number | null
+          error?: string | null
+          id?: string
+          items_found?: number
+          items_new?: number
+          items_updated?: number
+          source: string
+          status: string
+        }
+        Update: {
+          city_id?: string | null
+          created_at?: string
+          duration_ms?: number | null
+          error?: string | null
+          id?: string
+          items_found?: number
+          items_new?: number
+          items_updated?: number
+          source?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "representative_sync_logs_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      representatives: {
+        Row: {
+          bio: string | null
+          city_id: string
+          created_at: string
+          email: string | null
+          id: string
+          is_active: boolean
+          mandate_end: string | null
+          mandate_start: string | null
+          name: string
+          party: string | null
+          phone: string | null
+          photo_url: string | null
+          role: Database["public"]["Enums"]["representative_role"]
+          slug: string
+          social_links: Json
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          city_id: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_active?: boolean
+          mandate_end?: string | null
+          mandate_start?: string | null
+          name: string
+          party?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          role: Database["public"]["Enums"]["representative_role"]
+          slug: string
+          social_links?: Json
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          city_id?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_active?: boolean
+          mandate_end?: string | null
+          mandate_start?: string | null
+          name?: string
+          party?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          role?: Database["public"]["Enums"]["representative_role"]
+          slug?: string
+          social_links?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "representatives_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           author_name: string | null
@@ -2523,6 +2745,53 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      whatsapp_subscribers: {
+        Row: {
+          city_id: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          last_sent_at: string | null
+          name: string | null
+          opted_in_at: string
+          opted_out_at: string | null
+          phone: string
+          updated_at: string
+        }
+        Insert: {
+          city_id?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_sent_at?: string | null
+          name?: string | null
+          opted_in_at?: string
+          opted_out_at?: string | null
+          phone: string
+          updated_at?: string
+        }
+        Update: {
+          city_id?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_sent_at?: string | null
+          name?: string | null
+          opted_in_at?: string
+          opted_out_at?: string | null
+          phone?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_subscribers_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -2668,6 +2937,24 @@ export type Database = {
         | "funcionalidade"
         | "sugestao"
         | "outro"
+      representative_activity_kind:
+        | "projeto_lei"
+        | "indicacao"
+        | "requerimento"
+        | "voto"
+        | "decreto"
+        | "obra"
+        | "contrato"
+        | "pauta"
+        | "outro"
+      representative_activity_status:
+        | "em_tramitacao"
+        | "aprovado"
+        | "rejeitado"
+        | "vetado"
+        | "arquivado"
+        | "publicado"
+      representative_role: "prefeito" | "vice_prefeito" | "vereador"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2840,6 +3127,26 @@ export const Constants = {
         "sugestao",
         "outro",
       ],
+      representative_activity_kind: [
+        "projeto_lei",
+        "indicacao",
+        "requerimento",
+        "voto",
+        "decreto",
+        "obra",
+        "contrato",
+        "pauta",
+        "outro",
+      ],
+      representative_activity_status: [
+        "em_tramitacao",
+        "aprovado",
+        "rejeitado",
+        "vetado",
+        "arquivado",
+        "publicado",
+      ],
+      representative_role: ["prefeito", "vice_prefeito", "vereador"],
     },
   },
 } as const
