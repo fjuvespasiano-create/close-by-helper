@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { useEffect, useRef, useState } from "react";
 import { useAdmin } from "@/hooks/use-admin";
 import {
   deletePromotion,
@@ -10,6 +11,8 @@ import {
   upsertPromotion,
   type Promotion,
 } from "@/lib/promocoes";
+import { uploadPromotionImage } from "@/lib/promotion-upload";
+import { notifyNewPromotion } from "@/lib/promocoes-notify.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { BadgePercent, Crown, Pencil, Plus, Trash2 } from "lucide-react";
+import { BadgePercent, Crown, ImagePlus, Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
 import { isPremium } from "@/lib/plans";
 
 export const Route = createFileRoute("/painel/promocoes")({
