@@ -160,7 +160,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
-      <BugReportButton />
+      <ClientOnly fallback={null}>
+        <Suspense fallback={null}>
+          <BugReportButton />
+        </Suspense>
+      </ClientOnly>
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
