@@ -5,8 +5,8 @@ import { useSiteContent } from "@/lib/siteContent";
 export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
-      { title: "Sobre — AgendaAqui" },
-      { name: "description", content: "Conheça o AgendaAqui, marketplace regional de serviços e empresas em Minas Gerais." },
+      { title: "Sobre — AgenddaAqui" },
+      { name: "description", content: "Conheça o AgenddaAqui, marketplace regional de serviços e empresas em Minas Gerais." },
       { property: "og:url", content: "/sobre" },
     ],
     links: [{ rel: "canonical", href: "/sobre" }],

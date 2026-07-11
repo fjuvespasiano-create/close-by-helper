@@ -11,8 +11,8 @@ import { useQueryClient } from "@tanstack/react-query";
 export const Route = createFileRoute("/favoritos")({
   head: () => ({
     meta: [
-      { title: "Meus favoritos — AgendaAqui" },
-      { name: "description", content: "Empresas e profissionais que você salvou no AgendaAqui." },
+      { title: "Meus favoritos — AgenddaAqui" },
+      { name: "description", content: "Empresas e profissionais que você salvou no AgenddaAqui." },
       { name: "robots", content: "noindex" },
     ],
   }),

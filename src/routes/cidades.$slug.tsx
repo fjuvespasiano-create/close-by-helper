@@ -7,7 +7,7 @@ import { fetchCities, searchCompanies } from "@/lib/queries";
 export const Route = createFileRoute("/cidades/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `Serviços em ${params.slug} — AgendaAqui` },
+      { title: `Serviços em ${params.slug} — AgenddaAqui` },
       { name: "description", content: `Empresas e profissionais verificados em ${params.slug}.` },
       { property: "og:url", content: `/cidades/${params.slug}` },
     ],

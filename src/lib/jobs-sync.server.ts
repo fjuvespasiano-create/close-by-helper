@@ -54,7 +54,7 @@ function passesFilters(job: NormalizedJob, cfg: Record<string, any>): boolean {
 // -------- Adapter: RemoteOK --------
 async function fetchRemoteOK(src: Source): Promise<NormalizedJob[]> {
   const url = src.endpoint_url || "https://remoteok.com/api";
-  const res = await fetch(url, { headers: { "User-Agent": "AgendaAqui-JobsBot/1.0" } });
+  const res = await fetch(url, { headers: { "User-Agent": "AgenddaAqui-JobsBot/1.0" } });
   if (!res.ok) throw new Error(`RemoteOK HTTP ${res.status}`);
   const json = (await res.json()) as any[];
   const rows = json.filter((r) => r && r.id && r.position);
@@ -88,7 +88,7 @@ async function fetchRemoteOK(src: Source): Promise<NormalizedJob[]> {
 // -------- Adapter: Trampos.co --------
 async function fetchTrampos(src: Source): Promise<NormalizedJob[]> {
   const url = src.endpoint_url || "https://trampos.co/oportunidades.json";
-  const res = await fetch(url, { headers: { "User-Agent": "AgendaAqui-JobsBot/1.0" } });
+  const res = await fetch(url, { headers: { "User-Agent": "AgenddaAqui-JobsBot/1.0" } });
   if (!res.ok) throw new Error(`Trampos HTTP ${res.status}`);
   const json = (await res.json()) as any;
   const list: any[] = Array.isArray(json) ? json : (json.opportunities ?? json.data ?? []);

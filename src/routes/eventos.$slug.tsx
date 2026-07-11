@@ -8,7 +8,7 @@ import { fetchEventBySlug, fetchShowsForEvent } from "@/lib/events";
 export const Route = createFileRoute("/eventos/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.slug} — Evento — AgendaAqui` },
+      { title: `${params.slug} — Evento — AgenddaAqui` },
       { property: "og:type", content: "event" },
     ],
     links: [{ rel: "canonical", href: `/eventos/${params.slug}` }],

@@ -14,7 +14,7 @@ import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export const Route = createFileRoute("/painel/notificacoes")({
-  head: () => ({ meta: [{ title: "Notificações — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Notificações — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: NotifPage,
 });
 
@@ -67,7 +67,7 @@ function NotifPage() {
       <header className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="font-display text-2xl font-bold">Notificações</h1>
-          <p className="text-sm text-muted-foreground">Tudo o que o AgendaAqui envia pra você em um só lugar.</p>
+          <p className="text-sm text-muted-foreground">Tudo o que o AgenddaAqui envia pra você em um só lugar.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Link to="/painel/notificacoes/preferencias">

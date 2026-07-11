@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ListingForm } from "@/components/panel/ListingForm";
 
 export const Route = createFileRoute("/painel/anuncios/novo")({
-  head: () => ({ meta: [{ title: "Novo anúncio — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Novo anúncio — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: Novo,
 });
 

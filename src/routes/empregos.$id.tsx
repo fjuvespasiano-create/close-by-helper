@@ -9,7 +9,7 @@ import { Briefcase, MapPin, Wifi, Building2, ExternalLink, ArrowLeft } from "luc
 export const Route = createFileRoute("/empregos/$id")({
   head: () => ({
     meta: [
-      { title: "Detalhes da vaga — AgendaAqui" },
+      { title: "Detalhes da vaga — AgenddaAqui" },
     ],
   }),
   errorComponent: ({ error, reset }) => {

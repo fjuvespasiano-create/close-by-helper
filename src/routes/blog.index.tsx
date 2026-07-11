@@ -7,9 +7,9 @@ import { fetchBlogPosts } from "@/lib/blog";
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
-      { title: "Blog AgendaAqui — Dicas e novidades sobre serviços locais" },
+      { title: "Blog AgenddaAqui — Dicas e novidades sobre serviços locais" },
       { name: "description", content: "Artigos sobre empresas, serviços e profissionais em Minas Gerais." },
-      { property: "og:title", content: "Blog AgendaAqui" },
+      { property: "og:title", content: "Blog AgenddaAqui" },
       { property: "og:url", content: "/blog" },
     ],
     links: [{ rel: "canonical", href: "/blog" }],
@@ -24,7 +24,7 @@ function BlogPage() {
     <SiteLayout>
       <section className="border-b border-border bg-surface">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="font-display text-3xl font-bold md:text-4xl">Blog AgendaAqui</h1>
+          <h1 className="font-display text-3xl font-bold md:text-4xl">Blog AgenddaAqui</h1>
           <p className="mt-2 max-w-2xl text-muted-foreground">
             Dicas, novidades e histórias sobre serviços locais em Minas Gerais.
           </p>

@@ -6,8 +6,8 @@ import { useSiteContent } from "@/lib/siteContent";
 export const Route = createFileRoute("/contato")({
   head: () => ({
     meta: [
-      { title: "Contato — AgendaAqui" },
-      { name: "description", content: "Fale com a equipe do AgendaAqui." },
+      { title: "Contato — AgenddaAqui" },
+      { name: "description", content: "Fale com a equipe do AgenddaAqui." },
       { property: "og:url", content: "/contato" },
     ],
     links: [{ rel: "canonical", href: "/contato" }],

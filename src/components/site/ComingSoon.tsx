@@ -26,7 +26,7 @@ export function ComingSoon({ emoji, title, description }: Props) {
         </Link>
       </div>
       <p className="mt-8 text-xs uppercase tracking-[0.14em] text-muted-foreground">
-        Em breve · AgendaAqui
+        Em breve · AgenddaAqui
       </p>
     </main>
   );

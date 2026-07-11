@@ -8,8 +8,8 @@ import { categoriesQueryOptions, searchCompanies } from "@/lib/queries";
 export const Route = createFileRoute("/categoria/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.slug} — AgendaAqui` },
-      { name: "description", content: `Empresas e profissionais de ${params.slug} no AgendaAqui.` },
+      { title: `${params.slug} — AgenddaAqui` },
+      { name: "description", content: `Empresas e profissionais de ${params.slug} no AgenddaAqui.` },
       { property: "og:url", content: `/categoria/${params.slug}` },
     ],
     links: [{ rel: "canonical", href: `/categoria/${params.slug}` }],

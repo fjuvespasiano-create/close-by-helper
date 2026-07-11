@@ -13,7 +13,7 @@ import { fireHighAlertTest } from "@/lib/pwa";
 import { BellRing } from "lucide-react";
 
 export const Route = createFileRoute("/painel/notificacoes/preferencias")({
-  head: () => ({ meta: [{ title: "Preferências de notificações — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Preferências de notificações — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: PrefsPage,
 });
 
@@ -54,7 +54,7 @@ function PrefsPage() {
 
   const CATS: { key: keyof Prefs; label: string; desc: string; emoji: string }[] = [
     { key: "promocoes", label: "Promoções", desc: "Ofertas e descontos das empresas.", emoji: "🎉" },
-    { key: "novidades", label: "Novidades", desc: "Recursos e melhorias do AgendaAqui.", emoji: "🚀" },
+    { key: "novidades", label: "Novidades", desc: "Recursos e melhorias do AgenddaAqui.", emoji: "🚀" },
     { key: "eventos", label: "Eventos", desc: "Shows, festivais e agendas locais.", emoji: "📅" },
     { key: "atualizacoes", label: "Atualizações", desc: "Aviso quando algo que você segue muda.", emoji: "🔔" },
     { key: "empresas", label: "Empresas em destaque", desc: "Recomendações personalizadas.", emoji: "⭐" },

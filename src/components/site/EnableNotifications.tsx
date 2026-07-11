@@ -26,7 +26,7 @@ export function EnableNotifications({ compact = false }: { compact?: boolean }) 
   if (!supported) {
     return compact ? null : (
       <div className="rounded-lg border border-border/60 bg-muted/40 p-4 text-sm text-muted-foreground">
-        Este navegador não suporta notificações push. Instale o app AgendaAqui para receber avisos.
+        Este navegador não suporta notificações push. Instale o app AgenddaAqui para receber avisos.
       </div>
     );
   }
@@ -58,7 +58,7 @@ export function EnableNotifications({ compact = false }: { compact?: boolean }) 
         <BellOff className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
         <div>
           <div className="font-semibold text-destructive">Notificações bloqueadas</div>
-          <p className="text-muted-foreground">Habilite nas configurações do navegador para receber avisos do AgendaAqui.</p>
+          <p className="text-muted-foreground">Habilite nas configurações do navegador para receber avisos do AgenddaAqui.</p>
         </div>
       </div>
     );

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Building2, Mail, Star, User, Heart, Bell, Trophy, Package, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/painel")({
-  head: () => ({ meta: [{ title: "Meu painel — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Meu painel — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: PanelLayout,
 });
 

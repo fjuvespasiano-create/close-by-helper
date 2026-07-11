@@ -38,7 +38,7 @@ const BADGE_OPTIONS: { key: string; label: string }[] = [
   { key: "top_atendimento", label: "Top atendimento" },
   { key: "entrega_garantida", label: "Entrega garantida" },
   { key: "especialista", label: "Especialista" },
-  { key: "parceiro", label: "Parceiro AgendaAqui" },
+  { key: "parceiro", label: "Parceiro AgenddaAqui" },
   { key: "top_10", label: "Top 10 da cidade" },
 ];
 

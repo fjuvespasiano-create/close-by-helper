@@ -20,14 +20,14 @@ export const Route = createFileRoute("/admin/push/novo")({
 type Audience = { kind: string; city_id?: string; state?: string; category_id?: string };
 
 const TEMPLATES = [
-  { slug: "promocao", name: "Promoção", emoji: "🎉", color: "#F97316", title: "Promoção especial pra você!", body: "Confira as melhores ofertas de hoje no AgendaAqui.", icon: Rocket },
-  { slug: "novidade", name: "Novidade", emoji: "🚀", color: "#3B82F6", title: "Novidade no AgendaAqui", body: "Acabou de chegar uma novidade que você vai gostar.", icon: Rocket },
+  { slug: "promocao", name: "Promoção", emoji: "🎉", color: "#F97316", title: "Promoção especial pra você!", body: "Confira as melhores ofertas de hoje no AgenddaAqui.", icon: Rocket },
+  { slug: "novidade", name: "Novidade", emoji: "🚀", color: "#3B82F6", title: "Novidade no AgenddaAqui", body: "Acabou de chegar uma novidade que você vai gostar.", icon: Rocket },
   { slug: "destaque", name: "Destaque", emoji: "⭐", color: "#FACC15", title: "Empresa em destaque", body: "Conheça a empresa que está bombando na sua cidade.", icon: Star },
-  { slug: "comunicado", name: "Comunicado", emoji: "📢", color: "#0EA5E9", title: "Aviso importante", body: "Uma novidade oficial do AgendaAqui pra você.", icon: Megaphone },
+  { slug: "comunicado", name: "Comunicado", emoji: "📢", color: "#0EA5E9", title: "Aviso importante", body: "Uma novidade oficial do AgenddaAqui pra você.", icon: Megaphone },
   { slug: "noticia", name: "Notícia", emoji: "📰", color: "#8B5CF6", title: "Notícia quentinha", body: "Fique por dentro do que acontece na sua região.", icon: Newspaper },
   { slug: "oferta", name: "Oferta", emoji: "🎁", color: "#EC4899", title: "Oferta imperdível", body: "Aproveite antes que acabe.", icon: Gift },
   { slug: "evento", name: "Evento", emoji: "📅", color: "#22C55E", title: "Evento chegando", body: "Não perca o próximo evento da sua cidade.", icon: CalendarDays },
-  { slug: "manutencao", name: "Manutenção", emoji: "⚠️", color: "#EF4444", title: "Manutenção programada", body: "O AgendaAqui passará por manutenção rápida.", icon: AlertTriangle },
+  { slug: "manutencao", name: "Manutenção", emoji: "⚠️", color: "#EF4444", title: "Manutenção programada", body: "O AgenddaAqui passará por manutenção rápida.", icon: AlertTriangle },
 ];
 
 const AUDIENCES = [

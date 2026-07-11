@@ -15,7 +15,7 @@ import type { EventRow, ShowRow, EventCategory } from "@/lib/events";
 import { fetchEventCategories } from "@/lib/events";
 
 export const Route = createFileRoute("/admin/eventos")({
-  head: () => ({ meta: [{ title: "Eventos — Admin AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Eventos — Admin AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: AdminEventos,
 });
 

@@ -29,7 +29,7 @@ export const Route = createFileRoute("/buscar")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Buscar serviços e empresas — AgendaAqui" },
+      { title: "Buscar serviços e empresas — AgenddaAqui" },
       { name: "description", content: "Encontre empresas verificadas por categoria, cidade, avaliação e preço. Autocomplete, filtros dinâmicos e resultados em cards." },
       { property: "og:url", content: "/buscar" },
     ],

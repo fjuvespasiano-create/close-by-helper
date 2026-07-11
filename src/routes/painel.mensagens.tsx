@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { timeAgo, toListing, type Listing, type ListingMessage } from "@/lib/marketplace";
 
 export const Route = createFileRoute("/painel/mensagens")({
-  head: () => ({ meta: [{ title: "Mensagens — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Mensagens — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: Mensagens,
 });
 

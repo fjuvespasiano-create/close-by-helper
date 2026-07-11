@@ -281,7 +281,7 @@ function ListingDetail() {
                           <Phone className="h-4 w-4" /> {listing.contact_phone}
                         </Button>
                       </a>
-                      <a href={waUrl(listing.contact_phone, `Olá! Vi seu anúncio "${listing.title}" no AgendaAqui.`)}
+                      <a href={waUrl(listing.contact_phone, `Olá! Vi seu anúncio "${listing.title}" no AgenddaAqui.`)}
                         target="_blank" rel="noopener noreferrer">
                         <Button variant="outline" className="w-full gap-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100">
                           WhatsApp

@@ -10,7 +10,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { formatBRL, timeAgo, toListing, STATUS_LABEL, type Listing, type ListingStatus } from "@/lib/marketplace";
 
 export const Route = createFileRoute("/painel/anuncios")({
-  head: () => ({ meta: [{ title: "Meus anúncios — AgendaAqui" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Meus anúncios — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: PainelAnuncios,
 });
 

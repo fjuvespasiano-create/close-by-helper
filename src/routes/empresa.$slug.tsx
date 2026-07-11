@@ -30,8 +30,8 @@ import {
 export const Route = createFileRoute("/empresa/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.slug} — AgendaAqui` },
-      { name: "description", content: `Veja avaliações, fotos, horários e contato de ${params.slug} no AgendaAqui.` },
+      { title: `${params.slug} — AgenddaAqui` },
+      { name: "description", content: `Veja avaliações, fotos, horários e contato de ${params.slug} no AgenddaAqui.` },
       { property: "og:url", content: `/empresa/${params.slug}` },
       { property: "og:type", content: "profile" },
     ],
@@ -320,7 +320,7 @@ function CompanyPage() {
             </div>
             <div className="grid w-full shrink-0 gap-2 md:w-56">
               {company.whatsapp && (
-                <a href={waUrl(company.whatsapp, `Olá! Vi sua empresa no AgendaAqui.`)} target="_blank" rel="noreferrer">
+                <a href={waUrl(company.whatsapp, `Olá! Vi sua empresa no AgenddaAqui.`)} target="_blank" rel="noreferrer">
                   <Button className="w-full bg-[#25D366] text-white hover:bg-[#1ebe5d]">
                     <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
                   </Button>
@@ -394,7 +394,7 @@ function CompanyPage() {
               </div>
             </section>
 
-            {/* Fase 2 — Reputação AgendaAqui */}
+            {/* Fase 2 — Reputação AgenddaAqui */}
             <ReputationRing
               overrideScore={(company as unknown as { reputation_score?: number | null }).reputation_score ?? null}
               inputs={{
@@ -616,7 +616,7 @@ function CompanyPage() {
               </div>
               <div className="mt-4 space-y-2">
                 {company.whatsapp && (
-                  <a href={waUrl(company.whatsapp, `Olá! Vi sua empresa no AgendaAqui.`)} target="_blank" rel="noreferrer" className="block">
+                  <a href={waUrl(company.whatsapp, `Olá! Vi sua empresa no AgenddaAqui.`)} target="_blank" rel="noreferrer" className="block">
                     <Button className="w-full bg-[#25D366] text-white hover:bg-[#1ebe5d]">
                       <MessageCircle className="mr-2 h-4 w-4" /> Falar no WhatsApp
                     </Button>
@@ -799,7 +799,7 @@ function CompanyPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <ShieldCheck className="mt-0.5 h-4 w-4 text-primary" />
-                  Dados verificados pelo AgendaAqui
+                  Dados verificados pelo AgenddaAqui
                 </li>
                 <li className="flex items-start gap-2">
                   <Sparkles className="mt-0.5 h-4 w-4 text-primary" />
@@ -816,7 +816,7 @@ function CompanyPage() {
           <p className="mt-2 opacity-90">Solicite um orçamento agora mesmo, é rápido e gratuito.</p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
             {company.whatsapp && (
-              <a href={waUrl(company.whatsapp, `Olá! Vi sua empresa no AgendaAqui.`)} target="_blank" rel="noreferrer">
+              <a href={waUrl(company.whatsapp, `Olá! Vi sua empresa no AgenddaAqui.`)} target="_blank" rel="noreferrer">
                 <Button size="lg" className="bg-[#25D366] text-white hover:bg-[#1ebe5d]">
                   <MessageCircle className="mr-2 h-5 w-5" /> Falar no WhatsApp
                 </Button>

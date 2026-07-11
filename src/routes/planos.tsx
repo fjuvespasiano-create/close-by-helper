@@ -14,9 +14,9 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/planos")({
   head: () => ({
     meta: [
-      { title: "Anuncie sua empresa grátis — AgendaAqui" },
+      { title: "Anuncie sua empresa grátis — AgenddaAqui" },
       { name: "description", content: "Apareça para quem já procura seu serviço em Vespasiano e São José da Lapa. Cadastro em 2 minutos, sem cartão, sem fidelidade. Contatos direto no seu WhatsApp." },
-      { property: "og:title", content: "Apareça no app da cidade — AgendaAqui" },
+      { property: "og:title", content: "Apareça no app da cidade — AgenddaAqui" },
       { property: "og:url", content: "/planos" },
     ],
     links: [{ rel: "canonical", href: "/planos" }],
@@ -170,7 +170,7 @@ function PlanosPage() {
             Apareça para quem já quer contratar hoje
           </h1>
           <p className="planos-fade mx-auto mt-4 max-w-2xl text-base text-white/90 md:text-lg" style={{ animationDelay: ".16s" }}>
-            Todos os dias, vizinhos de Vespasiano e São José da Lapa entram no AgendaAqui para achar quem resolve. Escolha como quer aparecer — o cadastro leva 2 minutos e é grátis.
+            Todos os dias, vizinhos de Vespasiano e São José da Lapa entram no AgenddaAqui para achar quem resolve. Escolha como quer aparecer — o cadastro leva 2 minutos e é grátis.
           </p>
           <div className="planos-fade mt-6 flex flex-wrap items-center justify-center gap-3 text-xs text-white/85" style={{ animationDelay: ".24s" }}>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 ring-1 ring-white/20"><ShieldCheck className="h-3.5 w-3.5" /> Sem cartão</span>

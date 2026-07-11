@@ -15,11 +15,11 @@ export const Route = createFileRoute("/blog/$slug")({
     const p = loaderData?.post;
     const url = `${SITE}/blog/${params.slug}`;
     const title = p?.meta_title || p?.title || params.slug;
-    const description = p?.meta_description || p?.excerpt || "Artigo do blog AgendaAqui.";
+    const description = p?.meta_description || p?.excerpt || "Artigo do blog AgenddaAqui.";
     const image = p?.og_image || p?.cover_url || undefined;
     const keywords = (p?.keywords ?? []).join(", ");
     const meta: Array<Record<string, string>> = [
-      { title: `${title} — Blog AgendaAqui` },
+      { title: `${title} — Blog AgenddaAqui` },
       { name: "description", content: description },
       ...(keywords ? [{ name: "keywords", content: keywords }] : []),
       { property: "og:type", content: "article" },
