@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TransporteRouteImport } from './routes/transporte'
+import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicosPublicosRouteImport } from './routes/servicos-publicos'
@@ -84,6 +85,11 @@ import { Route as ApiPublicHooksJobsSyncRouteImport } from './routes/api/public/
 const TransporteRoute = TransporteRouteImport.update({
   id: '/transporte',
   path: '/transporte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TransparenciaRoute = TransparenciaRouteImport.update({
+  id: '/transparencia',
+  path: '/transparencia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SobreRoute = SobreRouteImport.update({
@@ -462,6 +468,7 @@ export interface FileRoutesByFullPath {
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -533,6 +540,7 @@ export interface FileRoutesByTo {
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -606,6 +614,7 @@ export interface FileRoutesById {
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -681,6 +690,7 @@ export interface FileRouteTypes {
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/transparencia'
     | '/transporte'
     | '/admin/blog'
     | '/admin/cidades'
@@ -752,6 +762,7 @@ export interface FileRouteTypes {
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/transparencia'
     | '/transporte'
     | '/admin/blog'
     | '/admin/cidades'
@@ -824,6 +835,7 @@ export interface FileRouteTypes {
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
+    | '/transparencia'
     | '/transporte'
     | '/admin/blog'
     | '/admin/cidades'
@@ -898,6 +910,7 @@ export interface RootRouteChildren {
   ServicosPublicosRoute: typeof ServicosPublicosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
+  TransparenciaRoute: typeof TransparenciaRoute
   TransporteRoute: typeof TransporteRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
@@ -922,6 +935,13 @@ declare module '@tanstack/react-router' {
       path: '/transporte'
       fullPath: '/transporte'
       preLoaderRoute: typeof TransporteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/transparencia': {
+      id: '/transparencia'
+      path: '/transparencia'
+      fullPath: '/transparencia'
+      preLoaderRoute: typeof TransparenciaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sobre': {
@@ -1588,6 +1608,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicosPublicosRoute: ServicosPublicosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
+  TransparenciaRoute: TransparenciaRoute,
   TransporteRoute: TransporteRoute,
   BlogSlugRoute: BlogSlugRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,

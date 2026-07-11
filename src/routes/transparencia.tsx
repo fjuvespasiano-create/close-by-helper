@@ -112,7 +112,7 @@ function TransparenciaPage() {
   });
 
   function apply(next: Partial<SearchState>) {
-    navigate({ search: (prev) => ({ ...prev, ...next, page: next.page ?? 1 }) });
+    navigate({ search: (prev: SearchState) => ({ ...prev, ...next, page: next.page ?? 1 }) });
   }
 
   const totalPages = data ? Math.max(1, Math.ceil(data.total / data.pageSize)) : 1;
