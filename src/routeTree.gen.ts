@@ -9,38 +9,913 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TransporteRouteImport } from './routes/transporte'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ServicosPublicosRouteImport } from './routes/servicos-publicos'
+import { Route as ReputacaoRouteImport } from './routes/reputacao'
+import { Route as PromocoesRouteImport } from './routes/promocoes'
+import { Route as PlanosRouteImport } from './routes/planos'
+import { Route as PainelRouteImport } from './routes/painel'
+import { Route as OQueFazerRouteImport } from './routes/o-que-fazer'
+import { Route as MarketplaceRouteImport } from './routes/marketplace'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as EmpregosRouteImport } from './routes/empregos'
+import { Route as EmergenciaRouteImport } from './routes/emergencia'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PainelIndexRouteImport } from './routes/painel.index'
+import { Route as EventosIndexRouteImport } from './routes/eventos.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as PainelRankingRouteImport } from './routes/painel.ranking'
+import { Route as PainelPerfilRouteImport } from './routes/painel.perfil'
+import { Route as PainelNotificacoesRouteImport } from './routes/painel.notificacoes'
+import { Route as PainelMensagensRouteImport } from './routes/painel.mensagens'
+import { Route as PainelLeadsRouteImport } from './routes/painel.leads'
+import { Route as PainelFavoritosRouteImport } from './routes/painel.favoritos'
+import { Route as PainelEmpresasRouteImport } from './routes/painel.empresas'
+import { Route as PainelAvaliacoesRouteImport } from './routes/painel.avaliacoes'
+import { Route as PainelAnunciosRouteImport } from './routes/painel.anuncios'
+import { Route as MarketplaceSlugRouteImport } from './routes/marketplace.$slug'
+import { Route as EventosSlugRouteImport } from './routes/eventos.$slug'
+import { Route as EmpresaSlugRouteImport } from './routes/empresa.$slug'
+import { Route as CidadesSlugRouteImport } from './routes/cidades.$slug'
+import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminTextosRouteImport } from './routes/admin.textos'
+import { Route as AdminServicosPublicosRouteImport } from './routes/admin.servicos-publicos'
+import { Route as AdminQaRouteImport } from './routes/admin.qa'
+import { Route as AdminPushRouteImport } from './routes/admin.push'
+import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
+import { Route as AdminMenuRouteImport } from './routes/admin.menu'
+import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
+import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
+import { Route as AdminEmpresasRouteImport } from './routes/admin.empresas'
+import { Route as AdminEmergenciaRouteImport } from './routes/admin.emergencia'
+import { Route as AdminDuplicadosRouteImport } from './routes/admin.duplicados'
+import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
+import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
+import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminPushIndexRouteImport } from './routes/admin.push.index'
+import { Route as PainelNotificacoesPreferenciasRouteImport } from './routes/painel.notificacoes.preferencias'
+import { Route as PainelEmpresasNovaRouteImport } from './routes/painel.empresas.nova'
+import { Route as PainelEmpresasIdRouteImport } from './routes/painel.empresas.$id'
+import { Route as PainelAnunciosNovoRouteImport } from './routes/painel.anuncios.novo'
+import { Route as AdminPushTemplatesRouteImport } from './routes/admin.push.templates'
+import { Route as AdminPushNovoRouteImport } from './routes/admin.push.novo'
+import { Route as AdminPushHistoricoRouteImport } from './routes/admin.push.historico'
+import { Route as AdminPushIdRouteImport } from './routes/admin.push.$id'
+import { Route as PainelAnunciosIdEditarRouteImport } from './routes/painel.anuncios.$id.editar'
+import { Route as ApiPublicPushTrackRouteImport } from './routes/api/public/push/track'
 
+const TransporteRoute = TransporteRouteImport.update({
+  id: '/transporte',
+  path: '/transporte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicosPublicosRoute = ServicosPublicosRouteImport.update({
+  id: '/servicos-publicos',
+  path: '/servicos-publicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReputacaoRoute = ReputacaoRouteImport.update({
+  id: '/reputacao',
+  path: '/reputacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PromocoesRoute = PromocoesRouteImport.update({
+  id: '/promocoes',
+  path: '/promocoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanosRoute = PlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PainelRoute = PainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OQueFazerRoute = OQueFazerRouteImport.update({
+  id: '/o-que-fazer',
+  path: '/o-que-fazer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketplaceRoute = MarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmpregosRoute = EmpregosRouteImport.update({
+  id: '/empregos',
+  path: '/empregos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmergenciaRoute = EmergenciaRouteImport.update({
+  id: '/emergencia',
+  path: '/emergencia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscarRoute = BuscarRouteImport.update({
+  id: '/buscar',
+  path: '/buscar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PainelIndexRoute = PainelIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PainelRoute,
+} as any)
+const EventosIndexRoute = EventosIndexRouteImport.update({
+  id: '/eventos/',
+  path: '/eventos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const PainelRankingRoute = PainelRankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelPerfilRoute = PainelPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelNotificacoesRoute = PainelNotificacoesRouteImport.update({
+  id: '/notificacoes',
+  path: '/notificacoes',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelMensagensRoute = PainelMensagensRouteImport.update({
+  id: '/mensagens',
+  path: '/mensagens',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelLeadsRoute = PainelLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelFavoritosRoute = PainelFavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelEmpresasRoute = PainelEmpresasRouteImport.update({
+  id: '/empresas',
+  path: '/empresas',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelAvaliacoesRoute = PainelAvaliacoesRouteImport.update({
+  id: '/avaliacoes',
+  path: '/avaliacoes',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelAnunciosRoute = PainelAnunciosRouteImport.update({
+  id: '/anuncios',
+  path: '/anuncios',
+  getParentRoute: () => PainelRoute,
+} as any)
+const MarketplaceSlugRoute = MarketplaceSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => MarketplaceRoute,
+} as any)
+const EventosSlugRoute = EventosSlugRouteImport.update({
+  id: '/eventos/$slug',
+  path: '/eventos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmpresaSlugRoute = EmpresaSlugRouteImport.update({
+  id: '/empresa/$slug',
+  path: '/empresa/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CidadesSlugRoute = CidadesSlugRouteImport.update({
+  id: '/cidades/$slug',
+  path: '/cidades/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
+  id: '/categoria/$slug',
+  path: '/categoria/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTextosRoute = AdminTextosRouteImport.update({
+  id: '/textos',
+  path: '/textos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminServicosPublicosRoute = AdminServicosPublicosRouteImport.update({
+  id: '/servicos-publicos',
+  path: '/servicos-publicos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminQaRoute = AdminQaRouteImport.update({
+  id: '/qa',
+  path: '/qa',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPushRoute = AdminPushRouteImport.update({
+  id: '/push',
+  path: '/push',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlanosRoute = AdminPlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMenuRoute = AdminMenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventosRoute = AdminEventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEmpresasRoute = AdminEmpresasRouteImport.update({
+  id: '/empresas',
+  path: '/empresas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEmergenciaRoute = AdminEmergenciaRouteImport.update({
+  id: '/emergencia',
+  path: '/emergencia',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDuplicadosRoute = AdminDuplicadosRouteImport.update({
+  id: '/duplicados',
+  path: '/duplicados',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCidadesRoute = AdminCidadesRouteImport.update({
+  id: '/cidades',
+  path: '/cidades',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogRoute = AdminBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPushIndexRoute = AdminPushIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminPushRoute,
+} as any)
+const PainelNotificacoesPreferenciasRoute =
+  PainelNotificacoesPreferenciasRouteImport.update({
+    id: '/preferencias',
+    path: '/preferencias',
+    getParentRoute: () => PainelNotificacoesRoute,
+  } as any)
+const PainelEmpresasNovaRoute = PainelEmpresasNovaRouteImport.update({
+  id: '/nova',
+  path: '/nova',
+  getParentRoute: () => PainelEmpresasRoute,
+} as any)
+const PainelEmpresasIdRoute = PainelEmpresasIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PainelEmpresasRoute,
+} as any)
+const PainelAnunciosNovoRoute = PainelAnunciosNovoRouteImport.update({
+  id: '/novo',
+  path: '/novo',
+  getParentRoute: () => PainelAnunciosRoute,
+} as any)
+const AdminPushTemplatesRoute = AdminPushTemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => AdminPushRoute,
+} as any)
+const AdminPushNovoRoute = AdminPushNovoRouteImport.update({
+  id: '/novo',
+  path: '/novo',
+  getParentRoute: () => AdminPushRoute,
+} as any)
+const AdminPushHistoricoRoute = AdminPushHistoricoRouteImport.update({
+  id: '/historico',
+  path: '/historico',
+  getParentRoute: () => AdminPushRoute,
+} as any)
+const AdminPushIdRoute = AdminPushIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminPushRoute,
+} as any)
+const PainelAnunciosIdEditarRoute = PainelAnunciosIdEditarRouteImport.update({
+  id: '/$id/editar',
+  path: '/$id/editar',
+  getParentRoute: () => PainelAnunciosRoute,
+} as any)
+const ApiPublicPushTrackRoute = ApiPublicPushTrackRouteImport.update({
+  id: '/api/public/push/track',
+  path: '/api/public/push/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/buscar': typeof BuscarRoute
+  '/contato': typeof ContatoRoute
+  '/emergencia': typeof EmergenciaRoute
+  '/empregos': typeof EmpregosRoute
+  '/favoritos': typeof FavoritosRoute
+  '/marketplace': typeof MarketplaceRouteWithChildren
+  '/o-que-fazer': typeof OQueFazerRoute
+  '/painel': typeof PainelRouteWithChildren
+  '/planos': typeof PlanosRoute
+  '/promocoes': typeof PromocoesRoute
+  '/reputacao': typeof ReputacaoRoute
+  '/servicos-publicos': typeof ServicosPublicosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/sobre': typeof SobreRoute
+  '/transporte': typeof TransporteRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/cidades': typeof AdminCidadesRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/duplicados': typeof AdminDuplicadosRoute
+  '/admin/emergencia': typeof AdminEmergenciaRoute
+  '/admin/empresas': typeof AdminEmpresasRoute
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/menu': typeof AdminMenuRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/push': typeof AdminPushRouteWithChildren
+  '/admin/qa': typeof AdminQaRoute
+  '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/textos': typeof AdminTextosRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/categoria/$slug': typeof CategoriaSlugRoute
+  '/cidades/$slug': typeof CidadesSlugRoute
+  '/empresa/$slug': typeof EmpresaSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/marketplace/$slug': typeof MarketplaceSlugRoute
+  '/painel/anuncios': typeof PainelAnunciosRouteWithChildren
+  '/painel/avaliacoes': typeof PainelAvaliacoesRoute
+  '/painel/empresas': typeof PainelEmpresasRouteWithChildren
+  '/painel/favoritos': typeof PainelFavoritosRoute
+  '/painel/leads': typeof PainelLeadsRoute
+  '/painel/mensagens': typeof PainelMensagensRoute
+  '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
+  '/painel/perfil': typeof PainelPerfilRoute
+  '/painel/ranking': typeof PainelRankingRoute
+  '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
+  '/eventos/': typeof EventosIndexRoute
+  '/painel/': typeof PainelIndexRoute
+  '/admin/push/$id': typeof AdminPushIdRoute
+  '/admin/push/historico': typeof AdminPushHistoricoRoute
+  '/admin/push/novo': typeof AdminPushNovoRoute
+  '/admin/push/templates': typeof AdminPushTemplatesRoute
+  '/painel/anuncios/novo': typeof PainelAnunciosNovoRoute
+  '/painel/empresas/$id': typeof PainelEmpresasIdRoute
+  '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
+  '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
+  '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/push/track': typeof ApiPublicPushTrackRoute
+  '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/buscar': typeof BuscarRoute
+  '/contato': typeof ContatoRoute
+  '/emergencia': typeof EmergenciaRoute
+  '/empregos': typeof EmpregosRoute
+  '/favoritos': typeof FavoritosRoute
+  '/marketplace': typeof MarketplaceRouteWithChildren
+  '/o-que-fazer': typeof OQueFazerRoute
+  '/planos': typeof PlanosRoute
+  '/promocoes': typeof PromocoesRoute
+  '/reputacao': typeof ReputacaoRoute
+  '/servicos-publicos': typeof ServicosPublicosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/sobre': typeof SobreRoute
+  '/transporte': typeof TransporteRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/cidades': typeof AdminCidadesRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/duplicados': typeof AdminDuplicadosRoute
+  '/admin/emergencia': typeof AdminEmergenciaRoute
+  '/admin/empresas': typeof AdminEmpresasRoute
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/menu': typeof AdminMenuRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/qa': typeof AdminQaRoute
+  '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/textos': typeof AdminTextosRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/categoria/$slug': typeof CategoriaSlugRoute
+  '/cidades/$slug': typeof CidadesSlugRoute
+  '/empresa/$slug': typeof EmpresaSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/marketplace/$slug': typeof MarketplaceSlugRoute
+  '/painel/anuncios': typeof PainelAnunciosRouteWithChildren
+  '/painel/avaliacoes': typeof PainelAvaliacoesRoute
+  '/painel/empresas': typeof PainelEmpresasRouteWithChildren
+  '/painel/favoritos': typeof PainelFavoritosRoute
+  '/painel/leads': typeof PainelLeadsRoute
+  '/painel/mensagens': typeof PainelMensagensRoute
+  '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
+  '/painel/perfil': typeof PainelPerfilRoute
+  '/painel/ranking': typeof PainelRankingRoute
+  '/admin': typeof AdminIndexRoute
+  '/blog': typeof BlogIndexRoute
+  '/eventos': typeof EventosIndexRoute
+  '/painel': typeof PainelIndexRoute
+  '/admin/push/$id': typeof AdminPushIdRoute
+  '/admin/push/historico': typeof AdminPushHistoricoRoute
+  '/admin/push/novo': typeof AdminPushNovoRoute
+  '/admin/push/templates': typeof AdminPushTemplatesRoute
+  '/painel/anuncios/novo': typeof PainelAnunciosNovoRoute
+  '/painel/empresas/$id': typeof PainelEmpresasIdRoute
+  '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
+  '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
+  '/admin/push': typeof AdminPushIndexRoute
+  '/api/public/push/track': typeof ApiPublicPushTrackRoute
+  '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/buscar': typeof BuscarRoute
+  '/contato': typeof ContatoRoute
+  '/emergencia': typeof EmergenciaRoute
+  '/empregos': typeof EmpregosRoute
+  '/favoritos': typeof FavoritosRoute
+  '/marketplace': typeof MarketplaceRouteWithChildren
+  '/o-que-fazer': typeof OQueFazerRoute
+  '/painel': typeof PainelRouteWithChildren
+  '/planos': typeof PlanosRoute
+  '/promocoes': typeof PromocoesRoute
+  '/reputacao': typeof ReputacaoRoute
+  '/servicos-publicos': typeof ServicosPublicosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/sobre': typeof SobreRoute
+  '/transporte': typeof TransporteRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/cidades': typeof AdminCidadesRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/duplicados': typeof AdminDuplicadosRoute
+  '/admin/emergencia': typeof AdminEmergenciaRoute
+  '/admin/empresas': typeof AdminEmpresasRoute
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/menu': typeof AdminMenuRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/push': typeof AdminPushRouteWithChildren
+  '/admin/qa': typeof AdminQaRoute
+  '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/textos': typeof AdminTextosRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/categoria/$slug': typeof CategoriaSlugRoute
+  '/cidades/$slug': typeof CidadesSlugRoute
+  '/empresa/$slug': typeof EmpresaSlugRoute
+  '/eventos/$slug': typeof EventosSlugRoute
+  '/marketplace/$slug': typeof MarketplaceSlugRoute
+  '/painel/anuncios': typeof PainelAnunciosRouteWithChildren
+  '/painel/avaliacoes': typeof PainelAvaliacoesRoute
+  '/painel/empresas': typeof PainelEmpresasRouteWithChildren
+  '/painel/favoritos': typeof PainelFavoritosRoute
+  '/painel/leads': typeof PainelLeadsRoute
+  '/painel/mensagens': typeof PainelMensagensRoute
+  '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
+  '/painel/perfil': typeof PainelPerfilRoute
+  '/painel/ranking': typeof PainelRankingRoute
+  '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
+  '/eventos/': typeof EventosIndexRoute
+  '/painel/': typeof PainelIndexRoute
+  '/admin/push/$id': typeof AdminPushIdRoute
+  '/admin/push/historico': typeof AdminPushHistoricoRoute
+  '/admin/push/novo': typeof AdminPushNovoRoute
+  '/admin/push/templates': typeof AdminPushTemplatesRoute
+  '/painel/anuncios/novo': typeof PainelAnunciosNovoRoute
+  '/painel/empresas/$id': typeof PainelEmpresasIdRoute
+  '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
+  '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
+  '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/push/track': typeof ApiPublicPushTrackRoute
+  '/painel/anuncios/$id/editar': typeof PainelAnunciosIdEditarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/buscar'
+    | '/contato'
+    | '/emergencia'
+    | '/empregos'
+    | '/favoritos'
+    | '/marketplace'
+    | '/o-que-fazer'
+    | '/painel'
+    | '/planos'
+    | '/promocoes'
+    | '/reputacao'
+    | '/servicos-publicos'
+    | '/sitemap.xml'
+    | '/sobre'
+    | '/transporte'
+    | '/admin/blog'
+    | '/admin/cidades'
+    | '/admin/configuracoes'
+    | '/admin/duplicados'
+    | '/admin/emergencia'
+    | '/admin/empresas'
+    | '/admin/eventos'
+    | '/admin/leads'
+    | '/admin/menu'
+    | '/admin/planos'
+    | '/admin/push'
+    | '/admin/qa'
+    | '/admin/servicos-publicos'
+    | '/admin/textos'
+    | '/blog/$slug'
+    | '/categoria/$slug'
+    | '/cidades/$slug'
+    | '/empresa/$slug'
+    | '/eventos/$slug'
+    | '/marketplace/$slug'
+    | '/painel/anuncios'
+    | '/painel/avaliacoes'
+    | '/painel/empresas'
+    | '/painel/favoritos'
+    | '/painel/leads'
+    | '/painel/mensagens'
+    | '/painel/notificacoes'
+    | '/painel/perfil'
+    | '/painel/ranking'
+    | '/admin/'
+    | '/blog/'
+    | '/eventos/'
+    | '/painel/'
+    | '/admin/push/$id'
+    | '/admin/push/historico'
+    | '/admin/push/novo'
+    | '/admin/push/templates'
+    | '/painel/anuncios/novo'
+    | '/painel/empresas/$id'
+    | '/painel/empresas/nova'
+    | '/painel/notificacoes/preferencias'
+    | '/admin/push/'
+    | '/api/public/push/track'
+    | '/painel/anuncios/$id/editar'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/buscar'
+    | '/contato'
+    | '/emergencia'
+    | '/empregos'
+    | '/favoritos'
+    | '/marketplace'
+    | '/o-que-fazer'
+    | '/planos'
+    | '/promocoes'
+    | '/reputacao'
+    | '/servicos-publicos'
+    | '/sitemap.xml'
+    | '/sobre'
+    | '/transporte'
+    | '/admin/blog'
+    | '/admin/cidades'
+    | '/admin/configuracoes'
+    | '/admin/duplicados'
+    | '/admin/emergencia'
+    | '/admin/empresas'
+    | '/admin/eventos'
+    | '/admin/leads'
+    | '/admin/menu'
+    | '/admin/planos'
+    | '/admin/qa'
+    | '/admin/servicos-publicos'
+    | '/admin/textos'
+    | '/blog/$slug'
+    | '/categoria/$slug'
+    | '/cidades/$slug'
+    | '/empresa/$slug'
+    | '/eventos/$slug'
+    | '/marketplace/$slug'
+    | '/painel/anuncios'
+    | '/painel/avaliacoes'
+    | '/painel/empresas'
+    | '/painel/favoritos'
+    | '/painel/leads'
+    | '/painel/mensagens'
+    | '/painel/notificacoes'
+    | '/painel/perfil'
+    | '/painel/ranking'
+    | '/admin'
+    | '/blog'
+    | '/eventos'
+    | '/painel'
+    | '/admin/push/$id'
+    | '/admin/push/historico'
+    | '/admin/push/novo'
+    | '/admin/push/templates'
+    | '/painel/anuncios/novo'
+    | '/painel/empresas/$id'
+    | '/painel/empresas/nova'
+    | '/painel/notificacoes/preferencias'
+    | '/admin/push'
+    | '/api/public/push/track'
+    | '/painel/anuncios/$id/editar'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/buscar'
+    | '/contato'
+    | '/emergencia'
+    | '/empregos'
+    | '/favoritos'
+    | '/marketplace'
+    | '/o-que-fazer'
+    | '/painel'
+    | '/planos'
+    | '/promocoes'
+    | '/reputacao'
+    | '/servicos-publicos'
+    | '/sitemap.xml'
+    | '/sobre'
+    | '/transporte'
+    | '/admin/blog'
+    | '/admin/cidades'
+    | '/admin/configuracoes'
+    | '/admin/duplicados'
+    | '/admin/emergencia'
+    | '/admin/empresas'
+    | '/admin/eventos'
+    | '/admin/leads'
+    | '/admin/menu'
+    | '/admin/planos'
+    | '/admin/push'
+    | '/admin/qa'
+    | '/admin/servicos-publicos'
+    | '/admin/textos'
+    | '/blog/$slug'
+    | '/categoria/$slug'
+    | '/cidades/$slug'
+    | '/empresa/$slug'
+    | '/eventos/$slug'
+    | '/marketplace/$slug'
+    | '/painel/anuncios'
+    | '/painel/avaliacoes'
+    | '/painel/empresas'
+    | '/painel/favoritos'
+    | '/painel/leads'
+    | '/painel/mensagens'
+    | '/painel/notificacoes'
+    | '/painel/perfil'
+    | '/painel/ranking'
+    | '/admin/'
+    | '/blog/'
+    | '/eventos/'
+    | '/painel/'
+    | '/admin/push/$id'
+    | '/admin/push/historico'
+    | '/admin/push/novo'
+    | '/admin/push/templates'
+    | '/painel/anuncios/novo'
+    | '/painel/empresas/$id'
+    | '/painel/empresas/nova'
+    | '/painel/notificacoes/preferencias'
+    | '/admin/push/'
+    | '/api/public/push/track'
+    | '/painel/anuncios/$id/editar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  BuscarRoute: typeof BuscarRoute
+  ContatoRoute: typeof ContatoRoute
+  EmergenciaRoute: typeof EmergenciaRoute
+  EmpregosRoute: typeof EmpregosRoute
+  FavoritosRoute: typeof FavoritosRoute
+  MarketplaceRoute: typeof MarketplaceRouteWithChildren
+  OQueFazerRoute: typeof OQueFazerRoute
+  PainelRoute: typeof PainelRouteWithChildren
+  PlanosRoute: typeof PlanosRoute
+  PromocoesRoute: typeof PromocoesRoute
+  ReputacaoRoute: typeof ReputacaoRoute
+  ServicosPublicosRoute: typeof ServicosPublicosRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SobreRoute: typeof SobreRoute
+  TransporteRoute: typeof TransporteRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  CategoriaSlugRoute: typeof CategoriaSlugRoute
+  CidadesSlugRoute: typeof CidadesSlugRoute
+  EmpresaSlugRoute: typeof EmpresaSlugRoute
+  EventosSlugRoute: typeof EventosSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+  EventosIndexRoute: typeof EventosIndexRoute
+  ApiPublicPushTrackRoute: typeof ApiPublicPushTrackRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/transporte': {
+      id: '/transporte'
+      path: '/transporte'
+      fullPath: '/transporte'
+      preLoaderRoute: typeof TransporteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/servicos-publicos': {
+      id: '/servicos-publicos'
+      path: '/servicos-publicos'
+      fullPath: '/servicos-publicos'
+      preLoaderRoute: typeof ServicosPublicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reputacao': {
+      id: '/reputacao'
+      path: '/reputacao'
+      fullPath: '/reputacao'
+      preLoaderRoute: typeof ReputacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/promocoes': {
+      id: '/promocoes'
+      path: '/promocoes'
+      fullPath: '/promocoes'
+      preLoaderRoute: typeof PromocoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planos': {
+      id: '/planos'
+      path: '/planos'
+      fullPath: '/planos'
+      preLoaderRoute: typeof PlanosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/painel': {
+      id: '/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof PainelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/o-que-fazer': {
+      id: '/o-que-fazer'
+      path: '/o-que-fazer'
+      fullPath: '/o-que-fazer'
+      preLoaderRoute: typeof OQueFazerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketplace': {
+      id: '/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof MarketplaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/empregos': {
+      id: '/empregos'
+      path: '/empregos'
+      fullPath: '/empregos'
+      preLoaderRoute: typeof EmpregosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/emergencia': {
+      id: '/emergencia'
+      path: '/emergencia'
+      fullPath: '/emergencia'
+      preLoaderRoute: typeof EmergenciaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buscar': {
+      id: '/buscar'
+      path: '/buscar'
+      fullPath: '/buscar'
+      preLoaderRoute: typeof BuscarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +923,483 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/painel/': {
+      id: '/painel/'
+      path: '/'
+      fullPath: '/painel/'
+      preLoaderRoute: typeof PainelIndexRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/eventos/': {
+      id: '/eventos/'
+      path: '/eventos'
+      fullPath: '/eventos/'
+      preLoaderRoute: typeof EventosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/painel/ranking': {
+      id: '/painel/ranking'
+      path: '/ranking'
+      fullPath: '/painel/ranking'
+      preLoaderRoute: typeof PainelRankingRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/perfil': {
+      id: '/painel/perfil'
+      path: '/perfil'
+      fullPath: '/painel/perfil'
+      preLoaderRoute: typeof PainelPerfilRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/notificacoes': {
+      id: '/painel/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/painel/notificacoes'
+      preLoaderRoute: typeof PainelNotificacoesRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/mensagens': {
+      id: '/painel/mensagens'
+      path: '/mensagens'
+      fullPath: '/painel/mensagens'
+      preLoaderRoute: typeof PainelMensagensRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/leads': {
+      id: '/painel/leads'
+      path: '/leads'
+      fullPath: '/painel/leads'
+      preLoaderRoute: typeof PainelLeadsRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/favoritos': {
+      id: '/painel/favoritos'
+      path: '/favoritos'
+      fullPath: '/painel/favoritos'
+      preLoaderRoute: typeof PainelFavoritosRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/empresas': {
+      id: '/painel/empresas'
+      path: '/empresas'
+      fullPath: '/painel/empresas'
+      preLoaderRoute: typeof PainelEmpresasRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/avaliacoes': {
+      id: '/painel/avaliacoes'
+      path: '/avaliacoes'
+      fullPath: '/painel/avaliacoes'
+      preLoaderRoute: typeof PainelAvaliacoesRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/anuncios': {
+      id: '/painel/anuncios'
+      path: '/anuncios'
+      fullPath: '/painel/anuncios'
+      preLoaderRoute: typeof PainelAnunciosRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/marketplace/$slug': {
+      id: '/marketplace/$slug'
+      path: '/$slug'
+      fullPath: '/marketplace/$slug'
+      preLoaderRoute: typeof MarketplaceSlugRouteImport
+      parentRoute: typeof MarketplaceRoute
+    }
+    '/eventos/$slug': {
+      id: '/eventos/$slug'
+      path: '/eventos/$slug'
+      fullPath: '/eventos/$slug'
+      preLoaderRoute: typeof EventosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/empresa/$slug': {
+      id: '/empresa/$slug'
+      path: '/empresa/$slug'
+      fullPath: '/empresa/$slug'
+      preLoaderRoute: typeof EmpresaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cidades/$slug': {
+      id: '/cidades/$slug'
+      path: '/cidades/$slug'
+      fullPath: '/cidades/$slug'
+      preLoaderRoute: typeof CidadesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categoria/$slug': {
+      id: '/categoria/$slug'
+      path: '/categoria/$slug'
+      fullPath: '/categoria/$slug'
+      preLoaderRoute: typeof CategoriaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/textos': {
+      id: '/admin/textos'
+      path: '/textos'
+      fullPath: '/admin/textos'
+      preLoaderRoute: typeof AdminTextosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/servicos-publicos': {
+      id: '/admin/servicos-publicos'
+      path: '/servicos-publicos'
+      fullPath: '/admin/servicos-publicos'
+      preLoaderRoute: typeof AdminServicosPublicosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/qa': {
+      id: '/admin/qa'
+      path: '/qa'
+      fullPath: '/admin/qa'
+      preLoaderRoute: typeof AdminQaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/push': {
+      id: '/admin/push'
+      path: '/push'
+      fullPath: '/admin/push'
+      preLoaderRoute: typeof AdminPushRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/planos': {
+      id: '/admin/planos'
+      path: '/planos'
+      fullPath: '/admin/planos'
+      preLoaderRoute: typeof AdminPlanosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/menu': {
+      id: '/admin/menu'
+      path: '/menu'
+      fullPath: '/admin/menu'
+      preLoaderRoute: typeof AdminMenuRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/eventos': {
+      id: '/admin/eventos'
+      path: '/eventos'
+      fullPath: '/admin/eventos'
+      preLoaderRoute: typeof AdminEventosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/empresas': {
+      id: '/admin/empresas'
+      path: '/empresas'
+      fullPath: '/admin/empresas'
+      preLoaderRoute: typeof AdminEmpresasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/emergencia': {
+      id: '/admin/emergencia'
+      path: '/emergencia'
+      fullPath: '/admin/emergencia'
+      preLoaderRoute: typeof AdminEmergenciaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/duplicados': {
+      id: '/admin/duplicados'
+      path: '/duplicados'
+      fullPath: '/admin/duplicados'
+      preLoaderRoute: typeof AdminDuplicadosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/configuracoes': {
+      id: '/admin/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/admin/configuracoes'
+      preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/cidades': {
+      id: '/admin/cidades'
+      path: '/cidades'
+      fullPath: '/admin/cidades'
+      preLoaderRoute: typeof AdminCidadesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/blog': {
+      id: '/admin/blog'
+      path: '/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AdminBlogRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/push/': {
+      id: '/admin/push/'
+      path: '/'
+      fullPath: '/admin/push/'
+      preLoaderRoute: typeof AdminPushIndexRouteImport
+      parentRoute: typeof AdminPushRoute
+    }
+    '/painel/notificacoes/preferencias': {
+      id: '/painel/notificacoes/preferencias'
+      path: '/preferencias'
+      fullPath: '/painel/notificacoes/preferencias'
+      preLoaderRoute: typeof PainelNotificacoesPreferenciasRouteImport
+      parentRoute: typeof PainelNotificacoesRoute
+    }
+    '/painel/empresas/nova': {
+      id: '/painel/empresas/nova'
+      path: '/nova'
+      fullPath: '/painel/empresas/nova'
+      preLoaderRoute: typeof PainelEmpresasNovaRouteImport
+      parentRoute: typeof PainelEmpresasRoute
+    }
+    '/painel/empresas/$id': {
+      id: '/painel/empresas/$id'
+      path: '/$id'
+      fullPath: '/painel/empresas/$id'
+      preLoaderRoute: typeof PainelEmpresasIdRouteImport
+      parentRoute: typeof PainelEmpresasRoute
+    }
+    '/painel/anuncios/novo': {
+      id: '/painel/anuncios/novo'
+      path: '/novo'
+      fullPath: '/painel/anuncios/novo'
+      preLoaderRoute: typeof PainelAnunciosNovoRouteImport
+      parentRoute: typeof PainelAnunciosRoute
+    }
+    '/admin/push/templates': {
+      id: '/admin/push/templates'
+      path: '/templates'
+      fullPath: '/admin/push/templates'
+      preLoaderRoute: typeof AdminPushTemplatesRouteImport
+      parentRoute: typeof AdminPushRoute
+    }
+    '/admin/push/novo': {
+      id: '/admin/push/novo'
+      path: '/novo'
+      fullPath: '/admin/push/novo'
+      preLoaderRoute: typeof AdminPushNovoRouteImport
+      parentRoute: typeof AdminPushRoute
+    }
+    '/admin/push/historico': {
+      id: '/admin/push/historico'
+      path: '/historico'
+      fullPath: '/admin/push/historico'
+      preLoaderRoute: typeof AdminPushHistoricoRouteImport
+      parentRoute: typeof AdminPushRoute
+    }
+    '/admin/push/$id': {
+      id: '/admin/push/$id'
+      path: '/$id'
+      fullPath: '/admin/push/$id'
+      preLoaderRoute: typeof AdminPushIdRouteImport
+      parentRoute: typeof AdminPushRoute
+    }
+    '/painel/anuncios/$id/editar': {
+      id: '/painel/anuncios/$id/editar'
+      path: '/$id/editar'
+      fullPath: '/painel/anuncios/$id/editar'
+      preLoaderRoute: typeof PainelAnunciosIdEditarRouteImport
+      parentRoute: typeof PainelAnunciosRoute
+    }
+    '/api/public/push/track': {
+      id: '/api/public/push/track'
+      path: '/api/public/push/track'
+      fullPath: '/api/public/push/track'
+      preLoaderRoute: typeof ApiPublicPushTrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AdminPushRouteChildren {
+  AdminPushIdRoute: typeof AdminPushIdRoute
+  AdminPushHistoricoRoute: typeof AdminPushHistoricoRoute
+  AdminPushNovoRoute: typeof AdminPushNovoRoute
+  AdminPushTemplatesRoute: typeof AdminPushTemplatesRoute
+  AdminPushIndexRoute: typeof AdminPushIndexRoute
+}
+
+const AdminPushRouteChildren: AdminPushRouteChildren = {
+  AdminPushIdRoute: AdminPushIdRoute,
+  AdminPushHistoricoRoute: AdminPushHistoricoRoute,
+  AdminPushNovoRoute: AdminPushNovoRoute,
+  AdminPushTemplatesRoute: AdminPushTemplatesRoute,
+  AdminPushIndexRoute: AdminPushIndexRoute,
+}
+
+const AdminPushRouteWithChildren = AdminPushRoute._addFileChildren(
+  AdminPushRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminBlogRoute: typeof AdminBlogRoute
+  AdminCidadesRoute: typeof AdminCidadesRoute
+  AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
+  AdminDuplicadosRoute: typeof AdminDuplicadosRoute
+  AdminEmergenciaRoute: typeof AdminEmergenciaRoute
+  AdminEmpresasRoute: typeof AdminEmpresasRoute
+  AdminEventosRoute: typeof AdminEventosRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
+  AdminMenuRoute: typeof AdminMenuRoute
+  AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminPushRoute: typeof AdminPushRouteWithChildren
+  AdminQaRoute: typeof AdminQaRoute
+  AdminServicosPublicosRoute: typeof AdminServicosPublicosRoute
+  AdminTextosRoute: typeof AdminTextosRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminBlogRoute: AdminBlogRoute,
+  AdminCidadesRoute: AdminCidadesRoute,
+  AdminConfiguracoesRoute: AdminConfiguracoesRoute,
+  AdminDuplicadosRoute: AdminDuplicadosRoute,
+  AdminEmergenciaRoute: AdminEmergenciaRoute,
+  AdminEmpresasRoute: AdminEmpresasRoute,
+  AdminEventosRoute: AdminEventosRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
+  AdminMenuRoute: AdminMenuRoute,
+  AdminPlanosRoute: AdminPlanosRoute,
+  AdminPushRoute: AdminPushRouteWithChildren,
+  AdminQaRoute: AdminQaRoute,
+  AdminServicosPublicosRoute: AdminServicosPublicosRoute,
+  AdminTextosRoute: AdminTextosRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface MarketplaceRouteChildren {
+  MarketplaceSlugRoute: typeof MarketplaceSlugRoute
+}
+
+const MarketplaceRouteChildren: MarketplaceRouteChildren = {
+  MarketplaceSlugRoute: MarketplaceSlugRoute,
+}
+
+const MarketplaceRouteWithChildren = MarketplaceRoute._addFileChildren(
+  MarketplaceRouteChildren,
+)
+
+interface PainelAnunciosRouteChildren {
+  PainelAnunciosNovoRoute: typeof PainelAnunciosNovoRoute
+  PainelAnunciosIdEditarRoute: typeof PainelAnunciosIdEditarRoute
+}
+
+const PainelAnunciosRouteChildren: PainelAnunciosRouteChildren = {
+  PainelAnunciosNovoRoute: PainelAnunciosNovoRoute,
+  PainelAnunciosIdEditarRoute: PainelAnunciosIdEditarRoute,
+}
+
+const PainelAnunciosRouteWithChildren = PainelAnunciosRoute._addFileChildren(
+  PainelAnunciosRouteChildren,
+)
+
+interface PainelEmpresasRouteChildren {
+  PainelEmpresasIdRoute: typeof PainelEmpresasIdRoute
+  PainelEmpresasNovaRoute: typeof PainelEmpresasNovaRoute
+}
+
+const PainelEmpresasRouteChildren: PainelEmpresasRouteChildren = {
+  PainelEmpresasIdRoute: PainelEmpresasIdRoute,
+  PainelEmpresasNovaRoute: PainelEmpresasNovaRoute,
+}
+
+const PainelEmpresasRouteWithChildren = PainelEmpresasRoute._addFileChildren(
+  PainelEmpresasRouteChildren,
+)
+
+interface PainelNotificacoesRouteChildren {
+  PainelNotificacoesPreferenciasRoute: typeof PainelNotificacoesPreferenciasRoute
+}
+
+const PainelNotificacoesRouteChildren: PainelNotificacoesRouteChildren = {
+  PainelNotificacoesPreferenciasRoute: PainelNotificacoesPreferenciasRoute,
+}
+
+const PainelNotificacoesRouteWithChildren =
+  PainelNotificacoesRoute._addFileChildren(PainelNotificacoesRouteChildren)
+
+interface PainelRouteChildren {
+  PainelAnunciosRoute: typeof PainelAnunciosRouteWithChildren
+  PainelAvaliacoesRoute: typeof PainelAvaliacoesRoute
+  PainelEmpresasRoute: typeof PainelEmpresasRouteWithChildren
+  PainelFavoritosRoute: typeof PainelFavoritosRoute
+  PainelLeadsRoute: typeof PainelLeadsRoute
+  PainelMensagensRoute: typeof PainelMensagensRoute
+  PainelNotificacoesRoute: typeof PainelNotificacoesRouteWithChildren
+  PainelPerfilRoute: typeof PainelPerfilRoute
+  PainelRankingRoute: typeof PainelRankingRoute
+  PainelIndexRoute: typeof PainelIndexRoute
+}
+
+const PainelRouteChildren: PainelRouteChildren = {
+  PainelAnunciosRoute: PainelAnunciosRouteWithChildren,
+  PainelAvaliacoesRoute: PainelAvaliacoesRoute,
+  PainelEmpresasRoute: PainelEmpresasRouteWithChildren,
+  PainelFavoritosRoute: PainelFavoritosRoute,
+  PainelLeadsRoute: PainelLeadsRoute,
+  PainelMensagensRoute: PainelMensagensRoute,
+  PainelNotificacoesRoute: PainelNotificacoesRouteWithChildren,
+  PainelPerfilRoute: PainelPerfilRoute,
+  PainelRankingRoute: PainelRankingRoute,
+  PainelIndexRoute: PainelIndexRoute,
+}
+
+const PainelRouteWithChildren =
+  PainelRoute._addFileChildren(PainelRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AuthRoute: AuthRoute,
+  BuscarRoute: BuscarRoute,
+  ContatoRoute: ContatoRoute,
+  EmergenciaRoute: EmergenciaRoute,
+  EmpregosRoute: EmpregosRoute,
+  FavoritosRoute: FavoritosRoute,
+  MarketplaceRoute: MarketplaceRouteWithChildren,
+  OQueFazerRoute: OQueFazerRoute,
+  PainelRoute: PainelRouteWithChildren,
+  PlanosRoute: PlanosRoute,
+  PromocoesRoute: PromocoesRoute,
+  ReputacaoRoute: ReputacaoRoute,
+  ServicosPublicosRoute: ServicosPublicosRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SobreRoute: SobreRoute,
+  TransporteRoute: TransporteRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  CategoriaSlugRoute: CategoriaSlugRoute,
+  CidadesSlugRoute: CidadesSlugRoute,
+  EmpresaSlugRoute: EmpresaSlugRoute,
+  EventosSlugRoute: EventosSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+  EventosIndexRoute: EventosIndexRoute,
+  ApiPublicPushTrackRoute: ApiPublicPushTrackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
