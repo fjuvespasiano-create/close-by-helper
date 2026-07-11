@@ -86,6 +86,7 @@ export const CompanyCard = memo(function CompanyCard({ company }: { company: Com
             </span>
           </div>
         )}
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         {isFeatured ? (
           <Badge className="absolute left-3 top-3 bg-accent text-accent-foreground hover:bg-accent">
             <Crown className="mr-1 h-3 w-3" /> Destaque
