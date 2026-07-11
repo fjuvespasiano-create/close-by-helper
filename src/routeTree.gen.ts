@@ -75,6 +75,7 @@ import { Route as AdminEmergenciaRouteImport } from './routes/admin.emergencia'
 import { Route as AdminDuplicadosRouteImport } from './routes/admin.duplicados'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
 import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
+import { Route as AdminCalendarioEditorialRouteImport } from './routes/admin.calendario-editorial'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminAnunciosRouteImport } from './routes/admin.anuncios'
 import { Route as AdminAnalyticsAnunciosRouteImport } from './routes/admin.analytics-anuncios'
@@ -431,6 +432,12 @@ const AdminCidadesRoute = AdminCidadesRouteImport.update({
   path: '/cidades',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCalendarioEditorialRoute =
+  AdminCalendarioEditorialRouteImport.update({
+    id: '/calendario-editorial',
+    path: '/calendario-editorial',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const AdminBlogRoute = AdminBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -595,6 +602,7 @@ export interface FileRoutesByFullPath {
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
@@ -685,6 +693,7 @@ export interface FileRoutesByTo {
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
@@ -778,6 +787,7 @@ export interface FileRoutesById {
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
@@ -873,6 +883,7 @@ export interface FileRouteTypes {
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
     | '/admin/blog'
+    | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
     | '/admin/duplicados'
@@ -963,6 +974,7 @@ export interface FileRouteTypes {
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
     | '/admin/blog'
+    | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
     | '/admin/duplicados'
@@ -1055,6 +1067,7 @@ export interface FileRouteTypes {
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
     | '/admin/blog'
+    | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
     | '/admin/duplicados'
@@ -1631,6 +1644,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCidadesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/calendario-editorial': {
+      id: '/admin/calendario-editorial'
+      path: '/calendario-editorial'
+      fullPath: '/admin/calendario-editorial'
+      preLoaderRoute: typeof AdminCalendarioEditorialRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/blog': {
       id: '/admin/blog'
       path: '/blog'
@@ -1833,6 +1853,7 @@ interface AdminRouteChildren {
   AdminAnalyticsAnunciosRoute: typeof AdminAnalyticsAnunciosRoute
   AdminAnunciosRoute: typeof AdminAnunciosRoute
   AdminBlogRoute: typeof AdminBlogRoute
+  AdminCalendarioEditorialRoute: typeof AdminCalendarioEditorialRoute
   AdminCidadesRoute: typeof AdminCidadesRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminDuplicadosRoute: typeof AdminDuplicadosRoute
@@ -1857,6 +1878,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAnalyticsAnunciosRoute: AdminAnalyticsAnunciosRoute,
   AdminAnunciosRoute: AdminAnunciosRoute,
   AdminBlogRoute: AdminBlogRoute,
+  AdminCalendarioEditorialRoute: AdminCalendarioEditorialRoute,
   AdminCidadesRoute: AdminCidadesRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminDuplicadosRoute: AdminDuplicadosRoute,
