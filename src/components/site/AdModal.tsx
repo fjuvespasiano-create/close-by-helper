@@ -259,6 +259,7 @@ export function AdModal() {
         <img
           src={ad.image_url}
           alt={ad.name}
+          onError={onImgError}
           className="block h-auto w-full object-cover"
           loading="lazy"
         />
