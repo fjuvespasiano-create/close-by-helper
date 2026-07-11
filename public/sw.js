@@ -137,6 +137,7 @@ self.addEventListener('push', (event) => {
       url: data.url || '/',
       notification_id: data.notification_id,
       delivery_id: data.delivery_id,
+      delivery_token: data.delivery_token,
       buttons: Array.isArray(data.buttons) ? data.buttons : [],
       priority: isHigh ? 'high' : 'normal',
       sound: data.sound || (isHigh ? '/alert.mp3' : undefined),
@@ -149,7 +150,7 @@ self.addEventListener('push', (event) => {
 
   const tasks = [
     self.registration.showNotification(title, options),
-    track(data.delivery_id, 'delivered'),
+    track(data.delivery_id, 'delivered', data.delivery_token),
   ];
   if (isHigh && data.silent !== true) tasks.push(notifyClientsPlaySound(options.data.sound));
   event.waitUntil(Promise.all(tasks));
@@ -165,7 +166,7 @@ self.addEventListener('notificationclick', (event) => {
     if (b && b.url) target = b.url;
   }
   event.waitUntil((async () => {
-    await track(d.delivery_id, 'clicked');
+    await track(d.delivery_id, 'clicked', d.delivery_token);
     const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
     for (const client of clients) {
       if ('focus' in client) {
@@ -178,16 +179,45 @@ self.addEventListener('notificationclick', (event) => {
   })());
 });
 
+// B2/B3: subscription rotation. `oldSubscription.options` frequentemente é null
+// em navegadores modernos — reconstruímos com a chave VAPID pública do app.
+const VAPID_PUB = 'BGy1egLnuC9d2mMd-poJQFGUGRJpx62hNsP6b_5V9l8YYbuZyHXi_7UHKUewiqsWKxwieK9XuiMs3Nkufs-gIC0';
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const raw = atob(base64);
+  const out = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; ++i) out[i] = raw.charCodeAt(i);
+  return out;
+}
+
 self.addEventListener('pushsubscriptionchange', (event) => {
   event.waitUntil((async () => {
     try {
-      const newSub = await self.registration.pushManager.subscribe(event.oldSubscription.options);
-      await fetch('/api/public/push/track', {
+      const options = (event.oldSubscription && event.oldSubscription.options)
+        ? event.oldSubscription.options
+        : { userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(VAPID_PUB) };
+      const newSub = await self.registration.pushManager.subscribe(options);
+      const oldEndpoint = event.oldSubscription && event.oldSubscription.endpoint;
+      if (!oldEndpoint) return;
+      // Persistir a nova assinatura no backend (mesmo user_id da antiga).
+      await fetch('/api/public/push/resubscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event: 'resubscribe', old_endpoint: event.oldSubscription?.endpoint, new_subscription: newSub }),
+        body: JSON.stringify({
+          old_endpoint: oldEndpoint,
+          new_subscription: {
+            endpoint: newSub.endpoint,
+            keys: {
+              p256dh: btoa(String.fromCharCode(...new Uint8Array(newSub.getKey('p256dh')))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''),
+              auth: btoa(String.fromCharCode(...new Uint8Array(newSub.getKey('auth')))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''),
+            },
+          },
+        }),
       });
-    } catch {}
+    } catch (err) {
+      console.error('[sw] pushsubscriptionchange failed', err);
+    }
   })());
 });
 
