@@ -135,8 +135,8 @@ function Home() {
               <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — 1 toque para ligar.</div>
             </div>
           </div>
-          <div className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-0.5">
-            Ver agora <ArrowRight className="h-4 w-4" />
+          <div className="btn-shine inline-flex shrink-0 items-center gap-1.5 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-0.5 group-hover:shadow-md">
+            Ver agora <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </Link>
       </section>
@@ -154,8 +154,8 @@ function Home() {
             <h2 className="font-display text-2xl font-bold md:text-3xl">Resolva com a cidade</h2>
             <p className="mt-1 text-muted-foreground">Saúde, educação, segurança e prefeitura — endereço, telefone e horário em 2 toques.</p>
           </div>
-          <Link to="/servicos-publicos" search={{}} className="hidden text-sm font-medium text-primary hover:underline md:inline-flex">
-            Ver todos
+          <Link to="/servicos-publicos" search={{}} className="group hidden items-center gap-1 text-sm font-medium text-primary hover:underline md:inline-flex">
+            Ver todos <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
         <div className="reveal-grid grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -173,8 +173,8 @@ function Home() {
               <h2 className="font-display text-2xl font-bold md:text-3xl">Empresas de confiança</h2>
               <p className="mt-1 text-muted-foreground">{(cats.data ?? []).length} categorias com quem atende de verdade em {cityName}.</p>
             </div>
-            <Link to="/buscar" className="hidden text-sm font-medium text-primary hover:underline md:inline-flex">
-              Ver todas
+            <Link to="/buscar" className="group hidden items-center gap-1 text-sm font-medium text-primary hover:underline md:inline-flex">
+              Ver todas <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
           <div className="reveal-grid hidden gap-3 md:grid md:grid-cols-4 lg:grid-cols-6">
@@ -203,8 +203,8 @@ function Home() {
             <h2 className="font-display text-2xl font-bold md:text-3xl">As queridinhas da vizinhança</h2>
             <p className="mt-1 text-muted-foreground">Escolhidas por quem mora aqui, com base em avaliações reais.</p>
           </div>
-          <Link to="/buscar" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-            Ver tudo <ArrowRight className="h-4 w-4" />
+          <Link to="/buscar" className="group inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+            Ver tudo <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
         <div className="reveal-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
