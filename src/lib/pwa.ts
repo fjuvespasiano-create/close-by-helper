@@ -92,8 +92,12 @@ export function registerServiceWorker() {
         void a.play().catch(() => {});
       } catch {}
     });
-  });
+    });
+  };
+  if (document.readyState === "complete") start();
+  else window.addEventListener("load", start, { once: true });
 }
+
 
 // ---------------- High-Alert test ----------------
 
