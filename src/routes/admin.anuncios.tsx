@@ -329,6 +329,38 @@ function AdminAds() {
                 <Input type="datetime-local" value={form.ends_at} onChange={(e) => setForm({ ...form, ends_at: e.target.value })} />
               </div>
             </div>
+            <div>
+              <Label>Empresa vinculada (opcional)</Label>
+              <Select
+                value={form.company_id || "none"}
+                onValueChange={(v) => setForm({ ...form, company_id: v === "none" ? "" : v })}
+              >
+                <SelectTrigger><SelectValue placeholder="Nenhuma" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Nenhuma</SelectItem>
+                  {companies.data?.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.name}{c.plan === "premium" ? " · 👑 Premium" : ""}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Campanhas de empresas <strong>Premium ativas</strong> recebem prioridade automática (peso ×3).
+              </p>
+            </div>
+            <div>
+              <Label>Rotas alvo (opcional)</Label>
+              <Textarea
+                rows={3}
+                value={form.route_patterns}
+                onChange={(e) => setForm({ ...form, route_patterns: e.target.value })}
+                placeholder={"/empregos\n/vespasiano\n/empresa/*"}
+              />
+              <p className="mt-1 text-xs text-muted-foreground">
+                Uma rota por linha. Use <code>*</code> no final para curinga (ex.: <code>/empresa/*</code>). Vazio = todas as páginas.
+              </p>
+            </div>
             <label className="flex items-center gap-2">
               <Switch checked={form.active} onCheckedChange={(v) => setForm({ ...form, active: v })} />
               <span className="text-sm">Ativa</span>
