@@ -53,12 +53,12 @@ export const CompanyCard = memo(function CompanyCard({ company }: { company: Com
     <Link
       to="/empresa/$slug"
       params={{ slug: company.slug }}
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_40px_-16px_rgb(15_23_42/0.22)] focus-ring active:translate-y-0 active:scale-[0.99] ${
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-18px_rgb(15_23_42/0.28)] focus-ring active:translate-y-0 active:scale-[0.99] ${
         isFeatured
-          ? "border-accent/60 ring-2 ring-accent/30 hover:ring-accent/60"
+          ? "border-accent/60 ring-2 ring-accent/30 hover:ring-accent/70 hover:border-accent"
           : isPremium
-          ? "border-primary/40 ring-1 ring-primary/20"
-          : "border-border"
+          ? "border-primary/40 ring-1 ring-primary/20 hover:ring-primary/40 hover:border-primary/60"
+          : "border-border hover:border-primary/30"
       }`}
     >
       {isPremium ? (
