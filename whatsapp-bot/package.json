@@ -1,0 +1,18 @@
+{
+  "name": "agenddaqui-whatsapp-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Módulo de disparo de mensagens WhatsApp para leads (portaria/condomínio).",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "send:auto": "node src/index.js --mode=auto",
+    "send:manual": "node src/index.js --mode=manual",
+    "send:one": "node src/index.js --mode=one"
+  },
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
+  }
+}
