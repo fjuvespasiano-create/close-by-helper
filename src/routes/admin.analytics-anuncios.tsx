@@ -250,10 +250,28 @@ function AnalyticsAnunciosPage() {
             Métricas para provar valor ao comerciante local e renovar contratos.
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <label htmlFor="range" className="text-sm text-muted-foreground">Período</label>
+        <div className="flex flex-wrap items-center gap-2">
           <select
-            id="range"
+            value={cityFilter}
+            onChange={(e) => setCityFilter(e.target.value)}
+            className="h-9 rounded-md border border-input bg-background px-2 text-sm"
+          >
+            <option value="">Todas as cidades</option>
+            {cities.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <select
+            value={placementFilter}
+            onChange={(e) => setPlacementFilter(e.target.value)}
+            className="h-9 rounded-md border border-input bg-background px-2 text-sm"
+          >
+            <option value="">Todos os canais</option>
+            {placements.map((p) => (
+              <option key={p} value={p}>{p}</option>
+            ))}
+          </select>
+          <select
             value={rangeDays}
             onChange={(e) => setRangeDays(Number(e.target.value))}
             className="h-9 rounded-md border border-input bg-background px-2 text-sm"
@@ -263,16 +281,24 @@ function AnalyticsAnunciosPage() {
             <option value={30}>Últimos 30 dias</option>
             <option value={90}>Últimos 90 dias</option>
           </select>
+          <button
+            type="button"
+            onClick={exportCsv}
+            className="inline-flex items-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm hover:bg-muted"
+          >
+            <Download className="h-4 w-4" /> CSV
+          </button>
         </div>
       </div>
 
       {/* Overview cards */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <MetricCard icon={<Eye className="h-4 w-4" />} label="Visualizações totais" value={overview.impressions.toLocaleString("pt-BR")} />
-        <MetricCard icon={<MousePointerClick className="h-4 w-4" />} label="Cliques totais" value={overview.clicks.toLocaleString("pt-BR")} />
-        <MetricCard icon={<Percent className="h-4 w-4" />} label="CTR médio do site" value={`${overview.ctr.toFixed(2)}%`} />
-        <MetricCard icon={<TrendingUp className="h-4 w-4" />} label="Anúncios ativos" value={String(campaigns.filter((c) => c.active).length)} />
+        <MetricCard icon={<Eye className="h-4 w-4" />} label="Visualizações totais" value={overview.impressions.toLocaleString("pt-BR")} delta={overview.impDelta} />
+        <MetricCard icon={<MousePointerClick className="h-4 w-4" />} label="Cliques totais" value={overview.clicks.toLocaleString("pt-BR")} delta={overview.clkDelta} />
+        <MetricCard icon={<Percent className="h-4 w-4" />} label="CTR médio" value={`${overview.ctr.toFixed(2)}%`} />
+        <MetricCard icon={<TrendingUp className="h-4 w-4" />} label="Anúncios ativos" value={String(filteredCampaigns.filter((c) => c.active).length)} />
       </div>
+
 
       {/* Top anunciantes */}
       <section className="rounded-xl border bg-card">
