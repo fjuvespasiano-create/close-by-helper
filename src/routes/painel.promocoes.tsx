@@ -215,6 +215,9 @@ function PromotionDialog({
   onSaved: () => void;
   trigger?: React.ReactNode;
 }) {
+  const { userId } = useAdmin();
+  const notifyFn = useServerFn(notifyNewPromotion);
+  const fileRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -222,6 +225,7 @@ function PromotionDialog({
   const [cityId, setCityId] = useState("");
   const [category, setCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [discount, setDiscount] = useState("");
   const [validTo, setValidTo] = useState("");
@@ -245,6 +249,21 @@ function PromotionDialog({
     }
   }, [open, existing, companies]);
 
+  async function handleFile(f: File | null) {
+    if (!f || !userId) return;
+    setUploading(true);
+    try {
+      const url = await uploadPromotionImage(f, userId);
+      setImageUrl(url);
+      toast.success("Imagem enviada");
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  }
+
   async function save() {
     if (!title.trim() || !companyId) {
       toast.error("Preencha título e empresa");
@@ -252,7 +271,8 @@ function PromotionDialog({
     }
     setSaving(true);
     try {
-      await upsertPromotion({
+      const isNew = !existing?.id;
+      const savedId = await upsertPromotion({
         id: existing?.id,
         title: title.trim(),
         slug: slugify(title) || `promo-${Date.now()}`,
@@ -269,6 +289,15 @@ function PromotionDialog({
       toast.success(existing ? "Promoção atualizada" : "Promoção publicada");
       setOpen(false);
       onSaved();
+
+      // Dispara push apenas em novas publicações — falha silenciosa (não bloqueia UX).
+      if (isNew && savedId) {
+        notifyFn({ data: { promotionId: savedId } })
+          .then((r) => {
+            if (r?.ok) toast.message("🔔 Push enviado para usuários da cidade");
+          })
+          .catch(() => {/* noop */});
+      }
     } catch (e) {
       const msg = (e as Error).message;
       if (msg.includes("Premium podem cadastrar")) {
@@ -280,6 +309,7 @@ function PromotionDialog({
       setSaving(false);
     }
   }
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
