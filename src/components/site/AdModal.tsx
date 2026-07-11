@@ -126,6 +126,12 @@ export function AdModal() {
   function onClick() {
     if (!ad) return;
     void supabase.rpc("track_ad_event", { _ad_id: ad.id, _kind: "click" });
+    void supabase.from("analytics_events").insert({
+      name: "ad_click",
+      entity_type: "ad_campaign",
+      entity_id: ad.id,
+      meta: { device: window.matchMedia("(max-width: 768px)").matches ? "mobile" : "desktop" },
+    });
     markSeen(ad.id);
   }
 
