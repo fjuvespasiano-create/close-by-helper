@@ -15,10 +15,10 @@ import { useSiteContent } from "@/lib/siteContent";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AgendaAqui — o app de Vespasiano e São José da Lapa" },
-      { name: "description", content: "Encontre em segundos hospital, escola, delegacia, prefeitura e as empresas mais bem avaliadas de Vespasiano e São José da Lapa. Grátis, feito por quem mora aqui." },
-      { property: "og:title", content: "AgendaAqui — tudo da sua cidade num só app" },
-      { property: "og:description", content: "Serviços públicos, emergência e as empresas de confiança de Vespasiano e São José da Lapa. Endereço, telefone e avaliações reais." },
+      { title: "AgendaAqui — a cidade inteira de Vespasiano e São José da Lapa no seu bolso" },
+      { name: "description", content: "Encontre em 2 toques hospital, escola, delegacia, prefeitura, plantão 24h e as empresas mais bem avaliadas de Vespasiano e São José da Lapa. Grátis, atualizado, feito por quem mora aqui." },
+      { property: "og:title", content: "AgendaAqui — a cidade inteira num só app" },
+      { property: "og:description", content: "Serviços públicos, emergência 24h e as empresas de confiança da região. Avaliações reais dos vizinhos, endereço e telefone à mão." },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
