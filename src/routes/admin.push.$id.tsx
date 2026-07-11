@@ -36,7 +36,7 @@ function PushDetail() {
         <div className="flex items-start gap-3">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xl"
             style={{ background: n.color ? `${n.color}22` : "hsl(var(--primary) / 0.1)", color: n.color ?? "hsl(var(--primary))" }}>
-            {n.emoji ?? <Bell className="h-6 w-6" />}
+            {n.emoji ? n.emoji : <Bell className="h-6 w-6" />}
           </div>
           <div>
             <h2 className="font-display text-xl font-bold">{n.title}</h2>
