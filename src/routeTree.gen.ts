@@ -79,6 +79,7 @@ import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configura
 import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
 import { Route as AdminCalendarioEditorialRouteImport } from './routes/admin.calendario-editorial'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminBackupRouteImport } from './routes/admin.backup'
 import { Route as AdminAnunciosRouteImport } from './routes/admin.anuncios'
 import { Route as AdminAnalyticsAnunciosRouteImport } from './routes/admin.analytics-anuncios'
 import { Route as AdminPushIndexRouteImport } from './routes/admin.push.index'
@@ -455,6 +456,11 @@ const AdminBlogRoute = AdminBlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminBackupRoute = AdminBackupRouteImport.update({
+  id: '/backup',
+  path: '/backup',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminAnunciosRoute = AdminAnunciosRouteImport.update({
   id: '/anuncios',
   path: '/anuncios',
@@ -613,6 +619,7 @@ export interface FileRoutesByFullPath {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -706,6 +713,7 @@ export interface FileRoutesByTo {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -802,6 +810,7 @@ export interface FileRoutesById {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
@@ -900,6 +909,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
     | '/admin/cidades'
@@ -993,6 +1003,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
     | '/admin/cidades'
@@ -1088,6 +1099,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
     | '/admin/cidades'
@@ -1696,6 +1708,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBlogRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/backup': {
+      id: '/admin/backup'
+      path: '/backup'
+      fullPath: '/admin/backup'
+      preLoaderRoute: typeof AdminBackupRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/anuncios': {
       id: '/admin/anuncios'
       path: '/anuncios'
@@ -1890,6 +1909,7 @@ const AdminPushRouteWithChildren = AdminPushRoute._addFileChildren(
 interface AdminRouteChildren {
   AdminAnalyticsAnunciosRoute: typeof AdminAnalyticsAnunciosRoute
   AdminAnunciosRoute: typeof AdminAnunciosRoute
+  AdminBackupRoute: typeof AdminBackupRoute
   AdminBlogRoute: typeof AdminBlogRoute
   AdminCalendarioEditorialRoute: typeof AdminCalendarioEditorialRoute
   AdminCidadesRoute: typeof AdminCidadesRoute
@@ -1916,6 +1936,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAnalyticsAnunciosRoute: AdminAnalyticsAnunciosRoute,
   AdminAnunciosRoute: AdminAnunciosRoute,
+  AdminBackupRoute: AdminBackupRoute,
   AdminBlogRoute: AdminBlogRoute,
   AdminCalendarioEditorialRoute: AdminCalendarioEditorialRoute,
   AdminCidadesRoute: AdminCidadesRoute,

@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Building2, BadgePercent, Settings, Mail, Landmark, Siren, MapPin,
   Newspaper, CalendarDays, Menu as MenuIcon, Type, Bell, Bug, Copy, Briefcase,
   Megaphone, Compass, Download, BarChart3, ChevronDown, Home, Store, FileText,
-  Sparkles, ShieldCheck,
+  Sparkles, ShieldCheck, DatabaseBackup,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
@@ -22,6 +22,7 @@ type AdminPath =
   | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/calendario-editorial"
   | "/admin/promocoes"
   | "/admin/scraper-vespasiano" | "/admin/scraper-sjl"
+  | "/admin/backup"
   | "/admin/configuracoes";
 
 type NavItem = { to: AdminPath; label: string; icon: typeof LayoutDashboard; exact?: boolean };
@@ -81,6 +82,7 @@ const GROUPS: NavGroup[] = [
     id: "sistema", label: "Sistema", icon: ShieldCheck,
     items: [
       { to: "/admin/qa", label: "Central de Qualidade", icon: Bug },
+      { to: "/admin/backup", label: "Backup & Restauração", icon: DatabaseBackup },
       { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
     ],
   },
