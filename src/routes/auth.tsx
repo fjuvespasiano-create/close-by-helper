@@ -135,8 +135,8 @@ function AuthPage() {
                   <Label htmlFor="p2">Crie uma senha</Label>
                   <Input id="p2" type="password" placeholder="Mínimo 6 caracteres" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
                 </div>
-                <Button type="submit" className="w-full" disabled={loading}>{loading ? "Criando..." : "Criar minha conta grátis"}</Button>
-                <p className="pt-1 text-center text-[11px] text-muted-foreground">Grátis, sem cartão. Leva menos de 1 minuto.</p>
+                <Button type="submit" className="w-full" disabled={loading}>{loading ? "Criando sua conta..." : "Criar minha conta grátis"}</Button>
+                <p className="pt-1 text-center text-[11px] text-muted-foreground">Grátis, sem cartão. Menos de 1 minuto e você já está dentro.</p>
               </form>
             </TabsContent>
           </Tabs>
