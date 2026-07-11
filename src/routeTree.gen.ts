@@ -14,6 +14,7 @@ import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicosPublicosRouteImport } from './routes/servicos-publicos'
+import { Route as RoteiroTuristicoRouteImport } from './routes/roteiro-turistico'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReputacaoRouteImport } from './routes/reputacao'
 import { Route as RepresentantesRouteImport } from './routes/representantes'
@@ -118,6 +119,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ServicosPublicosRoute = ServicosPublicosRouteImport.update({
   id: '/servicos-publicos',
   path: '/servicos-publicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoteiroTuristicoRoute = RoteiroTuristicoRouteImport.update({
+  id: '/roteiro-turistico',
+  path: '/roteiro-turistico',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -549,6 +555,7 @@ export interface FileRoutesByFullPath {
   '/representantes': typeof RepresentantesRouteWithChildren
   '/reputacao': typeof ReputacaoRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roteiro-turistico': typeof RoteiroTuristicoRoute
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -633,6 +640,7 @@ export interface FileRoutesByTo {
   '/promocoes': typeof PromocoesRoute
   '/reputacao': typeof ReputacaoRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roteiro-turistico': typeof RoteiroTuristicoRoute
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -720,6 +728,7 @@ export interface FileRoutesById {
   '/representantes': typeof RepresentantesRouteWithChildren
   '/reputacao': typeof ReputacaoRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/roteiro-turistico': typeof RoteiroTuristicoRoute
   '/servicos-publicos': typeof ServicosPublicosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -809,6 +818,7 @@ export interface FileRouteTypes {
     | '/representantes'
     | '/reputacao'
     | '/reset-password'
+    | '/roteiro-turistico'
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
@@ -893,6 +903,7 @@ export interface FileRouteTypes {
     | '/promocoes'
     | '/reputacao'
     | '/reset-password'
+    | '/roteiro-turistico'
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
@@ -979,6 +990,7 @@ export interface FileRouteTypes {
     | '/representantes'
     | '/reputacao'
     | '/reset-password'
+    | '/roteiro-turistico'
     | '/servicos-publicos'
     | '/sitemap.xml'
     | '/sobre'
@@ -1067,6 +1079,7 @@ export interface RootRouteChildren {
   RepresentantesRoute: typeof RepresentantesRouteWithChildren
   ReputacaoRoute: typeof ReputacaoRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  RoteiroTuristicoRoute: typeof RoteiroTuristicoRoute
   ServicosPublicosRoute: typeof ServicosPublicosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
@@ -1128,6 +1141,13 @@ declare module '@tanstack/react-router' {
       path: '/servicos-publicos'
       fullPath: '/servicos-publicos'
       preLoaderRoute: typeof ServicosPublicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roteiro-turistico': {
+      id: '/roteiro-turistico'
+      path: '/roteiro-turistico'
+      fullPath: '/roteiro-turistico'
+      preLoaderRoute: typeof RoteiroTuristicoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -1895,6 +1915,7 @@ const rootRouteChildren: RootRouteChildren = {
   RepresentantesRoute: RepresentantesRouteWithChildren,
   ReputacaoRoute: ReputacaoRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  RoteiroTuristicoRoute: RoteiroTuristicoRoute,
   ServicosPublicosRoute: ServicosPublicosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
