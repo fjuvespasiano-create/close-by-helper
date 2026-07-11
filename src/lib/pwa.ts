@@ -39,15 +39,52 @@ export function isStandalone() {
   );
 }
 
+/**
+ * Recusa registrar o SW em contextos onde ele causa cache stale, tela branca
+ * ou "app não atualiza": dev, iframe do editor Lovable, preview compartilhado,
+ * beta.lovable.dev, ou quando o usuário passa ?sw=off para desligar.
+ * Em qualquer contexto recusado, ainda desregistra assinaturas antigas de /sw.js.
+ */
+function shouldRegisterSW(): boolean {
+  if (typeof window === "undefined" || !("serviceWorker" in navigator)) return false;
+  if (!import.meta.env.PROD) return false;
+  try {
+    if (window.top !== window.self) return false;
+  } catch { return false; }
+  const host = window.location.hostname;
+  if (host.startsWith("id-preview--") || host.startsWith("preview--")) return false;
+  if (host === "lovableproject.com" || host.endsWith(".lovableproject.com")) return false;
+  if (host === "lovableproject-dev.com" || host.endsWith(".lovableproject-dev.com")) return false;
+  if (host === "beta.lovable.dev" || host.endsWith(".beta.lovable.dev")) return false;
+  if (host === "localhost" || host === "127.0.0.1") return false;
+  if (new URLSearchParams(window.location.search).get("sw") === "off") return false;
+  return true;
+}
+
+async function unregisterOwnServiceWorkers() {
+  try {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(
+      regs
+        .filter((r) => {
+          const url = r.active?.scriptURL || r.installing?.scriptURL || r.waiting?.scriptURL || "";
+          return url.endsWith("/sw.js");
+        })
+        .map((r) => r.unregister()),
+    );
+  } catch { /* ignore */ }
+}
+
 export function registerServiceWorker() {
   if (typeof window === "undefined") return;
   if (!("serviceWorker" in navigator)) return;
 
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e as BeforeInstallPromptEvent;
-    emit();
-  });
+  if (!shouldRegisterSW()) {
+    // Limpa SW residual — evita cache antigo servindo HTML obsoleto no preview.
+    void unregisterOwnServiceWorkers();
+    return;
+  }
+
 
   window.addEventListener("appinstalled", () => {
     deferredPrompt = null;
