@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowRight, Siren, Sparkles } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { AgoraWidget } from "@/components/site/AgoraWidget";
+import { RepresentativesWidget } from "@/components/site/RepresentativesWidget";
 import { SearchBar } from "@/components/site/SearchBar";
 import { CategoryIcon } from "@/components/site/CategoryIcon";
 import { CompanyCard, toCompanyCardData } from "@/components/site/CompanyCard";
