@@ -216,31 +216,70 @@ export type Database = {
       }
       cities: {
         Row: {
+          banner_url: string | null
           created_at: string
+          featured_category_ids: string[]
+          hero_image_url: string | null
+          hero_subtitle: string | null
+          hero_title: string | null
           id: string
+          is_active: boolean
           lat: number | null
           lng: number | null
+          logo_url: string | null
           name: string
+          og_image_url: string | null
+          primary_color: string | null
+          seo_description: string | null
+          seo_title: string | null
           slug: string
           state: string
+          updated_at: string
+          video_url: string | null
         }
         Insert: {
+          banner_url?: string | null
           created_at?: string
+          featured_category_ids?: string[]
+          hero_image_url?: string | null
+          hero_subtitle?: string | null
+          hero_title?: string | null
           id?: string
+          is_active?: boolean
           lat?: number | null
           lng?: number | null
+          logo_url?: string | null
           name: string
+          og_image_url?: string | null
+          primary_color?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
           slug: string
           state?: string
+          updated_at?: string
+          video_url?: string | null
         }
         Update: {
+          banner_url?: string | null
           created_at?: string
+          featured_category_ids?: string[]
+          hero_image_url?: string | null
+          hero_subtitle?: string | null
+          hero_title?: string | null
           id?: string
+          is_active?: boolean
           lat?: number | null
           lng?: number | null
+          logo_url?: string | null
           name?: string
+          og_image_url?: string | null
+          primary_color?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
           slug?: string
           state?: string
+          updated_at?: string
+          video_url?: string | null
         }
         Relationships: []
       }
@@ -2005,28 +2044,37 @@ export type Database = {
       }
       reviews: {
         Row: {
+          author_name: string | null
           comment: string | null
           company_id: string
           created_at: string
           id: string
           rating: number
-          user_id: string
+          review_date: string | null
+          source: string
+          user_id: string | null
         }
         Insert: {
+          author_name?: string | null
           comment?: string | null
           company_id: string
           created_at?: string
           id?: string
           rating: number
-          user_id: string
+          review_date?: string | null
+          source?: string
+          user_id?: string | null
         }
         Update: {
+          author_name?: string | null
           comment?: string | null
           company_id?: string
           created_at?: string
           id?: string
           rating?: number
-          user_id?: string
+          review_date?: string | null
+          source?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -2182,12 +2230,38 @@ export type Database = {
       }
     }
     Functions: {
+      get_weekly_ranking: {
+        Args: never
+        Returns: {
+          activity: number
+          avg_rating: number
+          city_id: string
+          company_id: string
+          is_self: boolean
+          logo_url: string
+          name: string
+          rank_position: number
+          reviews: number
+          score: number
+          slug: string
+          visits: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      nearest_city: {
+        Args: { _lat: number; _lng: number }
+        Returns: {
+          distance_km: number
+          id: string
+          name: string
+          slug: string
+        }[]
       }
       refresh_company_rating: {
         Args: { _company_id: string }
