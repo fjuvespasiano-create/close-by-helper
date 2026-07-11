@@ -145,14 +145,14 @@ export function AdModal() {
         meta: { device: window.matchMedia("(max-width: 768px)").matches ? "mobile" : "desktop" },
       });
       timers.current.tick = window.setInterval(() => {
-        setCountdown((c) => {
-          if (c <= 1) {
-            close();
-            return 0;
-          }
-          return c - 1;
-        });
+        setCountdown((c) => (c > 0 ? c - 1 : 0));
       }, 1000);
+      // Auto-close após display_seconds — separado do updater para evitar
+      // side-effects dentro de setState (bug do React StrictMode).
+      timers.current.show = window.setTimeout(() => {
+        close();
+      }, Math.max(1, ad.display_seconds) * 1000);
+
     };
     timers.current.show = window.setTimeout(show, Math.max(0, ad.delay_seconds) * 1000);
 
@@ -189,7 +189,12 @@ export function AdModal() {
       meta: { device: window.matchMedia("(max-width: 768px)").matches ? "mobile" : "desktop" },
     });
     markSeen(ad.id);
+    // Fecha o modal após o clique — evita banner "pendurado" quando o link
+    // abre em nova aba (target=_blank).
+    setVisible(false);
+    if (timers.current.tick) window.clearInterval(timers.current.tick);
   }
+
 
   if (!ad || !visible) return null;
 

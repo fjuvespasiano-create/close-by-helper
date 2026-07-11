@@ -63,17 +63,26 @@ export const Route = createFileRoute("/api/public/push/track")({
         const patch: { status?: string; delivered_at?: string; opened_at?: string; clicked_at?: string } = {};
         let counter: "delivered_count" | "opened_count" | "clicked_count" | null = null;
 
+        // Ordem de progresso — nunca rebaixa o status (ex.: opened chegando
+        // depois de clicked mantém "clicked").
+        const rank: Record<string, number> = { queued: 0, sent: 1, delivered: 2, opened: 3, clicked: 4, failed: -1 };
+        const bump = (next: string) => {
+          const cur = rank[deliv.status ?? ""] ?? 0;
+          if ((rank[next] ?? 0) > cur) patch.status = next;
+        };
+
         if (event === "delivered" && !deliv.delivered_at) {
           patch.delivered_at = now;
-          if (deliv.status === "sent" || deliv.status === "queued") patch.status = "delivered";
+          bump("delivered");
           counter = "delivered_count";
         }
         if (event === "opened" && !deliv.opened_at) {
-          patch.opened_at = now; patch.status = "opened"; counter = "opened_count";
+          patch.opened_at = now; bump("opened"); counter = "opened_count";
         }
         if (event === "clicked" && !deliv.clicked_at) {
-          patch.clicked_at = now; patch.status = "clicked"; counter = "clicked_count";
+          patch.clicked_at = now; bump("clicked"); counter = "clicked_count";
         }
+
 
         if (Object.keys(patch).length > 0) {
           await supabaseAdmin.from("push_deliveries").update(patch).eq("id", delivery_id);
