@@ -1,0 +1,1 @@
+ALTER TABLE public.blog_posts_legacy ADD COLUMN IF NOT EXISTS meta_description TEXT, ADD COLUMN IF NOT EXISTS keywords TEXT[] NOT NULL DEFAULT '{}';
