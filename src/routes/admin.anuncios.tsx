@@ -31,6 +31,8 @@ type FormState = {
   starts_at: string;
   ends_at: string;
   active: boolean;
+  route_patterns: string; // textarea, uma rota por linha
+  company_id: string; // "" = nenhuma
 };
 
 const empty: FormState = {
@@ -46,7 +48,19 @@ const empty: FormState = {
   starts_at: "",
   ends_at: "",
   active: true,
+  route_patterns: "",
+  company_id: "",
 };
+
+async function listCompanies() {
+  const { data, error } = await supabase
+    .from("companies")
+    .select("id,name,plan,status")
+    .eq("status", "active")
+    .order("name");
+  if (error) throw error;
+  return data ?? [];
+}
 
 async function listAll() {
   const { data, error } = await supabase
