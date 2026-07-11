@@ -219,6 +219,28 @@ function AnalyticsAnunciosPage() {
       .save();
   }
 
+  function exportCsv() {
+    const header = ["#", "Anunciante", "Cidade", "Posicionamento", "Views", "Cliques", "CTR (%)"];
+    const rows = overview.top.map((r, i) => [
+      i + 1,
+      `"${r.name.replace(/"/g, '""')}"`,
+      r.city,
+      r.placement,
+      r.impressions,
+      r.clicks,
+      r.ctr.toFixed(2),
+    ]);
+    const csv = [header, ...rows].map((r) => r.join(",")).join("\n");
+    const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `analytics-anuncios-${rangeDays}d-${fmtDay(new Date())}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
