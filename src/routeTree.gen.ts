@@ -80,6 +80,7 @@ import { Route as ApiPublicPushResubscribeRouteImport } from './routes/api/publi
 import { Route as ApiPublicHooksSyncOriginalRouteImport } from './routes/api/public/hooks/sync-original'
 import { Route as ApiPublicHooksScrapeServicesRouteImport } from './routes/api/public/hooks/scrape-services'
 import { Route as ApiPublicHooksScrapeProcurementsRouteImport } from './routes/api/public/hooks/scrape-procurements'
+import { Route as ApiPublicHooksScrapeEventsRouteImport } from './routes/api/public/hooks/scrape-events'
 import { Route as ApiPublicHooksPushSchedulerRouteImport } from './routes/api/public/hooks/push-scheduler'
 import { Route as ApiPublicHooksJobsSyncRouteImport } from './routes/api/public/hooks/jobs-sync'
 
@@ -443,6 +444,12 @@ const ApiPublicHooksScrapeProcurementsRoute =
     path: '/api/public/hooks/scrape-procurements',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksScrapeEventsRoute =
+  ApiPublicHooksScrapeEventsRouteImport.update({
+    id: '/api/public/hooks/scrape-events',
+    path: '/api/public/hooks/scrape-events',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksPushSchedulerRoute =
   ApiPublicHooksPushSchedulerRouteImport.update({
     id: '/api/public/hooks/push-scheduler',
@@ -523,6 +530,7 @@ export interface FileRoutesByFullPath {
   '/admin/push/': typeof AdminPushIndexRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
+  '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
@@ -595,6 +603,7 @@ export interface FileRoutesByTo {
   '/admin/push': typeof AdminPushIndexRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
+  '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
@@ -671,6 +680,7 @@ export interface FileRoutesById {
   '/admin/push/': typeof AdminPushIndexRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
+  '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
@@ -748,6 +758,7 @@ export interface FileRouteTypes {
     | '/admin/push/'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
+    | '/api/public/hooks/scrape-events'
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
@@ -820,6 +831,7 @@ export interface FileRouteTypes {
     | '/admin/push'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
+    | '/api/public/hooks/scrape-events'
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
@@ -895,6 +907,7 @@ export interface FileRouteTypes {
     | '/admin/push/'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
+    | '/api/public/hooks/scrape-events'
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
     | '/api/public/hooks/sync-original'
@@ -934,6 +947,7 @@ export interface RootRouteChildren {
   EventosIndexRoute: typeof EventosIndexRoute
   ApiPublicHooksJobsSyncRoute: typeof ApiPublicHooksJobsSyncRoute
   ApiPublicHooksPushSchedulerRoute: typeof ApiPublicHooksPushSchedulerRoute
+  ApiPublicHooksScrapeEventsRoute: typeof ApiPublicHooksScrapeEventsRoute
   ApiPublicHooksScrapeProcurementsRoute: typeof ApiPublicHooksScrapeProcurementsRoute
   ApiPublicHooksScrapeServicesRoute: typeof ApiPublicHooksScrapeServicesRoute
   ApiPublicHooksSyncOriginalRoute: typeof ApiPublicHooksSyncOriginalRoute
@@ -1440,6 +1454,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHooksScrapeProcurementsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/scrape-events': {
+      id: '/api/public/hooks/scrape-events'
+      path: '/api/public/hooks/scrape-events'
+      fullPath: '/api/public/hooks/scrape-events'
+      preLoaderRoute: typeof ApiPublicHooksScrapeEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/push-scheduler': {
       id: '/api/public/hooks/push-scheduler'
       path: '/api/public/hooks/push-scheduler'
@@ -1640,6 +1661,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosIndexRoute: EventosIndexRoute,
   ApiPublicHooksJobsSyncRoute: ApiPublicHooksJobsSyncRoute,
   ApiPublicHooksPushSchedulerRoute: ApiPublicHooksPushSchedulerRoute,
+  ApiPublicHooksScrapeEventsRoute: ApiPublicHooksScrapeEventsRoute,
   ApiPublicHooksScrapeProcurementsRoute: ApiPublicHooksScrapeProcurementsRoute,
   ApiPublicHooksScrapeServicesRoute: ApiPublicHooksScrapeServicesRoute,
   ApiPublicHooksSyncOriginalRoute: ApiPublicHooksSyncOriginalRoute,
