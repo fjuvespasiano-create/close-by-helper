@@ -111,12 +111,12 @@ function Home() {
               <Siren className="h-6 w-6" />
             </div>
             <div className="min-w-0">
-              <div className="font-display text-lg font-bold text-foreground">Plantão e Emergência 24h</div>
-              <div className="mt-0.5 text-sm text-muted-foreground">Acesso rápido a SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão.</div>
+              <div className="font-display text-lg font-bold text-foreground">Emergência? Todos os números 24h aqui.</div>
+              <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — 1 toque para ligar.</div>
             </div>
           </div>
           <div className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-0.5">
-            Ver números <ArrowRight className="h-4 w-4" />
+            Ver agora <ArrowRight className="h-4 w-4" />
           </div>
         </Link>
       </section>
