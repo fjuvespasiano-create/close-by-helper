@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      ad_campaigns: {
+        Row: {
+          active: boolean
+          city_slug: string | null
+          clicks: number
+          created_at: string
+          delay_seconds: number
+          display_seconds: number
+          ends_at: string | null
+          id: string
+          image_url: string
+          impressions: number
+          link_url: string
+          name: string
+          placement: string
+          scroll_trigger_percent: number
+          starts_at: string | null
+          updated_at: string
+          weight: number
+        }
+        Insert: {
+          active?: boolean
+          city_slug?: string | null
+          clicks?: number
+          created_at?: string
+          delay_seconds?: number
+          display_seconds?: number
+          ends_at?: string | null
+          id?: string
+          image_url: string
+          impressions?: number
+          link_url: string
+          name: string
+          placement?: string
+          scroll_trigger_percent?: number
+          starts_at?: string | null
+          updated_at?: string
+          weight?: number
+        }
+        Update: {
+          active?: boolean
+          city_slug?: string | null
+          clicks?: number
+          created_at?: string
+          delay_seconds?: number
+          display_seconds?: number
+          ends_at?: string | null
+          id?: string
+          image_url?: string
+          impressions?: number
+          link_url?: string
+          name?: string
+          placement?: string
+          scroll_trigger_percent?: number
+          starts_at?: string | null
+          updated_at?: string
+          weight?: number
+        }
+        Relationships: []
+      }
       analytics_events: {
         Row: {
           created_at: string
@@ -2975,6 +3035,10 @@ export type Database = {
       }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
+      track_ad_event: {
+        Args: { _ad_id: string; _kind: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "company_owner" | "user" | "editor" | "publisher"
