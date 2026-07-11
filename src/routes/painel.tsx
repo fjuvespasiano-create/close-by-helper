@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { useAdmin } from "@/hooks/use-admin";
 import { useUnreadMessagesCount } from "@/hooks/useUnreadMessages";
 import { Button } from "@/components/ui/button";
+import { PanelOnboardingWizard } from "@/components/painel/PanelOnboardingWizard";
 import { LayoutDashboard, Building2, Mail, Star, User, Heart, Bell, Trophy, Package, MessageCircle, BadgePercent } from "lucide-react";
 
 export const Route = createFileRoute("/painel")({
@@ -84,6 +85,7 @@ function PanelLayout() {
           <Outlet />
         </div>
       </div>
+      <PanelOnboardingWizard userId={userId} />
     </SiteLayout>
   );
 }
