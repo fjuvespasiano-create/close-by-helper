@@ -71,6 +71,7 @@ import { Route as AdminDuplicadosRouteImport } from './routes/admin.duplicados'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
 import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminAnunciosRouteImport } from './routes/admin.anuncios'
 import { Route as AdminPushIndexRouteImport } from './routes/admin.push.index'
 import { Route as PainelNotificacoesPreferenciasRouteImport } from './routes/painel.notificacoes.preferencias'
 import { Route as PainelEmpresasNovaRouteImport } from './routes/painel.empresas.nova'
@@ -404,6 +405,11 @@ const AdminBlogRoute = AdminBlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAnunciosRoute = AdminAnunciosRouteImport.update({
+  id: '/anuncios',
+  path: '/anuncios',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPushIndexRoute = AdminPushIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -548,6 +554,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
+  '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -631,6 +638,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
+  '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -717,6 +725,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/transporte': typeof TransporteRouteWithChildren
+  '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -805,6 +814,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/transporte'
+    | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
     | '/admin/configuracoes'
@@ -888,6 +898,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/transporte'
+    | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
     | '/admin/configuracoes'
@@ -973,6 +984,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/transporte'
+    | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cidades'
     | '/admin/configuracoes'
@@ -1517,6 +1529,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBlogRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/anuncios': {
+      id: '/admin/anuncios'
+      path: '/anuncios'
+      fullPath: '/admin/anuncios'
+      preLoaderRoute: typeof AdminAnunciosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/push/': {
       id: '/admin/push/'
       path: '/'
@@ -1695,6 +1714,7 @@ const AdminPushRouteWithChildren = AdminPushRoute._addFileChildren(
 )
 
 interface AdminRouteChildren {
+  AdminAnunciosRoute: typeof AdminAnunciosRoute
   AdminBlogRoute: typeof AdminBlogRoute
   AdminCidadesRoute: typeof AdminCidadesRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
@@ -1714,6 +1734,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnunciosRoute: AdminAnunciosRoute,
   AdminBlogRoute: AdminBlogRoute,
   AdminCidadesRoute: AdminCidadesRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
