@@ -43,6 +43,7 @@ import { Route as RepresentantesRankingRouteImport } from './routes/representant
 import { Route as RepresentantesFeedRouteImport } from './routes/representantes.feed'
 import { Route as RepresentantesIdRouteImport } from './routes/representantes.$id'
 import { Route as PainelRankingRouteImport } from './routes/painel.ranking'
+import { Route as PainelPromocoesRouteImport } from './routes/painel.promocoes'
 import { Route as PainelPerfilRouteImport } from './routes/painel.perfil'
 import { Route as PainelNotificacoesRouteImport } from './routes/painel.notificacoes'
 import { Route as PainelMensagensRouteImport } from './routes/painel.mensagens'
@@ -65,6 +66,7 @@ import { Route as AdminScraperVespasianoRouteImport } from './routes/admin.scrap
 import { Route as AdminScraperSjlRouteImport } from './routes/admin.scraper-sjl'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPushRouteImport } from './routes/admin.push'
+import { Route as AdminPromocoesRouteImport } from './routes/admin.promocoes'
 import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
 import { Route as AdminMenuRouteImport } from './routes/admin.menu'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
@@ -272,6 +274,11 @@ const PainelRankingRoute = PainelRankingRouteImport.update({
   path: '/ranking',
   getParentRoute: () => PainelRoute,
 } as any)
+const PainelPromocoesRoute = PainelPromocoesRouteImport.update({
+  id: '/promocoes',
+  path: '/promocoes',
+  getParentRoute: () => PainelRoute,
+} as any)
 const PainelPerfilRoute = PainelPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -380,6 +387,11 @@ const AdminQaRoute = AdminQaRouteImport.update({
 const AdminPushRoute = AdminPushRouteImport.update({
   id: '/push',
   path: '/push',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPromocoesRoute = AdminPromocoesRouteImport.update({
+  id: '/promocoes',
+  path: '/promocoes',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminPlanosRoute = AdminPlanosRouteImport.update({
@@ -613,6 +625,7 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/push': typeof AdminPushRouteWithChildren
   '/admin/qa': typeof AdminQaRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
@@ -635,6 +648,7 @@ export interface FileRoutesByFullPath {
   '/painel/mensagens': typeof PainelMensagensRoute
   '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
   '/painel/perfil': typeof PainelPerfilRoute
+  '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
@@ -704,6 +718,7 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/qa': typeof AdminQaRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
@@ -725,6 +740,7 @@ export interface FileRoutesByTo {
   '/painel/mensagens': typeof PainelMensagensRoute
   '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
   '/painel/perfil': typeof PainelPerfilRoute
+  '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
@@ -798,6 +814,7 @@ export interface FileRoutesById {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/menu': typeof AdminMenuRoute
   '/admin/planos': typeof AdminPlanosRoute
+  '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/push': typeof AdminPushRouteWithChildren
   '/admin/qa': typeof AdminQaRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
@@ -820,6 +837,7 @@ export interface FileRoutesById {
   '/painel/mensagens': typeof PainelMensagensRoute
   '/painel/notificacoes': typeof PainelNotificacoesRouteWithChildren
   '/painel/perfil': typeof PainelPerfilRoute
+  '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
@@ -894,6 +912,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/menu'
     | '/admin/planos'
+    | '/admin/promocoes'
     | '/admin/push'
     | '/admin/qa'
     | '/admin/scraper-sjl'
@@ -916,6 +935,7 @@ export interface FileRouteTypes {
     | '/painel/mensagens'
     | '/painel/notificacoes'
     | '/painel/perfil'
+    | '/painel/promocoes'
     | '/painel/ranking'
     | '/representantes/$id'
     | '/representantes/feed'
@@ -985,6 +1005,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/menu'
     | '/admin/planos'
+    | '/admin/promocoes'
     | '/admin/qa'
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
@@ -1006,6 +1027,7 @@ export interface FileRouteTypes {
     | '/painel/mensagens'
     | '/painel/notificacoes'
     | '/painel/perfil'
+    | '/painel/promocoes'
     | '/painel/ranking'
     | '/representantes/$id'
     | '/representantes/feed'
@@ -1078,6 +1100,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/menu'
     | '/admin/planos'
+    | '/admin/promocoes'
     | '/admin/push'
     | '/admin/qa'
     | '/admin/scraper-sjl'
@@ -1100,6 +1123,7 @@ export interface FileRouteTypes {
     | '/painel/mensagens'
     | '/painel/notificacoes'
     | '/painel/perfil'
+    | '/painel/promocoes'
     | '/painel/ranking'
     | '/representantes/$id'
     | '/representantes/feed'
@@ -1420,6 +1444,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PainelRankingRouteImport
       parentRoute: typeof PainelRoute
     }
+    '/painel/promocoes': {
+      id: '/painel/promocoes'
+      path: '/promocoes'
+      fullPath: '/painel/promocoes'
+      preLoaderRoute: typeof PainelPromocoesRouteImport
+      parentRoute: typeof PainelRoute
+    }
     '/painel/perfil': {
       id: '/painel/perfil'
       path: '/perfil'
@@ -1572,6 +1603,13 @@ declare module '@tanstack/react-router' {
       path: '/push'
       fullPath: '/admin/push'
       preLoaderRoute: typeof AdminPushRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/promocoes': {
+      id: '/admin/promocoes'
+      path: '/promocoes'
+      fullPath: '/admin/promocoes'
+      preLoaderRoute: typeof AdminPromocoesRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/planos': {
@@ -1864,6 +1902,7 @@ interface AdminRouteChildren {
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminMenuRoute: typeof AdminMenuRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminPromocoesRoute: typeof AdminPromocoesRoute
   AdminPushRoute: typeof AdminPushRouteWithChildren
   AdminQaRoute: typeof AdminQaRoute
   AdminScraperSjlRoute: typeof AdminScraperSjlRoute
@@ -1889,6 +1928,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminLeadsRoute: AdminLeadsRoute,
   AdminMenuRoute: AdminMenuRoute,
   AdminPlanosRoute: AdminPlanosRoute,
+  AdminPromocoesRoute: AdminPromocoesRoute,
   AdminPushRoute: AdminPushRouteWithChildren,
   AdminQaRoute: AdminQaRoute,
   AdminScraperSjlRoute: AdminScraperSjlRoute,
@@ -1973,6 +2013,7 @@ interface PainelRouteChildren {
   PainelMensagensRoute: typeof PainelMensagensRoute
   PainelNotificacoesRoute: typeof PainelNotificacoesRouteWithChildren
   PainelPerfilRoute: typeof PainelPerfilRoute
+  PainelPromocoesRoute: typeof PainelPromocoesRoute
   PainelRankingRoute: typeof PainelRankingRoute
   PainelIndexRoute: typeof PainelIndexRoute
 }
@@ -1986,6 +2027,7 @@ const PainelRouteChildren: PainelRouteChildren = {
   PainelMensagensRoute: PainelMensagensRoute,
   PainelNotificacoesRoute: PainelNotificacoesRouteWithChildren,
   PainelPerfilRoute: PainelPerfilRoute,
+  PainelPromocoesRoute: PainelPromocoesRoute,
   PainelRankingRoute: PainelRankingRoute,
   PainelIndexRoute: PainelIndexRoute,
 }

@@ -20,6 +20,7 @@ type AdminPath =
   | "/admin/duplicados" | "/admin/eventos" | "/admin/menu" | "/admin/textos"
   | "/admin/push" | "/admin/empregos" | "/admin/turismo" | "/admin/qa"
   | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/calendario-editorial"
+  | "/admin/promocoes"
   | "/admin/scraper-vespasiano" | "/admin/scraper-sjl"
   | "/admin/configuracoes";
 
@@ -63,6 +64,7 @@ const GROUPS: NavGroup[] = [
     id: "marketing", label: "Marketing", icon: Sparkles,
     items: [
       { to: "/admin/calendario-editorial", label: "Calendário Editorial", icon: CalendarDays },
+      { to: "/admin/promocoes", label: "Promoções & Cupons", icon: BadgePercent },
       { to: "/admin/anuncios", label: "Anúncios locais", icon: Megaphone },
       { to: "/admin/analytics-anuncios", label: "Analytics de Anúncios", icon: BarChart3 },
       { to: "/admin/push", label: "Notificações Push", icon: Bell },
