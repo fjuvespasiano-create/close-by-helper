@@ -1497,26 +1497,40 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          city_id: string | null
           created_at: string
           id: string
           name: string | null
+          state: string | null
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
+          city_id?: string | null
           created_at?: string
           id: string
           name?: string | null
+          state?: string | null
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
+          city_id?: string | null
           created_at?: string
           id?: string
           name?: string | null
+          state?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       promotions: {
         Row: {
@@ -1663,8 +1677,10 @@ export type Database = {
           device: string | null
           error: string | null
           id: number
+          next_retry_at: string | null
           notification_id: string
           opened_at: string | null
+          retry_count: number
           sent_at: string | null
           status: string
           subscription_id: string | null
@@ -1678,8 +1694,10 @@ export type Database = {
           device?: string | null
           error?: string | null
           id?: number
+          next_retry_at?: string | null
           notification_id: string
           opened_at?: string | null
+          retry_count?: number
           sent_at?: string | null
           status?: string
           subscription_id?: string | null
@@ -1693,8 +1711,10 @@ export type Database = {
           device?: string | null
           error?: string | null
           id?: number
+          next_retry_at?: string | null
           notification_id?: string
           opened_at?: string | null
+          retry_count?: number
           sent_at?: string | null
           status?: string
           subscription_id?: string | null

@@ -38,6 +38,7 @@ const ComposeSchema = z.object({
   buttons: z.array(ButtonSchema).max(2).nullish(),
   audience: AudienceSchema,
   template_id: z.string().uuid().nullish(),
+  scheduled_at: z.string().datetime().nullish(),
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,72 +49,7 @@ async function ensureAdmin(supabase: SB, userId: string) {
   if (!data) throw new Error("Acesso restrito.");
 }
 
-// ---------- Audience resolver: returns user_ids ----------
-async function resolveAudience(
-  supabase: SB,
-  audience: z.infer<typeof AudienceSchema>,
-): Promise<string[]> {
-  const { data: subs } = await supabase.from("push_subscriptions").select("user_id");
-  const subscriberIds = Array.from(new Set(((subs ?? []) as Array<{ user_id: string }>).map((s) => s.user_id)));
-  if (subscriberIds.length === 0) return [];
-
-  const k = audience.kind;
-  if (k === "all") return subscriberIds;
-
-  if (k === "pwa") {
-    const { data } = await supabase.from("push_subscriptions").select("user_id").eq("is_pwa", true);
-    return Array.from(new Set(((data ?? []) as Array<{ user_id: string }>).map((s) => s.user_id)));
-  }
-
-  if (k === "admins") {
-    const { data } = await supabase.from("user_roles").select("user_id").eq("role", "admin");
-    const ids = new Set(((data ?? []) as Array<{ user_id: string }>).map((r) => r.user_id));
-    return subscriberIds.filter((id) => ids.has(id));
-  }
-
-  if (k === "users" || k === "companies" || k === "premium" || k === "free" || k === "city" || k === "state" || k === "category") {
-    let q = supabase.from("companies").select("owner_id, plan, city_id, cities(state), company_categories(category_id)").not("owner_id", "is", null);
-    if (k === "premium") q = q.eq("plan", "premium");
-    if (k === "free") q = q.eq("plan", "free");
-    if (k === "city" && audience.city_id) q = q.eq("city_id", audience.city_id);
-    const { data: companies } = await q;
-    type CompanyRow = { owner_id: string | null; cities?: { state?: string } | null; company_categories?: Array<{ category_id?: string }> };
-    const rows = (companies ?? []) as CompanyRow[];
-    let owners = new Set<string>(rows.map((c) => c.owner_id).filter((v): v is string => !!v));
-
-    if (k === "state" && audience.state) {
-      owners = new Set(rows.filter((c) => c.cities?.state === audience.state).map((c) => c.owner_id!).filter(Boolean));
-    }
-    if (k === "category" && audience.category_id) {
-      owners = new Set(
-        rows
-          .filter((c) => Array.isArray(c.company_categories) && c.company_categories.some((cc) => cc.category_id === audience.category_id))
-          .map((c) => c.owner_id!).filter(Boolean),
-      );
-    }
-    if (k === "users") {
-      return subscriberIds.filter((id) => !owners.has(id));
-    }
-    return subscriberIds.filter((id) => owners.has(id));
-  }
-
-  if (k === "recent30") {
-    const cutoff = new Date(Date.now() - 30 * 86400_000).toISOString();
-    const { data } = await supabase.from("profiles").select("id, created_at").gte("created_at", cutoff);
-    const ids = new Set(((data ?? []) as Array<{ id: string }>).map((p) => p.id));
-    return subscriberIds.filter((id) => ids.has(id));
-  }
-
-  if (k === "inactive") {
-    const cutoff = new Date(Date.now() - 60 * 86400_000).toISOString();
-    const { data } = await supabase.from("push_subscriptions").select("user_id").lt("last_seen_at", cutoff);
-    return Array.from(new Set(((data ?? []) as Array<{ user_id: string }>).map((s) => s.user_id)));
-  }
-
-  return subscriberIds;
-}
-
-// ---------- Send now ----------
+// ---------- Send now / schedule ----------
 export const sendPushNow = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((raw: unknown) => ComposeSchema.parse(raw))
@@ -121,7 +57,9 @@ export const sendPushNow = createServerFn({ method: "POST" })
     const { supabase, userId } = context;
     await ensureAdmin(supabase, userId);
 
-    // 1. Cria o registro de envio
+    const scheduled = data.scheduled_at ? new Date(data.scheduled_at) : null;
+    const isFuture = scheduled !== null && scheduled.getTime() > Date.now() + 30_000;
+
     const { data: notif, error: nErr } = await supabase
       .from("push_notifications")
       .insert({
@@ -138,164 +76,24 @@ export const sendPushNow = createServerFn({ method: "POST" })
         emoji: data.emoji ?? null,
         buttons: data.buttons ?? null,
         audience: data.audience,
-        status: "sending",
-        sent_at: new Date().toISOString(),
+        status: isFuture ? "scheduled" : "sending",
+        scheduled_at: isFuture ? scheduled!.toISOString() : null,
+        sent_at: isFuture ? null : new Date().toISOString(),
       })
       .select("id")
       .single();
     if (nErr || !notif) throw new Error(nErr?.message ?? "Falha ao criar envio.");
 
-    // 2. Resolve público
-    let userIds = await resolveAudience(supabase, data.audience);
-    if (userIds.length === 0) {
-      await supabase.from("push_notifications").update({ status: "sent", sent_count: 0 }).eq("id", notif.id);
-      return { id: notif.id, sent: 0 };
+    if (isFuture) {
+      return { id: notif.id, scheduled: true, scheduled_at: scheduled!.toISOString() };
     }
 
-    // 2b. H1 — filtra por notification_preferences (categoria + quiet hours).
-    // Categorias "sistema", requerem opt-in prévio? Não: emergência/manutenção/sistema
-    // são sempre entregues (transacional). Demais respeitam a preferência.
-    const CATEGORY_PREF_MAP: Record<string, keyof PrefsRow | null> = {
-      promocao: "promocoes",
-      novidade: "novidades",
-      evento: "eventos",
-      empresa: "empresas",
-      blog: "blog",
-      marketplace: "marketplace",
-      noticias: "novidades",
-      // transacionais sempre entregues:
-      sistema: null,
-      manutencao: null,
-      emergencia: null,
-      geral: null,
-    };
-    type PrefsRow = {
-      user_id: string;
-      promocoes: boolean; novidades: boolean; eventos: boolean; atualizacoes: boolean;
-      empresas: boolean; blog: boolean; marketplace: boolean;
-      quiet_hours_enabled: boolean; quiet_start: number; quiet_end: number;
-    };
-    const prefCol = CATEGORY_PREF_MAP[data.category] ?? null;
-    if (prefCol !== null) {
-      const { data: prefs } = await supabase
-        .from("notification_preferences")
-        .select("user_id, promocoes, novidades, eventos, atualizacoes, empresas, blog, marketplace, quiet_hours_enabled, quiet_start, quiet_end")
-        .in("user_id", userIds);
-      const prefsMap = new Map<string, PrefsRow>();
-      ((prefs ?? []) as PrefsRow[]).forEach((p) => prefsMap.set(p.user_id, p));
-      const hourUTC = new Date().getUTCHours();
-      userIds = userIds.filter((uid) => {
-        const p = prefsMap.get(uid);
-        if (!p) return true; // sem prefs = default opt-in
-        if (p[prefCol] === false) return false;
-        if (p.quiet_hours_enabled) {
-          const s = p.quiet_start, e = p.quiet_end;
-          const inQuiet = s < e ? (hourUTC >= s && hourUTC < e) : (hourUTC >= s || hourUTC < e);
-          if (inQuiet && data.priority !== "high") return false;
-        }
-        return true;
-      });
-      if (userIds.length === 0) {
-        await supabase.from("push_notifications").update({ status: "sent", sent_count: 0 }).eq("id", notif.id);
-        return { id: notif.id, sent: 0, filtered: true };
-      }
-    }
-
-    // 3. Puxa TODAS as inscrições ativas dos alvos
-    const { data: targets } = await supabase
-      .from("push_subscriptions")
-      .select("id, user_id, endpoint, p256dh, auth, user_agent")
-      .in("user_id", userIds);
-
-    if (!targets || targets.length === 0) {
-      await supabase.from("push_notifications").update({ status: "sent", sent_count: 0 }).eq("id", notif.id);
-      return { id: notif.id, sent: 0 };
-    }
-
-    // 4. Registra caixa de entrada (uma linha por usuário)
-    const inboxRows = userIds.map((uid) => ({ user_id: uid, notification_id: notif.id }));
-    await supabase.from("push_inbox").upsert(inboxRows, { onConflict: "user_id,notification_id", ignoreDuplicates: true });
-
-    // 5. Cria linhas de delivery em batch
-    const deliveryRows = targets.map((t) => ({
-      notification_id: notif.id,
-      user_id: t.user_id,
-      subscription_id: t.id,
-      status: "queued" as const,
-    }));
-    const { data: deliveries } = await supabase
-      .from("push_deliveries")
-      .upsert(deliveryRows, { onConflict: "notification_id,user_id,subscription_id", ignoreDuplicates: false })
-      .select("id, subscription_id");
-    const deliveryByEndpoint = new Map<string, number>();
-    (deliveries ?? []).forEach((d) => {
-      const t = targets.find((x) => x.id === d.subscription_id);
-      if (t) deliveryByEndpoint.set(t.endpoint, d.id as number);
-    });
-
-    // 6. Dispara em paralelo, em lotes de 50 — assina delivery token (S1).
-    const { sendWebPush, parseUA } = await import("@/lib/push-send.server");
-    const { signDeliveryToken } = await import("@/lib/push-token.server");
-    let sent = 0, failed = 0, unsubscribed = 0;
-    const BATCH = 50;
-    for (let i = 0; i < targets.length; i += BATCH) {
-      const chunk = targets.slice(i, i + BATCH);
-      await Promise.all(chunk.map(async (t) => {
-        const deliveryId = deliveryByEndpoint.get(t.endpoint);
-        const ua = parseUA(t.user_agent);
-        const payload = {
-          title: `${data.emoji ? data.emoji + " " : ""}${data.title}`,
-          body: data.body,
-          icon: data.icon_url ?? "/icons/icon-192.png",
-          image: data.image_url ?? undefined,
-          url: data.url ?? "/",
-          buttons: data.buttons ?? undefined,
-          notification_id: notif.id,
-          delivery_id: deliveryId,
-          delivery_token: deliveryId ? signDeliveryToken(deliveryId) : undefined,
-          category: data.category,
-          priority: data.priority,
-        };
-        const res = await sendWebPush(
-          { endpoint: t.endpoint, keys: { p256dh: t.p256dh, auth: t.auth } },
-          payload,
-          { urgency: data.priority === "high" ? "high" : data.priority === "low" ? "low" : "normal" },
-        );
-        if (res.ok) {
-          sent += 1;
-          if (deliveryId) {
-            await supabase.from("push_deliveries").update({
-              status: "sent", sent_at: new Date().toISOString(),
-              device: ua.device, browser: ua.browser,
-            }).eq("id", deliveryId);
-          }
-        } else {
-          failed += 1;
-          if (res.gone) {
-            unsubscribed += 1;
-            await supabase.from("push_subscriptions").delete().eq("id", t.id);
-          }
-          if (deliveryId) {
-            await supabase.from("push_deliveries").update({
-              status: res.gone ? "unsubscribed" : "failed",
-              error: res.error.slice(0, 500),
-              device: ua.device, browser: ua.browser,
-            }).eq("id", deliveryId);
-          }
-          console.error("[push] send failed", { notification_id: notif.id, delivery_id: deliveryId, status: res.status, error: res.error?.slice(0, 200) });
-        }
-      }));
-    }
-
-    await supabase.from("push_notifications").update({
-      status: "sent",
-      sent_count: sent,
-      failed_count: failed,
-      unsubscribed_count: unsubscribed,
-    }).eq("id", notif.id);
-
-    return { id: notif.id, sent, failed, unsubscribed };
+    const { dispatchNotification } = await import("@/lib/push-dispatch.server");
+    const res = await dispatchNotification(supabase, notif.id);
+    return { id: notif.id, ...res };
   });
+
+
 
 // ---------- List ----------
 export const listAdminPush = createServerFn({ method: "GET" })
