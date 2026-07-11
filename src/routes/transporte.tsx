@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  ArrowLeft,
   Bus,
   Clock,
   MapPin,
@@ -1163,6 +1164,14 @@ function TransportePage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary to-primary-dark text-primary-foreground">
         <div className="container mx-auto px-4 py-10 sm:py-14">
+          <Link
+            to="/"
+            aria-label="Voltar para a página inicial"
+            className="mb-5 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-semibold text-white ring-1 ring-white/25 backdrop-blur transition-all hover:-translate-x-0.5 hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Voltar ao início
+          </Link>
           <div className="flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15 backdrop-blur">
               <Bus className="h-6 w-6" aria-hidden />
