@@ -45,7 +45,7 @@ function EmpregosPage() {
   });
 
   function apply(next: Partial<typeof search>) {
-    navigate({ search: (prev) => ({ ...prev, ...next, page: next.page ?? 1 }) });
+    navigate({ search: (prev: typeof search) => ({ ...prev, ...next, page: next.page ?? 1 }) });
   }
 
   return (
