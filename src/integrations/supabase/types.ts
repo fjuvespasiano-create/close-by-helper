@@ -184,6 +184,87 @@ export type Database = {
         }
         Relationships: []
       }
+      bus_lines: {
+        Row: {
+          city_slug: string
+          code: string
+          created_at: string
+          departures: Json
+          fare: number | null
+          id: string
+          last_scraped_at: string
+          name: string
+          operator: string | null
+          raw_updated_at: string | null
+          slug: string
+          source_url: string
+          updated_at: string
+        }
+        Insert: {
+          city_slug: string
+          code: string
+          created_at?: string
+          departures?: Json
+          fare?: number | null
+          id?: string
+          last_scraped_at?: string
+          name: string
+          operator?: string | null
+          raw_updated_at?: string | null
+          slug: string
+          source_url: string
+          updated_at?: string
+        }
+        Update: {
+          city_slug?: string
+          code?: string
+          created_at?: string
+          departures?: Json
+          fare?: number | null
+          id?: string
+          last_scraped_at?: string
+          name?: string
+          operator?: string | null
+          raw_updated_at?: string | null
+          slug?: string
+          source_url?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bus_sync_logs: {
+        Row: {
+          city_slug: string
+          errors: Json
+          finished_at: string | null
+          id: string
+          lines_found: number
+          lines_updated: number
+          started_at: string
+          status: string
+        }
+        Insert: {
+          city_slug: string
+          errors?: Json
+          finished_at?: string | null
+          id?: string
+          lines_found?: number
+          lines_updated?: number
+          started_at?: string
+          status?: string
+        }
+        Update: {
+          city_slug?: string
+          errors?: Json
+          finished_at?: string | null
+          id?: string
+          lines_found?: number
+          lines_updated?: number
+          started_at?: string
+          status?: string
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           created_at: string

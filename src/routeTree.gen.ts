@@ -36,6 +36,7 @@ import { Route as PainelIndexRouteImport } from './routes/painel.index'
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as TransporteLinhasRouteImport } from './routes/transporte.linhas'
 import { Route as RepresentantesRankingRouteImport } from './routes/representantes.ranking'
 import { Route as RepresentantesFeedRouteImport } from './routes/representantes.feed'
 import { Route as RepresentantesIdRouteImport } from './routes/representantes.$id'
@@ -86,6 +87,7 @@ import { Route as ApiPublicHooksWhatsappWeeklyDigestRouteImport } from './routes
 import { Route as ApiPublicHooksWhatsappOptOutRouteImport } from './routes/api/public/hooks/whatsapp-opt-out'
 import { Route as ApiPublicHooksSyncRepresentativesRouteImport } from './routes/api/public/hooks/sync-representatives'
 import { Route as ApiPublicHooksSyncOriginalRouteImport } from './routes/api/public/hooks/sync-original'
+import { Route as ApiPublicHooksSyncBusRouteImport } from './routes/api/public/hooks/sync-bus'
 import { Route as ApiPublicHooksScrapeServicesRouteImport } from './routes/api/public/hooks/scrape-services'
 import { Route as ApiPublicHooksScrapeProcurementsRouteImport } from './routes/api/public/hooks/scrape-procurements'
 import { Route as ApiPublicHooksScrapeEventsRouteImport } from './routes/api/public/hooks/scrape-events'
@@ -226,6 +228,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const TransporteLinhasRoute = TransporteLinhasRouteImport.update({
+  id: '/linhas',
+  path: '/linhas',
+  getParentRoute: () => TransporteRoute,
 } as any)
 const RepresentantesRankingRoute = RepresentantesRankingRouteImport.update({
   id: '/ranking',
@@ -483,6 +490,11 @@ const ApiPublicHooksSyncOriginalRoute =
     path: '/api/public/hooks/sync-original',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksSyncBusRoute = ApiPublicHooksSyncBusRouteImport.update({
+  id: '/api/public/hooks/sync-bus',
+  path: '/api/public/hooks/sync-bus',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksScrapeServicesRoute =
   ApiPublicHooksScrapeServicesRouteImport.update({
     id: '/api/public/hooks/scrape-services',
@@ -535,7 +547,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
-  '/transporte': typeof TransporteRoute
+  '/transporte': typeof TransporteRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -570,6 +582,7 @@ export interface FileRoutesByFullPath {
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
+  '/transporte/linhas': typeof TransporteLinhasRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/eventos/': typeof EventosIndexRoute
@@ -589,6 +602,7 @@ export interface FileRoutesByFullPath {
   '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
+  '/api/public/hooks/sync-bus': typeof ApiPublicHooksSyncBusRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
   '/api/public/hooks/sync-representatives': typeof ApiPublicHooksSyncRepresentativesRoute
   '/api/public/hooks/whatsapp-opt-out': typeof ApiPublicHooksWhatsappOptOutRoute
@@ -616,7 +630,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
-  '/transporte': typeof TransporteRoute
+  '/transporte': typeof TransporteRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -650,6 +664,7 @@ export interface FileRoutesByTo {
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
+  '/transporte/linhas': typeof TransporteLinhasRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/eventos': typeof EventosIndexRoute
@@ -669,6 +684,7 @@ export interface FileRoutesByTo {
   '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
+  '/api/public/hooks/sync-bus': typeof ApiPublicHooksSyncBusRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
   '/api/public/hooks/sync-representatives': typeof ApiPublicHooksSyncRepresentativesRoute
   '/api/public/hooks/whatsapp-opt-out': typeof ApiPublicHooksWhatsappOptOutRoute
@@ -700,7 +716,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
-  '/transporte': typeof TransporteRoute
+  '/transporte': typeof TransporteRouteWithChildren
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -735,6 +751,7 @@ export interface FileRoutesById {
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
+  '/transporte/linhas': typeof TransporteLinhasRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/eventos/': typeof EventosIndexRoute
@@ -754,6 +771,7 @@ export interface FileRoutesById {
   '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
   '/api/public/hooks/scrape-procurements': typeof ApiPublicHooksScrapeProcurementsRoute
   '/api/public/hooks/scrape-services': typeof ApiPublicHooksScrapeServicesRoute
+  '/api/public/hooks/sync-bus': typeof ApiPublicHooksSyncBusRoute
   '/api/public/hooks/sync-original': typeof ApiPublicHooksSyncOriginalRoute
   '/api/public/hooks/sync-representatives': typeof ApiPublicHooksSyncRepresentativesRoute
   '/api/public/hooks/whatsapp-opt-out': typeof ApiPublicHooksWhatsappOptOutRoute
@@ -821,6 +839,7 @@ export interface FileRouteTypes {
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
+    | '/transporte/linhas'
     | '/admin/'
     | '/blog/'
     | '/eventos/'
@@ -840,6 +859,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/scrape-events'
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
+    | '/api/public/hooks/sync-bus'
     | '/api/public/hooks/sync-original'
     | '/api/public/hooks/sync-representatives'
     | '/api/public/hooks/whatsapp-opt-out'
@@ -901,6 +921,7 @@ export interface FileRouteTypes {
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
+    | '/transporte/linhas'
     | '/admin'
     | '/blog'
     | '/eventos'
@@ -920,6 +941,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/scrape-events'
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
+    | '/api/public/hooks/sync-bus'
     | '/api/public/hooks/sync-original'
     | '/api/public/hooks/sync-representatives'
     | '/api/public/hooks/whatsapp-opt-out'
@@ -985,6 +1007,7 @@ export interface FileRouteTypes {
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
+    | '/transporte/linhas'
     | '/admin/'
     | '/blog/'
     | '/eventos/'
@@ -1004,6 +1027,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/scrape-events'
     | '/api/public/hooks/scrape-procurements'
     | '/api/public/hooks/scrape-services'
+    | '/api/public/hooks/sync-bus'
     | '/api/public/hooks/sync-original'
     | '/api/public/hooks/sync-representatives'
     | '/api/public/hooks/whatsapp-opt-out'
@@ -1035,7 +1059,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   TransparenciaRoute: typeof TransparenciaRoute
-  TransporteRoute: typeof TransporteRoute
+  TransporteRoute: typeof TransporteRouteWithChildren
   BlogSlugRoute: typeof BlogSlugRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
   CidadesSlugRoute: typeof CidadesSlugRoute
@@ -1048,6 +1072,7 @@ export interface RootRouteChildren {
   ApiPublicHooksScrapeEventsRoute: typeof ApiPublicHooksScrapeEventsRoute
   ApiPublicHooksScrapeProcurementsRoute: typeof ApiPublicHooksScrapeProcurementsRoute
   ApiPublicHooksScrapeServicesRoute: typeof ApiPublicHooksScrapeServicesRoute
+  ApiPublicHooksSyncBusRoute: typeof ApiPublicHooksSyncBusRoute
   ApiPublicHooksSyncOriginalRoute: typeof ApiPublicHooksSyncOriginalRoute
   ApiPublicHooksSyncRepresentativesRoute: typeof ApiPublicHooksSyncRepresentativesRoute
   ApiPublicHooksWhatsappOptOutRoute: typeof ApiPublicHooksWhatsappOptOutRoute
@@ -1246,6 +1271,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/transporte/linhas': {
+      id: '/transporte/linhas'
+      path: '/linhas'
+      fullPath: '/transporte/linhas'
+      preLoaderRoute: typeof TransporteLinhasRouteImport
+      parentRoute: typeof TransporteRoute
     }
     '/representantes/ranking': {
       id: '/representantes/ranking'
@@ -1597,6 +1629,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHooksSyncOriginalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/sync-bus': {
+      id: '/api/public/hooks/sync-bus'
+      path: '/api/public/hooks/sync-bus'
+      fullPath: '/api/public/hooks/sync-bus'
+      preLoaderRoute: typeof ApiPublicHooksSyncBusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/scrape-services': {
       id: '/api/public/hooks/scrape-services'
       path: '/api/public/hooks/scrape-services'
@@ -1805,6 +1844,18 @@ const RepresentantesRouteWithChildren = RepresentantesRoute._addFileChildren(
   RepresentantesRouteChildren,
 )
 
+interface TransporteRouteChildren {
+  TransporteLinhasRoute: typeof TransporteLinhasRoute
+}
+
+const TransporteRouteChildren: TransporteRouteChildren = {
+  TransporteLinhasRoute: TransporteLinhasRoute,
+}
+
+const TransporteRouteWithChildren = TransporteRoute._addFileChildren(
+  TransporteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -1827,7 +1878,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   TransparenciaRoute: TransparenciaRoute,
-  TransporteRoute: TransporteRoute,
+  TransporteRoute: TransporteRouteWithChildren,
   BlogSlugRoute: BlogSlugRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,
   CidadesSlugRoute: CidadesSlugRoute,
@@ -1840,6 +1891,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicHooksScrapeEventsRoute: ApiPublicHooksScrapeEventsRoute,
   ApiPublicHooksScrapeProcurementsRoute: ApiPublicHooksScrapeProcurementsRoute,
   ApiPublicHooksScrapeServicesRoute: ApiPublicHooksScrapeServicesRoute,
+  ApiPublicHooksSyncBusRoute: ApiPublicHooksSyncBusRoute,
   ApiPublicHooksSyncOriginalRoute: ApiPublicHooksSyncOriginalRoute,
   ApiPublicHooksSyncRepresentativesRoute:
     ApiPublicHooksSyncRepresentativesRoute,
