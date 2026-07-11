@@ -44,7 +44,10 @@ async function fetchAll(table: string, select = "*"): Promise<unknown[]> {
 export const Route = createFileRoute("/api/public/hooks/sync-original")({
   server: {
     handlers: {
-      POST: async () => {
+      POST: async ({ request }) => {
+        const { checkCronAuth } = await import("@/lib/cron-auth.server");
+        const unauth = checkCronAuth(request);
+        if (unauth) return unauth;
         const started = Date.now();
         const report: Record<string, unknown> = { started_at: new Date().toISOString() };
 
