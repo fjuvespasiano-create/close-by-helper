@@ -171,7 +171,7 @@ function AnalyticsAnunciosPage() {
     if (!selectedId) return null;
     const campaign = campaigns.find((c) => c.id === selectedId);
     if (!campaign) return null;
-    const filtered = events.filter((e) => e.entity_id === selectedId);
+    const filtered = scopedEvents.filter((e) => e.entity_id === selectedId);
     const impressions = filtered.filter((e) => e.name === "ad_impression").length;
     const clicks = filtered.filter((e) => e.name === "ad_click").length;
     const ctr = impressions ? (clicks / impressions) * 100 : 0;
