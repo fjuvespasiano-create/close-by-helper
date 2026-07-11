@@ -113,8 +113,8 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
           const media = (await fetchAll(
             "company_media",
             "id,company_id,type,url,caption,sort,created_at",
-          )) as never[];
-          const mediaFiltered = media.filter((m) => companyIds.has(m.company_id as string));
+          )) as Array<{ id: string; company_id: string }>;
+          const mediaFiltered = media.filter((m) => companyIds.has(m.company_id));
           if (mediaFiltered.length) {
             const { error } = await supabaseAdmin
               .from("company_media")
