@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Loader2, Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
+import { runServicesScrapeFn } from "@/lib/scrape-services.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -137,14 +139,32 @@ function AdminPublicServices() {
 
   const cityById = useMemo(() => new Map((cities.data ?? []).map((c) => [c.id, c.name])), [cities.data]);
 
+  const scrapeFn = useServerFn(runServicesScrapeFn);
+  const scrape = useMutation({
+    mutationFn: async () => scrapeFn(),
+    onSuccess: (report) => {
+      qc.invalidateQueries({ queryKey: ["admin-public-services"] });
+      qc.invalidateQueries({ queryKey: ["public-services"] });
+      const total = report.cities.reduce((a, c) => a + c.total_upserted, 0);
+      toast.success(`Scraper concluído: ${total} serviços atualizados em ${(report.duration_ms / 1000).toFixed(1)}s`);
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
         <div>
           <h1 className="font-display text-2xl font-bold">Serviços Públicos</h1>
           <p className="text-sm text-muted-foreground">Cadastre hospitais, escolas, secretarias e demais serviços da cidade.</p>
         </div>
-        <Button onClick={openNew} className="gap-1"><Plus className="h-4 w-4" /> Novo serviço</Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => scrape.mutate()} disabled={scrape.isPending} className="gap-1">
+            {scrape.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+            Executar scraper
+          </Button>
+          <Button onClick={openNew} className="gap-1"><Plus className="h-4 w-4" /> Novo serviço</Button>
+        </div>
       </div>
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-border bg-card">
