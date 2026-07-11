@@ -42,13 +42,22 @@ export function useCityAutoDetect() {
   }, [ipFn, setCity]);
 }
 
+export type GPSDetectResult =
+  | { ok: true; slug: string | null; name: string | null }
+  | { ok: false; reason: "unsupported" | "insecure" | "denied" | "unavailable" | "timeout" | "server"; message: string };
+
 export function useRunGPSDetect() {
   const { setCity } = useSelectedCity();
   const gpsFn = useServerFn(detectCityByGPS);
   return () =>
-    new Promise<{ slug: string | null; name: string | null } | null>((resolve) => {
+    new Promise<GPSDetectResult>((resolve) => {
       if (typeof navigator === "undefined" || !navigator.geolocation) {
-        resolve(null);
+        resolve({ ok: false, reason: "unsupported", message: "Seu navegador não suporta geolocalização." });
+        return;
+      }
+      // Geolocation requires a secure context (HTTPS or localhost).
+      if (typeof window !== "undefined" && window.isSecureContext === false) {
+        resolve({ ok: false, reason: "insecure", message: "Localização exige HTTPS. Acesse pelo endereço seguro." });
         return;
       }
       navigator.geolocation.getCurrentPosition(
@@ -58,13 +67,22 @@ export function useRunGPSDetect() {
               data: { lat: pos.coords.latitude, lng: pos.coords.longitude },
             });
             if (isKnownSlug(res?.slug)) setCity(res.slug);
-            resolve(res ?? null);
-          } catch {
-            resolve(null);
+            resolve({ ok: true, slug: res?.slug ?? null, name: res?.name ?? null });
+          } catch (err) {
+            resolve({ ok: false, reason: "server", message: (err as Error)?.message || "Falha ao consultar cidade." });
           }
         },
-        () => resolve(null),
-        { timeout: 8000, maximumAge: 5 * 60_000 },
+        (err) => {
+          const map: Record<number, { reason: GPSDetectResult extends { ok: false; reason: infer R } ? R : never; message: string }> = {
+            1: { reason: "denied", message: "Permissão de localização negada. Habilite nas configurações do navegador." },
+            2: { reason: "unavailable", message: "Localização indisponível no momento. Tente novamente." },
+            3: { reason: "timeout", message: "Tempo esgotado ao obter localização. Tente novamente." },
+          };
+          const info = map[err.code] ?? { reason: "unavailable" as const, message: err.message || "Não foi possível obter sua localização." };
+          resolve({ ok: false, reason: info.reason, message: info.message });
+        },
+        { enableHighAccuracy: false, timeout: 15000, maximumAge: 5 * 60_000 },
       );
     });
 }
+
