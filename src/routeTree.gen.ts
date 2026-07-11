@@ -62,6 +62,7 @@ import { Route as AdminTurismoRouteImport } from './routes/admin.turismo'
 import { Route as AdminTextosRouteImport } from './routes/admin.textos'
 import { Route as AdminServicosPublicosRouteImport } from './routes/admin.servicos-publicos'
 import { Route as AdminScraperVespasianoRouteImport } from './routes/admin.scraper-vespasiano'
+import { Route as AdminScraperSjlRouteImport } from './routes/admin.scraper-sjl'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPushRouteImport } from './routes/admin.push'
 import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
@@ -365,6 +366,11 @@ const AdminScraperVespasianoRoute = AdminScraperVespasianoRouteImport.update({
   path: '/scraper-vespasiano',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminScraperSjlRoute = AdminScraperSjlRouteImport.update({
+  id: '/scraper-sjl',
+  path: '/scraper-sjl',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminQaRoute = AdminQaRouteImport.update({
   id: '/qa',
   path: '/qa',
@@ -601,6 +607,7 @@ export interface FileRoutesByFullPath {
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/push': typeof AdminPushRouteWithChildren
   '/admin/qa': typeof AdminQaRoute
+  '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/textos': typeof AdminTextosRoute
@@ -689,6 +696,7 @@ export interface FileRoutesByTo {
   '/admin/menu': typeof AdminMenuRoute
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/qa': typeof AdminQaRoute
+  '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/textos': typeof AdminTextosRoute
@@ -782,6 +790,7 @@ export interface FileRoutesById {
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/push': typeof AdminPushRouteWithChildren
   '/admin/qa': typeof AdminQaRoute
+  '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/textos': typeof AdminTextosRoute
@@ -876,6 +885,7 @@ export interface FileRouteTypes {
     | '/admin/planos'
     | '/admin/push'
     | '/admin/qa'
+    | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
     | '/admin/textos'
@@ -964,6 +974,7 @@ export interface FileRouteTypes {
     | '/admin/menu'
     | '/admin/planos'
     | '/admin/qa'
+    | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
     | '/admin/textos'
@@ -1056,6 +1067,7 @@ export interface FileRouteTypes {
     | '/admin/planos'
     | '/admin/push'
     | '/admin/qa'
+    | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
     | '/admin/textos'
@@ -1528,6 +1540,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminScraperVespasianoRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/scraper-sjl': {
+      id: '/admin/scraper-sjl'
+      path: '/scraper-sjl'
+      fullPath: '/admin/scraper-sjl'
+      preLoaderRoute: typeof AdminScraperSjlRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/qa': {
       id: '/admin/qa'
       path: '/qa'
@@ -1826,6 +1845,7 @@ interface AdminRouteChildren {
   AdminPlanosRoute: typeof AdminPlanosRoute
   AdminPushRoute: typeof AdminPushRouteWithChildren
   AdminQaRoute: typeof AdminQaRoute
+  AdminScraperSjlRoute: typeof AdminScraperSjlRoute
   AdminScraperVespasianoRoute: typeof AdminScraperVespasianoRoute
   AdminServicosPublicosRoute: typeof AdminServicosPublicosRoute
   AdminTextosRoute: typeof AdminTextosRoute
@@ -1849,6 +1869,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPlanosRoute: AdminPlanosRoute,
   AdminPushRoute: AdminPushRouteWithChildren,
   AdminQaRoute: AdminQaRoute,
+  AdminScraperSjlRoute: AdminScraperSjlRoute,
   AdminScraperVespasianoRoute: AdminScraperVespasianoRoute,
   AdminServicosPublicosRoute: AdminServicosPublicosRoute,
   AdminTextosRoute: AdminTextosRoute,
