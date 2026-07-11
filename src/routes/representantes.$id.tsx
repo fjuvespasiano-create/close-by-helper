@@ -58,7 +58,7 @@ function initials(name: string): string {
 }
 
 function RepresentativePage() {
-  const rep = Route.useLoaderData();
+  const rep = Route.useLoaderData() as import("@/lib/representatives").Representative;
 
   const { data: activities = [] } = useQuery({
     queryKey: ["rep-activities", rep.id],
