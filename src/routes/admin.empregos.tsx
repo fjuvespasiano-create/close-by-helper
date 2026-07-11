@@ -343,7 +343,7 @@ function JobDialog({ initial, sources, onClose, onSave }: { initial: any; source
               salary_min: form.salary_min ? Number(form.salary_min) : null,
               salary_max: form.salary_max ? Number(form.salary_max) : null,
               apply_url: form.apply_url.trim() || null,
-              tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
+              tags: form.tags.split(",").map((t: string) => t.trim()).filter(Boolean),
               is_active: form.is_active,
             });
           }}>Salvar</Button>
