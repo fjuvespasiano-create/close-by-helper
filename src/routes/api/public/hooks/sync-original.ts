@@ -55,7 +55,7 @@ export const Route = createFileRoute("/api/public/hooks/sync-original")({
           const cities = (await fetchAll(
             "cities",
             "id,slug,name,state,lat,lng,is_active",
-          )) as Array<Record<string, unknown>>;
+          )) as never[];
           if (cities.length) {
             const { error } = await supabaseAdmin.from("cities").upsert(cities, { onConflict: "slug" });
             if (error) throw new Error(`cities upsert: ${error.message}`);
