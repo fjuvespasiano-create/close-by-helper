@@ -19,7 +19,7 @@ type AdminPath =
   | "/admin/cidades" | "/admin/planos" | "/admin/leads" | "/admin/blog"
   | "/admin/duplicados" | "/admin/eventos" | "/admin/menu" | "/admin/textos"
   | "/admin/push" | "/admin/empregos" | "/admin/turismo" | "/admin/qa"
-  | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/scraper-vespasiano"
+  | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/scraper-vespasiano" | "/admin/scraper-sjl"
   | "/admin/configuracoes";
 
 type NavItem = { to: AdminPath; label: string; icon: typeof LayoutDashboard; exact?: boolean };
@@ -37,6 +37,7 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/servicos-publicos", label: "Serviços Públicos", icon: Landmark },
       { to: "/admin/emergencia", label: "Emergência", icon: Siren },
       { to: "/admin/scraper-vespasiano", label: "Scraper Vespasiano", icon: Download },
+      { to: "/admin/scraper-sjl", label: "Scraper São José da Lapa", icon: Download },
     ],
   },
   {
