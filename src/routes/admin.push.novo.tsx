@@ -101,7 +101,11 @@ function NovoPush() {
       },
     }),
     onSuccess: (res) => {
-      toast.success(`Enviado para ${res.sent} dispositivo(s).`);
+      if ("scheduled" in res && res.scheduled) {
+        toast.success(`Agendado para ${new Date(res.scheduled_at).toLocaleString("pt-BR")}.`);
+      } else {
+        toast.success(`Enviado para ${res.sent ?? 0} dispositivo(s).`);
+      }
       nav({ to: "/admin/push/$id", params: { id: res.id } });
     },
     onError: (e) => toast.error((e as Error).message),
