@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS analytics_events_entity_idx ON public.analytics_events (entity_type, entity_id, created_at DESC);
