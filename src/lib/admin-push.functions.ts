@@ -146,10 +146,59 @@ export const sendPushNow = createServerFn({ method: "POST" })
     if (nErr || !notif) throw new Error(nErr?.message ?? "Falha ao criar envio.");
 
     // 2. Resolve público
-    const userIds = await resolveAudience(supabase, data.audience);
+    let userIds = await resolveAudience(supabase, data.audience);
     if (userIds.length === 0) {
       await supabase.from("push_notifications").update({ status: "sent", sent_count: 0 }).eq("id", notif.id);
       return { id: notif.id, sent: 0 };
+    }
+
+    // 2b. H1 — filtra por notification_preferences (categoria + quiet hours).
+    // Categorias "sistema", requerem opt-in prévio? Não: emergência/manutenção/sistema
+    // são sempre entregues (transacional). Demais respeitam a preferência.
+    const CATEGORY_PREF_MAP: Record<string, keyof PrefsRow | null> = {
+      promocao: "promocoes",
+      novidade: "novidades",
+      evento: "eventos",
+      empresa: "empresas",
+      blog: "blog",
+      marketplace: "marketplace",
+      noticias: "novidades",
+      // transacionais sempre entregues:
+      sistema: null,
+      manutencao: null,
+      emergencia: null,
+      geral: null,
+    };
+    type PrefsRow = {
+      user_id: string;
+      promocoes: boolean; novidades: boolean; eventos: boolean; atualizacoes: boolean;
+      empresas: boolean; blog: boolean; marketplace: boolean;
+      quiet_hours_enabled: boolean; quiet_start: number; quiet_end: number;
+    };
+    const prefCol = CATEGORY_PREF_MAP[data.category] ?? null;
+    if (prefCol !== null) {
+      const { data: prefs } = await supabase
+        .from("notification_preferences")
+        .select("user_id, promocoes, novidades, eventos, atualizacoes, empresas, blog, marketplace, quiet_hours_enabled, quiet_start, quiet_end")
+        .in("user_id", userIds);
+      const prefsMap = new Map<string, PrefsRow>();
+      ((prefs ?? []) as PrefsRow[]).forEach((p) => prefsMap.set(p.user_id, p));
+      const hourUTC = new Date().getUTCHours();
+      userIds = userIds.filter((uid) => {
+        const p = prefsMap.get(uid);
+        if (!p) return true; // sem prefs = default opt-in
+        if (p[prefCol] === false) return false;
+        if (p.quiet_hours_enabled) {
+          const s = p.quiet_start, e = p.quiet_end;
+          const inQuiet = s < e ? (hourUTC >= s && hourUTC < e) : (hourUTC >= s || hourUTC < e);
+          if (inQuiet && data.priority !== "high") return false;
+        }
+        return true;
+      });
+      if (userIds.length === 0) {
+        await supabase.from("push_notifications").update({ status: "sent", sent_count: 0 }).eq("id", notif.id);
+        return { id: notif.id, sent: 0, filtered: true };
+      }
     }
 
     // 3. Puxa TODAS as inscrições ativas dos alvos
@@ -184,8 +233,9 @@ export const sendPushNow = createServerFn({ method: "POST" })
       if (t) deliveryByEndpoint.set(t.endpoint, d.id as number);
     });
 
-    // 6. Dispara em paralelo, em lotes de 50
+    // 6. Dispara em paralelo, em lotes de 50 — assina delivery token (S1).
     const { sendWebPush, parseUA } = await import("@/lib/push-send.server");
+    const { signDeliveryToken } = await import("@/lib/push-token.server");
     let sent = 0, failed = 0, unsubscribed = 0;
     const BATCH = 50;
     for (let i = 0; i < targets.length; i += BATCH) {
@@ -202,7 +252,9 @@ export const sendPushNow = createServerFn({ method: "POST" })
           buttons: data.buttons ?? undefined,
           notification_id: notif.id,
           delivery_id: deliveryId,
+          delivery_token: deliveryId ? signDeliveryToken(deliveryId) : undefined,
           category: data.category,
+          priority: data.priority,
         };
         const res = await sendWebPush(
           { endpoint: t.endpoint, keys: { p256dh: t.p256dh, auth: t.auth } },
@@ -230,6 +282,7 @@ export const sendPushNow = createServerFn({ method: "POST" })
               device: ua.device, browser: ua.browser,
             }).eq("id", deliveryId);
           }
+          console.error("[push] send failed", { notification_id: notif.id, delivery_id: deliveryId, status: res.status, error: res.error?.slice(0, 200) });
         }
       }));
     }
