@@ -102,7 +102,9 @@
   html, body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
     /* Sitewide guard against any accidental horizontal scroll on mobile. */
     overflow-x: clip;
     max-width: 100%;
@@ -110,6 +112,7 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    line-height: 1.55;
     /* Never let a wide child (banner, table, iframe) push the viewport wider. */
     min-width: 0;
   }
@@ -126,8 +129,14 @@
   }
   h1, h2, h3, h4, .font-display {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.022em;
+    line-height: 1.15;
   }
+  h1 { font-weight: 800; }
+  h2 { font-weight: 700; }
+  h3, h4 { font-weight: 700; }
+  p { line-height: 1.6; }
+  small { line-height: 1.5; }
   ::selection {
     background-color: color-mix(in oklch, var(--primary) 25%, transparent);
     color: var(--foreground);
@@ -135,7 +144,26 @@
   a, button {
     transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, opacity 180ms ease;
   }
+  /* Consistent, brand-tinted focus visible across all interactive elements. */
+  :focus-visible {
+    outline: none;
+  }
+  /* Custom scrollbar — subtle, brand-consistent. */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklch, var(--muted-foreground) 30%, transparent);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklch, var(--muted-foreground) 55%, transparent);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
 }
+
 
 @utility container-tight {
   max-width: 76rem;
