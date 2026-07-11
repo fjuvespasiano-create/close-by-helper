@@ -61,6 +61,9 @@ function AnalyticsAnunciosPage() {
   const [events, setEvents] = useState<EventRow[]>([]);
   const [rangeDays, setRangeDays] = useState(30);
   const [selectedId, setSelectedId] = useState<string>("");
+  const [cityFilter, setCityFilter] = useState<string>("");
+  const [placementFilter, setPlacementFilter] = useState<string>("");
+  const [prevEvents, setPrevEvents] = useState<EventRow[]>([]);
   const [loading, setLoading] = useState(true);
   const reportRef = useRef<HTMLDivElement>(null);
 
@@ -68,10 +71,12 @@ function AnalyticsAnunciosPage() {
     (async () => {
       setLoading(true);
       const start = daysAgo(rangeDays).toISOString();
-      const [{ data: camps }, { data: evs }] = await Promise.all([
+      const prevStart = daysAgo(rangeDays * 2).toISOString();
+      const prevEnd = daysAgo(rangeDays).toISOString();
+      const [{ data: camps }, { data: evs }, { data: prev }] = await Promise.all([
         supabase
           .from("ad_campaigns")
-          .select("id,name,image_url,link_url,starts_at,ends_at,active")
+          .select("id,name,image_url,link_url,starts_at,ends_at,active,city_slug,placement")
           .order("created_at", { ascending: false }),
         supabase
           .from("analytics_events")
@@ -80,12 +85,49 @@ function AnalyticsAnunciosPage() {
           .gte("created_at", start)
           .order("created_at", { ascending: false })
           .limit(20000),
+        supabase
+          .from("analytics_events")
+          .select("name,entity_id,created_at")
+          .eq("entity_type", "ad_campaign")
+          .gte("created_at", prevStart)
+          .lt("created_at", prevEnd)
+          .limit(20000),
       ]);
       setCampaigns((camps ?? []) as Campaign[]);
       setEvents((evs ?? []) as EventRow[]);
+      setPrevEvents((prev ?? []) as EventRow[]);
       setLoading(false);
     })();
   }, [rangeDays]);
+
+  const cities = useMemo(
+    () => Array.from(new Set(campaigns.map((c) => c.city_slug).filter(Boolean))) as string[],
+    [campaigns],
+  );
+  const placements = useMemo(
+    () => Array.from(new Set(campaigns.map((c) => c.placement).filter(Boolean))) as string[],
+    [campaigns],
+  );
+
+  const filteredCampaigns = useMemo(
+    () =>
+      campaigns.filter(
+        (c) =>
+          (!cityFilter || c.city_slug === cityFilter) &&
+          (!placementFilter || c.placement === placementFilter),
+      ),
+    [campaigns, cityFilter, placementFilter],
+  );
+  const allowedIds = useMemo(() => new Set(filteredCampaigns.map((c) => c.id)), [filteredCampaigns]);
+  const scopedEvents = useMemo(
+    () => events.filter((e) => !e.entity_id || allowedIds.has(e.entity_id)),
+    [events, allowedIds],
+  );
+  const scopedPrev = useMemo(
+    () => prevEvents.filter((e) => !e.entity_id || allowedIds.has(e.entity_id)),
+    [prevEvents, allowedIds],
+  );
+
 
   // Overview metrics
   const overview = useMemo(() => {
