@@ -166,7 +166,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <PageTransition>
+        <Outlet />
+      </PageTransition>
       <ClientOnly fallback={null}>
         <Suspense fallback={null}>
           <BugReportButton />
