@@ -6,15 +6,22 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  ClientOnly,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { registerServiceWorker } from "@/lib/pwa";
 import { supabase } from "@/integrations/supabase/client";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
-import { BugReportButton } from "@/components/qa/BugReportButton";
+
+const BugReportButton = lazy(() =>
+  import("@/components/qa/BugReportButton").then((m) => ({ default: m.BugReportButton })),
+);
+
+const SUPABASE_ORIGIN = (import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? "";
+
 
 function NotFoundComponent() {
   return (
@@ -101,6 +108,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
       { rel: "icon", type: "image/png", sizes: "192x192", href: "/icons/icon-192.png" },
       { rel: "icon", type: "image/png", sizes: "512x512", href: "/icons/icon-512.png" },
+      ...(SUPABASE_ORIGIN
+        ? [
+            { rel: "preconnect", href: SUPABASE_ORIGIN, crossOrigin: "anonymous" as const },
+            { rel: "dns-prefetch", href: SUPABASE_ORIGIN },
+          ]
+        : []),
     ],
   }),
   shellComponent: RootShell,
@@ -128,7 +141,14 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
-    registerServiceWorker();
+    const w = window as unknown as { requestIdleCallback?: (cb: () => void) => number };
+    const id = w.requestIdleCallback
+      ? w.requestIdleCallback(() => registerServiceWorker())
+      : window.setTimeout(() => registerServiceWorker(), 1200);
+    return () => {
+      const wc = window as unknown as { cancelIdleCallback?: (id: number) => void };
+      wc.cancelIdleCallback ? wc.cancelIdleCallback(id) : window.clearTimeout(id);
+    };
   }, []);
 
   useEffect(() => {
@@ -147,7 +167,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
-      <BugReportButton />
+      <ClientOnly fallback={null}>
+        <Suspense fallback={null}>
+          <BugReportButton />
+        </Suspense>
+      </ClientOnly>
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
