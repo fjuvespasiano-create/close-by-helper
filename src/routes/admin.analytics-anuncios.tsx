@@ -28,7 +28,10 @@ type Campaign = {
   starts_at: string | null;
   ends_at: string | null;
   active: boolean;
+  city_slug: string | null;
+  placement: string | null;
 };
+
 
 type EventRow = {
   name: string;
@@ -58,6 +61,9 @@ function AnalyticsAnunciosPage() {
   const [events, setEvents] = useState<EventRow[]>([]);
   const [rangeDays, setRangeDays] = useState(30);
   const [selectedId, setSelectedId] = useState<string>("");
+  const [cityFilter, setCityFilter] = useState<string>("");
+  const [placementFilter, setPlacementFilter] = useState<string>("");
+  const [prevEvents, setPrevEvents] = useState<EventRow[]>([]);
   const [loading, setLoading] = useState(true);
   const reportRef = useRef<HTMLDivElement>(null);
 
@@ -65,10 +71,12 @@ function AnalyticsAnunciosPage() {
     (async () => {
       setLoading(true);
       const start = daysAgo(rangeDays).toISOString();
-      const [{ data: camps }, { data: evs }] = await Promise.all([
+      const prevStart = daysAgo(rangeDays * 2).toISOString();
+      const prevEnd = daysAgo(rangeDays).toISOString();
+      const [{ data: camps }, { data: evs }, { data: prev }] = await Promise.all([
         supabase
           .from("ad_campaigns")
-          .select("id,name,image_url,link_url,starts_at,ends_at,active")
+          .select("id,name,image_url,link_url,starts_at,ends_at,active,city_slug,placement")
           .order("created_at", { ascending: false }),
         supabase
           .from("analytics_events")
@@ -77,21 +85,63 @@ function AnalyticsAnunciosPage() {
           .gte("created_at", start)
           .order("created_at", { ascending: false })
           .limit(20000),
+        supabase
+          .from("analytics_events")
+          .select("name,entity_id,created_at")
+          .eq("entity_type", "ad_campaign")
+          .gte("created_at", prevStart)
+          .lt("created_at", prevEnd)
+          .limit(20000),
       ]);
       setCampaigns((camps ?? []) as Campaign[]);
       setEvents((evs ?? []) as EventRow[]);
+      setPrevEvents((prev ?? []) as EventRow[]);
       setLoading(false);
     })();
   }, [rangeDays]);
 
+  const cities = useMemo(
+    () => Array.from(new Set(campaigns.map((c) => c.city_slug).filter(Boolean))) as string[],
+    [campaigns],
+  );
+  const placements = useMemo(
+    () => Array.from(new Set(campaigns.map((c) => c.placement).filter(Boolean))) as string[],
+    [campaigns],
+  );
+
+  const filteredCampaigns = useMemo(
+    () =>
+      campaigns.filter(
+        (c) =>
+          (!cityFilter || c.city_slug === cityFilter) &&
+          (!placementFilter || c.placement === placementFilter),
+      ),
+    [campaigns, cityFilter, placementFilter],
+  );
+  const allowedIds = useMemo(() => new Set(filteredCampaigns.map((c) => c.id)), [filteredCampaigns]);
+  const scopedEvents = useMemo(
+    () => events.filter((e) => !e.entity_id || allowedIds.has(e.entity_id)),
+    [events, allowedIds],
+  );
+  const scopedPrev = useMemo(
+    () => prevEvents.filter((e) => !e.entity_id || allowedIds.has(e.entity_id)),
+    [prevEvents, allowedIds],
+  );
+
+
   // Overview metrics
   const overview = useMemo(() => {
-    const impressions = events.filter((e) => e.name === "ad_impression").length;
-    const clicks = events.filter((e) => e.name === "ad_click").length;
+    const impressions = scopedEvents.filter((e) => e.name === "ad_impression").length;
+    const clicks = scopedEvents.filter((e) => e.name === "ad_click").length;
     const ctr = impressions > 0 ? (clicks / impressions) * 100 : 0;
 
+    const prevImp = scopedPrev.filter((e) => e.name === "ad_impression").length;
+    const prevClk = scopedPrev.filter((e) => e.name === "ad_click").length;
+    const impDelta = prevImp ? ((impressions - prevImp) / prevImp) * 100 : impressions > 0 ? 100 : 0;
+    const clkDelta = prevClk ? ((clicks - prevClk) / prevClk) * 100 : clicks > 0 ? 100 : 0;
+
     const byCampaign = new Map<string, { impressions: number; clicks: number }>();
-    for (const e of events) {
+    for (const e of scopedEvents) {
       if (!e.entity_id) continue;
       const s = byCampaign.get(e.entity_id) ?? { impressions: 0, clicks: 0 };
       if (e.name === "ad_impression") s.impressions++;
@@ -101,20 +151,27 @@ function AnalyticsAnunciosPage() {
     const top = Array.from(byCampaign.entries())
       .map(([id, v]) => {
         const c = campaigns.find((x) => x.id === id);
-        return { id, name: c?.name ?? "—", ...v, ctr: v.impressions ? (v.clicks / v.impressions) * 100 : 0 };
+        return {
+          id,
+          name: c?.name ?? "—",
+          city: c?.city_slug ?? "—",
+          placement: c?.placement ?? "—",
+          ...v,
+          ctr: v.impressions ? (v.clicks / v.impressions) * 100 : 0,
+        };
       })
-      .sort((a, b) => b.clicks - a.clicks)
-      .slice(0, 10);
+      .sort((a, b) => b.clicks - a.clicks);
 
-    return { impressions, clicks, ctr, top };
-  }, [events, campaigns]);
+    return { impressions, clicks, ctr, top, impDelta, clkDelta };
+  }, [scopedEvents, scopedPrev, campaigns]);
+
 
   // Selected campaign metrics
   const report = useMemo(() => {
     if (!selectedId) return null;
     const campaign = campaigns.find((c) => c.id === selectedId);
     if (!campaign) return null;
-    const filtered = events.filter((e) => e.entity_id === selectedId);
+    const filtered = scopedEvents.filter((e) => e.entity_id === selectedId);
     const impressions = filtered.filter((e) => e.name === "ad_impression").length;
     const clicks = filtered.filter((e) => e.name === "ad_click").length;
     const ctr = impressions ? (clicks / impressions) * 100 : 0;
@@ -162,6 +219,28 @@ function AnalyticsAnunciosPage() {
       .save();
   }
 
+  function exportCsv() {
+    const header = ["#", "Anunciante", "Cidade", "Posicionamento", "Views", "Cliques", "CTR (%)"];
+    const rows = overview.top.map((r, i) => [
+      i + 1,
+      `"${r.name.replace(/"/g, '""')}"`,
+      r.city,
+      r.placement,
+      r.impressions,
+      r.clicks,
+      r.ctr.toFixed(2),
+    ]);
+    const csv = [header, ...rows].map((r) => r.join(",")).join("\n");
+    const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `analytics-anuncios-${rangeDays}d-${fmtDay(new Date())}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -171,10 +250,28 @@ function AnalyticsAnunciosPage() {
             Métricas para provar valor ao comerciante local e renovar contratos.
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <label htmlFor="range" className="text-sm text-muted-foreground">Período</label>
+        <div className="flex flex-wrap items-center gap-2">
           <select
-            id="range"
+            value={cityFilter}
+            onChange={(e) => setCityFilter(e.target.value)}
+            className="h-9 rounded-md border border-input bg-background px-2 text-sm"
+          >
+            <option value="">Todas as cidades</option>
+            {cities.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <select
+            value={placementFilter}
+            onChange={(e) => setPlacementFilter(e.target.value)}
+            className="h-9 rounded-md border border-input bg-background px-2 text-sm"
+          >
+            <option value="">Todos os canais</option>
+            {placements.map((p) => (
+              <option key={p} value={p}>{p}</option>
+            ))}
+          </select>
+          <select
             value={rangeDays}
             onChange={(e) => setRangeDays(Number(e.target.value))}
             className="h-9 rounded-md border border-input bg-background px-2 text-sm"
@@ -184,16 +281,24 @@ function AnalyticsAnunciosPage() {
             <option value={30}>Últimos 30 dias</option>
             <option value={90}>Últimos 90 dias</option>
           </select>
+          <button
+            type="button"
+            onClick={exportCsv}
+            className="inline-flex items-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm hover:bg-muted"
+          >
+            <Download className="h-4 w-4" /> CSV
+          </button>
         </div>
       </div>
 
       {/* Overview cards */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <MetricCard icon={<Eye className="h-4 w-4" />} label="Visualizações totais" value={overview.impressions.toLocaleString("pt-BR")} />
-        <MetricCard icon={<MousePointerClick className="h-4 w-4" />} label="Cliques totais" value={overview.clicks.toLocaleString("pt-BR")} />
-        <MetricCard icon={<Percent className="h-4 w-4" />} label="CTR médio do site" value={`${overview.ctr.toFixed(2)}%`} />
-        <MetricCard icon={<TrendingUp className="h-4 w-4" />} label="Anúncios ativos" value={String(campaigns.filter((c) => c.active).length)} />
+        <MetricCard icon={<Eye className="h-4 w-4" />} label="Visualizações totais" value={overview.impressions.toLocaleString("pt-BR")} delta={overview.impDelta} />
+        <MetricCard icon={<MousePointerClick className="h-4 w-4" />} label="Cliques totais" value={overview.clicks.toLocaleString("pt-BR")} delta={overview.clkDelta} />
+        <MetricCard icon={<Percent className="h-4 w-4" />} label="CTR médio" value={`${overview.ctr.toFixed(2)}%`} />
+        <MetricCard icon={<TrendingUp className="h-4 w-4" />} label="Anúncios ativos" value={String(filteredCampaigns.filter((c) => c.active).length)} />
       </div>
+
 
       {/* Top anunciantes */}
       <section className="rounded-xl border bg-card">
@@ -342,16 +447,23 @@ function AnalyticsAnunciosPage() {
   );
 }
 
-function MetricCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function MetricCard({ icon, label, value, delta }: { icon: React.ReactNode; label: string; value: string; delta?: number }) {
+  const up = (delta ?? 0) >= 0;
   return (
     <div className="rounded-xl border bg-card p-4">
       <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground">
         {icon} {label}
       </div>
       <div className="mt-2 text-2xl font-bold">{value}</div>
+      {typeof delta === "number" && (
+        <div className={`mt-1 text-xs font-medium ${up ? "text-emerald-600" : "text-red-600"}`}>
+          {up ? "▲" : "▼"} {Math.abs(delta).toFixed(1)}% vs período anterior
+        </div>
+      )}
     </div>
   );
 }
+
 
 function ReportKPI({ label, value, sub }: { label: string; value: string; sub: string }) {
   return (
