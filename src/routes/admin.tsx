@@ -22,6 +22,7 @@ const NAV: { to: "/admin" | "/admin/empresas" | "/admin/servicos-publicos" | "/a
   { to: "/admin/duplicados", label: "Conteúdo duplicado", icon: Copy },
   { to: "/admin/push", label: "Notificações Push", icon: Bell },
   { to: "/admin/anuncios", label: "Anúncios locais", icon: Megaphone },
+  { to: "/admin/analytics-anuncios", label: "Analytics de Anúncios", icon: BarChart3 },
   { to: "/admin/qa", label: "Central de Qualidade", icon: Bug },
   { to: "/admin/menu", label: "Menu do site", icon: MenuIcon },
   { to: "/admin/textos", label: "Textos do site", icon: Type },
