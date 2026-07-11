@@ -1212,6 +1212,25 @@ function TransportePage() {
       </section>
 
       <div className="container mx-auto px-4 py-6 space-y-6">
+        {/* Banner: horários em tempo real */}
+        <Link
+          to="/transporte/linhas"
+          className="block rounded-2xl border bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-4 transition hover:shadow-md md:p-5"
+        >
+          <div className="flex items-center gap-4">
+            <div className="rounded-xl bg-primary/15 p-3">
+              <Bus className="h-6 w-6 text-primary" aria-hidden />
+            </div>
+            <div className="flex-1">
+              <div className="font-semibold">Horários oficiais atualizados semanalmente</div>
+              <div className="text-sm text-muted-foreground">
+                Todas as linhas DER-MG de Vespasiano e SJL com quadro completo por dia da semana.
+              </div>
+            </div>
+            <Badge variant="secondary" className="hidden md:inline-flex">Ver linhas →</Badge>
+          </div>
+        </Link>
+
         {/* Favoritos */}
         <section aria-labelledby="favs-title">
           <div className="mb-3 flex items-center gap-2">
