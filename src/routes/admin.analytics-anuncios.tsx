@@ -28,7 +28,10 @@ type Campaign = {
   starts_at: string | null;
   ends_at: string | null;
   active: boolean;
+  city_slug: string | null;
+  placement: string | null;
 };
+
 
 type EventRow = {
   name: string;
