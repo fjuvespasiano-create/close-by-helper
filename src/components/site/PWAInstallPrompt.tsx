@@ -6,10 +6,9 @@ import {
   isStandalone,
   notificationPermission,
   promptInstall,
-  requestNotificationPermission,
-  showLocalNotification,
   subscribeInstallPrompt,
 } from "@/lib/pwa";
+import { enablePush, pushSupported } from "@/lib/push-client";
 import { toast } from "sonner";
 
 const DISMISS_KEY = "pwa_install_dismissed_at";
@@ -72,20 +71,19 @@ export function PWAInstallPrompt() {
   }
 
   async function handleEnableNotif() {
-    // Hide immediately so the card never lingers while the browser prompt is open.
     setShowNotif(false);
     localStorage.setItem(NOTIF_DISMISS_KEY, String(Date.now()));
-    const perm = await requestNotificationPermission();
-    // Read the browser's authoritative value in case the helper returned "unsupported".
-    const effective = typeof Notification !== "undefined" ? Notification.permission : perm;
-    setNotifPerm(effective);
-    if (effective === "granted") {
-      await showLocalNotification("Notificações ativadas 🎉", "Você receberá alertas sobre novos serviços e ofertas.", "/");
-      toast.success("Notificações ativadas!");
-    } else if (effective === "denied") {
-      toast.error("Permissão negada. Ative nas configurações do navegador.");
-    } else if (perm === "unsupported") {
+    if (!pushSupported()) {
       toast.error("Seu navegador não suporta notificações.");
+      return;
+    }
+    const r = await enablePush();
+    const effective = typeof Notification !== "undefined" ? Notification.permission : "default";
+    setNotifPerm(effective);
+    if (r.ok) {
+      toast.success("Notificações ativadas!");
+    } else {
+      toast.error(r.error || "Não foi possível ativar as notificações.");
     }
   }
 
@@ -101,9 +99,9 @@ export function PWAInstallPrompt() {
   if (installed) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex flex-col items-center gap-2 px-4 sm:bottom-6">
+    <div className="pointer-events-none fixed inset-x-0 top-16 z-50 flex flex-col items-center gap-2 px-4 sm:top-20">
       {showInstall && (
-        <div className="pointer-events-auto w-full max-w-md animate-in fade-in slide-in-from-bottom-4 rounded-2xl border border-border/70 bg-background/95 p-4 shadow-2xl backdrop-blur-xl">
+        <div className="pointer-events-auto w-full max-w-md animate-in fade-in slide-in-from-top-4 rounded-2xl border border-border/70 bg-background/95 p-4 shadow-2xl backdrop-blur-xl">
           <div className="flex items-start gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <Download className="h-5 w-5" />
@@ -126,7 +124,7 @@ export function PWAInstallPrompt() {
       )}
 
       {showNotif && !showInstall && (
-        <div className="pointer-events-auto w-full max-w-md animate-in fade-in slide-in-from-bottom-4 rounded-2xl border border-border/70 bg-background/95 p-4 shadow-2xl backdrop-blur-xl">
+        <div className="pointer-events-auto w-full max-w-md animate-in fade-in slide-in-from-top-4 rounded-2xl border border-border/70 bg-background/95 p-4 shadow-2xl backdrop-blur-xl">
           <div className="flex items-start gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <BellRing className="h-5 w-5" />
