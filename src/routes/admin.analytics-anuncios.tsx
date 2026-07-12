@@ -65,15 +65,18 @@ function AnalyticsAnunciosPage() {
   const [placementFilter, setPlacementFilter] = useState<string>("");
   const [prevEvents, setPrevEvents] = useState<EventRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
       setLoading(true);
+      setLoadError(null);
       const start = daysAgo(rangeDays).toISOString();
       const prevStart = daysAgo(rangeDays * 2).toISOString();
       const prevEnd = daysAgo(rangeDays).toISOString();
-      const [{ data: camps }, { data: evs }, { data: prev }] = await Promise.all([
+      const [campsRes, evsRes, prevRes] = await Promise.all([
         supabase
           .from("ad_campaigns")
           .select("id,name,image_url,link_url,starts_at,ends_at,active,city_slug,placement")
@@ -93,11 +96,21 @@ function AnalyticsAnunciosPage() {
           .lt("created_at", prevEnd)
           .limit(20000),
       ]);
-      setCampaigns((camps ?? []) as Campaign[]);
-      setEvents((evs ?? []) as EventRow[]);
-      setPrevEvents((prev ?? []) as EventRow[]);
+      if (cancelled) return;
+      const firstError = campsRes.error ?? evsRes.error ?? prevRes.error;
+      if (firstError) {
+        setLoadError(firstError.message);
+        setCampaigns([]);
+        setEvents([]);
+        setPrevEvents([]);
+      } else {
+        setCampaigns((campsRes.data ?? []) as Campaign[]);
+        setEvents((evsRes.data ?? []) as EventRow[]);
+        setPrevEvents((prevRes.data ?? []) as EventRow[]);
+      }
       setLoading(false);
     })();
+    return () => { cancelled = true; };
   }, [rangeDays]);
 
   const cities = useMemo(
