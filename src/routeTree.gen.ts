@@ -83,6 +83,7 @@ import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
 import { Route as AdminCalendarioEditorialRouteImport } from './routes/admin.calendario-editorial'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminBackupRouteImport } from './routes/admin.backup'
+import { Route as AdminAoVivoRouteImport } from './routes/admin.ao-vivo'
 import { Route as AdminAnunciosRouteImport } from './routes/admin.anuncios'
 import { Route as AdminAnalyticsAnunciosRouteImport } from './routes/admin.analytics-anuncios'
 import { Route as AdminPushIndexRouteImport } from './routes/admin.push.index'
@@ -479,6 +480,11 @@ const AdminBackupRoute = AdminBackupRouteImport.update({
   path: '/backup',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAoVivoRoute = AdminAoVivoRouteImport.update({
+  id: '/ao-vivo',
+  path: '/ao-vivo',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminAnunciosRoute = AdminAnunciosRouteImport.update({
   id: '/anuncios',
   path: '/anuncios',
@@ -638,6 +644,7 @@ export interface FileRoutesByFullPath {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
@@ -735,6 +742,7 @@ export interface FileRoutesByTo {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
@@ -835,6 +843,7 @@ export interface FileRoutesById {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
@@ -937,6 +946,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
@@ -1034,6 +1044,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
@@ -1133,6 +1144,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
@@ -1773,6 +1785,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBackupRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/ao-vivo': {
+      id: '/admin/ao-vivo'
+      path: '/ao-vivo'
+      fullPath: '/admin/ao-vivo'
+      preLoaderRoute: typeof AdminAoVivoRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/anuncios': {
       id: '/admin/anuncios'
       path: '/anuncios'
@@ -1967,6 +1986,7 @@ const AdminPushRouteWithChildren = AdminPushRoute._addFileChildren(
 interface AdminRouteChildren {
   AdminAnalyticsAnunciosRoute: typeof AdminAnalyticsAnunciosRoute
   AdminAnunciosRoute: typeof AdminAnunciosRoute
+  AdminAoVivoRoute: typeof AdminAoVivoRoute
   AdminBackupRoute: typeof AdminBackupRoute
   AdminBlogRoute: typeof AdminBlogRoute
   AdminCalendarioEditorialRoute: typeof AdminCalendarioEditorialRoute
@@ -1995,6 +2015,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAnalyticsAnunciosRoute: AdminAnalyticsAnunciosRoute,
   AdminAnunciosRoute: AdminAnunciosRoute,
+  AdminAoVivoRoute: AdminAoVivoRoute,
   AdminBackupRoute: AdminBackupRoute,
   AdminBlogRoute: AdminBlogRoute,
   AdminCalendarioEditorialRoute: AdminCalendarioEditorialRoute,
