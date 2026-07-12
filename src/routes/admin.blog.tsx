@@ -137,8 +137,9 @@ function AdminBlog() {
     const slug = (p.slug ?? slugify(title)).trim();
     const contentStr = (p.content ?? "").trim();
     if (!title || !slug) return toast.error("Título e slug são obrigatórios");
-    if (p.published && contentStr.length < MIN_CONTENT_CHARS) {
-      return toast.error(`Para publicar, o conteúdo precisa ter no mínimo ${MIN_CONTENT_CHARS} caracteres (atual: ${contentStr.length}).`);
+    const minChars = (p.type ?? "blog") === "news" ? 300 : MIN_CONTENT_CHARS;
+    if (p.published && contentStr.length < minChars) {
+      return toast.error(`Para publicar, o conteúdo precisa ter no mínimo ${minChars} caracteres (atual: ${contentStr.length}).`);
     }
     const payload = {
       type: (p.type ?? "blog") as PostType,
