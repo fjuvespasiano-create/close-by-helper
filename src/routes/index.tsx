@@ -9,6 +9,8 @@ import { CategoryIcon } from "@/components/site/CategoryIcon";
 import { CompanyCard, toCompanyCardData } from "@/components/site/CompanyCard";
 import { CitySwitch } from "@/components/site/CitySwitch";
 import { FeaturedCouponsCard } from "@/components/site/FeaturedCouponsCard";
+import { LiveFeedWidget } from "@/features/live-feed";
+import { useCityId } from "@/hooks/useCityId";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { categoriesQueryOptions, featuredCompaniesQueryOptions } from "@/lib/queries";
 import { PUBLIC_SERVICE_CATEGORIES } from "@/lib/publicServices";
