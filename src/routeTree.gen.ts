@@ -109,6 +109,7 @@ import { Route as ApiPublicHooksScrapeProcurementsRouteImport } from './routes/a
 import { Route as ApiPublicHooksScrapeEventsRouteImport } from './routes/api/public/hooks/scrape-events'
 import { Route as ApiPublicHooksPushSchedulerRouteImport } from './routes/api/public/hooks/push-scheduler'
 import { Route as ApiPublicHooksJobsSyncRouteImport } from './routes/api/public/hooks/jobs-sync'
+import { Route as ApiPublicHooksDailyBlogPostRouteImport } from './routes/api/public/hooks/daily-blog-post'
 
 const VespasianoRoute = VespasianoRouteImport.update({
   id: '/vespasiano',
@@ -621,6 +622,12 @@ const ApiPublicHooksJobsSyncRoute = ApiPublicHooksJobsSyncRouteImport.update({
   path: '/api/public/hooks/jobs-sync',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksDailyBlogPostRoute =
+  ApiPublicHooksDailyBlogPostRouteImport.update({
+    id: '/api/public/hooks/daily-blog-post',
+    path: '/api/public/hooks/daily-blog-post',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -710,6 +717,7 @@ export interface FileRoutesByFullPath {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/hooks/daily-blog-post': typeof ApiPublicHooksDailyBlogPostRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
@@ -808,6 +816,7 @@ export interface FileRoutesByTo {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push': typeof AdminPushIndexRoute
+  '/api/public/hooks/daily-blog-post': typeof ApiPublicHooksDailyBlogPostRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
@@ -911,6 +920,7 @@ export interface FileRoutesById {
   '/painel/empresas/nova': typeof PainelEmpresasNovaRoute
   '/painel/notificacoes/preferencias': typeof PainelNotificacoesPreferenciasRoute
   '/admin/push/': typeof AdminPushIndexRoute
+  '/api/public/hooks/daily-blog-post': typeof ApiPublicHooksDailyBlogPostRoute
   '/api/public/hooks/jobs-sync': typeof ApiPublicHooksJobsSyncRoute
   '/api/public/hooks/push-scheduler': typeof ApiPublicHooksPushSchedulerRoute
   '/api/public/hooks/scrape-events': typeof ApiPublicHooksScrapeEventsRoute
@@ -1015,6 +1025,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/hooks/daily-blog-post'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/hooks/scrape-events'
@@ -1113,6 +1124,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push'
+    | '/api/public/hooks/daily-blog-post'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/hooks/scrape-events'
@@ -1215,6 +1227,7 @@ export interface FileRouteTypes {
     | '/painel/empresas/nova'
     | '/painel/notificacoes/preferencias'
     | '/admin/push/'
+    | '/api/public/hooks/daily-blog-post'
     | '/api/public/hooks/jobs-sync'
     | '/api/public/hooks/push-scheduler'
     | '/api/public/hooks/scrape-events'
@@ -1263,6 +1276,7 @@ export interface RootRouteChildren {
   EventosSlugRoute: typeof EventosSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   EventosIndexRoute: typeof EventosIndexRoute
+  ApiPublicHooksDailyBlogPostRoute: typeof ApiPublicHooksDailyBlogPostRoute
   ApiPublicHooksJobsSyncRoute: typeof ApiPublicHooksJobsSyncRoute
   ApiPublicHooksPushSchedulerRoute: typeof ApiPublicHooksPushSchedulerRoute
   ApiPublicHooksScrapeEventsRoute: typeof ApiPublicHooksScrapeEventsRoute
@@ -1979,6 +1993,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHooksJobsSyncRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/daily-blog-post': {
+      id: '/api/public/hooks/daily-blog-post'
+      path: '/api/public/hooks/daily-blog-post'
+      fullPath: '/api/public/hooks/daily-blog-post'
+      preLoaderRoute: typeof ApiPublicHooksDailyBlogPostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -2223,6 +2244,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosSlugRoute: EventosSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   EventosIndexRoute: EventosIndexRoute,
+  ApiPublicHooksDailyBlogPostRoute: ApiPublicHooksDailyBlogPostRoute,
   ApiPublicHooksJobsSyncRoute: ApiPublicHooksJobsSyncRoute,
   ApiPublicHooksPushSchedulerRoute: ApiPublicHooksPushSchedulerRoute,
   ApiPublicHooksScrapeEventsRoute: ApiPublicHooksScrapeEventsRoute,

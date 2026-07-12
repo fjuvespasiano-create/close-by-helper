@@ -43,7 +43,8 @@ function todayIndex() {
   return Math.floor((now.getTime() - start.getTime()) / 86_400_000);
 }
 
-async function pickTheme(supabase: ReturnType<typeof import("@supabase/supabase-js").createClient>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function pickTheme(supabase: any) {
   const idx = todayIndex();
   const category: Category = CATEGORY_ROTATION[idx % CATEGORY_ROTATION.length];
 
