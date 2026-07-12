@@ -1,4 +1,4 @@
-// Public server functions for the Jobs module (listing + detail).
+// Public server functions for the Jobs module (listing + detail + premium).
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
@@ -11,6 +11,12 @@ function publicClient() {
     { auth: { storage: undefined, persistSession: false, autoRefreshToken: false } },
   );
 }
+
+const LIST_COLUMNS =
+  "id, title, company_name, company_logo_url, location_city, location_state, is_remote, employment_type, experience_level, salary_min, salary_max, salary_currency, apply_url, category, tags, posted_at, is_premium";
+
+const PREMIUM_COLUMNS =
+  LIST_COLUMNS + ", benefits, requirements, workload, featured_until";
 
 const ListInput = z.object({
   q: z.string().trim().max(120).optional(),
@@ -38,20 +44,19 @@ export const listJobs = createServerFn({ method: "GET" })
     const to = from + data.pageSize - 1;
     let q = supabase
       .from("jobs")
-      .select(
-        "id, title, company_name, location_city, location_state, is_remote, employment_type, experience_level, salary_min, salary_max, salary_currency, apply_url, category, tags, posted_at",
-        { count: "exact" },
-      )
+      .select(LIST_COLUMNS, { count: "exact" })
       .eq("is_active", true)
       .range(from, to);
 
-    // Sorting
     if (data.sort === "salary_desc") {
       q = q.order("salary_max", { ascending: false, nullsFirst: false });
     } else if (data.sort === "salary_asc") {
       q = q.order("salary_min", { ascending: true, nullsFirst: false });
     } else {
-      q = q.order("posted_at", { ascending: false, nullsFirst: false });
+      // Premium primeiro dentro do "recentes".
+      q = q
+        .order("is_premium", { ascending: false })
+        .order("posted_at", { ascending: false, nullsFirst: false });
     }
 
     if (data.q) {
@@ -68,7 +73,6 @@ export const listJobs = createServerFn({ method: "GET" })
     if (data.employment) q = q.ilike("employment_type", data.employment);
     if (data.experience) q = q.ilike("experience_level", data.experience);
     if (data.salaryMin) {
-      // Vaga passa se salary_max OU salary_min for ≥ mínimo pedido.
       q = q.or(`salary_max.gte.${data.salaryMin},salary_min.gte.${data.salaryMin}`);
     }
 
@@ -89,6 +93,33 @@ export const getJob = createServerFn({ method: "GET" })
       .maybeSingle();
     if (error) throw new Error(error.message);
     return row;
+  });
+
+const PremiumListInput = z.object({
+  city: z.string().trim().max(80).optional(),
+  category: z.string().trim().max(80).optional(),
+  limit: z.number().int().min(1).max(30).default(6),
+});
+
+export const listPremiumJobs = createServerFn({ method: "GET" })
+  .inputValidator((raw: unknown) => PremiumListInput.parse(raw ?? {}))
+  .handler(async ({ data }) => {
+    const supabase = publicClient();
+    const nowIso = new Date().toISOString();
+    let q = supabase
+      .from("jobs")
+      .select(PREMIUM_COLUMNS)
+      .eq("is_active", true)
+      .eq("is_premium", true)
+      .or(`featured_until.is.null,featured_until.gte.${nowIso}`)
+      .order("featured_until", { ascending: false, nullsFirst: false })
+      .order("posted_at", { ascending: false, nullsFirst: false })
+      .limit(data.limit);
+    if (data.city) q = q.ilike("location_city", data.city);
+    if (data.category) q = q.eq("category", data.category);
+    const { data: rows, error } = await q;
+    if (error) throw new Error(error.message);
+    return rows ?? [];
   });
 
 /** Facets/aggregations to power dynamic filter suggestions. */
