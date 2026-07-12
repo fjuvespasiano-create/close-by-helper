@@ -306,7 +306,7 @@ function Home() {
 
 function LiveFeedForHome() {
   const { city } = useSelectedCity();
-  const { data: cityId } = useCityId(city?.slug ?? null);
+  const { data: cityId } = useCityId(city ?? null);
   return <LiveFeedWidget cityId={cityId ?? null} title="Ao vivo na sua cidade" />;
 }
 
