@@ -117,10 +117,10 @@ function AuthPage() {
       return;
     }
     if (data.session) {
-      toast.success("Conta criada! Complete seu perfil para começar.");
+      toast.success("Conta criada! Vamos deixar seu perfil pronto para receber clientes.");
       navigate({ to: "/painel/perfil", replace: true });
     } else {
-      toast.success("Falta pouco — confirme seu e-mail para ativar o cadastro.");
+      toast.success("Falta um passo — confirme seu e-mail e sua conta já fica ativa.");
     }
   }
 
