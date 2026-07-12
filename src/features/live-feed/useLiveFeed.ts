@@ -64,8 +64,8 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
     .eq("key", "live_feed_blacklist")
     .maybeSingle();
 
-  const [events, jobs, promotions, procurements, activities, hidden, settings] =
-    await Promise.all([eventsQ, jobsQ, promoQ, procQ, actQ, hiddenQ, settingsQ]);
+  const [events, promotions, procurements, activities, hidden, settings] =
+    await Promise.all([eventsQ, promoQ, procQ, actQ, hiddenQ, settingsQ]);
 
   const hiddenKeys = new Set<string>(
     (hidden.data ?? []).map((h) => `${h.source}:${h.source_id}`),
@@ -108,19 +108,10 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
   (events.data ?? []).forEach((e) =>
     push("event", { ...e, href: e.slug ? `/eventos/${e.slug}` : "/eventos" }),
   );
-  (jobs.data ?? []).forEach((j) =>
-    push("job", {
-      id: j.id,
-      title: j.title,
-      description: j.description,
-      city_id: null,
-      created_at: j.created_at,
-      href: `/empregos/${j.id}`,
-    }),
-  );
   (promotions.data ?? []).forEach((p) =>
     push("promotion", { ...p, href: "/promocoes" }),
   );
+
   (procurements.data ?? []).forEach((p) =>
     push("procurement", {
       id: p.id,
