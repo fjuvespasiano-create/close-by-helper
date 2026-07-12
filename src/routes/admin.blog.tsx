@@ -293,6 +293,38 @@ function AdminBlog() {
                 <Label>Slug</Label>
                 <Input value={editing.slug ?? ""} onChange={(e) => setEditing({ ...editing, slug: slugify(e.target.value) })} />
               </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <Label>Tipo</Label>
+                  <div className="mt-1 inline-flex w-full rounded-lg border border-border bg-card p-1">
+                    {(["news", "blog"] as PostType[]).map((t) => (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => setEditing({ ...editing, type: t })}
+                        className={`flex-1 inline-flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition ${
+                          (editing.type ?? "blog") === t ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        {t === "news" ? <><Newspaper className="h-3.5 w-3.5" /> Notícia</> : <><PenLine className="h-3.5 w-3.5" /> Blog</>}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <Label>Categoria</Label>
+                  <select
+                    className="mt-1 h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+                    value={editing.category_id ?? ""}
+                    onChange={(e) => setEditing({ ...editing, category_id: e.target.value || null })}
+                  >
+                    <option value="">— Sem categoria —</option>
+                    {(categories ?? []).map((c) => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
               <div>
                 <Label>Resumo (excerpt)</Label>
                 <Textarea rows={2} value={editing.excerpt ?? ""} onChange={(e) => setEditing({ ...editing, excerpt: e.target.value })} />
