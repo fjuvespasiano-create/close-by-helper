@@ -31,13 +31,8 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  const jobsQ = supabase
-    .from("jobs")
-    .select("id,title,description,location_city,created_at")
-    .gte("created_at", sinceISO)
-    .eq("is_active", true)
-    .order("created_at", { ascending: false })
-    .limit(limit);
+
+
 
   const promoQ = supabase
     .from("promotions")
