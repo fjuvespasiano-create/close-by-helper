@@ -71,20 +71,19 @@ export function PWAInstallPrompt() {
   }
 
   async function handleEnableNotif() {
-    // Hide immediately so the card never lingers while the browser prompt is open.
     setShowNotif(false);
     localStorage.setItem(NOTIF_DISMISS_KEY, String(Date.now()));
-    const perm = await requestNotificationPermission();
-    // Read the browser's authoritative value in case the helper returned "unsupported".
-    const effective = typeof Notification !== "undefined" ? Notification.permission : perm;
-    setNotifPerm(effective);
-    if (effective === "granted") {
-      await showLocalNotification("Notificações ativadas 🎉", "Você receberá alertas sobre novos serviços e ofertas.", "/");
-      toast.success("Notificações ativadas!");
-    } else if (effective === "denied") {
-      toast.error("Permissão negada. Ative nas configurações do navegador.");
-    } else if (perm === "unsupported") {
+    if (!pushSupported()) {
       toast.error("Seu navegador não suporta notificações.");
+      return;
+    }
+    const r = await enablePush();
+    const effective = typeof Notification !== "undefined" ? Notification.permission : "default";
+    setNotifPerm(effective);
+    if (r.ok) {
+      toast.success("Notificações ativadas!");
+    } else {
+      toast.error(r.error || "Não foi possível ativar as notificações.");
     }
   }
 
