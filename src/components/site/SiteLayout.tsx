@@ -42,8 +42,9 @@ function DeferredOverlays() {
   return (
     <Suspense fallback={null}>
       <PWAInstallPrompt />
-      <OnboardingWizard />
       <AdModal />
+
+
 
     </Suspense>
   );
