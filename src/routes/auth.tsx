@@ -28,7 +28,7 @@ export const Route = createFileRoute("/auth")({
       {
         name: "description",
         content:
-          "Sua conta gratuita no AgenddaAqui: avalie empresas, salve favoritos e gerencie seu negócio na cidade. Leva menos de 1 minuto.",
+          "Sua conta gratuita: publique seu negócio, receba contatos no WhatsApp e apareça para quem procura em Vespasiano e São José da Lapa. Menos de 1 minuto.",
       },
       { property: "og:url", content: "/auth" },
     ],
