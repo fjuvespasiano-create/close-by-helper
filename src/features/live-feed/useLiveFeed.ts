@@ -152,13 +152,13 @@ export function useLiveFeed(opts: FetchOpts = {}) {
   useEffect(() => {
     const tables = [
       "events",
-      "jobs",
       "promotions",
       "procurements",
       "representative_activities",
       "live_feed_hidden",
       "system_settings",
     ] as const;
+
     const channel = supabase.channel("live-feed");
     tables.forEach((t) => {
       channel.on(
