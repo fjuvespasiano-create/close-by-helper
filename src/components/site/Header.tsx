@@ -108,7 +108,7 @@ export function Header() {
         </Link>
 
 
-        <nav className="hidden items-center gap-0.5 lg:flex">
+        <nav className="hidden items-center gap-0.5 2xl:flex">
           {NAV.map((n) => {
             const active = isActive(n.to);
             const Icon = NAV_ICONS[n.to];
@@ -151,12 +151,12 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
           <div className="hidden md:inline-flex"><CityPickerDialog /></div>
           {isAdmin ? (
-            <Link to="/admin" className="hidden lg:inline-flex" aria-label={site.header.admin_label}>
+              <Link to="/admin" className="hidden 2xl:inline-flex" aria-label={site.header.admin_label}>
               <Button variant="ghost" size="sm" className="gap-1"><ShieldCheck className="h-4 w-4" /> {site.header.admin_label}</Button>
             </Link>
           ) : null}
           {isAuthed ? (
-            <Link to="/painel" className="hidden lg:inline-flex" aria-label={site.header.panel_label}>
+              <Link to="/painel" className="hidden 2xl:inline-flex" aria-label={site.header.panel_label}>
               <Button variant="ghost" size="sm" className="gap-1"><LayoutDashboard className="h-4 w-4" /> {site.header.panel_label}</Button>
             </Link>
           ) : null}
@@ -175,11 +175,11 @@ export function Header() {
               </Button>
             </Link>
           ) : null}
-          <Link to="/buscar" className="lg:hidden">
+          <Link to="/buscar" className="2xl:hidden">
             <Button variant="ghost" size="icon" aria-label="Buscar" className="rounded-full"><Search className="h-5 w-5" /></Button>
           </Link>
           {isAuthed ? (
-            <Button variant="ghost" size="sm" className="hidden lg:inline-flex gap-1" onClick={handleSignOut} aria-label={site.header.logout_label}>
+            <Button variant="ghost" size="sm" className="hidden 2xl:inline-flex gap-1" onClick={handleSignOut} aria-label={site.header.logout_label}>
               <LogOut className="h-4 w-4" /> {site.header.logout_label}
             </Button>
           ) : (
@@ -197,7 +197,7 @@ export function Header() {
             variant="ghost"
             size="icon"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
-            className="lg:hidden rounded-full"
+            className="2xl:hidden rounded-full"
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -207,7 +207,7 @@ export function Header() {
 
       {/* Mobile menu */}
       {open ? (
-        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-up">
+        <div className="2xl:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-up">
           <nav className="container mx-auto flex flex-col gap-1 px-4 py-3">
             {NAV.map((n) => {
               const active = isActive(n.to);
