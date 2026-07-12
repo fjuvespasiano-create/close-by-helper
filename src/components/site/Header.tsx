@@ -299,8 +299,9 @@ export function Header() {
                 </Link>
               )}
             </div>
-          </nav>
+          </div>
         </div>
+
       ) : null}
     </header>
   );
