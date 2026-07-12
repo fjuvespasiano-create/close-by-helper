@@ -9,12 +9,10 @@ import { useCityAutoDetect } from "@/hooks/useCityAutoDetect";
 const PWAInstallPrompt = lazy(() =>
   import("./PWAInstallPrompt").then((m) => ({ default: m.PWAInstallPrompt })),
 );
-const OnboardingWizard = lazy(() =>
-  import("./OnboardingWizard").then((m) => ({ default: m.OnboardingWizard })),
-);
 const AdModal = lazy(() =>
   import("./AdModal").then((m) => ({ default: m.AdModal })),
 );
+
 
 /**
  * Difere o carregamento dos overlays até o browser ficar ocioso
