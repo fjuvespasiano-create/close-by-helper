@@ -169,9 +169,9 @@ function AuthPage() {
     <SiteLayout>
       <div className="container mx-auto flex max-w-md flex-col px-4 py-16">
         <div className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
-          <h1 className="font-display text-2xl font-bold">Bem-vindo ao AgenddaAqui</h1>
+          <h1 className="font-display text-2xl font-bold">Coloque seu negócio no mapa</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Sua conta grátis para avaliar empresas, salvar favoritos e cuidar do seu negócio na cidade.
+            Crie sua conta grátis, cadastre sua empresa e comece a receber contatos de quem já procura seu serviço em Vespasiano e São José da Lapa.
           </p>
 
           <Button
