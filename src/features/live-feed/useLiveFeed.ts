@@ -120,15 +120,23 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
       description: j.description,
       city_id: null,
       created_at: j.created_at,
-      href: j.slug ? `/empregos/${j.id}` : "/empregos",
+      href: `/empregos/${j.id}`,
     }),
   );
   (promotions.data ?? []).forEach((p) =>
     push("promotion", { ...p, href: "/promocoes" }),
   );
   (procurements.data ?? []).forEach((p) =>
-    push("procurement", { ...p, href: p.source_url ?? undefined }),
+    push("procurement", {
+      id: p.id,
+      title: p.title,
+      description: p.object,
+      city_id: p.city_id,
+      created_at: p.created_at,
+      href: p.source_url ?? undefined,
+    }),
   );
+
   (activities.data ?? []).forEach((a) =>
     push("activity", {
       ...a,
