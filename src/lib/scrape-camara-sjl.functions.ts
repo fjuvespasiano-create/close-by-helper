@@ -287,11 +287,11 @@ export const importScrapedCamaraSjlReps = createServerFn({ method: "POST" })
       const existingId = bySlug.get(slug);
       if (existingId) {
         const { error } = await context.supabase
-          .from("representatives").update(payload).eq("id", existingId);
+          .from("representatives").update(payload as never).eq("id", existingId);
         if (error) warnings.push(`update ${slug}: ${error.message}`);
         else updated++;
       } else {
-        const { error } = await context.supabase.from("representatives").insert(payload);
+        const { error } = await context.supabase.from("representatives").insert(payload as never);
         if (error) warnings.push(`insert ${slug}: ${error.message}`);
         else inserted++;
       }
