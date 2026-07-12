@@ -82,6 +82,16 @@ function NovoPush() {
     setTitle(t.title); setBody(t.body); setEmoji(t.emoji); setColor(t.color); setCategory(t.slug);
   }
 
+  useEffect(() => {
+    if (!templateParam) return;
+    const t = TEMPLATES.find((x) => x.slug === templateParam);
+    if (t) {
+      applyTemplate(t);
+      toast.success(`Template "${t.name}" carregado.`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templateParam]);
+
   const mut = useMutation({
     mutationFn: () => send({
       data: {
