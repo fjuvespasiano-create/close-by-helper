@@ -185,12 +185,12 @@ function Home() {
               <Siren className="h-6 w-6" />
             </div>
             <div className="min-w-0">
-              <div className="font-display text-lg font-bold text-foreground">Emergência? Todos os números 24h aqui.</div>
-              <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — 1 toque para ligar.</div>
+              <div className="font-display text-lg font-bold text-foreground">Emergência agora? A lista 24h está aqui.</div>
+              <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — toque uma vez e já liga.</div>
             </div>
           </div>
           <div className="btn-shine inline-flex shrink-0 items-center gap-1.5 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-0.5 group-hover:shadow-md">
-            Ver agora <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            Abrir a lista <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </Link>
       </section>
