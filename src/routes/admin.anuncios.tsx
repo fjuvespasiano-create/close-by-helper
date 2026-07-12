@@ -85,6 +85,7 @@ function AdminAds() {
   const qc = useQueryClient();
   const list = useQuery({ queryKey: ["admin-ads"], queryFn: listAll });
   const companies = useQuery({ queryKey: ["admin-ads-companies"], queryFn: listCompanies });
+  const cities = useQuery({ queryKey: ["admin-ads-cities"], queryFn: listCities });
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<FormState>(empty);
 
