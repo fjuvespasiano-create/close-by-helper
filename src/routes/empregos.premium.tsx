@@ -92,7 +92,7 @@ function PremiumJobsPage() {
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {rows.map((j) => <PremiumJobCard key={j.id} job={j as PremiumJobRow} />)}
+            {rows.map((j) => <PremiumJobCard key={(j as unknown as PremiumJobRow).id} job={j as unknown as PremiumJobRow} />)}
           </div>
         )}
       </section>
