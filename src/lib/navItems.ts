@@ -5,6 +5,7 @@ export type NavItem = { to: string; label: string; danger?: boolean };
 export const DEFAULT_NAV_ITEMS: NavItem[] = [
   { to: "/", label: "Home" },
   { to: "/agora", label: "Agora" },
+  { to: "/ao-vivo", label: "Ao vivo" },
   { to: "/representantes", label: "Representantes" },
   { to: "/blog", label: "Notícias" },
   { to: "/buscar", label: "Empresas" },
