@@ -3,6 +3,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
+import { assertAdmin } from "@/lib/auth/assert-admin";
+import { createFirecrawl } from "@/lib/scraping";
 
 const SJL_CITY_ID = "d9203559-409c-4512-ae93-a5d398afe0b0";
 const BASE_URL = "https://www.saojosedalapa.mg.gov.br";
@@ -37,13 +39,8 @@ const ContactSchema = z.object({
 
 export type ScrapedSjlContact = z.infer<typeof ContactSchema>;
 
-async function assertAdmin(context: { supabase: any; userId: string }) {
-  const { data, error } = await context.supabase.rpc("has_role", {
-    _user_id: context.userId,
-    _role: "admin",
-  });
-  if (error || !data) throw new Error("Acesso restrito a administradores.");
-}
+
+
 
 const EXTRACT_PROMPT = `Extraia TODOS os serviços públicos, órgãos, secretarias e contatos úteis desta página do site da Prefeitura de São José da Lapa/MG.
 Para cada item retorne: name (obrigatório), category (uma de: saude, educacao, seguranca, prefeitura, transporte, assistencia_social, emergencia, outros),
