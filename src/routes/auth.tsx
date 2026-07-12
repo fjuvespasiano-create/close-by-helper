@@ -86,7 +86,7 @@ function AuthPage() {
       toast.error(mapAuthError(error.message));
       return;
     }
-    toast.success("Que bom te ver de volta!");
+    toast.success("Bem-vindo de volta! Seu painel está pronto.");
     // Redirect handled by onAuthStateChange.
   }
 
