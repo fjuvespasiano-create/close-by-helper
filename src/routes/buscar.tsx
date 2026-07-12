@@ -207,7 +207,7 @@ function BuscarPage() {
           ) : items.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-border bg-card p-12 text-center">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-muted"><Search className="h-6 w-6 text-muted-foreground" /></div>
-              <p className="mt-3 text-lg font-semibold">Nenhuma empresa encontrada</p>
+              <p className="mt-3 text-lg font-semibold">Ainda não achamos essa aqui</p>
               <p className="mt-1 text-sm text-muted-foreground">Tente remover alguns filtros ou usar termos diferentes.</p>
               {activeChips.length > 0 && <Button variant="outline" size="sm" onClick={clearAll} className="mt-4">Limpar filtros</Button>}
             </div>
