@@ -239,7 +239,7 @@ function AuthPage() {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Entrando..." : "Entrar na minha conta"}
+                  {loading ? "Entrando..." : "Entrar no meu painel"}
                 </Button>
               </form>
             </TabsContent>
