@@ -50,6 +50,7 @@ const AUDIENCES = [
 function NovoPush() {
   const nav = useNavigate();
   const send = useServerFn(sendPushNow);
+  const { template: templateParam } = Route.useSearch();
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
