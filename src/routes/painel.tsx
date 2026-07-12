@@ -51,36 +51,45 @@ function PanelLayout() {
 
   return (
     <SiteLayout>
-      <div className="container mx-auto grid gap-6 px-4 py-8 lg:grid-cols-[220px_1fr]">
-        <aside className="space-y-1">
-          <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Meu painel</div>
-          {NAV.map((n) => {
-            const active = n.exact ? pathname === n.to : pathname.startsWith(n.to);
-            const showBadge = n.to === "/painel/mensagens" && unread > 0;
-            return (
-              <Link
-                key={n.to}
-                to={n.to}
-                className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition ${
-                  active ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
-                }`}
-              >
-                <n.icon className="h-4 w-4" />
-                <span className="flex-1">{n.label}</span>
-                {showBadge ? (
-                  <span
-                    aria-label={`${unread} mensagens não lidas`}
-                    className={`inline-flex min-w-[20px] items-center justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
-                      active ? "bg-primary-foreground text-primary" : "bg-primary text-primary-foreground"
-                    }`}
-                  >
-                    {unread > 99 ? "99+" : unread}
-                  </span>
-                ) : null}
-              </Link>
-            );
-          })}
-        </aside>
+      <div className="container mx-auto grid gap-6 px-4 py-6 sm:py-8 lg:grid-cols-[220px_1fr]">
+        <details className="group rounded-lg border border-border bg-card lg:border-0 lg:bg-transparent lg:[&>summary]:hidden" open={typeof window !== "undefined" && window.innerWidth >= 1024}>
+          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold lg:hidden">
+            <span className="flex items-center gap-2">
+              <LayoutDashboard className="h-4 w-4" />
+              Menu do painel
+            </span>
+            <span className="text-xs text-muted-foreground transition group-open:rotate-180">▾</span>
+          </summary>
+          <aside className="space-y-1 border-t border-border p-2 lg:border-0 lg:p-0">
+            <div className="mb-3 hidden px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground lg:block">Meu painel</div>
+            {NAV.map((n) => {
+              const active = n.exact ? pathname === n.to : pathname.startsWith(n.to);
+              const showBadge = n.to === "/painel/mensagens" && unread > 0;
+              return (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition ${
+                    active ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
+                  }`}
+                >
+                  <n.icon className="h-4 w-4 shrink-0" />
+                  <span className="flex-1 truncate">{n.label}</span>
+                  {showBadge ? (
+                    <span
+                      aria-label={`${unread} mensagens não lidas`}
+                      className={`inline-flex min-w-[20px] shrink-0 items-center justify-center rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                        active ? "bg-primary-foreground text-primary" : "bg-primary text-primary-foreground"
+                      }`}
+                    >
+                      {unread > 99 ? "99+" : unread}
+                    </span>
+                  ) : null}
+                </Link>
+              );
+            })}
+          </aside>
+        </details>
         <div className="min-w-0">
           <Outlet />
         </div>
@@ -89,3 +98,4 @@ function PanelLayout() {
     </SiteLayout>
   );
 }
+
