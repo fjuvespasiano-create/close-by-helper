@@ -215,7 +215,7 @@ function AnalyticsAnunciosPage() {
     const desktopPct = totalDev ? (desktop / totalDev) * 100 : 0;
 
     return { campaign, impressions, clicks, ctr, series, mobilePct, desktopPct };
-  }, [selectedId, events, campaigns, rangeDays]);
+  }, [selectedId, scopedEvents, campaigns, rangeDays]);
 
   async function exportPdf() {
     if (!reportRef.current || !report) return;
