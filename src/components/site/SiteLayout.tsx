@@ -15,9 +15,6 @@ const OnboardingWizard = lazy(() =>
 const AdModal = lazy(() =>
   import("./AdModal").then((m) => ({ default: m.AdModal })),
 );
-const AcheServicoPopup = lazy(() =>
-  import("./AcheServicoPopup").then((m) => ({ default: m.AcheServicoPopup })),
-);
 
 /**
  * Difere o carregamento dos overlays até o browser ficar ocioso
@@ -49,7 +46,7 @@ function DeferredOverlays() {
       <PWAInstallPrompt />
       <OnboardingWizard />
       <AdModal />
-      <AcheServicoPopup />
+
     </Suspense>
   );
 }
