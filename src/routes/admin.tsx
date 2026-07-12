@@ -84,6 +84,7 @@ const GROUPS: NavGroup[] = [
     id: "sistema", label: "Sistema", icon: ShieldCheck,
     items: [
       { to: "/admin/qa", label: "Central de Qualidade", icon: Bug },
+      { to: "/admin/solicitacoes", label: "Solicitações & Pedidos", icon: Inbox },
       { to: "/admin/ao-vivo", label: "Feed Ao Vivo", icon: Siren },
       { to: "/admin/backup", label: "Backup & Restauração", icon: DatabaseBackup },
       { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
