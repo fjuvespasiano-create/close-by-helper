@@ -169,8 +169,9 @@ function AdminBlog() {
   }
 
   async function togglePublish(p: Post) {
-    if (!p.published && (p.content?.length ?? 0) < MIN_CONTENT_CHARS) {
-      return toast.error(`Conteúdo com ${p.content?.length ?? 0}/${MIN_CONTENT_CHARS} caracteres. Amplie o texto antes de publicar.`);
+    const minChars = p.type === "news" ? 300 : MIN_CONTENT_CHARS;
+    if (!p.published && (p.content?.length ?? 0) < minChars) {
+      return toast.error(`Conteúdo com ${p.content?.length ?? 0}/${minChars} caracteres. Amplie o texto antes de publicar.`);
     }
     const { error } = await supabase.from("posts").update({
       status: !p.published ? "published" : "draft",
