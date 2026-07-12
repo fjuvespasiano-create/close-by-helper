@@ -304,6 +304,18 @@ function AnalyticsAnunciosPage() {
         </div>
       </div>
 
+      {loadError && (
+        <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
+          Não foi possível carregar os dados: {loadError}
+        </div>
+      )}
+      {loading && !loadError && (
+        <div className="rounded-xl border border-border bg-muted/30 p-4 text-center text-sm text-muted-foreground">
+          Carregando métricas…
+        </div>
+      )}
+
+
       {/* Overview cards */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard icon={<Eye className="h-4 w-4" />} label="Visualizações totais" value={overview.impressions.toLocaleString("pt-BR")} delta={overview.impDelta} />
