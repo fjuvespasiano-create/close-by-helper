@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Pencil, Plus, Trash2, Eye, EyeOff, ExternalLink, AlertCircle, CheckCircle2, Sparkles } from "lucide-react";
+import { Pencil, Plus, Trash2, Eye, EyeOff, ExternalLink, AlertCircle, CheckCircle2, Sparkles, Newspaper, PenLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
+import { fetchBlogCategories } from "@/lib/blog";
 
 export const Route = createFileRoute("/admin/blog")({
   head: () => ({ meta: [{ title: "Blog — Admin AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
@@ -21,6 +22,7 @@ const META_DESC_MIN = 120;
 const META_DESC_MAX = 160;
 const TITLE_MAX = 60;
 
+type PostType = "blog" | "news";
 type Post = {
   id: string;
   slug: string;
@@ -36,6 +38,8 @@ type Post = {
   meta_description: string | null;
   og_image: string | null;
   keywords: string[] | null;
+  type: PostType;
+  category_id: string | null;
 };
 
 function slugify(s: string) {
@@ -49,8 +53,8 @@ function slugify(s: string) {
 async function fetchAll(): Promise<Post[]> {
   const { data, error } = await supabase
     .from("posts")
-    .select("id, slug, title, excerpt, content, featured_image, author_name, status, published_at, created_at, meta_title, meta_description, og_image, tags")
-    .eq("type", "blog")
+    .select("id, slug, title, excerpt, content, featured_image, author_name, status, published_at, created_at, meta_title, meta_description, og_image, tags, type, category_id")
+    .in("type", ["blog", "news"])
     .order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []).map((r) => ({
@@ -68,6 +72,8 @@ async function fetchAll(): Promise<Post[]> {
     meta_description: r.meta_description,
     og_image: r.og_image,
     keywords: r.tags ?? [],
+    type: (r.type as PostType) ?? "blog",
+    category_id: r.category_id ?? null,
   })) as Post[];
 }
 
