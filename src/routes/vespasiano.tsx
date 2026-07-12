@@ -62,21 +62,20 @@ function VespasianoPage() {
             A cidade inteira no seu bolso
           </p>
           <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
-            O guia oficial dos moradores de Vespasiano e São José da Lapa. Serviços públicos, plantão 24h e
-            as empresas mais bem avaliadas da região — grátis, num só lugar.
+            Prefeitura, UPA, escolas, transporte, plantão 24h e as empresas mais indicadas de Vespasiano — endereço, horário e telefone na palma da mão, atualizado por quem mora aqui.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               to="/buscar"
               className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
             >
-              Buscar serviços
+              Encontrar um serviço
             </Link>
             <Link
               to="/emergencia"
               className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground hover:border-primary/40"
             >
-              Plantão 24h
+              Emergência 24h
             </Link>
           </div>
         </div>
@@ -129,7 +128,7 @@ function VespasianoPage() {
 
             {services.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-border bg-card p-12 text-center">
-                <p className="text-muted-foreground">Ainda estamos cadastrando serviços para Vespasiano.</p>
+                <p className="text-muted-foreground">Estamos cadastrando os serviços de Vespasiano. Volte em breve — a lista cresce toda semana.</p>
               </div>
             ) : null}
           </div>

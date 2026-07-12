@@ -24,7 +24,7 @@ function PanelAvaliacoes() {
         ) : items.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border bg-card p-10 text-center">
             <Star className="mx-auto h-8 w-8 text-muted-foreground" />
-            <p className="mt-2 text-sm text-muted-foreground">Nenhuma avaliação ainda.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Nenhuma avaliação ainda. Peça para os primeiros clientes deixarem uma nota — comércio bem avaliado aparece na frente na busca.</p>
           </div>
         ) : items.map((r) => {
           const company = (r as { companies: { name: string; slug: string } }).companies;

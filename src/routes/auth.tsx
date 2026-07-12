@@ -28,7 +28,7 @@ export const Route = createFileRoute("/auth")({
       {
         name: "description",
         content:
-          "Sua conta gratuita no AgenddaAqui: avalie empresas, salve favoritos e gerencie seu negócio na cidade. Leva menos de 1 minuto.",
+          "Sua conta gratuita: publique seu negócio, receba contatos no WhatsApp e apareça para quem procura em Vespasiano e São José da Lapa. Menos de 1 minuto.",
       },
       { property: "og:url", content: "/auth" },
     ],
@@ -86,7 +86,7 @@ function AuthPage() {
       toast.error(mapAuthError(error.message));
       return;
     }
-    toast.success("Que bom te ver de volta!");
+    toast.success("Bem-vindo de volta! Seu painel está pronto.");
     // Redirect handled by onAuthStateChange.
   }
 
@@ -117,10 +117,10 @@ function AuthPage() {
       return;
     }
     if (data.session) {
-      toast.success("Conta criada! Complete seu perfil para começar.");
+      toast.success("Conta criada! Vamos deixar seu perfil pronto para receber clientes.");
       navigate({ to: "/painel/perfil", replace: true });
     } else {
-      toast.success("Falta pouco — confirme seu e-mail para ativar o cadastro.");
+      toast.success("Falta um passo — confirme seu e-mail e sua conta já fica ativa.");
     }
   }
 
@@ -169,9 +169,9 @@ function AuthPage() {
     <SiteLayout>
       <div className="container mx-auto flex max-w-md flex-col px-4 py-16">
         <div className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
-          <h1 className="font-display text-2xl font-bold">Bem-vindo ao AgenddaAqui</h1>
+          <h1 className="font-display text-2xl font-bold">Coloque seu negócio no mapa</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Sua conta grátis para avaliar empresas, salvar favoritos e cuidar do seu negócio na cidade.
+            Crie sua conta grátis, cadastre sua empresa e comece a receber contatos de quem já procura seu serviço em Vespasiano e São José da Lapa.
           </p>
 
           <Button
@@ -239,7 +239,7 @@ function AuthPage() {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Entrando..." : "Entrar na minha conta"}
+                  {loading ? "Entrando..." : "Entrar no meu painel"}
                 </Button>
               </form>
             </TabsContent>
@@ -286,10 +286,10 @@ function AuthPage() {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Criando sua conta..." : "Criar minha conta grátis"}
+                  {loading ? "Preparando sua conta..." : "Criar minha conta grátis"}
                 </Button>
                 <p className="pt-1 text-center text-[11px] text-muted-foreground">
-                  Grátis, sem cartão. Menos de 1 minuto e você já está dentro.
+                  Grátis para sempre. Sem cartão, sem taxa e você cancela quando quiser.
                 </p>
               </form>
             </TabsContent>

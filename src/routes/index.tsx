@@ -139,9 +139,9 @@ function Home() {
 
           {/* Headline */}
           <h1 className="mt-8 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
-            {site.home.hero_title.replace(/\{city\}|sua cidade/i, "").trim() || "Tudo o que oferece, num só app"}{" "}
+            {site.home.hero_title}{" "}
             <span className="bg-gradient-to-r from-accent via-accent to-orange-300 bg-clip-text text-transparent md:whitespace-nowrap">
-              {cityName}
+              em {cityName}
             </span>
           </h1>
 
@@ -185,12 +185,12 @@ function Home() {
               <Siren className="h-6 w-6" />
             </div>
             <div className="min-w-0">
-              <div className="font-display text-lg font-bold text-foreground">Emergência? Todos os números 24h aqui.</div>
-              <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — 1 toque para ligar.</div>
+              <div className="font-display text-lg font-bold text-foreground">Emergência agora? A lista 24h está aqui.</div>
+              <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — toque uma vez e já liga.</div>
             </div>
           </div>
           <div className="btn-shine inline-flex shrink-0 items-center gap-1.5 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-0.5 group-hover:shadow-md">
-            Ver agora <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            Abrir a lista <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </Link>
       </section>
@@ -216,8 +216,8 @@ function Home() {
       <section className="container mx-auto px-4 py-14">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <h2 className="font-display text-2xl font-bold md:text-3xl">Resolva com a cidade</h2>
-            <p className="mt-1 text-muted-foreground">Saúde, educação, segurança e prefeitura — endereço, telefone e horário em 2 toques.</p>
+            <h2 className="font-display text-2xl font-bold md:text-3xl">Resolva com a cidade, sem sair de casa</h2>
+            <p className="mt-1 text-muted-foreground">Saúde, educação, segurança e prefeitura — endereço, horário e telefone à mão. Menos fila, menos "a quem eu ligo?".</p>
           </div>
           <Link to="/servicos-publicos" search={{}} className="group hidden items-center gap-1 text-sm font-medium text-primary hover:underline md:inline-flex">
             Ver todos <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -235,8 +235,8 @@ function Home() {
         <div className="container mx-auto px-4">
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
-              <h2 className="font-display text-2xl font-bold md:text-3xl">Empresas de confiança</h2>
-              <p className="mt-1 text-muted-foreground">{(cats.data ?? []).length} categorias com quem atende de verdade em {cityName}.</p>
+              <h2 className="font-display text-2xl font-bold md:text-3xl">Empresas que a vizinhança recomenda</h2>
+              <p className="mt-1 text-muted-foreground">{(cats.data ?? []).length} categorias com quem atende de verdade em {cityName} — avaliadas por quem já contratou.</p>
             </div>
             <Link to="/buscar" className="group hidden items-center gap-1 text-sm font-medium text-primary hover:underline md:inline-flex">
               Ver todas <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -266,7 +266,7 @@ function Home() {
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-2xl font-bold md:text-3xl">As queridinhas da vizinhança</h2>
-            <p className="mt-1 text-muted-foreground">Escolhidas por quem mora aqui, com base em avaliações reais.</p>
+            <p className="mt-1 text-muted-foreground">Os negócios que a cidade indica primeiro — com nota, foto e comentário de quem já foi cliente.</p>
           </div>
           <Link to="/buscar" className="group inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
             Ver tudo <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -286,16 +286,16 @@ function Home() {
           <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
           <div className="relative flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Sua empresa aparecendo aqui</h3>
+              <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Seu negócio na vitrine da cidade</h3>
               <p className="mt-2 max-w-xl text-white/95">
-                Cadastro em 2 minutos, sem cartão e sem taxa. Fique visível para quem já procura seu serviço em {cityName} e receba os contatos direto no seu WhatsApp.
+                Enquanto você lê isso, alguém em {cityName} está procurando o serviço que você faz. Cadastre em 2 minutos, sem cartão, e receba os contatos direto no seu WhatsApp.
               </p>
             </div>
             <Link
               to="/auth"
               className="group btn-shine focus-ring inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-semibold text-accent shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0"
             >
-              Anunciar grátis agora <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              Cadastrar meu negócio grátis <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         </div>

@@ -81,7 +81,7 @@ function FavoritosPage() {
         ) : items.length === 0 ? (
           <div className="mt-10 rounded-xl border border-dashed border-border bg-card p-10 text-center">
             <Heart className="mx-auto h-10 w-10 text-muted-foreground" />
-            <p className="mt-3 text-lg font-semibold">Nenhum favorito ainda</p>
+            <p className="mt-3 text-lg font-semibold">Sua lista está vazia</p>
             <p className="mt-1 text-sm text-muted-foreground">Toque no coração nos cards para salvar empresas aqui.</p>
             <Link to="/buscar"><Button className="mt-5">Explorar empresas</Button></Link>
           </div>

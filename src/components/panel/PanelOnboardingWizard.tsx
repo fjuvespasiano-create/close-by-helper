@@ -15,37 +15,37 @@ interface Step {
 const STEPS: Step[] = [
   {
     icon: Sparkles,
-    title: "Bem-vindo ao seu painel!",
+    title: "Que bom ter você aqui!",
     description:
-      "Este é o seu centro de controle no AgenddaAqui. Aqui você gerencia suas empresas, promoções, avaliações e preferências em um só lugar.",
+      "Em menos de 5 minutos, seu negócio vai estar visível para os moradores de Vespasiano e São José da Lapa. Vamos juntos — passo a passo.",
   },
   {
     icon: User,
-    title: "Atualize seu perfil",
+    title: "Passo 1 — Sua identidade",
     description:
-      "Comece completando seus dados: nome, foto, cidade e informações de contato. Um perfil completo passa mais confiança para clientes e melhora sua visibilidade.",
-    cta: { label: "Ir para Meu perfil", to: "/painel/perfil" },
+      "Um perfil com nome e foto passa confiança de cara. É o primeiro sinal de que tem alguém de verdade do outro lado.",
+    cta: { label: "Preencher meu perfil", to: "/painel/perfil" },
   },
   {
     icon: Building2,
-    title: "Cadastre sua empresa",
+    title: "Passo 2 — Seu negócio no ar",
     description:
-      "Se você é comerciante, adicione sua empresa em ‘Minhas empresas’. Inclua fotos, horários, categorias e um bom texto de apresentação para atrair mais clientes.",
-    cta: { label: "Minhas empresas", to: "/painel/empresas" },
+      "Adicione fotos, horário, categoria e uma descrição curta. Empresas com foto e horário recebem até 4x mais contatos do que as que ficam vazias.",
+    cta: { label: "Cadastrar minha empresa", to: "/painel/empresas" },
   },
   {
     icon: BadgePercent,
-    title: "Crie promoções e cupons",
+    title: "Passo 3 — Chame atenção com uma oferta",
     description:
-      "Planos Premium e Destaque podem publicar promoções que aparecem na home e disparam notificações para moradores da cidade. Clientes adoram desconto!",
-    cta: { label: "Ver promoções", to: "/painel/promocoes" },
+      "Cupom, desconto ou combo — o que fizer sentido. Promoções aparecem na home da cidade e disparam notificação para quem mora perto. É o atalho mais rápido para o primeiro cliente.",
+    cta: { label: "Criar minha primeira oferta", to: "/painel/promocoes" },
   },
   {
     icon: Bell,
-    title: "Ative notificações e você está pronto",
+    title: "Pronto! Só falta não perder cliente",
     description:
-      "Configure alertas de novos leads, mensagens e avaliações em ‘Notificações’. Assim você nunca perde uma oportunidade.",
-    cta: { label: "Preferências", to: "/painel/notificacoes/preferencias" },
+      "Ative as notificações para receber cada lead na hora — no navegador e no celular. Cliente que espera resposta procura outro em 5 minutos.",
+    cta: { label: "Ativar minhas notificações", to: "/painel/notificacoes/preferencias" },
   },
 ];
 

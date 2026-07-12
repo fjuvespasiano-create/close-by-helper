@@ -46,7 +46,7 @@ function CityPage() {
           </div>
         ) : (results.data?.items ?? []).length === 0 ? (
           <div className="rounded-xl border border-dashed border-border bg-card p-10 text-center">
-            <p className="text-lg font-semibold">Nenhuma empresa nesta cidade ainda</p>
+            <p className="text-lg font-semibold">Essa cidade ainda está começando por aqui</p>
             <Link to="/buscar" className="mt-3 inline-block text-sm font-medium text-primary hover:underline">
               Ver todas as empresas
             </Link>

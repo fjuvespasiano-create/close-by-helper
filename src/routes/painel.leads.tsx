@@ -24,7 +24,7 @@ function PanelLeads() {
         ) : items.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border bg-card p-10 text-center">
             <Mail className="mx-auto h-8 w-8 text-muted-foreground" />
-            <p className="mt-2 text-sm text-muted-foreground">Nenhum lead recebido ainda.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Ainda sem leads por aqui — mas relaxa: assim que alguém clicar em "Ligar" ou "WhatsApp" na sua empresa, aparece aqui em tempo real.</p>
           </div>
         ) : items.map((l) => {
           const company = (l as { companies: { name: string; slug: string } }).companies;

@@ -188,7 +188,7 @@ function EmptyState({ cityName }: { cityName: string }) {
       <div className="text-4xl">🌙</div>
       <h3 className="mt-3 font-semibold">Tudo tranquilo em {cityName} agora</h3>
       <p className="mt-1 text-sm text-muted-foreground">
-        Nenhuma novidade urgente nas últimas horas. Volte mais tarde ou ative as notificações para não perder nada.
+        Tudo tranquilo por aqui nas últimas horas. Ative as notificações e a gente te avisa assim que rolar algo novo na cidade.
       </p>
       <div className="mt-4 flex justify-center gap-2">
         <Button asChild size="sm" variant="outline">

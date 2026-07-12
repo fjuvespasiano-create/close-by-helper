@@ -38,7 +38,7 @@ function PanelFavoritos() {
       ) : items.length === 0 ? (
         <div className="mt-6 rounded-xl border border-dashed border-border bg-card p-10 text-center">
           <Heart className="mx-auto h-8 w-8 text-muted-foreground" />
-          <p className="mt-2 text-sm text-muted-foreground">Nenhum favorito ainda.</p>
+          <p className="mt-2 text-sm text-muted-foreground">Sem favoritos ainda. Toque no coração de qualquer empresa para guardar aqui e achar rapidinho depois.</p>
           <Link to="/buscar"><Button className="mt-4">Explorar empresas</Button></Link>
         </div>
       ) : (
