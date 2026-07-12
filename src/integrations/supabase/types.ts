@@ -1671,6 +1671,33 @@ export type Database = {
           },
         ]
       }
+      live_feed_hidden: {
+        Row: {
+          hidden_at: string
+          hidden_by: string | null
+          id: string
+          reason: string | null
+          source: string
+          source_id: string
+        }
+        Insert: {
+          hidden_at?: string
+          hidden_by?: string | null
+          id?: string
+          reason?: string | null
+          source: string
+          source_id: string
+        }
+        Update: {
+          hidden_at?: string
+          hidden_by?: string | null
+          id?: string
+          reason?: string | null
+          source?: string
+          source_id?: string
+        }
+        Relationships: []
+      }
       marketplace_items: {
         Row: {
           company_id: string
