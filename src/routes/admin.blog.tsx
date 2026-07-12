@@ -90,6 +90,8 @@ function keywordDensity(content: string, keywords: string[]) {
 function AdminBlog() {
   const qc = useQueryClient();
   const { data: posts, isLoading } = useQuery({ queryKey: ["admin-blog-posts"], queryFn: fetchAll });
+  const { data: categories } = useQuery({ queryKey: ["blog-categories"], queryFn: fetchBlogCategories });
+  const catById = useMemo(() => new Map((categories ?? []).map((c) => [c.id, c])), [categories]);
   const [editing, setEditing] = useState<Partial<Post> | null>(null);
   const [keywordsInput, setKeywordsInput] = useState("");
 
@@ -139,7 +141,7 @@ function AdminBlog() {
       return toast.error(`Para publicar, o conteúdo precisa ter no mínimo ${MIN_CONTENT_CHARS} caracteres (atual: ${contentStr.length}).`);
     }
     const payload = {
-      type: "blog" as const,
+      type: (p.type ?? "blog") as PostType,
       slug,
       title,
       excerpt: p.excerpt || null,
@@ -152,6 +154,7 @@ function AdminBlog() {
       meta_description: p.meta_description || null,
       og_image: p.og_image || p.cover_url || null,
       tags: p.keywords ?? [],
+      category_id: p.category_id || null,
     };
     const q = p.id
       ? supabase.from("posts").update(payload).eq("id", p.id)
