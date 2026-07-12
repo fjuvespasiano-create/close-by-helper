@@ -292,44 +292,110 @@ function JobDialog({ initial, sources, onClose, onSave }: { initial: any; source
     location_state: initial.location_state ?? "MG",
     is_remote: initial.is_remote ?? false,
     employment_type: initial.employment_type ?? "",
+    experience_level: initial.experience_level ?? "",
     salary_min: initial.salary_min ?? "",
     salary_max: initial.salary_max ?? "",
     apply_url: initial.apply_url ?? "",
     tags: (initial.tags ?? []).join(", "),
     is_active: initial.is_active ?? true,
+    // Premium
+    is_premium: initial.is_premium ?? false,
+    company_logo_url: initial.company_logo_url ?? "",
+    company_size: initial.company_size ?? "",
+    company_culture: initial.company_culture ?? "",
+    requirements: (initial.requirements ?? []).join("\n"),
+    nice_to_have: (initial.nice_to_have ?? []).join("\n"),
+    benefits: (initial.benefits ?? []).join("\n"),
+    responsibilities: (initial.responsibilities ?? []).join("\n"),
+    workload: initial.workload ?? "",
+    apply_email: initial.apply_email ?? "",
+    apply_whatsapp: initial.apply_whatsapp ?? "",
+    application_deadline: initial.application_deadline ? initial.application_deadline.slice(0, 10) : "",
+    featured_until: initial.featured_until ? initial.featured_until.slice(0, 10) : "",
   });
+  const [section, setSection] = useState<"basic" | "premium">("basic");
+
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
         <DialogHeader><DialogTitle>{form.id ? "Editar" : "Nova"} vaga</DialogTitle></DialogHeader>
-        <div className="space-y-3">
-          <div><label className="text-xs font-medium">Fonte</label>
-            <Select value={form.source_id} onValueChange={(v) => setForm({ ...form, source_id: v })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
-              <SelectContent>{sources.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}</SelectContent>
-            </Select>
-          </div>
-          <div><label className="text-xs font-medium">Título *</label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
-          <div><label className="text-xs font-medium">Empresa</label><Input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} /></div>
-          <div><label className="text-xs font-medium">Descrição</label><Textarea rows={5} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
-          <div className="grid grid-cols-3 gap-3">
-            <div><label className="text-xs font-medium">Cidade</label><Input value={form.location_city} onChange={(e) => setForm({ ...form, location_city: e.target.value })} /></div>
-            <div><label className="text-xs font-medium">UF</label><Input value={form.location_state} onChange={(e) => setForm({ ...form, location_state: e.target.value })} /></div>
-            <div className="flex items-end gap-2"><Switch checked={form.is_remote} onCheckedChange={(v) => setForm({ ...form, is_remote: v })} /><span className="text-sm">Remoto</span></div>
-          </div>
-          <div className="grid grid-cols-3 gap-3">
-            <div><label className="text-xs font-medium">Tipo</label><Input placeholder="CLT / PJ / estágio" value={form.employment_type} onChange={(e) => setForm({ ...form, employment_type: e.target.value })} /></div>
-            <div><label className="text-xs font-medium">Salário mín (R$)</label><Input type="number" value={form.salary_min} onChange={(e) => setForm({ ...form, salary_min: e.target.value })} /></div>
-            <div><label className="text-xs font-medium">Salário máx (R$)</label><Input type="number" value={form.salary_max} onChange={(e) => setForm({ ...form, salary_max: e.target.value })} /></div>
-          </div>
-          <div><label className="text-xs font-medium">Link de candidatura</label><Input value={form.apply_url} onChange={(e) => setForm({ ...form, apply_url: e.target.value })} /></div>
-          <div><label className="text-xs font-medium">Tags (separadas por vírgula)</label><Input value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} /></div>
-          <div className="flex items-center gap-2"><Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} /><span className="text-sm">Ativa</span></div>
+
+        <div className="flex gap-1 border-b border-border">
+          {(["basic", "premium"] as const).map((t) => (
+            <button
+              key={t}
+              onClick={() => setSection(t)}
+              className={`px-3 py-1.5 text-xs font-medium transition ${section === t ? "border-b-2 border-primary text-primary" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              {t === "basic" ? "Básico" : "✨ Premium"}
+            </button>
+          ))}
         </div>
+
+        {section === "basic" && (
+          <div className="space-y-3 pt-3">
+            <div><label className="text-xs font-medium">Fonte</label>
+              <Select value={form.source_id} onValueChange={(v) => setForm({ ...form, source_id: v })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{sources.map((s) => <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div><label className="text-xs font-medium">Título *</label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
+            <div><label className="text-xs font-medium">Empresa</label><Input value={form.company_name} onChange={(e) => setForm({ ...form, company_name: e.target.value })} /></div>
+            <div><label className="text-xs font-medium">Descrição</label><Textarea rows={5} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
+            <div className="grid grid-cols-3 gap-3">
+              <div><label className="text-xs font-medium">Cidade</label><Input value={form.location_city} onChange={(e) => setForm({ ...form, location_city: e.target.value })} /></div>
+              <div><label className="text-xs font-medium">UF</label><Input value={form.location_state} onChange={(e) => setForm({ ...form, location_state: e.target.value })} /></div>
+              <div className="flex items-end gap-2"><Switch checked={form.is_remote} onCheckedChange={(v) => setForm({ ...form, is_remote: v })} /><span className="text-sm">Remoto</span></div>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div><label className="text-xs font-medium">Contrato</label><Input placeholder="CLT / PJ / estágio" value={form.employment_type} onChange={(e) => setForm({ ...form, employment_type: e.target.value })} /></div>
+              <div><label className="text-xs font-medium">Nível</label><Input placeholder="Júnior / Pleno / Sênior" value={form.experience_level} onChange={(e) => setForm({ ...form, experience_level: e.target.value })} /></div>
+              <div><label className="text-xs font-medium">Jornada</label><Input placeholder="44h/sem" value={form.workload} onChange={(e) => setForm({ ...form, workload: e.target.value })} /></div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><label className="text-xs font-medium">Salário mín (R$)</label><Input type="number" value={form.salary_min} onChange={(e) => setForm({ ...form, salary_min: e.target.value })} /></div>
+              <div><label className="text-xs font-medium">Salário máx (R$)</label><Input type="number" value={form.salary_max} onChange={(e) => setForm({ ...form, salary_max: e.target.value })} /></div>
+            </div>
+            <div><label className="text-xs font-medium">Link de candidatura</label><Input value={form.apply_url} onChange={(e) => setForm({ ...form, apply_url: e.target.value })} /></div>
+            <div><label className="text-xs font-medium">Tags (separadas por vírgula)</label><Input value={form.tags} onChange={(e) => setForm({ ...form, tags: e.target.value })} /></div>
+            <div className="flex items-center gap-2"><Switch checked={form.is_active} onCheckedChange={(v) => setForm({ ...form, is_active: v })} /><span className="text-sm">Ativa</span></div>
+          </div>
+        )}
+
+        {section === "premium" && (
+          <div className="space-y-3 pt-3">
+            <div className="flex items-center justify-between rounded-lg border border-amber-500/30 bg-amber-500/5 p-3">
+              <div>
+                <p className="font-semibold text-amber-900 dark:text-amber-200">Vaga em destaque</p>
+                <p className="text-xs text-muted-foreground">Aparece na home, na aba Destaque e no topo dos resultados.</p>
+              </div>
+              <Switch checked={form.is_premium} onCheckedChange={(v) => setForm({ ...form, is_premium: v })} />
+            </div>
+            <div><label className="text-xs font-medium">Logo da empresa (URL)</label><Input value={form.company_logo_url} onChange={(e) => setForm({ ...form, company_logo_url: e.target.value })} /></div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><label className="text-xs font-medium">Porte</label><Input placeholder="10-50 funcionários" value={form.company_size} onChange={(e) => setForm({ ...form, company_size: e.target.value })} /></div>
+              <div><label className="text-xs font-medium">Destaque até</label><Input type="date" value={form.featured_until} onChange={(e) => setForm({ ...form, featured_until: e.target.value })} /></div>
+            </div>
+            <div><label className="text-xs font-medium">Cultura da empresa</label><Textarea rows={3} value={form.company_culture} onChange={(e) => setForm({ ...form, company_culture: e.target.value })} /></div>
+            <div><label className="text-xs font-medium">Responsabilidades (uma por linha)</label><Textarea rows={4} value={form.responsibilities} onChange={(e) => setForm({ ...form, responsibilities: e.target.value })} /></div>
+            <div><label className="text-xs font-medium">Requisitos (uma por linha)</label><Textarea rows={4} value={form.requirements} onChange={(e) => setForm({ ...form, requirements: e.target.value })} /></div>
+            <div><label className="text-xs font-medium">Diferenciais (uma por linha)</label><Textarea rows={3} value={form.nice_to_have} onChange={(e) => setForm({ ...form, nice_to_have: e.target.value })} /></div>
+            <div><label className="text-xs font-medium">Benefícios (um por linha)</label><Textarea rows={4} value={form.benefits} onChange={(e) => setForm({ ...form, benefits: e.target.value })} /></div>
+            <div className="grid grid-cols-2 gap-3">
+              <div><label className="text-xs font-medium">E-mail para candidatura</label><Input type="email" value={form.apply_email} onChange={(e) => setForm({ ...form, apply_email: e.target.value })} /></div>
+              <div><label className="text-xs font-medium">WhatsApp</label><Input placeholder="5531999999999" value={form.apply_whatsapp} onChange={(e) => setForm({ ...form, apply_whatsapp: e.target.value })} /></div>
+            </div>
+            <div><label className="text-xs font-medium">Prazo para envio</label><Input type="date" value={form.application_deadline} onChange={(e) => setForm({ ...form, application_deadline: e.target.value })} /></div>
+          </div>
+        )}
+
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>Cancelar</Button>
           <Button onClick={() => {
             if (!form.source_id) { toast.error("Selecione uma fonte"); return; }
+            const splitLines = (s: string) => s.split("\n").map((x) => x.trim()).filter(Boolean);
+            const toIso = (d: string) => (d ? new Date(d + "T00:00:00Z").toISOString() : null);
             onSave({
               id: form.id,
               source_id: form.source_id,
@@ -340,11 +406,25 @@ function JobDialog({ initial, sources, onClose, onSave }: { initial: any; source
               location_state: form.location_state.trim() || null,
               is_remote: form.is_remote,
               employment_type: form.employment_type.trim() || null,
+              experience_level: form.experience_level.trim() || null,
               salary_min: form.salary_min ? Number(form.salary_min) : null,
               salary_max: form.salary_max ? Number(form.salary_max) : null,
               apply_url: form.apply_url.trim() || null,
               tags: form.tags.split(",").map((t: string) => t.trim()).filter(Boolean),
               is_active: form.is_active,
+              is_premium: form.is_premium,
+              company_logo_url: form.company_logo_url.trim() || null,
+              company_size: form.company_size.trim() || null,
+              company_culture: form.company_culture.trim() || null,
+              workload: form.workload.trim() || null,
+              requirements: splitLines(form.requirements),
+              nice_to_have: splitLines(form.nice_to_have),
+              benefits: splitLines(form.benefits),
+              responsibilities: splitLines(form.responsibilities),
+              apply_email: form.apply_email.trim() || null,
+              apply_whatsapp: form.apply_whatsapp.trim() || null,
+              application_deadline: toIso(form.application_deadline),
+              featured_until: toIso(form.featured_until),
             });
           }}>Salvar</Button>
         </DialogFooter>
