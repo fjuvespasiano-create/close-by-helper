@@ -58,6 +58,7 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/empregos", label: "Empregos", icon: Briefcase },
       { to: "/admin/turismo", label: "Turismo", icon: Compass },
       { to: "/admin/blog", label: "Blog", icon: Newspaper },
+      { to: "/admin/blog-ai", label: "Gerador IA (Blog)", icon: Sparkles },
       { to: "/admin/duplicados", label: "Conteúdo duplicado", icon: Copy },
     ],
   },
