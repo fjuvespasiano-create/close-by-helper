@@ -180,7 +180,7 @@ function Mensagens() {
           ) : threads.length === 0 ? (
             <div className="p-6 text-center text-sm text-muted-foreground">
               <MessageCircle className="mx-auto h-8 w-8 opacity-60" />
-              <p className="mt-2">Nenhuma conversa ainda.</p>
+              <p className="mt-2">Sem conversas ainda. Quando um cliente mandar mensagem pela sua página, ela aparece aqui.</p>
               <Link to="/marketplace"><Button variant="link" size="sm">Explorar anúncios</Button></Link>
             </div>
           ) : (
