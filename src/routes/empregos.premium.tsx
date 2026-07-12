@@ -27,7 +27,7 @@ export const Route = createFileRoute("/empregos/premium")({
       { property: "og:description", content: "Oportunidades premium curadas para Vespasiano e São José da Lapa." },
     ],
   }),
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: searchSchema,
   component: PremiumJobsPage,
 });
 
