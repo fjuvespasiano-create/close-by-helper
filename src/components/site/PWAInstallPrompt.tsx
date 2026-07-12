@@ -99,9 +99,9 @@ export function PWAInstallPrompt() {
   if (installed) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex flex-col items-center gap-2 px-4 sm:bottom-6">
+    <div className="pointer-events-none fixed inset-x-0 top-16 z-50 flex flex-col items-center gap-2 px-4 sm:top-20">
       {showInstall && (
-        <div className="pointer-events-auto w-full max-w-md animate-in fade-in slide-in-from-bottom-4 rounded-2xl border border-border/70 bg-background/95 p-4 shadow-2xl backdrop-blur-xl">
+        <div className="pointer-events-auto w-full max-w-md animate-in fade-in slide-in-from-top-4 rounded-2xl border border-border/70 bg-background/95 p-4 shadow-2xl backdrop-blur-xl">
           <div className="flex items-start gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <Download className="h-5 w-5" />
@@ -124,7 +124,7 @@ export function PWAInstallPrompt() {
       )}
 
       {showNotif && !showInstall && (
-        <div className="pointer-events-auto w-full max-w-md animate-in fade-in slide-in-from-bottom-4 rounded-2xl border border-border/70 bg-background/95 p-4 shadow-2xl backdrop-blur-xl">
+        <div className="pointer-events-auto w-full max-w-md animate-in fade-in slide-in-from-top-4 rounded-2xl border border-border/70 bg-background/95 p-4 shadow-2xl backdrop-blur-xl">
           <div className="flex items-start gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <BellRing className="h-5 w-5" />
