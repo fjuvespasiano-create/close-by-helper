@@ -214,6 +214,7 @@ function RootComponent() {
       <ClientOnly fallback={null}>
         <Suspense fallback={null}>
           <BugReportButton />
+          <RequestFormButton />
         </Suspense>
       </ClientOnly>
       <Toaster richColors position="top-center" />
