@@ -82,7 +82,12 @@ function VespasianoPage() {
         </div>
       </section>
 
+      <section className="container mx-auto px-4 pt-10">
+        <LiveFeedWidget cityId={cityId ?? null} title="Acontecendo agora em Vespasiano" />
+      </section>
+
       <section className="container mx-auto px-4 py-10">
+
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-2xl font-extrabold md:text-3xl">Serviços Públicos</h2>
