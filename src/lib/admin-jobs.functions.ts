@@ -117,6 +117,20 @@ const ManualJobInput = z.object({
   tags: z.array(z.string().max(40)).max(20).default([]),
   expires_at: z.string().datetime().nullish(),
   is_active: z.boolean().default(true),
+  // Premium fields
+  is_premium: z.boolean().default(false),
+  company_logo_url: z.string().url().nullish(),
+  company_size: z.string().max(80).nullish(),
+  company_culture: z.string().max(4000).nullish(),
+  requirements: z.array(z.string().max(300)).max(30).default([]),
+  nice_to_have: z.array(z.string().max(300)).max(30).default([]),
+  benefits: z.array(z.string().max(300)).max(30).default([]),
+  responsibilities: z.array(z.string().max(300)).max(30).default([]),
+  workload: z.string().max(80).nullish(),
+  apply_email: z.string().email().nullish(),
+  apply_whatsapp: z.string().max(30).nullish(),
+  application_deadline: z.string().datetime().nullish(),
+  featured_until: z.string().datetime().nullish(),
 });
 
 export const adminUpsertJob = createServerFn({ method: "POST" })
