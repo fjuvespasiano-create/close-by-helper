@@ -6,10 +6,9 @@ import {
   isStandalone,
   notificationPermission,
   promptInstall,
-  requestNotificationPermission,
-  showLocalNotification,
   subscribeInstallPrompt,
 } from "@/lib/pwa";
+import { enablePush, pushSupported } from "@/lib/push-client";
 import { toast } from "sonner";
 
 const DISMISS_KEY = "pwa_install_dismissed_at";
