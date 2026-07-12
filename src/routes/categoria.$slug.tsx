@@ -55,7 +55,7 @@ function CategoryPage() {
           </div>
         ) : (results.data?.items ?? []).length === 0 ? (
           <div className="rounded-xl border border-dashed border-border bg-card p-10 text-center">
-            <p className="text-lg font-semibold">Nenhuma empresa nesta categoria ainda</p>
+            <p className="text-lg font-semibold">Essa categoria ainda está esperando quem faz bem feito</p>
             <p className="mt-1 text-sm text-muted-foreground">Volte em breve, novas empresas são cadastradas toda semana.</p>
             <Link to="/buscar" className="mt-4 inline-block text-sm font-medium text-primary hover:underline">
               Explorar outras categorias
