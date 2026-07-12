@@ -194,12 +194,17 @@ function AdminBlog() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="min-w-0">
-          <h1 className="font-display text-2xl font-bold">Blog</h1>
-          <p className="text-sm text-muted-foreground">Crie, edite e publique artigos otimizados para SEO (mínimo {MIN_CONTENT_CHARS.toLocaleString("pt-BR")} caracteres).</p>
+          <h1 className="font-display text-2xl font-bold">Notícias & Blog</h1>
+          <p className="text-sm text-muted-foreground">Crie notícias rápidas ou artigos completos, organize por categoria e publique com SEO otimizado.</p>
         </div>
-        <Button onClick={() => { setEditing({ published: false, author_name: "Equipe AgenddaAqui", keywords: [] }); setKeywordsInput(""); }} className="gap-1">
-          <Plus className="h-4 w-4" /> Novo post
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => { setEditing({ published: false, author_name: "Redação AgenddaAqui", keywords: [], type: "news" }); setKeywordsInput(""); }} className="gap-1">
+            <Newspaper className="h-4 w-4" /> Nova notícia
+          </Button>
+          <Button onClick={() => { setEditing({ published: false, author_name: "Equipe AgenddaAqui", keywords: [], type: "blog" }); setKeywordsInput(""); }} className="gap-1">
+            <PenLine className="h-4 w-4" /> Novo post
+          </Button>
+        </div>
       </div>
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-border bg-card">
@@ -207,7 +212,8 @@ function AdminBlog() {
           <thead className="bg-muted/50 text-left text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
               <th className="px-4 py-3">Título</th>
-              <th className="px-4 py-3">Caracteres</th>
+              <th className="px-4 py-3">Tipo</th>
+              <th className="px-4 py-3">Categoria</th>
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">Publicado em</th>
               <th className="px-4 py-3 text-right">Ações</th>
@@ -215,22 +221,30 @@ function AdminBlog() {
           </thead>
           <tbody>
             {isLoading ? (
-              <tr><td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
+              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
             ) : !posts?.length ? (
-              <tr><td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">Nenhum post ainda.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Nenhum post ainda.</td></tr>
             ) : posts.map((p) => {
-              const len = p.content?.length ?? 0;
-              const ok = len >= MIN_CONTENT_CHARS;
+              const cat = p.category_id ? catById.get(p.category_id) : null;
               return (
                 <tr key={p.id} className="border-t border-border">
                   <td className="px-4 py-3">
-                    <div className="font-medium truncate max-w-[420px]">{p.title}</div>
-                    <div className="text-xs text-muted-foreground truncate max-w-[420px]">/{p.slug}</div>
+                    <div className="font-medium truncate max-w-[380px]">{p.title}</div>
+                    <div className="text-xs text-muted-foreground truncate max-w-[380px]">/{p.slug} · {(p.content?.length ?? 0).toLocaleString("pt-BR")} caract.</div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${ok ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200" : "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200"}`}>
-                      {len.toLocaleString("pt-BR")} / {MIN_CONTENT_CHARS.toLocaleString("pt-BR")}
-                    </span>
+                    {p.type === "news" ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/40 dark:text-red-200"><Newspaper className="h-3 w-3" /> Notícia</span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-200"><PenLine className="h-3 w-3" /> Blog</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    {cat ? (
+                      <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white" style={{ backgroundColor: cat.color ?? "#64748b" }}>{cat.name}</span>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">—</span>
+                    )}
                   </td>
                   <td className="px-4 py-3">
                     <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${p.published ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200" : "bg-muted text-muted-foreground"}`}>
