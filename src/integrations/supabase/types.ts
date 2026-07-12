@@ -216,6 +216,42 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_categories: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          slug: string
+          sort: number
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          slug: string
+          sort?: number
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          sort?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_posts_legacy: {
         Row: {
           author_name: string | null
@@ -2014,6 +2050,7 @@ export type Database = {
           author_id: string | null
           author_name: string | null
           auto_generated: boolean
+          category_id: string | null
           city_id: string | null
           company_id: string | null
           content: string | null
@@ -2039,6 +2076,7 @@ export type Database = {
           author_id?: string | null
           author_name?: string | null
           auto_generated?: boolean
+          category_id?: string | null
           city_id?: string | null
           company_id?: string | null
           content?: string | null
@@ -2064,6 +2102,7 @@ export type Database = {
           author_id?: string | null
           author_name?: string | null
           auto_generated?: boolean
+          category_id?: string | null
           city_id?: string | null
           company_id?: string | null
           content?: string | null
@@ -2086,6 +2125,13 @@ export type Database = {
           views_count?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "posts_city_id_fkey"
             columns: ["city_id"]
@@ -3345,6 +3391,11 @@ export type Database = {
       blog_posts: {
         Row: {
           author_name: string | null
+          category_color: string | null
+          category_icon: string | null
+          category_id: string | null
+          category_name: string | null
+          category_slug: string | null
           content: string | null
           cover_url: string | null
           created_at: string | null
@@ -3354,47 +3405,22 @@ export type Database = {
           meta_description: string | null
           meta_title: string | null
           og_image: string | null
+          post_type: string | null
           published: boolean | null
           published_at: string | null
           slug: string | null
           title: string | null
           updated_at: string | null
         }
-        Insert: {
-          author_name?: string | null
-          content?: string | null
-          cover_url?: string | null
-          created_at?: string | null
-          excerpt?: string | null
-          id?: string | null
-          keywords?: never
-          meta_description?: string | null
-          meta_title?: string | null
-          og_image?: string | null
-          published?: never
-          published_at?: string | null
-          slug?: string | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          author_name?: string | null
-          content?: string | null
-          cover_url?: string | null
-          created_at?: string | null
-          excerpt?: string | null
-          id?: string | null
-          keywords?: never
-          meta_description?: string | null
-          meta_title?: string | null
-          og_image?: string | null
-          published?: never
-          published_at?: string | null
-          slug?: string | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Functions: {

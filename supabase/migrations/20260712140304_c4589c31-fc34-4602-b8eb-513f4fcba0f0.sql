@@ -1,0 +1,1 @@
+ALTER VIEW public.blog_posts SET (security_invoker = true);

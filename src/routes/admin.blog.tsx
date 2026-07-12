@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Pencil, Plus, Trash2, Eye, EyeOff, ExternalLink, AlertCircle, CheckCircle2, Sparkles } from "lucide-react";
+import { Pencil, Trash2, Eye, EyeOff, ExternalLink, AlertCircle, CheckCircle2, Sparkles, Newspaper, PenLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
+import { fetchBlogCategories } from "@/lib/blog";
 
 export const Route = createFileRoute("/admin/blog")({
   head: () => ({ meta: [{ title: "Blog — Admin AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
@@ -21,6 +22,7 @@ const META_DESC_MIN = 120;
 const META_DESC_MAX = 160;
 const TITLE_MAX = 60;
 
+type PostType = "blog" | "news";
 type Post = {
   id: string;
   slug: string;
@@ -36,6 +38,8 @@ type Post = {
   meta_description: string | null;
   og_image: string | null;
   keywords: string[] | null;
+  type: PostType;
+  category_id: string | null;
 };
 
 function slugify(s: string) {
@@ -49,8 +53,8 @@ function slugify(s: string) {
 async function fetchAll(): Promise<Post[]> {
   const { data, error } = await supabase
     .from("posts")
-    .select("id, slug, title, excerpt, content, featured_image, author_name, status, published_at, created_at, meta_title, meta_description, og_image, tags")
-    .eq("type", "blog")
+    .select("id, slug, title, excerpt, content, featured_image, author_name, status, published_at, created_at, meta_title, meta_description, og_image, tags, type, category_id")
+    .in("type", ["blog", "news"])
     .order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []).map((r) => ({
@@ -68,6 +72,8 @@ async function fetchAll(): Promise<Post[]> {
     meta_description: r.meta_description,
     og_image: r.og_image,
     keywords: r.tags ?? [],
+    type: (r.type as PostType) ?? "blog",
+    category_id: r.category_id ?? null,
   })) as Post[];
 }
 
@@ -84,6 +90,8 @@ function keywordDensity(content: string, keywords: string[]) {
 function AdminBlog() {
   const qc = useQueryClient();
   const { data: posts, isLoading } = useQuery({ queryKey: ["admin-blog-posts"], queryFn: fetchAll });
+  const { data: categories } = useQuery({ queryKey: ["blog-categories"], queryFn: fetchBlogCategories });
+  const catById = useMemo(() => new Map((categories ?? []).map((c) => [c.id, c])), [categories]);
   const [editing, setEditing] = useState<Partial<Post> | null>(null);
   const [keywordsInput, setKeywordsInput] = useState("");
 
@@ -129,11 +137,12 @@ function AdminBlog() {
     const slug = (p.slug ?? slugify(title)).trim();
     const contentStr = (p.content ?? "").trim();
     if (!title || !slug) return toast.error("Título e slug são obrigatórios");
-    if (p.published && contentStr.length < MIN_CONTENT_CHARS) {
-      return toast.error(`Para publicar, o conteúdo precisa ter no mínimo ${MIN_CONTENT_CHARS} caracteres (atual: ${contentStr.length}).`);
+    const minChars = (p.type ?? "blog") === "news" ? 300 : MIN_CONTENT_CHARS;
+    if (p.published && contentStr.length < minChars) {
+      return toast.error(`Para publicar, o conteúdo precisa ter no mínimo ${minChars} caracteres (atual: ${contentStr.length}).`);
     }
     const payload = {
-      type: "blog" as const,
+      type: (p.type ?? "blog") as PostType,
       slug,
       title,
       excerpt: p.excerpt || null,
@@ -146,6 +155,7 @@ function AdminBlog() {
       meta_description: p.meta_description || null,
       og_image: p.og_image || p.cover_url || null,
       tags: p.keywords ?? [],
+      category_id: p.category_id || null,
     };
     const q = p.id
       ? supabase.from("posts").update(payload).eq("id", p.id)
@@ -159,8 +169,9 @@ function AdminBlog() {
   }
 
   async function togglePublish(p: Post) {
-    if (!p.published && (p.content?.length ?? 0) < MIN_CONTENT_CHARS) {
-      return toast.error(`Conteúdo com ${p.content?.length ?? 0}/${MIN_CONTENT_CHARS} caracteres. Amplie o texto antes de publicar.`);
+    const minChars = p.type === "news" ? 300 : MIN_CONTENT_CHARS;
+    if (!p.published && (p.content?.length ?? 0) < minChars) {
+      return toast.error(`Conteúdo com ${p.content?.length ?? 0}/${minChars} caracteres. Amplie o texto antes de publicar.`);
     }
     const { error } = await supabase.from("posts").update({
       status: !p.published ? "published" : "draft",
@@ -185,12 +196,17 @@ function AdminBlog() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="min-w-0">
-          <h1 className="font-display text-2xl font-bold">Blog</h1>
-          <p className="text-sm text-muted-foreground">Crie, edite e publique artigos otimizados para SEO (mínimo {MIN_CONTENT_CHARS.toLocaleString("pt-BR")} caracteres).</p>
+          <h1 className="font-display text-2xl font-bold">Notícias & Blog</h1>
+          <p className="text-sm text-muted-foreground">Crie notícias rápidas ou artigos completos, organize por categoria e publique com SEO otimizado.</p>
         </div>
-        <Button onClick={() => { setEditing({ published: false, author_name: "Equipe AgenddaAqui", keywords: [] }); setKeywordsInput(""); }} className="gap-1">
-          <Plus className="h-4 w-4" /> Novo post
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => { setEditing({ published: false, author_name: "Redação AgenddaAqui", keywords: [], type: "news" }); setKeywordsInput(""); }} className="gap-1">
+            <Newspaper className="h-4 w-4" /> Nova notícia
+          </Button>
+          <Button onClick={() => { setEditing({ published: false, author_name: "Equipe AgenddaAqui", keywords: [], type: "blog" }); setKeywordsInput(""); }} className="gap-1">
+            <PenLine className="h-4 w-4" /> Novo post
+          </Button>
+        </div>
       </div>
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-border bg-card">
@@ -198,7 +214,8 @@ function AdminBlog() {
           <thead className="bg-muted/50 text-left text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
               <th className="px-4 py-3">Título</th>
-              <th className="px-4 py-3">Caracteres</th>
+              <th className="px-4 py-3">Tipo</th>
+              <th className="px-4 py-3">Categoria</th>
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">Publicado em</th>
               <th className="px-4 py-3 text-right">Ações</th>
@@ -206,22 +223,30 @@ function AdminBlog() {
           </thead>
           <tbody>
             {isLoading ? (
-              <tr><td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
+              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Carregando…</td></tr>
             ) : !posts?.length ? (
-              <tr><td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">Nenhum post ainda.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Nenhum post ainda.</td></tr>
             ) : posts.map((p) => {
-              const len = p.content?.length ?? 0;
-              const ok = len >= MIN_CONTENT_CHARS;
+              const cat = p.category_id ? catById.get(p.category_id) : null;
               return (
                 <tr key={p.id} className="border-t border-border">
                   <td className="px-4 py-3">
-                    <div className="font-medium truncate max-w-[420px]">{p.title}</div>
-                    <div className="text-xs text-muted-foreground truncate max-w-[420px]">/{p.slug}</div>
+                    <div className="font-medium truncate max-w-[380px]">{p.title}</div>
+                    <div className="text-xs text-muted-foreground truncate max-w-[380px]">/{p.slug} · {(p.content?.length ?? 0).toLocaleString("pt-BR")} caract.</div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${ok ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200" : "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200"}`}>
-                      {len.toLocaleString("pt-BR")} / {MIN_CONTENT_CHARS.toLocaleString("pt-BR")}
-                    </span>
+                    {p.type === "news" ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/40 dark:text-red-200"><Newspaper className="h-3 w-3" /> Notícia</span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-200"><PenLine className="h-3 w-3" /> Blog</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    {cat ? (
+                      <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium text-white" style={{ backgroundColor: cat.color ?? "#64748b" }}>{cat.name}</span>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">—</span>
+                    )}
                   </td>
                   <td className="px-4 py-3">
                     <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${p.published ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200" : "bg-muted text-muted-foreground"}`}>
@@ -269,6 +294,38 @@ function AdminBlog() {
               <div>
                 <Label>Slug</Label>
                 <Input value={editing.slug ?? ""} onChange={(e) => setEditing({ ...editing, slug: slugify(e.target.value) })} />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <Label>Tipo</Label>
+                  <div className="mt-1 inline-flex w-full rounded-lg border border-border bg-card p-1">
+                    {(["news", "blog"] as PostType[]).map((t) => (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => setEditing({ ...editing, type: t })}
+                        className={`flex-1 inline-flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition ${
+                          (editing.type ?? "blog") === t ? "bg-primary text-primary-foreground shadow" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        {t === "news" ? <><Newspaper className="h-3.5 w-3.5" /> Notícia</> : <><PenLine className="h-3.5 w-3.5" /> Blog</>}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <Label>Categoria</Label>
+                  <select
+                    className="mt-1 h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+                    value={editing.category_id ?? ""}
+                    onChange={(e) => setEditing({ ...editing, category_id: e.target.value || null })}
+                  >
+                    <option value="">— Sem categoria —</option>
+                    {(categories ?? []).map((c) => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div>
                 <Label>Resumo (excerpt)</Label>
