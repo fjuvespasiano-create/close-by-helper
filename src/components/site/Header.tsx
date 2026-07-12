@@ -127,33 +127,44 @@ export function Header() {
                 to={n.to as any}
                 search={n.to === "/servicos-publicos" ? ({} as any) : undefined}
                 className={[
-                  "group relative inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-all",
+                  "group relative inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold tracking-tight transition-all duration-300",
                   n.danger
                     ? "text-destructive hover:bg-destructive/10"
                     : active
-                    ? "bg-primary/10 text-primary shadow-[inset_0_0_0_1px_hsl(var(--primary)/0.15)]"
-                    : "text-muted-foreground hover:text-primary hover:bg-primary/5",
+                    ? "bg-gradient-to-b from-primary/15 to-primary/5 text-primary shadow-[inset_0_0_0_1px_hsl(var(--primary)/0.25)]"
+                    : "text-muted-foreground hover:-translate-y-0.5 hover:text-primary hover:bg-primary/5",
                 ].join(" ")}
               >
                 {Icon ? (
                   <Icon
                     className={[
-                      "h-4 w-4 transition-transform duration-200 group-hover:scale-110",
+                      "h-4 w-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-4deg]",
                       n.danger
                         ? ""
                         : active
-                        ? "text-primary"
-                        : "text-primary/70 group-hover:text-primary",
+                        ? "text-primary drop-shadow-[0_0_6px_hsl(var(--primary)/0.5)]"
+                        : "text-primary/60 group-hover:text-primary",
                     ].join(" ")}
                     strokeWidth={2.2}
                     aria-hidden
                   />
                 ) : null}
-                <span>{label}</span>
+                <span className="relative">
+                  {label}
+                  <span
+                    className={[
+                      "pointer-events-none absolute -bottom-0.5 left-0 h-[2px] rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-300",
+                      active ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-100",
+                    ].join(" ")}
+                    aria-hidden
+                  />
+                </span>
               </Link>
             );
           })}
         </nav>
+
+
 
 
         <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
