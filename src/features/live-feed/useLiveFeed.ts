@@ -38,7 +38,7 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
     .from("promotions")
     .select("id,title,description,city_id,created_at")
     .gte("created_at", sinceISO)
-    .eq("status", "active" as never)
+    .eq("status", "published")
     .order("created_at", { ascending: false })
     .limit(limit);
 
