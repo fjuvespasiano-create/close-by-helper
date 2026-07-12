@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin")({
 
 type AdminPath =
   | "/admin" | "/admin/empresas" | "/admin/servicos-publicos" | "/admin/emergencia"
-  | "/admin/cidades" | "/admin/planos" | "/admin/leads" | "/admin/blog"
+  | "/admin/cidades" | "/admin/planos" | "/admin/leads" | "/admin/blog" | "/admin/blog-ai"
   | "/admin/duplicados" | "/admin/eventos" | "/admin/menu" | "/admin/textos"
   | "/admin/push" | "/admin/empregos" | "/admin/turismo" | "/admin/qa"
   | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/calendario-editorial"
@@ -58,6 +58,7 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/empregos", label: "Empregos", icon: Briefcase },
       { to: "/admin/turismo", label: "Turismo", icon: Compass },
       { to: "/admin/blog", label: "Blog", icon: Newspaper },
+      { to: "/admin/blog-ai", label: "Gerador IA (Blog)", icon: Sparkles },
       { to: "/admin/duplicados", label: "Conteúdo duplicado", icon: Copy },
     ],
   },

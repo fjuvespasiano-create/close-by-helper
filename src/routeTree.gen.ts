@@ -81,6 +81,7 @@ import { Route as AdminDuplicadosRouteImport } from './routes/admin.duplicados'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
 import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
 import { Route as AdminCalendarioEditorialRouteImport } from './routes/admin.calendario-editorial'
+import { Route as AdminBlogAiRouteImport } from './routes/admin.blog-ai'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminBackupRouteImport } from './routes/admin.backup'
 import { Route as AdminAoVivoRouteImport } from './routes/admin.ao-vivo'
@@ -470,6 +471,11 @@ const AdminCalendarioEditorialRoute =
     path: '/calendario-editorial',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminBlogAiRoute = AdminBlogAiRouteImport.update({
+  id: '/blog-ai',
+  path: '/blog-ai',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminBlogRoute = AdminBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -647,6 +653,7 @@ export interface FileRoutesByFullPath {
   '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/blog-ai': typeof AdminBlogAiRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -745,6 +752,7 @@ export interface FileRoutesByTo {
   '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/blog-ai': typeof AdminBlogAiRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -846,6 +854,7 @@ export interface FileRoutesById {
   '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
+  '/admin/blog-ai': typeof AdminBlogAiRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -949,6 +958,7 @@ export interface FileRouteTypes {
     | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
+    | '/admin/blog-ai'
     | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
@@ -1047,6 +1057,7 @@ export interface FileRouteTypes {
     | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
+    | '/admin/blog-ai'
     | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
@@ -1147,6 +1158,7 @@ export interface FileRouteTypes {
     | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
+    | '/admin/blog-ai'
     | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
@@ -1771,6 +1783,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCalendarioEditorialRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/blog-ai': {
+      id: '/admin/blog-ai'
+      path: '/blog-ai'
+      fullPath: '/admin/blog-ai'
+      preLoaderRoute: typeof AdminBlogAiRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/blog': {
       id: '/admin/blog'
       path: '/blog'
@@ -1989,6 +2008,7 @@ interface AdminRouteChildren {
   AdminAoVivoRoute: typeof AdminAoVivoRoute
   AdminBackupRoute: typeof AdminBackupRoute
   AdminBlogRoute: typeof AdminBlogRoute
+  AdminBlogAiRoute: typeof AdminBlogAiRoute
   AdminCalendarioEditorialRoute: typeof AdminCalendarioEditorialRoute
   AdminCidadesRoute: typeof AdminCidadesRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
@@ -2018,6 +2038,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAoVivoRoute: AdminAoVivoRoute,
   AdminBackupRoute: AdminBackupRoute,
   AdminBlogRoute: AdminBlogRoute,
+  AdminBlogAiRoute: AdminBlogAiRoute,
   AdminCalendarioEditorialRoute: AdminCalendarioEditorialRoute,
   AdminCidadesRoute: AdminCidadesRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
