@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Building2, BadgePercent, Settings, Mail, Landmark, Siren, MapPin,
   Newspaper, CalendarDays, Menu as MenuIcon, Type, Bell, Bug, Copy, Briefcase,
   Megaphone, Compass, Download, BarChart3, ChevronDown, Home, Store, FileText,
-  Sparkles, ShieldCheck, DatabaseBackup,
+  Sparkles, ShieldCheck, DatabaseBackup, Inbox,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
