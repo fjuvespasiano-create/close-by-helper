@@ -6,17 +6,60 @@ import { Button } from "@/components/ui/button";
 import { getAdminPush } from "@/lib/admin-push.functions";
 import { ArrowLeft, Bell } from "lucide-react";
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export const Route = createFileRoute("/admin/push/$id")({
   head: () => ({ meta: [{ title: "Detalhes do envio — Admin" }, { name: "robots", content: "noindex" }] }),
   component: PushDetail,
+  errorComponent: ({ error, reset }) => (
+    <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-6 text-center">
+      <h2 className="font-display text-lg font-semibold text-destructive">Não foi possível carregar este envio</h2>
+      <p className="mt-1 text-sm text-muted-foreground">{error instanceof Error ? error.message : "Erro desconhecido."}</p>
+      <div className="mt-4 flex justify-center gap-2">
+        <Button variant="outline" size="sm" onClick={() => reset()}>Tentar novamente</Button>
+        <Link to="/admin/push/historico"><Button size="sm">Voltar ao histórico</Button></Link>
+      </div>
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="rounded-xl border border-border bg-muted/30 p-6 text-center">
+      <h2 className="font-display text-lg font-semibold">Envio não encontrado</h2>
+      <p className="mt-1 text-sm text-muted-foreground">Verifique o link ou volte para o histórico.</p>
+      <div className="mt-4"><Link to="/admin/push/historico"><Button size="sm">Ver histórico</Button></Link></div>
+    </div>
+  ),
 });
 
 function PushDetail() {
   const { id } = Route.useParams();
   const load = useServerFn(getAdminPush);
-  const { data, isLoading } = useQuery({ queryKey: ["admin-push-detail", id], queryFn: () => load({ data: { id } }) });
+  const isValidId = UUID_RE.test(id);
+  const { data, isLoading, isError, error, refetch } = useQuery({
+    queryKey: ["admin-push-detail", id],
+    queryFn: () => load({ data: { id } }),
+    enabled: isValidId,
+    retry: 1,
+  });
 
-  if (isLoading || !data) return <div className="py-10 text-center text-muted-foreground">Carregando…</div>;
+  if (!isValidId) {
+    return (
+      <div className="rounded-xl border border-border bg-muted/30 p-6 text-center">
+        <h2 className="font-display text-lg font-semibold">Identificador inválido</h2>
+        <p className="mt-1 text-sm text-muted-foreground">O link do envio parece incorreto.</p>
+        <div className="mt-4"><Link to="/admin/push/historico"><Button size="sm">Voltar ao histórico</Button></Link></div>
+      </div>
+    );
+  }
+  if (isLoading) return <div className="py-10 text-center text-muted-foreground">Carregando…</div>;
+  if (isError || !data) {
+    return (
+      <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-6 text-center">
+        <h2 className="font-display text-lg font-semibold text-destructive">Falha ao carregar envio</h2>
+        <p className="mt-1 text-sm text-muted-foreground">{error instanceof Error ? error.message : "Tente novamente em instantes."}</p>
+        <div className="mt-4"><Button size="sm" onClick={() => refetch()}>Tentar novamente</Button></div>
+      </div>
+    );
+  }
   const { notification: n, byDevice, byBrowser, totalDeliveries } = data as {
     notification: { title: string; body: string; emoji?: string | null; color?: string | null; image_url?: string | null; url?: string | null; category: string; status: string; sent_at?: string | null; sent_count: number; delivered_count: number; opened_count: number; clicked_count: number; failed_count: number; unsubscribed_count: number; audience: { kind?: string } | null };
     byDevice: Record<string, number>;
