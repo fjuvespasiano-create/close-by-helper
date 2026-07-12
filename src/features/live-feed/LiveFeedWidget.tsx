@@ -12,6 +12,9 @@ export function LiveFeedWidget({ cityId, limit = 5, title = "Acontecendo agora" 
   const { items, isLoading } = useLiveFeed({ cityId, limit: 30 });
   const top = items.slice(0, limit);
 
+  if (!isLoading && top.length === 0) return null;
+
+
   return (
     <section className="rounded-xl border border-border bg-card p-4 sm:p-5">
       <header className="mb-4 flex items-center justify-between gap-3">
