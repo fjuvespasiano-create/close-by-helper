@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveCityIdBySlug } from "@/lib/data/cities";
 
 export type CompanyListItem = {
   id: string;
@@ -123,10 +124,8 @@ export async function searchCompanies(params: {
   const from = page * limit;
   const to = from + limit - 1;
 
-  const [cityRes, catRes] = await Promise.all([
-    params.city
-      ? supabase.from("cities").select("id").eq("slug", params.city).maybeSingle()
-      : Promise.resolve({ data: null as { id: string } | null }),
+  const [cityId, catRes] = await Promise.all([
+    resolveCityIdBySlug(params.city),
     params.category
       ? supabase.from("categories").select("id").eq("slug", params.category).maybeSingle()
       : Promise.resolve({ data: null as { id: string } | null }),
@@ -150,7 +149,7 @@ export async function searchCompanies(params: {
 
   if (params.premiumOnly) query = query.in("plan", ["premium", "featured"]);
   if (params.plan && params.plan !== "all") query = query.eq("plan", params.plan);
-  if (cityRes.data) query = query.eq("city_id", cityRes.data.id);
+  if (cityId) query = query.eq("city_id", cityId);
   if (companyIdsForCategory) query = query.in("id", companyIdsForCategory.slice(0, 1000));
   if (params.minRating && params.minRating > 0) query = query.gte("rating", params.minRating);
 
@@ -181,11 +180,7 @@ export async function searchCompanies(params: {
 export async function suggestCompanies(q: string, city?: string): Promise<{ id: string; name: string; slug: string; logo_url: string | null; city_name: string | null }[]> {
   const safe = q.replace(/[%,]/g, " ").trim();
   if (safe.length < 2) return [];
-  let cityId: string | null = null;
-  if (city) {
-    const { data } = await supabase.from("cities").select("id").eq("slug", city).maybeSingle();
-    cityId = data?.id ?? null;
-  }
+  const cityId = await resolveCityIdBySlug(city);
   let query = supabase
     .from("companies")
     .select("id, name, slug, logo_url, cities ( name )")
