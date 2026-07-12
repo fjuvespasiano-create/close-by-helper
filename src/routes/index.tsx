@@ -198,6 +198,12 @@ function Home() {
       {/* AGORA NA CIDADE */}
       <AgoraWidget />
 
+      {/* LIVE FEED */}
+      <section className="container mx-auto px-4">
+        <LiveFeedForHome />
+      </section>
+
+
       {/* REPRESENTANTES */}
       <RepresentativesWidget />
 
