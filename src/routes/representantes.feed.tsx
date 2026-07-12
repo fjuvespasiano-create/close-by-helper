@@ -1,35 +1,35 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { ExternalLink, Filter, Radio, RefreshCw } from "lucide-react";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useSelectedCity } from "@/hooks/useSelectedCity";
 import {
+  CITY_NAME,
   fetchActivityFeed,
   KIND_META,
-  STATUS_LABEL,
+  representativesKeys,
   ROLE_LABEL,
+  STATUS_LABEL,
+  timeAgo,
   type ActivityKind,
   type ActivityStatus,
-} from "@/lib/representatives";
-import { Radio, ExternalLink, RefreshCw, Filter } from "lucide-react";
+} from "@/features/representatives";
 
 export const Route = createFileRoute("/representantes/feed")({
   component: FeedPage,
 });
-
-function timeAgo(iso: string): string {
-  const diff = Date.now() - new Date(iso).getTime();
-  const h = Math.floor(diff / 36e5);
-  if (h < 1) return "agora";
-  if (h < 24) return `há ${h}h`;
-  const d = Math.floor(h / 24);
-  if (d < 7) return `há ${d}d`;
-  return new Date(iso).toLocaleDateString("pt-BR");
-}
 
 function FeedPage() {
   const { city: citySlug } = useSelectedCity();
@@ -42,17 +42,18 @@ function FeedPage() {
     return () => clearInterval(id);
   }, []);
 
+  const filters = {
+    citySlug,
+    kind: kind === "all" ? undefined : kind,
+    status: status === "all" ? undefined : status,
+  };
+
   const { data: items = [], isLoading, refetch, isFetching } = useQuery({
-    queryKey: ["rep-feed", citySlug, kind, status, tick],
-    queryFn: () =>
-      fetchActivityFeed({
-        citySlug,
-        kind: kind === "all" ? undefined : kind,
-        status: status === "all" ? undefined : status,
-      }),
+    queryKey: [...representativesKeys.feed(filters), tick] as const,
+    queryFn: () => fetchActivityFeed(filters),
   });
 
-  const cityName = citySlug === "vespasiano" ? "Vespasiano" : "São José da Lapa";
+  const cityName = CITY_NAME[citySlug];
 
   return (
     <SiteLayout>

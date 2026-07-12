@@ -1,11 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo, type ReactNode } from "react";
+import { CalendarCheck, Trophy, TrendingDown, TrendingUp } from "lucide-react";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useSelectedCity } from "@/hooks/useSelectedCity";
-import { fetchMonthlyRanking, ROLE_LABEL } from "@/lib/representatives";
-import { Trophy, TrendingUp, TrendingDown, CalendarCheck } from "lucide-react";
+import {
+  CITY_NAME,
+  fetchMonthlyRanking,
+  formatRoleParty,
+  RepresentativeAvatar,
+  representativesKeys,
+  sortByAbsences,
+  sortByActivity,
+  sortByPresence,
+  topN,
+  type RankingRow,
+} from "@/features/representatives";
 
 export const Route = createFileRoute("/representantes/ranking")({
   component: RankingPage,
@@ -13,23 +26,17 @@ export const Route = createFileRoute("/representantes/ranking")({
 
 function RankingPage() {
   const { city: citySlug } = useSelectedCity();
-  const cityName = citySlug === "vespasiano" ? "Vespasiano" : "São José da Lapa";
+  const cityName = CITY_NAME[citySlug];
   const monthName = new Date().toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
 
   const { data: rows = [], isLoading } = useQuery({
-    queryKey: ["rep-ranking", citySlug],
+    queryKey: representativesKeys.ranking(citySlug),
     queryFn: () => fetchMonthlyRanking(citySlug),
   });
 
-  const byActivity = [...rows].sort((a, b) => b.activities_count - a.activities_count).slice(0, 10);
-  const byAbsences = [...rows]
-    .filter((r) => r.sessions_count > 0)
-    .sort((a, b) => b.absences_count - a.absences_count)
-    .slice(0, 10);
-  const byPresence = [...rows]
-    .filter((r) => r.sessions_count > 0)
-    .sort((a, b) => b.attendance_rate - a.attendance_rate)
-    .slice(0, 10);
+  const byActivity = useMemo(() => topN(sortByActivity(rows), 10), [rows]);
+  const byAbsences = useMemo(() => topN(sortByAbsences(rows), 10), [rows]);
+  const byPresence = useMemo(() => topN(sortByPresence(rows), 10), [rows]);
 
   return (
     <SiteLayout>
@@ -77,15 +84,9 @@ function RankingPage() {
 
 type RankingCardProps = {
   title: string;
-  icon: React.ReactNode;
-  rows: Array<{
-    representative: { id: string; slug: string; name: string; role: keyof typeof ROLE_LABEL; party: string | null; photo_url: string | null };
-    activities_count: number;
-    absences_count: number;
-    sessions_count: number;
-    attendance_rate: number;
-  }>;
-  metric: (r: RankingCardProps["rows"][number]) => string;
+  icon: ReactNode;
+  rows: RankingRow[];
+  metric: (r: RankingRow) => string;
   emptyMsg: string;
   loading: boolean;
 };
@@ -116,16 +117,16 @@ function RankingCard({ title, icon, rows, metric, emptyMsg, loading }: RankingCa
                   className="flex items-center gap-3 rounded-lg p-2 -mx-2 hover:bg-muted/50 transition"
                 >
                   <div className="w-6 text-center font-bold text-sm text-muted-foreground">{idx + 1}</div>
-                  {r.representative.photo_url ? (
-                    <img src={r.representative.photo_url} alt="" className="h-9 w-9 rounded-full object-cover" loading="lazy" />
-                  ) : (
-                    <div className="h-9 w-9 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-semibold">
-                      {r.representative.name.split(" ").slice(0, 2).map((p) => p[0]).join("")}
-                    </div>
-                  )}
+                  <RepresentativeAvatar
+                    name={r.representative.name}
+                    photoUrl={r.representative.photo_url}
+                    size="sm"
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium truncate">{r.representative.name}</div>
-                    <div className="text-xs text-muted-foreground">{ROLE_LABEL[r.representative.role]}{r.representative.party ? ` · ${r.representative.party}` : ""}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {formatRoleParty(r.representative.role, r.representative.party)}
+                    </div>
                   </div>
                   <Badge variant="secondary" className="text-[10px] shrink-0">{metric(r)}</Badge>
                 </Link>

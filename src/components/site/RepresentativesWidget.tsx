@@ -1,28 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import { ArrowRight, Building2 } from "lucide-react";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useSelectedCity } from "@/hooks/useSelectedCity";
-import { fetchActivityFeed, KIND_META, ROLE_LABEL } from "@/lib/representatives";
-import { Building2, ArrowRight } from "lucide-react";
+import {
+  CITY_NAME,
+  fetchActivityFeed,
+  KIND_META,
+  representativesKeys,
+  ROLE_LABEL,
+  timeAgo,
+} from "@/features/representatives";
 
-function timeAgo(iso: string): string {
-  const diff = Date.now() - new Date(iso).getTime();
-  const h = Math.floor(diff / 36e5);
-  if (h < 1) return "agora";
-  if (h < 24) return `há ${h}h`;
-  const d = Math.floor(h / 24);
-  if (d < 7) return `há ${d}d`;
-  return new Date(iso).toLocaleDateString("pt-BR");
-}
+const WIDGET_FILTERS = { sinceDays: 14, limit: 3 } as const;
 
 export function RepresentativesWidget() {
   const { city: citySlug } = useSelectedCity();
-  const cityName = citySlug === "vespasiano" ? "Vespasiano" : "São José da Lapa";
+  const cityName = CITY_NAME[citySlug];
 
   const { data: items = [], isLoading } = useQuery({
-    queryKey: ["rep-widget", citySlug],
-    queryFn: () => fetchActivityFeed({ citySlug, sinceDays: 14, limit: 3 }),
+    queryKey: representativesKeys.widget(citySlug),
+    queryFn: () => fetchActivityFeed({ citySlug, ...WIDGET_FILTERS }),
   });
 
   if (!isLoading && items.length === 0) return null;
