@@ -2,27 +2,34 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useMemo, useState } from "react";
-import { listJobs, jobFacets } from "@/lib/jobs.functions";
+import { toast } from "sonner";
+import {
+  Bookmark, BookmarkCheck, Briefcase, ChevronDown, Search, SlidersHorizontal, Sparkles, X,
+} from "lucide-react";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  Briefcase, MapPin, Wifi, Building2, Search, SlidersHorizontal,
-  X, Bookmark, BookmarkCheck, ChevronDown,
-} from "lucide-react";
-import { toast } from "sonner";
-
-type SearchState = {
-  q: string;
-  city: string;
-  remote: "all" | "yes" | "no";
-  employment: string;
-  experience: string;
-  salaryMin: number;
-  sort: "recent" | "salary_desc" | "salary_asc";
-  page: number;
-};
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from "@/components/ui/select";
+import { listJobs, jobFacets, listPremiumJobs } from "@/lib/jobs.functions";
+import {
+  CITY_OPTIONS,
+  DEFAULT_SEARCH,
+  EMPLOYMENT_OPTIONS,
+  EXPERIENCE_OPTIONS,
+  JobCard,
+  PAGE_SIZE,
+  PremiumJobCard,
+  SALARY_OPTIONS,
+  jobsKeys,
+  parseSearchParams,
+  useSavedSearches,
+  type JobRow,
+  type PremiumJobRow,
+  type SearchState,
+} from "@/features/jobs";
 
 export const Route = createFileRoute("/empregos")({
   head: () => ({
@@ -33,74 +40,24 @@ export const Route = createFileRoute("/empregos")({
       { property: "og:description", content: "Vagas atualizadas na sua cidade e oportunidades remotas." },
     ],
   }),
-  validateSearch: (s: Record<string, unknown>): SearchState => ({
-    q: (s.q as string) || "",
-    city: (s.city as string) || "",
-    remote: ((s.remote as string) || "all") as SearchState["remote"],
-    employment: (s.employment as string) || "",
-    experience: (s.experience as string) || "",
-    salaryMin: Number(s.salaryMin) || 0,
-    sort: ((s.sort as string) || "recent") as SearchState["sort"],
-    page: Number(s.page) || 1,
-  }),
+  validateSearch: parseSearchParams,
   component: EmpregosPage,
 });
-
-const EMPLOYMENT_OPTIONS = [
-  { value: "CLT", label: "CLT" },
-  { value: "PJ", label: "PJ" },
-  { value: "Temporário", label: "Temporário" },
-  { value: "Freelancer", label: "Freelancer" },
-  { value: "Estágio", label: "Estágio" },
-  { value: "Jovem Aprendiz", label: "Jovem Aprendiz" },
-];
-
-const EXPERIENCE_OPTIONS = [
-  { value: "Estágio", label: "Estágio" },
-  { value: "Júnior", label: "Júnior" },
-  { value: "Pleno", label: "Pleno" },
-  { value: "Sênior", label: "Sênior" },
-  { value: "Especialista", label: "Especialista" },
-];
-
-const SALARY_OPTIONS = [
-  { value: 0, label: "Qualquer" },
-  { value: 1500, label: "R$ 1,5k+" },
-  { value: 2500, label: "R$ 2,5k+" },
-  { value: 4000, label: "R$ 4k+" },
-  { value: 6000, label: "R$ 6k+" },
-  { value: 10000, label: "R$ 10k+" },
-];
-
-const SAVED_KEY = "empregos_saved_searches";
-
-type SavedSearch = { name: string; params: SearchState };
-
-function loadSaved(): SavedSearch[] {
-  try {
-    const raw = localStorage.getItem(SAVED_KEY);
-    return raw ? (JSON.parse(raw) as SavedSearch[]) : [];
-  } catch { return []; }
-}
-
-function persistSaved(list: SavedSearch[]) {
-  try { localStorage.setItem(SAVED_KEY, JSON.stringify(list)); } catch { /* ignore */ }
-}
 
 function EmpregosPage() {
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/empregos" });
   const list = useServerFn(listJobs);
   const facets = useServerFn(jobFacets);
+  const premium = useServerFn(listPremiumJobs);
 
   const [qLocal, setQLocal] = useState(search.q);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [saved, setSaved] = useState<SavedSearch[]>([]);
+  const { saved, add: addSaved, remove: removeSaved } = useSavedSearches();
 
-  useEffect(() => { setSaved(loadSaved()); }, []);
   useEffect(() => { setQLocal(search.q); }, [search.q]);
 
-  // Debounce free-text search: 350ms after last keystroke, push to URL.
+  // Debounce free-text search.
   useEffect(() => {
     if (qLocal === search.q) return;
     const t = setTimeout(() => {
@@ -110,7 +67,7 @@ function EmpregosPage() {
   }, [qLocal, search.q, navigate]);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["jobs", search],
+    queryKey: jobsKeys.list(search),
     queryFn: () => list({ data: {
       q: search.q || undefined,
       city: search.city || undefined,
@@ -120,32 +77,32 @@ function EmpregosPage() {
       salaryMin: search.salaryMin || undefined,
       sort: search.sort,
       page: search.page,
-      pageSize: 20,
+      pageSize: PAGE_SIZE,
     } }),
   });
 
   const { data: facetData } = useQuery({
-    queryKey: ["jobs-facets"],
+    queryKey: jobsKeys.facets(),
     queryFn: () => facets(),
     staleTime: 5 * 60_000,
+  });
+
+  const { data: premiumJobs = [] } = useQuery({
+    queryKey: jobsKeys.premium({ city: search.city || undefined, limit: 6 }),
+    queryFn: () => premium({ data: { city: search.city || undefined, limit: 6 } }),
+    staleTime: 60_000,
   });
 
   const employmentOptions = useMemo(() => {
     const fromDb = (facetData?.employment ?? []).map((v) => ({ value: v, label: v }));
     const seen = new Set(fromDb.map((o) => o.value.toLowerCase()));
-    return [
-      ...fromDb,
-      ...EMPLOYMENT_OPTIONS.filter((o) => !seen.has(o.value.toLowerCase())),
-    ];
+    return [...fromDb, ...EMPLOYMENT_OPTIONS.filter((o) => !seen.has(o.value.toLowerCase()))];
   }, [facetData]);
 
   const experienceOptions = useMemo(() => {
     const fromDb = (facetData?.experience ?? []).map((v) => ({ value: v, label: v }));
     const seen = new Set(fromDb.map((o) => o.value.toLowerCase()));
-    return [
-      ...fromDb,
-      ...EXPERIENCE_OPTIONS.filter((o) => !seen.has(o.value.toLowerCase())),
-    ];
+    return [...fromDb, ...EXPERIENCE_OPTIONS.filter((o) => !seen.has(o.value.toLowerCase()))];
   }, [facetData]);
 
   function apply(next: Partial<SearchState>) {
@@ -172,28 +129,19 @@ function EmpregosPage() {
 
   function clearAll() {
     setQLocal("");
-    navigate({ search: () => ({ q: "", city: "", remote: "all", employment: "", experience: "", salaryMin: 0, sort: "recent", page: 1 }) });
+    navigate({ search: () => DEFAULT_SEARCH });
   }
 
   function saveCurrent() {
-    if (!hasCustomFilters) {
-      toast.info("Ajuste algum filtro antes de salvar.");
-      return;
-    }
+    if (!hasCustomFilters) { toast.info("Ajuste algum filtro antes de salvar."); return; }
     const suggested = [search.q, search.city, search.employment, search.experience].filter(Boolean).join(" · ") || "Minha busca";
     const name = window.prompt("Nome desta busca", suggested)?.trim();
     if (!name) return;
-    const next = [{ name, params: search }, ...saved.filter((s) => s.name !== name)].slice(0, 10);
-    setSaved(next);
-    persistSaved(next);
+    addSaved(name, search);
     toast.success("Busca salva");
   }
 
-  function removeSaved(name: string) {
-    const next = saved.filter((s) => s.name !== name);
-    setSaved(next);
-    persistSaved(next);
-  }
+  const showPremiumStrip = !hasCustomFilters && premiumJobs.length > 0;
 
   return (
     <SiteLayout>
@@ -238,8 +186,7 @@ function EmpregosPage() {
                 <SelectTrigger className="border-0 sm:w-[200px]"><SelectValue placeholder="Cidade" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Todas as cidades</SelectItem>
-                  <SelectItem value="Vespasiano">Vespasiano</SelectItem>
-                  <SelectItem value="São José da Lapa">São José da Lapa</SelectItem>
+                  {CITY_OPTIONS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}
                 </SelectContent>
               </Select>
               <Button type="submit" size="lg">Buscar</Button>
@@ -265,7 +212,23 @@ function EmpregosPage() {
       </section>
 
       <section className="container mx-auto px-4 py-8">
-        {/* Toolbar: filters + sort + save */}
+        {showPremiumStrip && (
+          <div className="mb-8">
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="flex items-center gap-2 font-display text-xl font-bold">
+                <Sparkles className="h-5 w-5 text-amber-500" /> Vagas em destaque
+              </h2>
+              <Link to="/empregos/premium" className="text-sm font-medium text-primary hover:underline">
+                Ver todas →
+              </Link>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {premiumJobs.map((j) => <PremiumJobCard key={j.id} job={j as PremiumJobRow} />)}
+            </div>
+          </div>
+        )}
+
+        {/* Toolbar */}
         <div className="mb-4 flex flex-wrap items-center gap-2">
           <Button
             variant="outline"
@@ -294,50 +257,27 @@ function EmpregosPage() {
           </div>
         </div>
 
-        {/* Advanced filters panel */}
         {filtersOpen && (
           <div className="mb-4 grid gap-3 rounded-2xl border border-border bg-card p-4 sm:grid-cols-2 lg:grid-cols-4 animate-fade-up">
-            <FilterSelect
-              label="Contrato"
-              value={search.employment}
-              onChange={(v) => apply({ employment: v })}
-              options={employmentOptions}
-            />
-            <FilterSelect
-              label="Nível"
-              value={search.experience}
-              onChange={(v) => apply({ experience: v })}
-              options={experienceOptions}
-            />
+            <FilterSelect label="Contrato" value={search.employment} onChange={(v) => apply({ employment: v })} options={employmentOptions} />
+            <FilterSelect label="Nível" value={search.experience} onChange={(v) => apply({ experience: v })} options={experienceOptions} />
             <div>
               <label className="mb-1 block text-xs font-medium text-muted-foreground">Salário mínimo</label>
-              <Select
-                value={String(search.salaryMin || 0)}
-                onValueChange={(v) => apply({ salaryMin: Number(v) })}
-              >
+              <Select value={String(search.salaryMin || 0)} onValueChange={(v) => apply({ salaryMin: Number(v) })}>
                 <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {SALARY_OPTIONS.map((o) => (
-                    <SelectItem key={o.value} value={String(o.value)}>{o.label}</SelectItem>
-                  ))}
+                  {SALARY_OPTIONS.map((o) => <SelectItem key={o.value} value={String(o.value)}>{o.label}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
             <div className="flex items-end">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearAll}
-                disabled={!hasCustomFilters}
-                className="w-full gap-2"
-              >
+              <Button variant="ghost" size="sm" onClick={clearAll} disabled={!hasCustomFilters} className="w-full gap-2">
                 <X className="h-4 w-4" /> Limpar tudo
               </Button>
             </div>
           </div>
         )}
 
-        {/* Active filter chips */}
         {activeFilters.length > 0 && (
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <span className="text-xs uppercase tracking-wide text-muted-foreground">Ativos:</span>
@@ -354,7 +294,6 @@ function EmpregosPage() {
           </div>
         )}
 
-        {/* Saved searches */}
         {saved.length > 0 && (
           <div className="mb-6 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1 text-xs uppercase tracking-wide text-muted-foreground">
@@ -403,9 +342,7 @@ function EmpregosPage() {
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {data.rows.map((j) => (
-                <JobCard key={j.id} job={j} />
-              ))}
+              {data.rows.map((j) => <JobCard key={j.id} job={j as JobRow} />)}
             </div>
             {data.total > data.pageSize && (
               <div className="mt-8 flex justify-center gap-2">
@@ -435,92 +372,9 @@ function FilterSelect({
         <SelectTrigger className="h-9"><SelectValue placeholder="Todos" /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos</SelectItem>
-          {options.map((o) => (
-            <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
-          ))}
+          {options.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}
         </SelectContent>
       </Select>
     </div>
   );
-}
-
-type JobRow = {
-  id: string;
-  title: string;
-  company_name: string | null;
-  location_city: string | null;
-  location_state: string | null;
-  is_remote: boolean;
-  employment_type: string | null;
-  experience_level?: string | null;
-  salary_min: number | null;
-  salary_max: number | null;
-  salary_currency: string | null;
-  apply_url: string | null;
-  posted_at: string | null;
-};
-
-function JobCard({ job }: { job: JobRow }) {
-  const salary = formatSalary(job.salary_min, job.salary_max, job.salary_currency);
-  return (
-    <Link
-      to="/empregos/$id"
-      params={{ id: job.id }}
-      className="group flex flex-col rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_20px_40px_-16px_rgb(15_23_42/0.22)]"
-    >
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="line-clamp-2 font-display text-base font-bold group-hover:text-primary">{job.title}</h3>
-        {job.is_remote && (
-          <span className="shrink-0 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
-            <Wifi className="mr-0.5 inline h-3 w-3" /> Remoto
-          </span>
-        )}
-      </div>
-      {job.company_name && (
-        <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
-          <Building2 className="h-3.5 w-3.5" /> {job.company_name}
-        </p>
-      )}
-      {(job.location_city || job.location_state) && !job.is_remote && (
-        <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
-          <MapPin className="h-3.5 w-3.5" /> {[job.location_city, job.location_state].filter(Boolean).join(" · ")}
-        </p>
-      )}
-      {(job.employment_type || job.experience_level) && (
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {job.employment_type && (
-            <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-              {job.employment_type}
-            </span>
-          )}
-          {job.experience_level && (
-            <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-              {job.experience_level}
-            </span>
-          )}
-        </div>
-      )}
-      <div className="mt-auto flex items-center justify-between pt-4">
-        <span className="text-xs text-muted-foreground">{formatDate(job.posted_at)}</span>
-        {salary && <span className="text-sm font-semibold text-primary">{salary}</span>}
-      </div>
-    </Link>
-  );
-}
-
-function formatSalary(min: number | null, max: number | null, currency: string | null) {
-  if (!min && !max) return null;
-  const c = currency === "USD" ? "US$" : "R$";
-  const fmt = (n: number) => n >= 1000 ? `${(n / 1000).toFixed(0)}k` : `${n}`;
-  if (min && max) return `${c} ${fmt(min)}–${fmt(max)}`;
-  return `${c} ${fmt((min ?? max)!)}`;
-}
-
-function formatDate(iso: string | null) {
-  if (!iso) return "Recente";
-  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
-  if (days <= 0) return "Hoje";
-  if (days === 1) return "Ontem";
-  if (days < 30) return `${days}d atrás`;
-  return new Date(iso).toLocaleDateString("pt-BR");
 }
