@@ -128,7 +128,7 @@ function VespasianoPage() {
 
             {services.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-border bg-card p-12 text-center">
-                <p className="text-muted-foreground">Ainda estamos cadastrando serviços para Vespasiano.</p>
+                <p className="text-muted-foreground">Estamos cadastrando os serviços de Vespasiano. Volte em breve — a lista cresce toda semana.</p>
               </div>
             ) : null}
           </div>

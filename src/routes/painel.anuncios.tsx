@@ -78,7 +78,7 @@ function PainelAnuncios() {
               ))}</div>
             ) : byStatus(st).length === 0 ? (
               <p className="rounded-lg border border-dashed p-8 text-center text-sm text-muted-foreground">
-                Nenhum anúncio {STATUS_LABEL[st].toLowerCase()}.
+                Sem anúncios {STATUS_LABEL[st].toLowerCase()} por enquanto.
               </p>
             ) : (
               <div className="grid gap-3">

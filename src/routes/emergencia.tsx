@@ -97,7 +97,7 @@ function EmergenciaPage() {
           ))}
           {(services24h.data ?? []).length === 0 && !services24h.isLoading ? (
             <div className="col-span-full rounded-xl border border-dashed border-border bg-card p-6 text-center text-sm text-muted-foreground">
-              Nenhum serviço 24h cadastrado ainda para esta cidade.
+              Ainda estamos cadastrando os plantões 24h desta cidade. Em caso de emergência, ligue 190 (Polícia), 192 (SAMU) ou 193 (Bombeiros).
             </div>
           ) : null}
         </div>
