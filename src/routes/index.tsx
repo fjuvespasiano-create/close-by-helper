@@ -286,16 +286,16 @@ function Home() {
           <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
           <div className="relative flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Sua empresa aparecendo aqui</h3>
+              <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Seu negócio na vitrine da cidade</h3>
               <p className="mt-2 max-w-xl text-white/95">
-                Cadastro em 2 minutos, sem cartão e sem taxa. Fique visível para quem já procura seu serviço em {cityName} e receba os contatos direto no seu WhatsApp.
+                Enquanto você lê isso, alguém em {cityName} está procurando o serviço que você faz. Cadastre em 2 minutos, sem cartão, e receba os contatos direto no seu WhatsApp.
               </p>
             </div>
             <Link
               to="/auth"
               className="group btn-shine focus-ring inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-semibold text-accent shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0"
             >
-              Anunciar grátis agora <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              Cadastrar meu negócio grátis <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
