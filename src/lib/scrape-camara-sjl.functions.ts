@@ -4,6 +4,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
+import { assertAdmin } from "@/lib/auth/assert-admin";
+import {
+  absolutize,
+  createFirecrawl,
+  slugify,
+  withTimeout,
+} from "@/lib/scraping";
 
 const SJL_CITY_ID = "d9203559-409c-4512-ae93-a5d398afe0b0";
 const BASE_URL = "https://www.camarasaojosedalapa.mg.gov.br";
@@ -31,32 +38,6 @@ const RepresentativeSchema = z.object({
 
 export type ScrapedRepresentative = z.infer<typeof RepresentativeSchema>;
 
-async function assertAdmin(context: { supabase: any; userId: string }) {
-  const { data, error } = await context.supabase.rpc("has_role", {
-    _user_id: context.userId,
-    _role: "admin",
-  });
-  if (error || !data) throw new Error("Acesso restrito a administradores.");
-}
-
-function slugify(v: string): string {
-  return v
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function absolutize(url: string | null | undefined, base: string): string | null {
-  if (!url) return null;
-  try {
-    return new URL(url, base).href;
-  } catch {
-    return null;
-  }
-}
-
 function normPhone(v: string | null | undefined): string | null {
   if (!v) return null;
   const digits = v.replace(/\D/g, "");
@@ -64,12 +45,6 @@ function normPhone(v: string | null | undefined): string | null {
   return v.trim();
 }
 
-async function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
-  return Promise.race([
-    p,
-    new Promise<T>((_, reject) => setTimeout(() => reject(new Error(`${label} timeout ${ms}ms`)), ms)),
-  ]);
-}
 
 const EXTRACT_SCHEMA = {
   type: "object",
@@ -120,11 +95,7 @@ export const scrapeCamaraSjlReps = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
-    const apiKey = process.env.FIRECRAWL_API_KEY;
-    if (!apiKey) throw new Error("FIRECRAWL_API_KEY não configurada.");
-
-    const { default: Firecrawl } = await import("@mendable/firecrawl-js");
-    const fc = new Firecrawl({ apiKey });
+    const fc = await createFirecrawl();
 
     // 1) Discovery
     let urls: string[] = [];
