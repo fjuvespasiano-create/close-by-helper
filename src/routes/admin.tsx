@@ -168,61 +168,71 @@ function AdminLayout() {
 
   return (
     <SiteLayout>
-      <div className="container mx-auto grid gap-6 px-4 py-8 lg:grid-cols-[240px_1fr]">
-        <aside>
-          <div className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Administração
-          </div>
-          <nav className="space-y-1" aria-label="Navegação do painel">
-            {GROUPS.map((g) => {
-              const isOpen = !!open[g.id];
-              const groupActive = g.items.some((i) => (i.exact ? pathname === i.to : pathname.startsWith(i.to)));
-              const GroupIcon = g.icon;
-              return (
-                <div key={g.id}>
-                  <button
-                    type="button"
-                    onClick={() => toggle(g.id)}
-                    aria-expanded={isOpen}
-                    className={`flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 text-xs font-semibold uppercase tracking-wide transition ${
-                      groupActive ? "text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                    }`}
-                  >
-                    <span className="flex items-center gap-2">
-                      <GroupIcon className="h-3.5 w-3.5" />
-                      {g.label}
-                    </span>
-                    <ChevronDown
-                      className={`h-3.5 w-3.5 transition-transform ${isOpen ? "" : "-rotate-90"}`}
-                      aria-hidden="true"
-                    />
-                  </button>
+      <div className="container mx-auto grid gap-6 px-4 py-6 sm:py-8 lg:grid-cols-[240px_1fr]">
+        <details className="group rounded-lg border border-border bg-card lg:border-0 lg:bg-transparent lg:[&>summary]:hidden" open={typeof window !== "undefined" && window.innerWidth >= 1024}>
+          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold lg:hidden">
+            <span className="flex items-center gap-2">
+              <LayoutDashboard className="h-4 w-4" />
+              Menu do admin
+            </span>
+            <span className="text-xs text-muted-foreground transition group-open:rotate-180">▾</span>
+          </summary>
+          <aside className="border-t border-border p-2 lg:border-0 lg:p-0">
+            <div className="mb-3 hidden px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground lg:block">
+              Administração
+            </div>
+            <nav className="space-y-1" aria-label="Navegação do painel">
+              {GROUPS.map((g) => {
+                const isOpen = !!open[g.id];
+                const groupActive = g.items.some((i) => (i.exact ? pathname === i.to : pathname.startsWith(i.to)));
+                const GroupIcon = g.icon;
+                return (
+                  <div key={g.id}>
+                    <button
+                      type="button"
+                      onClick={() => toggle(g.id)}
+                      aria-expanded={isOpen}
+                      className={`flex w-full items-center justify-between gap-2 rounded-md px-3 py-2 text-xs font-semibold uppercase tracking-wide transition ${
+                        groupActive ? "text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      <span className="flex items-center gap-2 min-w-0">
+                        <GroupIcon className="h-3.5 w-3.5 shrink-0" />
+                        <span className="truncate">{g.label}</span>
+                      </span>
+                      <ChevronDown
+                        className={`h-3.5 w-3.5 shrink-0 transition-transform ${isOpen ? "" : "-rotate-90"}`}
+                        aria-hidden="true"
+                      />
+                    </button>
 
-                  {isOpen && (
-                    <div className="mt-1 space-y-0.5 border-l border-border pl-2">
-                      {g.items.map((n) => {
-                        const active = n.exact ? pathname === n.to : pathname.startsWith(n.to);
-                        return (
-                          <Link
-                            key={n.to}
-                            to={n.to}
-                            className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition ${
-                              active
-                                ? "bg-primary text-primary-foreground shadow-sm"
-                                : "text-foreground hover:bg-muted"
-                            }`}
-                          >
-                            <n.icon className="h-4 w-4" /> {n.label}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </nav>
-        </aside>
+                    {isOpen && (
+                      <div className="mt-1 space-y-0.5 border-l border-border pl-2">
+                        {g.items.map((n) => {
+                          const active = n.exact ? pathname === n.to : pathname.startsWith(n.to);
+                          return (
+                            <Link
+                              key={n.to}
+                              to={n.to}
+                              className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition ${
+                                active
+                                  ? "bg-primary text-primary-foreground shadow-sm"
+                                  : "text-foreground hover:bg-muted"
+                              }`}
+                            >
+                              <n.icon className="h-4 w-4 shrink-0" />
+                              <span className="truncate">{n.label}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
+          </aside>
+        </details>
         <div className="min-w-0">
           <Outlet />
         </div>
@@ -230,4 +240,5 @@ function AdminLayout() {
     </SiteLayout>
   );
 }
+
 
