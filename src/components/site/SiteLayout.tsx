@@ -49,7 +49,7 @@ function DeferredOverlays() {
       <PWAInstallPrompt />
       <OnboardingWizard />
       <AdModal />
-      <AcheServicoPopup />
+
     </Suspense>
   );
 }
