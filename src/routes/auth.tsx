@@ -286,10 +286,10 @@ function AuthPage() {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Criando sua conta..." : "Criar minha conta grátis"}
+                  {loading ? "Preparando sua conta..." : "Criar minha conta grátis"}
                 </Button>
                 <p className="pt-1 text-center text-[11px] text-muted-foreground">
-                  Grátis, sem cartão. Menos de 1 minuto e você já está dentro.
+                  Grátis para sempre. Sem cartão, sem taxa e você cancela quando quiser.
                 </p>
               </form>
             </TabsContent>
