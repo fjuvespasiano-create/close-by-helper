@@ -31,13 +31,8 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  const jobsQ = supabase
-    .from("jobs")
-    .select("id,title,description,location_city,created_at")
-    .gte("created_at", sinceISO)
-    .eq("is_active", true)
-    .order("created_at", { ascending: false })
-    .limit(limit);
+
+
 
   const promoQ = supabase
     .from("promotions")
@@ -69,8 +64,8 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
     .eq("key", "live_feed_blacklist")
     .maybeSingle();
 
-  const [events, jobs, promotions, procurements, activities, hidden, settings] =
-    await Promise.all([eventsQ, jobsQ, promoQ, procQ, actQ, hiddenQ, settingsQ]);
+  const [events, promotions, procurements, activities, hidden, settings] =
+    await Promise.all([eventsQ, promoQ, procQ, actQ, hiddenQ, settingsQ]);
 
   const hiddenKeys = new Set<string>(
     (hidden.data ?? []).map((h) => `${h.source}:${h.source_id}`),
@@ -113,19 +108,10 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
   (events.data ?? []).forEach((e) =>
     push("event", { ...e, href: e.slug ? `/eventos/${e.slug}` : "/eventos" }),
   );
-  (jobs.data ?? []).forEach((j) =>
-    push("job", {
-      id: j.id,
-      title: j.title,
-      description: j.description,
-      city_id: null,
-      created_at: j.created_at,
-      href: `/empregos/${j.id}`,
-    }),
-  );
   (promotions.data ?? []).forEach((p) =>
     push("promotion", { ...p, href: "/promocoes" }),
   );
+
   (procurements.data ?? []).forEach((p) =>
     push("procurement", {
       id: p.id,
@@ -166,13 +152,13 @@ export function useLiveFeed(opts: FetchOpts = {}) {
   useEffect(() => {
     const tables = [
       "events",
-      "jobs",
       "promotions",
       "procurements",
       "representative_activities",
       "live_feed_hidden",
       "system_settings",
     ] as const;
+
     const channel = supabase.channel("live-feed");
     tables.forEach((t) => {
       channel.on(
