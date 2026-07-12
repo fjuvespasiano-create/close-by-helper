@@ -1,27 +1,33 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Building2, MessageCircle, Radio, Users, ArrowRight } from "lucide-react";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useSelectedCity } from "@/hooks/useSelectedCity";
-import { fetchRepresentatives, ROLE_LABEL, type Representative } from "@/lib/representatives";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { WhatsAppSubscribeDialog } from "@/components/site/WhatsAppSubscribeDialog";
-import { Users, Building2, Radio, MessageCircle, ArrowRight } from "lucide-react";
+import { useSelectedCity } from "@/hooks/useSelectedCity";
+import {
+  CITY_NAME,
+  fetchRepresentatives,
+  RepresentativeAvatar,
+  representativesKeys,
+  ROLE_LABEL,
+  type Representative,
+} from "@/features/representatives";
 
 export const Route = createFileRoute("/representantes/")({
   component: RepresentativesListPage,
 });
-
-function initials(name: string): string {
-  return name
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((p) => p[0]?.toUpperCase() ?? "")
-    .join("");
-}
 
 function RepresentativesListPage() {
   const { city: citySlug } = useSelectedCity();
@@ -30,16 +36,23 @@ function RepresentativesListPage() {
   const [subscribeOpen, setSubscribeOpen] = useState(false);
 
   const { data: reps = [], isLoading } = useQuery({
-    queryKey: ["representatives", citySlug],
+    queryKey: representativesKeys.list(citySlug),
     queryFn: () => fetchRepresentatives(citySlug),
   });
 
-  const parties = Array.from(new Set(reps.map((r) => r.party).filter((p): p is string => !!p))).sort();
-  const filtered = reps.filter(
-    (r) => (role === "all" || r.role === role) && (party === "all" || r.party === party),
+  const parties = useMemo(
+    () => Array.from(new Set(reps.map((r) => r.party).filter((p): p is string => !!p))).sort(),
+    [reps],
+  );
+  const filtered = useMemo(
+    () =>
+      reps.filter(
+        (r) => (role === "all" || r.role === role) && (party === "all" || r.party === party),
+      ),
+    [reps, role, party],
   );
 
-  const cityName = citySlug === "vespasiano" ? "Vespasiano" : "São José da Lapa";
+  const cityName = CITY_NAME[citySlug];
 
   return (
     <SiteLayout>
@@ -120,18 +133,7 @@ function RepresentativesListPage() {
                 <Card className="h-full transition hover:shadow-md hover:-translate-y-0.5">
                   <CardContent className="p-5">
                     <div className="flex items-start gap-4">
-                      {r.photo_url ? (
-                        <img
-                          src={r.photo_url}
-                          alt={r.name}
-                          className="h-16 w-16 rounded-full object-cover ring-2 ring-primary/10"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="h-16 w-16 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg">
-                          {initials(r.name)}
-                        </div>
-                      )}
+                      <RepresentativeAvatar name={r.name} photoUrl={r.photo_url} size="lg" ring />
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold truncate">{r.name}</div>
                         <div className="text-xs text-muted-foreground mt-0.5">{ROLE_LABEL[r.role]}</div>

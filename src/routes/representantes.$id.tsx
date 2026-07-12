@@ -1,19 +1,23 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { ExternalLink, Facebook, Globe, Instagram, Mail, Phone, Twitter } from "lucide-react";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  fetchRepresentative,
   fetchActivitiesByRepresentative,
   fetchAttendance,
+  fetchRepresentative,
   KIND_META,
-  STATUS_LABEL,
+  RepresentativeAvatar,
+  representativesKeys,
   ROLE_LABEL,
-} from "@/lib/representatives";
-import { ExternalLink, Mail, Phone, Instagram, Facebook, Twitter, Globe } from "lucide-react";
+  STATUS_LABEL,
+  type Representative,
+} from "@/features/representatives";
 
 export const Route = createFileRoute("/representantes/$id")({
   loader: async ({ params }) => {
@@ -39,7 +43,9 @@ export const Route = createFileRoute("/representantes/$id")({
   }),
   errorComponent: () => (
     <SiteLayout>
-      <div className="container py-12 text-center text-muted-foreground">Não foi possível carregar este representante.</div>
+      <div className="container py-12 text-center text-muted-foreground">
+        Não foi possível carregar este representante.
+      </div>
     </SiteLayout>
   ),
   notFoundComponent: () => (
@@ -53,20 +59,16 @@ export const Route = createFileRoute("/representantes/$id")({
   component: RepresentativePage,
 });
 
-function initials(name: string): string {
-  return name.split(" ").slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "").join("");
-}
-
 function RepresentativePage() {
-  const rep = Route.useLoaderData() as import("@/lib/representatives").Representative;
+  const rep = Route.useLoaderData() as Representative;
 
   const { data: activities = [] } = useQuery({
-    queryKey: ["rep-activities", rep.id],
+    queryKey: representativesKeys.activities(rep.id),
     queryFn: () => fetchActivitiesByRepresentative(rep.id),
   });
 
   const { data: attendance = [] } = useQuery({
-    queryKey: ["rep-attendance", rep.id],
+    queryKey: representativesKeys.attendance(rep.id),
     queryFn: () => fetchAttendance(rep.id),
   });
 
@@ -75,7 +77,6 @@ function RepresentativePage() {
   const rate = totalSessions ? Math.round((present / totalSessions) * 100) : 0;
 
   const projetos = activities.filter((a) => a.kind === "projeto_lei");
-
   const socials = rep.social_links ?? {};
 
   return (
@@ -86,21 +87,11 @@ function RepresentativePage() {
             <Link to="/representantes" className="hover:text-primary">← Representantes</Link>
           </div>
           <div className="flex flex-col sm:flex-row gap-6">
-            {rep.photo_url ? (
-              <img
-                src={rep.photo_url}
-                alt={rep.name}
-                className="h-28 w-28 rounded-2xl object-cover ring-4 ring-background shadow-md"
-              />
-            ) : (
-              <div className="h-28 w-28 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-3xl font-bold ring-4 ring-background shadow-md">
-                {initials(rep.name)}
-              </div>
-            )}
+            <RepresentativeAvatar name={rep.name} photoUrl={rep.photo_url} size="xl" ring />
             <div className="flex-1 min-w-0">
               <h1 className="text-3xl font-bold tracking-tight">{rep.name}</h1>
               <div className="flex flex-wrap gap-2 mt-2">
-                <Badge>{ROLE_LABEL[rep.role as keyof typeof ROLE_LABEL]}</Badge>
+                <Badge>{ROLE_LABEL[rep.role]}</Badge>
                 {rep.party && <Badge variant="secondary">{rep.party}</Badge>}
               </div>
               {rep.bio && <p className="text-muted-foreground mt-3 max-w-2xl">{rep.bio}</p>}
