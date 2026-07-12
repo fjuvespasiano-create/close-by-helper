@@ -73,14 +73,14 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     button_label: "Quero receber",
   },
   home: {
-    hero_overline: "O app oficial da cidade",
-    hero_title: "Tudo o que sua cidade oferece, num só app",
+    hero_overline: "Feito pra vizinhança daqui",
+    hero_title: "A sua cidade descobre você",
     hero_subtitle:
-      "Hospital, escola, delegacia, prefeitura e as empresas mais bem avaliadas de Vespasiano e São José da Lapa — em 2 toques, sempre atualizado.",
-    cta_title: "Sua empresa vista pela cidade inteira",
+      "Quem mora em Vespasiano e São José da Lapa procura serviço todo dia por aqui. Coloque seu negócio no mapa, ganhe indicações reais e receba clientes direto no WhatsApp — sem taxa, sem comissão.",
+    cta_title: "Seu negócio na vitrine da cidade",
     cta_subtitle:
-      "Cadastro em 2 minutos, sem cartão. Apareça para quem já procura seu serviço aqui do lado e receba contatos direto no WhatsApp.",
-    cta_button: "Anunciar grátis agora",
+      "Cadastro em 2 minutos, sem cartão e sem pegadinha. Apareça pra quem já está procurando o que você faz — e receba os contatos direto no WhatsApp.",
+    cta_button: "Cadastrar meu negócio grátis",
   },
   about: {
     title: "O que é o AgenddaAqui",
