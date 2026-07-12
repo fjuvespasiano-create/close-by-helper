@@ -216,8 +216,8 @@ function Home() {
       <section className="container mx-auto px-4 py-14">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <h2 className="font-display text-2xl font-bold md:text-3xl">Resolva com a cidade</h2>
-            <p className="mt-1 text-muted-foreground">Saúde, educação, segurança e prefeitura — endereço, telefone e horário em 2 toques.</p>
+            <h2 className="font-display text-2xl font-bold md:text-3xl">Resolva com a cidade, sem sair de casa</h2>
+            <p className="mt-1 text-muted-foreground">Saúde, educação, segurança e prefeitura — endereço, horário e telefone à mão. Menos fila, menos "a quem eu ligo?".</p>
           </div>
           <Link to="/servicos-publicos" search={{}} className="group hidden items-center gap-1 text-sm font-medium text-primary hover:underline md:inline-flex">
             Ver todos <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
