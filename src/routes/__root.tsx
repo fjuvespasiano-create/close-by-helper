@@ -20,6 +20,9 @@ import { PageTransition } from "@/components/site/PageTransition";
 const BugReportButton = lazy(() =>
   import("@/components/qa/BugReportButton").then((m) => ({ default: m.BugReportButton })),
 );
+const RequestFormButton = lazy(() =>
+  import("@/components/site/RequestFormButton").then((m) => ({ default: m.RequestFormButton })),
+);
 
 const SUPABASE_ORIGIN = (import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? "";
 
