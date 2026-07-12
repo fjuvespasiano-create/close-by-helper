@@ -33,11 +33,11 @@ export const Route = createFileRoute("/ao-vivo")({
 
 const ALL_CATEGORIES: LiveFeedCategory[] = [
   "events",
-  "jobs",
   "deals",
   "government",
   "civic",
 ];
+
 
 function LiveFeedPage() {
   const { city } = useSelectedCity();
