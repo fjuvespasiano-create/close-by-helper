@@ -63,6 +63,7 @@ import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminTurismoRouteImport } from './routes/admin.turismo'
 import { Route as AdminTextosRouteImport } from './routes/admin.textos'
+import { Route as AdminSolicitacoesRouteImport } from './routes/admin.solicitacoes'
 import { Route as AdminServicosPublicosRouteImport } from './routes/admin.servicos-publicos'
 import { Route as AdminScraperVespasianoRouteImport } from './routes/admin.scraper-vespasiano'
 import { Route as AdminScraperSjlRouteImport } from './routes/admin.scraper-sjl'
@@ -381,6 +382,11 @@ const AdminTextosRoute = AdminTextosRouteImport.update({
   path: '/textos',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSolicitacoesRoute = AdminSolicitacoesRouteImport.update({
+  id: '/solicitacoes',
+  path: '/solicitacoes',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminServicosPublicosRoute = AdminServicosPublicosRouteImport.update({
   id: '/servicos-publicos',
   path: '/servicos-publicos',
@@ -679,6 +685,7 @@ export interface FileRoutesByFullPath {
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
   '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -778,6 +785,7 @@ export interface FileRoutesByTo {
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
   '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -882,6 +890,7 @@ export interface FileRoutesById {
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
   '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -987,6 +996,7 @@ export interface FileRouteTypes {
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
+    | '/admin/solicitacoes'
     | '/admin/textos'
     | '/admin/turismo'
     | '/blog/$slug'
@@ -1086,6 +1096,7 @@ export interface FileRouteTypes {
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
+    | '/admin/solicitacoes'
     | '/admin/textos'
     | '/admin/turismo'
     | '/blog/$slug'
@@ -1189,6 +1200,7 @@ export interface FileRouteTypes {
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
+    | '/admin/solicitacoes'
     | '/admin/textos'
     | '/admin/turismo'
     | '/blog/$slug'
@@ -1671,6 +1683,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTextosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/solicitacoes': {
+      id: '/admin/solicitacoes'
+      path: '/solicitacoes'
+      fullPath: '/admin/solicitacoes'
+      preLoaderRoute: typeof AdminSolicitacoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/servicos-publicos': {
       id: '/admin/servicos-publicos'
       path: '/servicos-publicos'
@@ -2048,6 +2067,7 @@ interface AdminRouteChildren {
   AdminScraperSjlRoute: typeof AdminScraperSjlRoute
   AdminScraperVespasianoRoute: typeof AdminScraperVespasianoRoute
   AdminServicosPublicosRoute: typeof AdminServicosPublicosRoute
+  AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
   AdminTextosRoute: typeof AdminTextosRoute
   AdminTurismoRoute: typeof AdminTurismoRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -2078,6 +2098,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminScraperSjlRoute: AdminScraperSjlRoute,
   AdminScraperVespasianoRoute: AdminScraperVespasianoRoute,
   AdminServicosPublicosRoute: AdminServicosPublicosRoute,
+  AdminSolicitacoesRoute: AdminSolicitacoesRoute,
   AdminTextosRoute: AdminTextosRoute,
   AdminTurismoRoute: AdminTurismoRoute,
   AdminIndexRoute: AdminIndexRoute,

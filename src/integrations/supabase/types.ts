@@ -3192,6 +3192,86 @@ export type Database = {
           },
         ]
       }
+      user_requests: {
+        Row: {
+          admin_response: string | null
+          assigned_to: string | null
+          attachment_url: string | null
+          category: string
+          city_id: string | null
+          created_at: string
+          description: string
+          extra: Json
+          id: string
+          ip: string | null
+          page_url: string | null
+          priority: string
+          request_number: string
+          resolved_at: string | null
+          status: string
+          subject: string
+          updated_at: string
+          user_email: string | null
+          user_id: string | null
+          user_name: string | null
+          user_phone: string | null
+        }
+        Insert: {
+          admin_response?: string | null
+          assigned_to?: string | null
+          attachment_url?: string | null
+          category?: string
+          city_id?: string | null
+          created_at?: string
+          description: string
+          extra?: Json
+          id?: string
+          ip?: string | null
+          page_url?: string | null
+          priority?: string
+          request_number?: string
+          resolved_at?: string | null
+          status?: string
+          subject: string
+          updated_at?: string
+          user_email?: string | null
+          user_id?: string | null
+          user_name?: string | null
+          user_phone?: string | null
+        }
+        Update: {
+          admin_response?: string | null
+          assigned_to?: string | null
+          attachment_url?: string | null
+          category?: string
+          city_id?: string | null
+          created_at?: string
+          description?: string
+          extra?: Json
+          id?: string
+          ip?: string | null
+          page_url?: string | null
+          priority?: string
+          request_number?: string
+          resolved_at?: string | null
+          status?: string
+          subject?: string
+          updated_at?: string
+          user_email?: string | null
+          user_id?: string | null
+          user_name?: string | null
+          user_phone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_requests_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string

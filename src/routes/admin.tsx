@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Building2, BadgePercent, Settings, Mail, Landmark, Siren, MapPin,
   Newspaper, CalendarDays, Menu as MenuIcon, Type, Bell, Bug, Copy, Briefcase,
   Megaphone, Compass, Download, BarChart3, ChevronDown, Home, Store, FileText,
-  Sparkles, ShieldCheck, DatabaseBackup,
+  Sparkles, ShieldCheck, DatabaseBackup, Inbox,
 } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
@@ -19,6 +19,7 @@ type AdminPath =
   | "/admin/cidades" | "/admin/planos" | "/admin/leads" | "/admin/blog" | "/admin/blog-ai"
   | "/admin/duplicados" | "/admin/eventos" | "/admin/menu" | "/admin/textos"
   | "/admin/push" | "/admin/empregos" | "/admin/turismo" | "/admin/qa"
+  | "/admin/solicitacoes"
   | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/calendario-editorial"
   | "/admin/promocoes"
   | "/admin/scraper-vespasiano" | "/admin/scraper-sjl"
@@ -83,6 +84,7 @@ const GROUPS: NavGroup[] = [
     id: "sistema", label: "Sistema", icon: ShieldCheck,
     items: [
       { to: "/admin/qa", label: "Central de Qualidade", icon: Bug },
+      { to: "/admin/solicitacoes", label: "Solicitações & Pedidos", icon: Inbox },
       { to: "/admin/ao-vivo", label: "Feed Ao Vivo", icon: Siren },
       { to: "/admin/backup", label: "Backup & Restauração", icon: DatabaseBackup },
       { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
