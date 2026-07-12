@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useAdmin } from "@/hooks/use-admin";
+import { useCurrentUserId } from "@/lib/favorites";
 import { listMyLeads } from "@/lib/panel";
 import { Mail, Phone, MessageCircle } from "lucide-react";
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/painel/leads")({
 });
 
 function PanelLeads() {
-  const { userId } = useAdmin();
+  const userId = useCurrentUserId();
   const leads = useQuery({ queryKey: ["panel-leads", userId], queryFn: () => listMyLeads(userId!), enabled: !!userId });
   const items = leads.data ?? [];
 
@@ -21,6 +21,10 @@ function PanelLeads() {
       <div className="mt-6 space-y-3">
         {leads.isLoading ? (
           <div className="text-sm text-muted-foreground">Carregando…</div>
+        ) : leads.isError ? (
+          <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-6 text-sm text-destructive">
+            Não conseguimos carregar seus leads agora. Tente recarregar a página.
+          </div>
         ) : items.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border bg-card p-10 text-center">
             <Mail className="mx-auto h-8 w-8 text-muted-foreground" />
