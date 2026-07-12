@@ -51,9 +51,9 @@ export const adminGenerateBlogPost = createServerFn({ method: "POST" })
     }
     if (data.company_id) {
       const { data: co } = await context.supabase.from("companies")
-        .select("name, category, description, services_offered, city_id").eq("id", data.company_id).maybeSingle();
+        .select("name, tagline, description, city_id").eq("id", data.company_id).maybeSingle();
       if (co) {
-        companyCtx = `Empresa: ${co.name}${co.category ? " (" + co.category + ")" : ""}. ${co.description ?? ""}`;
+        companyCtx = `Empresa: ${co.name}${co.tagline ? " — " + co.tagline : ""}. ${co.description ?? ""}`;
         if (!cityCtx && co.city_id) {
           const { data: c2 } = await context.supabase.from("cities").select("name, state").eq("id", co.city_id).maybeSingle();
           if (c2) cityCtx = `Cidade: ${c2.name}${c2.state ? " - " + c2.state : ""}.`;
