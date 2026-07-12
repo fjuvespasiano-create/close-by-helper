@@ -13,12 +13,16 @@ import {
   LayoutDashboard,
   LogOut,
   MapPin,
+  Map,
   Megaphone,
   Menu,
   Newspaper,
+  Radio,
   Search,
   ShieldCheck,
   ShoppingBag,
+  Users,
+  Zap,
   X,
 } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
@@ -35,16 +39,20 @@ type IconType = ComponentType<SVGProps<SVGSVGElement> & { size?: number | string
 
 const NAV_ICONS: Record<string, IconType> = {
   "/": Home,
+  "/agora": Zap,
+  "/ao-vivo": Radio,
+  "/representantes": Users,
   "/blog": Newspaper,
   "/buscar": Building2,
   "/eventos": Calendar,
   "/o-que-fazer": Compass,
-  "/roteiro-turistico": Compass,
+  "/roteiro-turistico": Map,
   "/marketplace": ShoppingBag,
   "/transporte": Bus,
   "/empregos": Briefcase,
   "/promocoes": Megaphone,
 };
+
 
 function stripLeadingEmoji(label: string): string {
   // remove emoji + optional space at start (Home was previously "🏠 Home")
