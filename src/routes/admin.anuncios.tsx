@@ -62,6 +62,16 @@ async function listCompanies() {
   return data ?? [];
 }
 
+async function listCities() {
+  const { data, error } = await supabase
+    .from("cities")
+    .select("slug,name")
+    .eq("is_active", true)
+    .order("name");
+  if (error) throw error;
+  return data ?? [];
+}
+
 async function listAll() {
   const { data, error } = await supabase
     .from("ad_campaigns")
