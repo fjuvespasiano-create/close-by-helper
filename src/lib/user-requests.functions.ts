@@ -147,7 +147,12 @@ export const updateUserRequest = createServerFn({ method: "POST" })
     const { supabase, userId } = context;
     const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
     if (!isAdmin) throw new Error("Forbidden");
-    const patch: Record<string, unknown> = {};
+    const patch: {
+      status?: z.infer<typeof StatusEnum>;
+      priority?: z.infer<typeof PriorityEnum>;
+      admin_response?: string | null;
+      resolved_at?: string;
+    } = {};
     if (data.status) {
       patch.status = data.status;
       if (data.status === "resolvido") patch.resolved_at = new Date().toISOString();
