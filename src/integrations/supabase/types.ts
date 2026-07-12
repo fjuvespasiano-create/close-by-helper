@@ -1277,22 +1277,35 @@ export type Database = {
       }
       jobs: {
         Row: {
+          application_deadline: string | null
+          apply_email: string | null
           apply_url: string | null
+          apply_whatsapp: string | null
+          benefits: string[]
           category: string | null
+          company_culture: string | null
+          company_id: string | null
+          company_logo_url: string | null
           company_name: string | null
+          company_size: string | null
           created_at: string
           description: string | null
           employment_type: string | null
           experience_level: string | null
           expires_at: string | null
           external_id: string | null
+          featured_until: string | null
           id: string
           is_active: boolean
+          is_premium: boolean
           is_remote: boolean
           location_city: string | null
           location_state: string | null
+          nice_to_have: string[]
           posted_at: string | null
           raw: Json | null
+          requirements: string[]
+          responsibilities: string[]
           salary_currency: string | null
           salary_max: number | null
           salary_min: number | null
@@ -1300,24 +1313,38 @@ export type Database = {
           tags: string[]
           title: string
           updated_at: string
+          workload: string | null
         }
         Insert: {
+          application_deadline?: string | null
+          apply_email?: string | null
           apply_url?: string | null
+          apply_whatsapp?: string | null
+          benefits?: string[]
           category?: string | null
+          company_culture?: string | null
+          company_id?: string | null
+          company_logo_url?: string | null
           company_name?: string | null
+          company_size?: string | null
           created_at?: string
           description?: string | null
           employment_type?: string | null
           experience_level?: string | null
           expires_at?: string | null
           external_id?: string | null
+          featured_until?: string | null
           id?: string
           is_active?: boolean
+          is_premium?: boolean
           is_remote?: boolean
           location_city?: string | null
           location_state?: string | null
+          nice_to_have?: string[]
           posted_at?: string | null
           raw?: Json | null
+          requirements?: string[]
+          responsibilities?: string[]
           salary_currency?: string | null
           salary_max?: number | null
           salary_min?: number | null
@@ -1325,24 +1352,38 @@ export type Database = {
           tags?: string[]
           title: string
           updated_at?: string
+          workload?: string | null
         }
         Update: {
+          application_deadline?: string | null
+          apply_email?: string | null
           apply_url?: string | null
+          apply_whatsapp?: string | null
+          benefits?: string[]
           category?: string | null
+          company_culture?: string | null
+          company_id?: string | null
+          company_logo_url?: string | null
           company_name?: string | null
+          company_size?: string | null
           created_at?: string
           description?: string | null
           employment_type?: string | null
           experience_level?: string | null
           expires_at?: string | null
           external_id?: string | null
+          featured_until?: string | null
           id?: string
           is_active?: boolean
+          is_premium?: boolean
           is_remote?: boolean
           location_city?: string | null
           location_state?: string | null
+          nice_to_have?: string[]
           posted_at?: string | null
           raw?: Json | null
+          requirements?: string[]
+          responsibilities?: string[]
           salary_currency?: string | null
           salary_max?: number | null
           salary_min?: number | null
@@ -1350,8 +1391,16 @@ export type Database = {
           tags?: string[]
           title?: string
           updated_at?: string
+          workload?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "jobs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "jobs_source_id_fkey"
             columns: ["source_id"]
