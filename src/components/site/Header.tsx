@@ -227,8 +227,8 @@ export function Header() {
       {/* Mobile menu */}
       {open ? (
         <div className="2xl:hidden border-t border-border bg-background/95 backdrop-blur-xl animate-fade-up">
-          <nav className="container mx-auto flex flex-col gap-1 px-4 py-3">
-            {NAV.map((n) => {
+          <nav className="container mx-auto grid grid-cols-2 gap-1.5 px-4 py-3 sm:grid-cols-3">
+            {NAV.map((n, idx) => {
               const active = isActive(n.to);
               const Icon = NAV_ICONS[n.to];
               const label = stripLeadingEmoji(n.label);
@@ -238,34 +238,38 @@ export function Header() {
                   to={n.to as any}
                   search={n.to === "/servicos-publicos" ? ({} as any) : undefined}
                   onClick={() => setOpen(false)}
+                  style={{ animationDelay: `${idx * 30}ms` }}
                   className={[
-                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    "group relative flex items-center gap-2.5 overflow-hidden rounded-xl border px-3 py-2.5 text-sm font-semibold transition-all duration-300 animate-fade-in",
                     n.danger
-                      ? "text-destructive hover:bg-destructive/10"
+                      ? "border-destructive/20 bg-destructive/5 text-destructive hover:border-destructive/40 hover:bg-destructive/10"
                       : active
-                      ? "bg-primary/10 text-primary"
-                      : "text-foreground/80 hover:bg-primary/5 hover:text-primary",
+                      ? "border-primary/30 bg-gradient-to-br from-primary/15 to-primary/5 text-primary shadow-sm"
+                      : "border-border/60 bg-card text-foreground/85 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary hover:shadow-md",
                   ].join(" ")}
                 >
                   {Icon ? (
                     <span
                       className={[
-                        "flex h-8 w-8 items-center justify-center rounded-lg transition-colors",
+                        "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-6deg]",
                         n.danger
                           ? "bg-destructive/10 text-destructive"
                           : active
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-primary/10 text-primary",
+                          ? "bg-primary text-primary-foreground shadow-[0_4px_14px_hsl(var(--primary)/0.4)]"
+                          : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground",
                       ].join(" ")}
                       aria-hidden
                     >
                       <Icon className="h-4 w-4" strokeWidth={2.2} />
                     </span>
                   ) : null}
-                  <span>{label}</span>
+                  <span className="min-w-0 truncate">{label}</span>
                 </Link>
               );
             })}
+          </nav>
+          <div className="container mx-auto px-4 pb-3">
+
 
             {(isAuthed || isAdmin) ? (
               <div className="mt-2 grid grid-cols-2 gap-2 border-t border-border pt-3">
