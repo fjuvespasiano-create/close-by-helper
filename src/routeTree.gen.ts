@@ -30,6 +30,7 @@ import { Route as EmergenciaRouteImport } from './routes/emergencia'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AoVivoRouteImport } from './routes/ao-vivo'
 import { Route as AgoraRouteImport } from './routes/agora'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -210,6 +211,11 @@ const BuscarRoute = BuscarRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AoVivoRoute = AoVivoRouteImport.update({
+  id: '/ao-vivo',
+  path: '/ao-vivo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgoraRoute = AgoraRouteImport.update({
@@ -608,6 +614,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/agora': typeof AgoraRoute
+  '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
@@ -706,6 +713,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agora': typeof AgoraRoute
+  '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
@@ -803,6 +811,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/agora': typeof AgoraRoute
+  '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
@@ -904,6 +913,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/agora'
+    | '/ao-vivo'
     | '/auth'
     | '/buscar'
     | '/contato'
@@ -1002,6 +1012,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/agora'
+    | '/ao-vivo'
     | '/auth'
     | '/buscar'
     | '/contato'
@@ -1098,6 +1109,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/agora'
+    | '/ao-vivo'
     | '/auth'
     | '/buscar'
     | '/contato'
@@ -1198,6 +1210,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AgoraRoute: typeof AgoraRoute
+  AoVivoRoute: typeof AoVivoRoute
   AuthRoute: typeof AuthRoute
   BuscarRoute: typeof BuscarRoute
   ContatoRoute: typeof ContatoRoute
@@ -1387,6 +1400,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ao-vivo': {
+      id: '/ao-vivo'
+      path: '/ao-vivo'
+      fullPath: '/ao-vivo'
+      preLoaderRoute: typeof AoVivoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agora': {
@@ -2132,6 +2152,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AgoraRoute: AgoraRoute,
+  AoVivoRoute: AoVivoRoute,
   AuthRoute: AuthRoute,
   BuscarRoute: BuscarRoute,
   ContatoRoute: ContatoRoute,
