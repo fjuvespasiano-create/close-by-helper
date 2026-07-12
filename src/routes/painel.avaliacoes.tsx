@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useAdmin } from "@/hooks/use-admin";
+import { useCurrentUserId } from "@/lib/favorites";
 import { listMyReviews } from "@/lib/panel";
 import { Star } from "lucide-react";
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/painel/avaliacoes")({
 });
 
 function PanelAvaliacoes() {
-  const { userId } = useAdmin();
+  const userId = useCurrentUserId();
   const reviews = useQuery({ queryKey: ["panel-reviews", userId], queryFn: () => listMyReviews(userId!), enabled: !!userId });
   const items = reviews.data ?? [];
 
@@ -21,6 +21,10 @@ function PanelAvaliacoes() {
       <div className="mt-6 space-y-3">
         {reviews.isLoading ? (
           <div className="text-sm text-muted-foreground">Carregando…</div>
+        ) : reviews.isError ? (
+          <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-6 text-sm text-destructive">
+            Não conseguimos carregar as avaliações agora. Tente recarregar a página.
+          </div>
         ) : items.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border bg-card p-10 text-center">
             <Star className="mx-auto h-8 w-8 text-muted-foreground" />

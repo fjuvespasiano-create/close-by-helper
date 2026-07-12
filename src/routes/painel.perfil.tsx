@@ -51,6 +51,7 @@ function PanelPerfil() {
 
   async function signOut() {
     await supabase.auth.signOut();
+    qc.clear();
     toast.success("Você saiu");
   }
 
