@@ -73,14 +73,15 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     button_label: "Quero receber",
   },
   home: {
-    hero_overline: "Feito pra vizinhança daqui",
-    hero_title: "A sua cidade descobre você",
+    hero_overline: "Para comerciantes de Vespasiano e São José da Lapa",
+    hero_title: "Cansado de ver o cliente fechar com o concorrente?",
     hero_subtitle:
-      "Quem mora em Vespasiano e São José da Lapa procura serviço todo dia por aqui. Coloque seu negócio no mapa, ganhe indicações reais e receba clientes direto no WhatsApp — sem taxa, sem comissão.",
-    cta_title: "Seu negócio na vitrine da cidade",
+      "Coloque seu negócio na vitrine que a cidade já usa todo dia e receba pedidos direto no seu WhatsApp — sem taxa, sem comissão e sem intermediário levando o seu lucro.",
+    cta_title: "Comece hoje a vender mais no WhatsApp",
     cta_subtitle:
-      "Cadastro em 2 minutos, sem cartão e sem pegadinha. Apareça pra quem já está procurando o que você faz — e receba os contatos direto no WhatsApp.",
-    cta_button: "Cadastrar meu negócio grátis",
+      "Mais de mil moradores buscam serviços aqui toda semana. Cadastre seu negócio em 2 minutos, sem cartão, e apareça para quem já está com o dinheiro na mão.",
+    cta_button: "Quero receber clientes no meu WhatsApp",
+
   },
   about: {
     title: "O que é o AgenddaAqui",
