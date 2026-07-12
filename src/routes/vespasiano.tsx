@@ -38,6 +38,7 @@ function VespasianoPage() {
     queryKey: ["public-services", "vespasiano", "all"],
     queryFn: () => fetchPublicServices({ citySlug: "vespasiano" }),
   });
+  const { data: cityId } = useCityId("vespasiano");
 
   const services = q.data ?? [];
   const byCategory = new Map<PublicServiceCategory, PublicService[]>();
