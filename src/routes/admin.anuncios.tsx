@@ -304,8 +304,9 @@ function AdminAds() {
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Todas</SelectItem>
-                    <SelectItem value="vespasiano">Vespasiano</SelectItem>
-                    <SelectItem value="sao-jose-da-lapa">São José da Lapa</SelectItem>
+                    {(cities.data ?? []).map((c) => (
+                      <SelectItem key={c.slug} value={c.slug}>{c.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
