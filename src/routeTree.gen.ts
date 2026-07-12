@@ -55,6 +55,7 @@ import { Route as PainelAnunciosRouteImport } from './routes/painel.anuncios'
 import { Route as MarketplaceSlugRouteImport } from './routes/marketplace.$slug'
 import { Route as EventosSlugRouteImport } from './routes/eventos.$slug'
 import { Route as EmpresaSlugRouteImport } from './routes/empresa.$slug'
+import { Route as EmpregosPremiumRouteImport } from './routes/empregos.premium'
 import { Route as EmpregosIdRouteImport } from './routes/empregos.$id'
 import { Route as CidadesSlugRouteImport } from './routes/cidades.$slug'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
@@ -334,6 +335,11 @@ const EmpresaSlugRoute = EmpresaSlugRouteImport.update({
   id: '/empresa/$slug',
   path: '/empresa/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const EmpregosPremiumRoute = EmpregosPremiumRouteImport.update({
+  id: '/premium',
+  path: '/premium',
+  getParentRoute: () => EmpregosRoute,
 } as any)
 const EmpregosIdRoute = EmpregosIdRouteImport.update({
   id: '/$id',
@@ -644,6 +650,7 @@ export interface FileRoutesByFullPath {
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
   '/empregos/$id': typeof EmpregosIdRoute
+  '/empregos/premium': typeof EmpregosPremiumRoute
   '/empresa/$slug': typeof EmpresaSlugRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/marketplace/$slug': typeof MarketplaceSlugRoute
@@ -737,6 +744,7 @@ export interface FileRoutesByTo {
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
   '/empregos/$id': typeof EmpregosIdRoute
+  '/empregos/premium': typeof EmpregosPremiumRoute
   '/empresa/$slug': typeof EmpresaSlugRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/marketplace/$slug': typeof MarketplaceSlugRoute
@@ -835,6 +843,7 @@ export interface FileRoutesById {
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/cidades/$slug': typeof CidadesSlugRoute
   '/empregos/$id': typeof EmpregosIdRoute
+  '/empregos/premium': typeof EmpregosPremiumRoute
   '/empresa/$slug': typeof EmpresaSlugRoute
   '/eventos/$slug': typeof EventosSlugRoute
   '/marketplace/$slug': typeof MarketplaceSlugRoute
@@ -934,6 +943,7 @@ export interface FileRouteTypes {
     | '/categoria/$slug'
     | '/cidades/$slug'
     | '/empregos/$id'
+    | '/empregos/premium'
     | '/empresa/$slug'
     | '/eventos/$slug'
     | '/marketplace/$slug'
@@ -1027,6 +1037,7 @@ export interface FileRouteTypes {
     | '/categoria/$slug'
     | '/cidades/$slug'
     | '/empregos/$id'
+    | '/empregos/premium'
     | '/empresa/$slug'
     | '/eventos/$slug'
     | '/marketplace/$slug'
@@ -1124,6 +1135,7 @@ export interface FileRouteTypes {
     | '/categoria/$slug'
     | '/cidades/$slug'
     | '/empregos/$id'
+    | '/empregos/premium'
     | '/empresa/$slug'
     | '/eventos/$slug'
     | '/marketplace/$slug'
@@ -1539,6 +1551,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/empresa/$slug'
       preLoaderRoute: typeof EmpresaSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/empregos/premium': {
+      id: '/empregos/premium'
+      path: '/premium'
+      fullPath: '/empregos/premium'
+      preLoaderRoute: typeof EmpregosPremiumRouteImport
+      parentRoute: typeof EmpregosRoute
     }
     '/empregos/$id': {
       id: '/empregos/$id'
@@ -1964,10 +1983,12 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface EmpregosRouteChildren {
   EmpregosIdRoute: typeof EmpregosIdRoute
+  EmpregosPremiumRoute: typeof EmpregosPremiumRoute
 }
 
 const EmpregosRouteChildren: EmpregosRouteChildren = {
   EmpregosIdRoute: EmpregosIdRoute,
+  EmpregosPremiumRoute: EmpregosPremiumRoute,
 }
 
 const EmpregosRouteWithChildren = EmpregosRoute._addFileChildren(

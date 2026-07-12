@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { z } from "zod";
-import { fallback, zodValidator } from "@tanstack/zod-adapter";
+
 
 import { SiteLayout } from "@/components/site/SiteLayout";
 import {
@@ -15,7 +15,7 @@ import {
 } from "@/features/jobs";
 
 const searchSchema = z.object({
-  city: fallback(z.string(), "").default(""),
+  city: z.string().catch("").default(""),
 });
 
 export const Route = createFileRoute("/empregos/premium")({
