@@ -303,3 +303,10 @@ function Home() {
     </SiteLayout>
   );
 }
+
+function LiveFeedForHome() {
+  const { city } = useSelectedCity();
+  const { data: cityId } = useCityId(city?.slug ?? null);
+  return <LiveFeedWidget cityId={cityId ?? null} title="Ao vivo na sua cidade" />;
+}
+
