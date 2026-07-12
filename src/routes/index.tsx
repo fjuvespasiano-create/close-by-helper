@@ -139,9 +139,9 @@ function Home() {
 
           {/* Headline */}
           <h1 className="mt-8 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
-            {site.home.hero_title.replace(/\{city\}|sua cidade/i, "").trim() || "Tudo o que oferece, num só app"}{" "}
+            {site.home.hero_title}{" "}
             <span className="bg-gradient-to-r from-accent via-accent to-orange-300 bg-clip-text text-transparent md:whitespace-nowrap">
-              {cityName}
+              em {cityName}
             </span>
           </h1>
 
