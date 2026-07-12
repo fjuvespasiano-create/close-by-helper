@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { resolveCityIdBySlug } from "@/lib/data/cities";
 import type { CitySlug } from "./useSelectedCity";
 
 export function useCityId(slug?: CitySlug | null) {
@@ -7,14 +7,6 @@ export function useCityId(slug?: CitySlug | null) {
     queryKey: ["city-id", slug],
     enabled: !!slug,
     staleTime: 60 * 60 * 1000,
-    queryFn: async () => {
-      if (!slug) return null;
-      const { data } = await supabase
-        .from("cities")
-        .select("id")
-        .eq("slug", slug)
-        .maybeSingle();
-      return data?.id ?? null;
-    },
+    queryFn: () => resolveCityIdBySlug(slug),
   });
 }

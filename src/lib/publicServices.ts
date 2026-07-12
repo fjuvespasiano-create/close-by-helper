@@ -48,9 +48,9 @@ export async function fetchPublicServices(opts?: {
     .order("name");
 
   if (opts?.citySlug) {
-    const { data: city } = await supabase.from("cities").select("id").eq("slug", opts.citySlug).maybeSingle();
-    if (city) query = query.eq("city_id", city.id);
-    else return [];
+    const cityId = await resolveCityIdBySlug(opts.citySlug);
+    if (!cityId) return [];
+    query = query.eq("city_id", cityId);
   }
   if (opts?.category) query = query.eq("category", opts.category);
   if (opts?.limit) query = query.limit(opts.limit);
@@ -71,11 +71,7 @@ export async function fetchPublicServiceById(id: string): Promise<PublicService 
 }
 
 export async function fetchEmergencyContacts(citySlug?: string | null): Promise<EmergencyContact[]> {
-  let cityId: string | null = null;
-  if (citySlug) {
-    const { data: city } = await supabase.from("cities").select("id").eq("slug", citySlug).maybeSingle();
-    cityId = city?.id ?? null;
-  }
+  const cityId = await resolveCityIdBySlug(citySlug);
   let query = supabase
     .from("emergency_contacts")
     .select(`id, name, phone, description, icon, sort_order, active, city_id, created_at, updated_at,
