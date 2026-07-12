@@ -33,7 +33,7 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
 
   const jobsQ = supabase
     .from("jobs")
-    .select("id,title,description,location_city,created_at,slug")
+    .select("id,title,description,location_city,created_at")
     .gte("created_at", sinceISO)
     .eq("is_active", true)
     .order("created_at", { ascending: false })
@@ -43,16 +43,17 @@ async function fetchLiveFeed({ cityId, limit = 60 }: FetchOpts): Promise<RawResu
     .from("promotions")
     .select("id,title,description,city_id,created_at")
     .gte("created_at", sinceISO)
-    .eq("status", "active")
+    .eq("status", "active" as never)
     .order("created_at", { ascending: false })
     .limit(limit);
 
   const procQ = supabase
     .from("procurements")
-    .select("id,title,description,city_id,created_at,source_url")
+    .select("id,title,object,city_id,created_at,source_url")
     .gte("created_at", sinceISO)
     .order("created_at", { ascending: false })
     .limit(limit);
+
 
   const actQ = supabase
     .from("representative_activities")
