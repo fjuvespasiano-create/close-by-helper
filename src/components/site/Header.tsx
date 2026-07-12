@@ -183,7 +183,7 @@ export function Header() {
               <LogOut className="h-4 w-4" /> {site.header.logout_label}
             </Button>
           ) : (
-            <Link to="/auth" className="hidden lg:inline-flex">
+            <Link to="/auth" className="inline-flex">
               <Button variant="ghost" size="sm">{site.header.login_label}</Button>
             </Link>
           )}
