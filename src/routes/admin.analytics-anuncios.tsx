@@ -65,15 +65,18 @@ function AnalyticsAnunciosPage() {
   const [placementFilter, setPlacementFilter] = useState<string>("");
   const [prevEvents, setPrevEvents] = useState<EventRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
       setLoading(true);
+      setLoadError(null);
       const start = daysAgo(rangeDays).toISOString();
       const prevStart = daysAgo(rangeDays * 2).toISOString();
       const prevEnd = daysAgo(rangeDays).toISOString();
-      const [{ data: camps }, { data: evs }, { data: prev }] = await Promise.all([
+      const [campsRes, evsRes, prevRes] = await Promise.all([
         supabase
           .from("ad_campaigns")
           .select("id,name,image_url,link_url,starts_at,ends_at,active,city_slug,placement")
@@ -93,11 +96,21 @@ function AnalyticsAnunciosPage() {
           .lt("created_at", prevEnd)
           .limit(20000),
       ]);
-      setCampaigns((camps ?? []) as Campaign[]);
-      setEvents((evs ?? []) as EventRow[]);
-      setPrevEvents((prev ?? []) as EventRow[]);
+      if (cancelled) return;
+      const firstError = campsRes.error ?? evsRes.error ?? prevRes.error;
+      if (firstError) {
+        setLoadError(firstError.message);
+        setCampaigns([]);
+        setEvents([]);
+        setPrevEvents([]);
+      } else {
+        setCampaigns((campsRes.data ?? []) as Campaign[]);
+        setEvents((evsRes.data ?? []) as EventRow[]);
+        setPrevEvents((prevRes.data ?? []) as EventRow[]);
+      }
       setLoading(false);
     })();
+    return () => { cancelled = true; };
   }, [rangeDays]);
 
   const cities = useMemo(
@@ -202,7 +215,7 @@ function AnalyticsAnunciosPage() {
     const desktopPct = totalDev ? (desktop / totalDev) * 100 : 0;
 
     return { campaign, impressions, clicks, ctr, series, mobilePct, desktopPct };
-  }, [selectedId, events, campaigns, rangeDays]);
+  }, [selectedId, scopedEvents, campaigns, rangeDays]);
 
   async function exportPdf() {
     if (!reportRef.current || !report) return;
@@ -290,6 +303,18 @@ function AnalyticsAnunciosPage() {
           </button>
         </div>
       </div>
+
+      {loadError && (
+        <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
+          Não foi possível carregar os dados: {loadError}
+        </div>
+      )}
+      {loading && !loadError && (
+        <div className="rounded-xl border border-border bg-muted/30 p-4 text-center text-sm text-muted-foreground">
+          Carregando métricas…
+        </div>
+      )}
+
 
       {/* Overview cards */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

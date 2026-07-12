@@ -1,7 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { z } from "zod";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/push/novo")({
   head: () => ({ meta: [{ title: "Novo envio push — Admin" }, { name: "robots", content: "noindex" }] }),
+  validateSearch: z.object({ template: z.string().optional() }),
   component: NovoPush,
 });
 
@@ -48,6 +50,7 @@ const AUDIENCES = [
 function NovoPush() {
   const nav = useNavigate();
   const send = useServerFn(sendPushNow);
+  const { template: templateParam } = Route.useSearch();
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -78,6 +81,16 @@ function NovoPush() {
   function applyTemplate(t: typeof TEMPLATES[number]) {
     setTitle(t.title); setBody(t.body); setEmoji(t.emoji); setColor(t.color); setCategory(t.slug);
   }
+
+  useEffect(() => {
+    if (!templateParam) return;
+    const t = TEMPLATES.find((x) => x.slug === templateParam);
+    if (t) {
+      applyTemplate(t);
+      toast.success(`Template "${t.name}" carregado.`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templateParam]);
 
   const mut = useMutation({
     mutationFn: () => send({

@@ -41,7 +41,9 @@ function TemplatesPage() {
               </div>
             </div>
             <div className="mt-3 flex justify-end">
-              <Link to="/admin/push/novo"><Button size="sm" variant="outline"><Send className="mr-2 h-4 w-4" /> Usar</Button></Link>
+              <Link to="/admin/push/novo" search={{ template: t.slug }}>
+                <Button size="sm" variant="outline"><Send className="mr-2 h-4 w-4" /> Usar</Button>
+              </Link>
             </div>
           </Card>
         ))}

@@ -62,6 +62,16 @@ async function listCompanies() {
   return data ?? [];
 }
 
+async function listCities() {
+  const { data, error } = await supabase
+    .from("cities")
+    .select("slug,name")
+    .eq("is_active", true)
+    .order("name");
+  if (error) throw error;
+  return data ?? [];
+}
+
 async function listAll() {
   const { data, error } = await supabase
     .from("ad_campaigns")
@@ -75,6 +85,7 @@ function AdminAds() {
   const qc = useQueryClient();
   const list = useQuery({ queryKey: ["admin-ads"], queryFn: listAll });
   const companies = useQuery({ queryKey: ["admin-ads-companies"], queryFn: listCompanies });
+  const cities = useQuery({ queryKey: ["admin-ads-cities"], queryFn: listCities });
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<FormState>(empty);
 
@@ -213,7 +224,16 @@ function AdminAds() {
                 <tr key={row.id}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <img src={row.image_url} alt="" className="h-12 w-12 rounded object-cover" />
+                      <img
+                        src={row.image_url}
+                        alt={row.name}
+                        className="h-12 w-12 rounded object-cover bg-muted"
+                        onError={(e) => {
+                          const t = e.currentTarget;
+                          t.onerror = null;
+                          t.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><rect width='48' height='48' fill='%23e5e7eb'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='sans-serif' font-size='9' fill='%236b7280'>sem img</text></svg>";
+                        }}
+                      />
                       <div>
                         <div className="font-medium">{row.name}</div>
                         <a href={row.link_url} target="_blank" rel="noopener" className="text-xs text-primary hover:underline">
@@ -284,8 +304,9 @@ function AdminAds() {
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Todas</SelectItem>
-                    <SelectItem value="vespasiano">Vespasiano</SelectItem>
-                    <SelectItem value="sao-jose-da-lapa">São José da Lapa</SelectItem>
+                    {(cities.data ?? []).map((c) => (
+                      <SelectItem key={c.slug} value={c.slug}>{c.name}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
