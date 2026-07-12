@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveCityIdBySlug } from "@/lib/data/cities";
 
 export type CompanyListItem = {
   id: string;
@@ -123,10 +124,8 @@ export async function searchCompanies(params: {
   const from = page * limit;
   const to = from + limit - 1;
 
-  const [cityRes, catRes] = await Promise.all([
-    params.city
-      ? supabase.from("cities").select("id").eq("slug", params.city).maybeSingle()
-      : Promise.resolve({ data: null as { id: string } | null }),
+  const [cityId, catRes] = await Promise.all([
+    resolveCityIdBySlug(params.city),
     params.category
       ? supabase.from("categories").select("id").eq("slug", params.category).maybeSingle()
       : Promise.resolve({ data: null as { id: string } | null }),

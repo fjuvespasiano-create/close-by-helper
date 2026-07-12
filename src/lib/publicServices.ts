@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { resolveCityIdBySlug } from "@/lib/data/cities";
 import type { Database } from "@/integrations/supabase/types";
 
 export type PublicServiceCategory = Database["public"]["Enums"]["public_service_category"];
