@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Clock, MapPin, Phone, Globe, ExternalLink } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { CategoryIcon } from "@/components/site/CategoryIcon";
+import { LiveFeedWidget } from "@/features/live-feed";
+import { useCityId } from "@/hooks/useCityId";
 import {
   PUBLIC_SERVICE_CATEGORIES,
   fetchPublicServices,
@@ -36,6 +38,7 @@ function VespasianoPage() {
     queryKey: ["public-services", "vespasiano", "all"],
     queryFn: () => fetchPublicServices({ citySlug: "vespasiano" }),
   });
+  const { data: cityId } = useCityId("vespasiano");
 
   const services = q.data ?? [];
   const byCategory = new Map<PublicServiceCategory, PublicService[]>();
@@ -79,7 +82,12 @@ function VespasianoPage() {
         </div>
       </section>
 
+      <section className="container mx-auto px-4 pt-10">
+        <LiveFeedWidget cityId={cityId ?? null} title="Acontecendo agora em Vespasiano" />
+      </section>
+
       <section className="container mx-auto px-4 py-10">
+
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-2xl font-extrabold md:text-3xl">Serviços Públicos</h2>

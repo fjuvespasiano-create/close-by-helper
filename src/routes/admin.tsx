@@ -22,7 +22,7 @@ type AdminPath =
   | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/calendario-editorial"
   | "/admin/promocoes"
   | "/admin/scraper-vespasiano" | "/admin/scraper-sjl"
-  | "/admin/backup"
+  | "/admin/backup" | "/admin/ao-vivo"
   | "/admin/configuracoes";
 
 type NavItem = { to: AdminPath; label: string; icon: typeof LayoutDashboard; exact?: boolean };
@@ -82,6 +82,7 @@ const GROUPS: NavGroup[] = [
     id: "sistema", label: "Sistema", icon: ShieldCheck,
     items: [
       { to: "/admin/qa", label: "Central de Qualidade", icon: Bug },
+      { to: "/admin/ao-vivo", label: "Feed Ao Vivo", icon: Siren },
       { to: "/admin/backup", label: "Backup & Restauração", icon: DatabaseBackup },
       { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
     ],

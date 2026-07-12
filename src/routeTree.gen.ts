@@ -30,6 +30,7 @@ import { Route as EmergenciaRouteImport } from './routes/emergencia'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AoVivoRouteImport } from './routes/ao-vivo'
 import { Route as AgoraRouteImport } from './routes/agora'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -82,6 +83,7 @@ import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
 import { Route as AdminCalendarioEditorialRouteImport } from './routes/admin.calendario-editorial'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminBackupRouteImport } from './routes/admin.backup'
+import { Route as AdminAoVivoRouteImport } from './routes/admin.ao-vivo'
 import { Route as AdminAnunciosRouteImport } from './routes/admin.anuncios'
 import { Route as AdminAnalyticsAnunciosRouteImport } from './routes/admin.analytics-anuncios'
 import { Route as AdminPushIndexRouteImport } from './routes/admin.push.index'
@@ -210,6 +212,11 @@ const BuscarRoute = BuscarRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AoVivoRoute = AoVivoRouteImport.update({
+  id: '/ao-vivo',
+  path: '/ao-vivo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgoraRoute = AgoraRouteImport.update({
@@ -473,6 +480,11 @@ const AdminBackupRoute = AdminBackupRouteImport.update({
   path: '/backup',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAoVivoRoute = AdminAoVivoRouteImport.update({
+  id: '/ao-vivo',
+  path: '/ao-vivo',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminAnunciosRoute = AdminAnunciosRouteImport.update({
   id: '/anuncios',
   path: '/anuncios',
@@ -608,6 +620,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/agora': typeof AgoraRoute
+  '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
@@ -631,6 +644,7 @@ export interface FileRoutesByFullPath {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
@@ -706,6 +720,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agora': typeof AgoraRoute
+  '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
@@ -727,6 +742,7 @@ export interface FileRoutesByTo {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
@@ -803,6 +819,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/agora': typeof AgoraRoute
+  '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
   '/contato': typeof ContatoRoute
@@ -826,6 +843,7 @@ export interface FileRoutesById {
   '/vespasiano': typeof VespasianoRoute
   '/admin/analytics-anuncios': typeof AdminAnalyticsAnunciosRoute
   '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/ao-vivo': typeof AdminAoVivoRoute
   '/admin/backup': typeof AdminBackupRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
@@ -904,6 +922,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/agora'
+    | '/ao-vivo'
     | '/auth'
     | '/buscar'
     | '/contato'
@@ -927,6 +946,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
@@ -1002,6 +1022,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/agora'
+    | '/ao-vivo'
     | '/auth'
     | '/buscar'
     | '/contato'
@@ -1023,6 +1044,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
@@ -1098,6 +1120,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/agora'
+    | '/ao-vivo'
     | '/auth'
     | '/buscar'
     | '/contato'
@@ -1121,6 +1144,7 @@ export interface FileRouteTypes {
     | '/vespasiano'
     | '/admin/analytics-anuncios'
     | '/admin/anuncios'
+    | '/admin/ao-vivo'
     | '/admin/backup'
     | '/admin/blog'
     | '/admin/calendario-editorial'
@@ -1198,6 +1222,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AgoraRoute: typeof AgoraRoute
+  AoVivoRoute: typeof AoVivoRoute
   AuthRoute: typeof AuthRoute
   BuscarRoute: typeof BuscarRoute
   ContatoRoute: typeof ContatoRoute
@@ -1387,6 +1412,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ao-vivo': {
+      id: '/ao-vivo'
+      path: '/ao-vivo'
+      fullPath: '/ao-vivo'
+      preLoaderRoute: typeof AoVivoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agora': {
@@ -1753,6 +1785,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBackupRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/ao-vivo': {
+      id: '/admin/ao-vivo'
+      path: '/ao-vivo'
+      fullPath: '/admin/ao-vivo'
+      preLoaderRoute: typeof AdminAoVivoRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/anuncios': {
       id: '/admin/anuncios'
       path: '/anuncios'
@@ -1947,6 +1986,7 @@ const AdminPushRouteWithChildren = AdminPushRoute._addFileChildren(
 interface AdminRouteChildren {
   AdminAnalyticsAnunciosRoute: typeof AdminAnalyticsAnunciosRoute
   AdminAnunciosRoute: typeof AdminAnunciosRoute
+  AdminAoVivoRoute: typeof AdminAoVivoRoute
   AdminBackupRoute: typeof AdminBackupRoute
   AdminBlogRoute: typeof AdminBlogRoute
   AdminCalendarioEditorialRoute: typeof AdminCalendarioEditorialRoute
@@ -1975,6 +2015,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAnalyticsAnunciosRoute: AdminAnalyticsAnunciosRoute,
   AdminAnunciosRoute: AdminAnunciosRoute,
+  AdminAoVivoRoute: AdminAoVivoRoute,
   AdminBackupRoute: AdminBackupRoute,
   AdminBlogRoute: AdminBlogRoute,
   AdminCalendarioEditorialRoute: AdminCalendarioEditorialRoute,
@@ -2132,6 +2173,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AgoraRoute: AgoraRoute,
+  AoVivoRoute: AoVivoRoute,
   AuthRoute: AuthRoute,
   BuscarRoute: BuscarRoute,
   ContatoRoute: ContatoRoute,
