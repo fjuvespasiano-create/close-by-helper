@@ -57,11 +57,7 @@ export const scrapeVespasianoContacts = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
-    const apiKey = process.env.FIRECRAWL_API_KEY;
-    if (!apiKey) throw new Error("FIRECRAWL_API_KEY não configurada.");
-
-    const { default: Firecrawl } = await import("@mendable/firecrawl-js");
-    const fc = new Firecrawl({ apiKey });
+    const fc = await createFirecrawl();
 
     // 1) Descobrir URLs relevantes
     let urls: string[] = [];
