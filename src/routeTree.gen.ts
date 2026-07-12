@@ -65,6 +65,7 @@ import { Route as AdminTextosRouteImport } from './routes/admin.textos'
 import { Route as AdminServicosPublicosRouteImport } from './routes/admin.servicos-publicos'
 import { Route as AdminScraperVespasianoRouteImport } from './routes/admin.scraper-vespasiano'
 import { Route as AdminScraperSjlRouteImport } from './routes/admin.scraper-sjl'
+import { Route as AdminScraperCamaraSjlRouteImport } from './routes/admin.scraper-camara-sjl'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPushRouteImport } from './routes/admin.push'
 import { Route as AdminPromocoesRouteImport } from './routes/admin.promocoes'
@@ -386,6 +387,11 @@ const AdminScraperSjlRoute = AdminScraperSjlRouteImport.update({
   path: '/scraper-sjl',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminScraperCamaraSjlRoute = AdminScraperCamaraSjlRouteImport.update({
+  id: '/scraper-camara-sjl',
+  path: '/scraper-camara-sjl',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminQaRoute = AdminQaRouteImport.update({
   id: '/qa',
   path: '/qa',
@@ -641,6 +647,7 @@ export interface FileRoutesByFullPath {
   '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/push': typeof AdminPushRouteWithChildren
   '/admin/qa': typeof AdminQaRoute
+  '/admin/scraper-camara-sjl': typeof AdminScraperCamaraSjlRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
@@ -735,6 +742,7 @@ export interface FileRoutesByTo {
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/qa': typeof AdminQaRoute
+  '/admin/scraper-camara-sjl': typeof AdminScraperCamaraSjlRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
@@ -834,6 +842,7 @@ export interface FileRoutesById {
   '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/push': typeof AdminPushRouteWithChildren
   '/admin/qa': typeof AdminQaRoute
+  '/admin/scraper-camara-sjl': typeof AdminScraperCamaraSjlRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
@@ -934,6 +943,7 @@ export interface FileRouteTypes {
     | '/admin/promocoes'
     | '/admin/push'
     | '/admin/qa'
+    | '/admin/scraper-camara-sjl'
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
@@ -1028,6 +1038,7 @@ export interface FileRouteTypes {
     | '/admin/planos'
     | '/admin/promocoes'
     | '/admin/qa'
+    | '/admin/scraper-camara-sjl'
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
@@ -1126,6 +1137,7 @@ export interface FileRouteTypes {
     | '/admin/promocoes'
     | '/admin/push'
     | '/admin/qa'
+    | '/admin/scraper-camara-sjl'
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
@@ -1622,6 +1634,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminScraperSjlRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/scraper-camara-sjl': {
+      id: '/admin/scraper-camara-sjl'
+      path: '/scraper-camara-sjl'
+      fullPath: '/admin/scraper-camara-sjl'
+      preLoaderRoute: typeof AdminScraperCamaraSjlRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/qa': {
       id: '/admin/qa'
       path: '/qa'
@@ -1944,6 +1963,7 @@ interface AdminRouteChildren {
   AdminPromocoesRoute: typeof AdminPromocoesRoute
   AdminPushRoute: typeof AdminPushRouteWithChildren
   AdminQaRoute: typeof AdminQaRoute
+  AdminScraperCamaraSjlRoute: typeof AdminScraperCamaraSjlRoute
   AdminScraperSjlRoute: typeof AdminScraperSjlRoute
   AdminScraperVespasianoRoute: typeof AdminScraperVespasianoRoute
   AdminServicosPublicosRoute: typeof AdminServicosPublicosRoute
@@ -1971,6 +1991,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPromocoesRoute: AdminPromocoesRoute,
   AdminPushRoute: AdminPushRouteWithChildren,
   AdminQaRoute: AdminQaRoute,
+  AdminScraperCamaraSjlRoute: AdminScraperCamaraSjlRoute,
   AdminScraperSjlRoute: AdminScraperSjlRoute,
   AdminScraperVespasianoRoute: AdminScraperVespasianoRoute,
   AdminServicosPublicosRoute: AdminServicosPublicosRoute,
