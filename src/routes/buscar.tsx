@@ -96,6 +96,9 @@ function BuscarPage() {
       {/* Sticky search hero */}
       <section className="sticky top-16 z-30 border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
         <div className="container mx-auto px-4 py-4">
+          <h1 className="mb-3 font-display text-xl font-bold text-foreground md:text-2xl">
+            Encontrar empresas e serviços
+          </h1>
           <SmartSearchBar />
 
           {/* Category chip strip */}

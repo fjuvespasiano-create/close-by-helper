@@ -5,11 +5,13 @@ import { useSiteContent } from "@/lib/siteContent";
 export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
-      { title: "Sobre — AgenddaAqui" },
-      { name: "description", content: "Conheça o AgenddaAqui, marketplace regional de serviços e empresas em Minas Gerais." },
-      { property: "og:url", content: "/sobre" },
+      { title: "Sobre o AgenddaAqui — Guia local de MG" },
+      { name: "description", content: "Conheça o AgenddaAqui, marketplace regional de serviços e empresas em Vespasiano, São José da Lapa e região metropolitana de BH." },
+      { property: "og:title", content: "Sobre o AgenddaAqui — Guia local de MG" },
+      { property: "og:description", content: "Marketplace regional de serviços e empresas em Vespasiano, São José da Lapa e região." },
+      { property: "og:url", content: "https://close-by-helper.lovable.app/sobre" },
     ],
-    links: [{ rel: "canonical", href: "/sobre" }],
+    links: [{ rel: "canonical", href: "https://close-by-helper.lovable.app/sobre" }],
   }),
   component: SobrePage,
 });
