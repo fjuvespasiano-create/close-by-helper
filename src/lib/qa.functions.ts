@@ -29,11 +29,11 @@ const CreateSchema = z.object({
   user_email: z.string().email().max(320).nullish(),
 });
 
-function serverClient() {
-  return createClient<Database>(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!, {
-    auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
-  });
+async function serverClient() {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  return supabaseAdmin;
 }
+
 
 function clientIp(): string | null {
   const req = getRequest();
@@ -76,7 +76,7 @@ function fingerprintOf(input: {
 export const createQaTicket = createServerFn({ method: "POST" })
   .inputValidator((raw: unknown) => CreateSchema.parse(raw))
   .handler(async ({ data }) => {
-    const supabase = serverClient();
+    const supabase = await serverClient();
     const ip = clientIp();
     const fingerprint = fingerprintOf(data);
     const priority = autoPriority(data.type);
