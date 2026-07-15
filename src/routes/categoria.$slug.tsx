@@ -7,7 +7,7 @@ import { categoriesQueryOptions, searchCompanies } from "@/lib/queries";
 
 export const Route = createFileRoute("/categoria/$slug")({
   head: ({ params, loaderData }) => {
-    const cat = loaderData?.category;
+    const cat = (loaderData as { category: { name: string; description?: string | null } | null } | undefined)?.category;
     const name = cat?.name ?? params.slug;
     const desc = cat?.description ?? `Empresas e profissionais de ${name} em Vespasiano, São José da Lapa e região.`;
     const url = `https://close-by-helper.lovable.app/categoria/${params.slug}`;
