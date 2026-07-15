@@ -76,7 +76,7 @@ function fingerprintOf(input: {
 export const createQaTicket = createServerFn({ method: "POST" })
   .inputValidator((raw: unknown) => CreateSchema.parse(raw))
   .handler(async ({ data }) => {
-    const supabase = serverClient();
+    const supabase = await serverClient();
     const ip = clientIp();
     const fingerprint = fingerprintOf(data);
     const priority = autoPriority(data.type);
