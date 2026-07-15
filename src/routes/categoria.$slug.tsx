@@ -6,17 +6,39 @@ import { CategoryIcon } from "@/components/site/CategoryIcon";
 import { categoriesQueryOptions, searchCompanies } from "@/lib/queries";
 
 export const Route = createFileRoute("/categoria/$slug")({
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} — AgenddaAqui` },
-      { name: "description", content: `Empresas e profissionais de ${params.slug} no AgenddaAqui.` },
-      { property: "og:url", content: `/categoria/${params.slug}` },
-    ],
-    links: [{ rel: "canonical", href: `/categoria/${params.slug}` }],
-  }),
+  head: ({ params, loaderData }) => {
+    const cat = loaderData?.category;
+    const name = cat?.name ?? params.slug;
+    const desc = cat?.description ?? `Empresas e profissionais de ${name} em Vespasiano, São José da Lapa e região.`;
+    const url = `https://close-by-helper.lovable.app/categoria/${params.slug}`;
+    return {
+      meta: [
+        { title: `${name} — Empresas e profissionais | AgenddaAqui` },
+        { name: "description", content: desc },
+        { property: "og:title", content: `${name} — Empresas e profissionais no AgenddaAqui` },
+        { property: "og:description", content: desc },
+        { property: "og:url", content: url },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: `${name} — AgenddaAqui`,
+            description: desc,
+            url,
+          }),
+        },
+      ],
+    };
+  },
   component: CategoryPage,
-  loader: ({ context }) => {
-    void context.queryClient.prefetchQuery(categoriesQueryOptions);
+  loader: async ({ context, params }) => {
+    const cats = await context.queryClient.ensureQueryData(categoriesQueryOptions);
+    const category = (cats as Array<{ slug: string; name: string; description?: string | null; icon?: string | null }>).find((c) => c.slug === params.slug) ?? null;
+    return { category };
   },
 });
 

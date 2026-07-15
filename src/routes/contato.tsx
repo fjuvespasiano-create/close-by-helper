@@ -6,11 +6,13 @@ import { useSiteContent } from "@/lib/siteContent";
 export const Route = createFileRoute("/contato")({
   head: () => ({
     meta: [
-      { title: "Contato — AgenddaAqui" },
-      { name: "description", content: "Fale com a equipe do AgenddaAqui." },
-      { property: "og:url", content: "/contato" },
+      { title: "Fale com o AgenddaAqui — Contato" },
+      { name: "description", content: "Tire dúvidas, envie sugestões ou fale com a equipe do AgenddaAqui por e-mail ou WhatsApp." },
+      { property: "og:title", content: "Fale com o AgenddaAqui — Contato" },
+      { property: "og:description", content: "E-mail e WhatsApp da equipe do AgenddaAqui para dúvidas e sugestões." },
+      { property: "og:url", content: "https://close-by-helper.lovable.app/contato" },
     ],
-    links: [{ rel: "canonical", href: "/contato" }],
+    links: [{ rel: "canonical", href: "https://close-by-helper.lovable.app/contato" }],
   }),
   component: ContatoPage,
 });

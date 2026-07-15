@@ -92,8 +92,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AgenddaAqui — Serviços e empresas perto de você em Vespasiano e SJL" },
-      { name: "description", content: "Encontre empresas verificadas, promoções, empregos, eventos e serviços públicos em Vespasiano e São José da Lapa/MG. A cidade inteira no seu bolso." },
+      { title: "AgenddaAqui — Guia local de Vespasiano e SJL" },
+      { name: "description", content: "Empresas, promoções, empregos, eventos e serviços públicos em Vespasiano e São José da Lapa/MG. A cidade inteira no seu bolso." },
       { name: "author", content: "AgenddaAqui" },
       { name: "keywords", content: "Vespasiano, São José da Lapa, empresas locais, serviços, promoções, empregos, eventos, guia comercial, MG" },
       { name: "geo.region", content: "BR-MG" },
