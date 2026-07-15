@@ -28,19 +28,89 @@ import {
 } from "@/components/site/CompanyReputationSections";
 
 export const Route = createFileRoute("/empresa/$slug")({
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug} — AgenddaAqui` },
-      { name: "description", content: `Veja avaliações, fotos, horários e contato de ${params.slug} no AgenddaAqui.` },
-      { property: "og:url", content: `/empresa/${params.slug}` },
-      { property: "og:type", content: "profile" },
-    ],
-    links: [{ rel: "canonical", href: `/empresa/${params.slug}` }],
-  }),
+  head: ({ params, loaderData }) => {
+    const co = (loaderData as { company: Company | null } | undefined)?.company;
+    const url = `https://close-by-helper.lovable.app/empresa/${params.slug}`;
+    const name = co?.name ?? params.slug.replace(/-/g, " ");
+    const cityName = co?.cities?.name;
+    const catName = co?.company_categories?.[0]?.categories?.name;
+    const titleBase = catName && cityName
+      ? `${name} — ${catName} em ${cityName}`
+      : cityName
+      ? `${name} — ${cityName}`
+      : name;
+    const title = `${titleBase} | AgenddaAqui`;
+    const desc = (co?.tagline || co?.description || `Avaliações, fotos, horários e contato de ${name} no AgenddaAqui.`).slice(0, 158);
+    const image = co?.banner_url || co?.logo_url || undefined;
+
+    const scripts: Array<{ type: string; children: string }> = [];
+    if (co) {
+      const localBusiness: Record<string, unknown> = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        name: co.name,
+        url,
+        ...(co.phone ? { telephone: co.phone } : {}),
+        ...(co.email ? { email: co.email } : {}),
+        ...(image ? { image } : {}),
+        ...(co.description ? { description: co.description } : {}),
+        ...(co.address || cityName
+          ? {
+              address: {
+                "@type": "PostalAddress",
+                ...(co.address ? { streetAddress: co.address } : {}),
+                ...(cityName ? { addressLocality: cityName } : {}),
+                ...(co.cities?.state ? { addressRegion: co.cities.state } : {}),
+                addressCountry: "BR",
+                ...(co.zip ? { postalCode: co.zip } : {}),
+              },
+            }
+          : {}),
+        ...(co.lat && co.lng
+          ? { geo: { "@type": "GeoCoordinates", latitude: co.lat, longitude: co.lng } }
+          : {}),
+      };
+      scripts.push({ type: "application/ld+json", children: JSON.stringify(localBusiness) });
+
+      const faqs = [
+        { q: "Como faço para solicitar um orçamento?", a: `Peça um orçamento gratuito diretamente pelo WhatsApp ou telefone de ${co.name} listados nesta página.` },
+        { q: "A empresa atende minha região?", a: cityName ? `${co.name} atende ${cityName} e regiões próximas.` : "Entre em contato para confirmar se a empresa atende sua região." },
+        { q: "Quais formas de pagamento são aceitas?", a: "Cartão de crédito, débito, Pix e dinheiro. Confirme condições diretamente com a empresa." },
+      ];
+      scripts.push({
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      });
+    }
+
+    return {
+      meta: [
+        { title },
+        { name: "description", content: desc },
+        { property: "og:title", content: titleBase },
+        { property: "og:description", content: desc },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "profile" },
+        ...(image ? [{ property: "og:image" as const, content: image }] : []),
+        ...(image ? [{ name: "twitter:image" as const, content: image }] : []),
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts,
+    };
+  },
   component: CompanyPage,
-  // Prefetch on hover / SSR so page paint is instant.
-  loader: ({ context, params }) => {
-    void context.queryClient.prefetchQuery(companyBySlugQueryOptions(params.slug));
+  // SSR the company so head() can populate title/description/JSON-LD.
+  loader: async ({ context, params }) => {
+    const company = (await context.queryClient.ensureQueryData(companyBySlugQueryOptions(params.slug))) as Company | null;
+    return { company };
   },
 });
 
