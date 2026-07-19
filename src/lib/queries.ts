@@ -142,9 +142,12 @@ export async function searchCompanies(params: {
     if (companyIdsForCategory.length === 0) return { items: [], hasMore: false, total: 0 };
   }
 
+  // `count: "estimated"` usa estatísticas do planner do Postgres em vez de
+  // rodar um COUNT(*) real — corta latência da busca em conjuntos grandes
+  // (a UI só precisa saber se há próxima página).
   let query = supabase
     .from("companies")
-    .select(SELECT, { count: "exact" })
+    .select(SELECT, { count: "estimated" })
     .eq("status", "active");
 
   if (params.premiumOnly) query = query.in("plan", ["premium", "featured"]);
@@ -173,7 +176,7 @@ export async function searchCompanies(params: {
   if (error) throw error;
   const items = (data as CompanyRow[] | null ?? []).map(mapCompany);
   const total = typeof count === "number" ? count : null;
-  const hasMore = total != null ? to + 1 < total : items.length === limit;
+  const hasMore = items.length === limit;
   return { items, hasMore, total };
 }
 

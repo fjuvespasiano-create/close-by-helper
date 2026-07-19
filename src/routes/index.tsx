@@ -50,11 +50,14 @@ export const Route = createFileRoute("/")({
     ],
   }),
   component: Home,
-  loader: ({ context }) => {
-    // Prime cache in parallel so first paint has data (also warms on hover
-    // preload since defaultPreload: "intent").
-    void context.queryClient.prefetchQuery(categoriesQueryOptions);
-    void context.queryClient.prefetchQuery(featuredCompaniesQueryOptions(8));
+  loader: async ({ context }) => {
+    // Aguarda categorias (dados críticos e leves para o above-the-fold) para
+    // que o SSR entregue HTML já pintado. Featured é prefetch em paralelo
+    // (não bloqueia) — chega logo depois via cache do Query.
+    await Promise.all([
+      context.queryClient.ensureQueryData(categoriesQueryOptions),
+      context.queryClient.prefetchQuery(featuredCompaniesQueryOptions(8)),
+    ]);
   },
 });
 
