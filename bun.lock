@@ -6,8 +6,6 @@
       "name": "tanstack_start_ts",
       "dependencies": {
         "@fontsource/dm-sans": "^5.2.8",
-        "@fontsource/inter": "^5.2.8",
-        "@fontsource/plus-jakarta-sans": "^5.2.8",
         "@fontsource/space-grotesk": "^5.2.10",
         "@hookform/resolvers": "^5.2.2",
         "@lovable.dev/cloud-auth-js": "^1.1.2",
@@ -71,7 +69,7 @@
       },
       "devDependencies": {
         "@eslint/js": "^9.32.0",
-        "@lovable.dev/vite-tanstack-config": "2.7.4",
+        "@lovable.dev/vite-tanstack-config": "2.7.6",
         "@types/node": "^22.16.5",
         "@types/react": "^19.2.0",
         "@types/react-dom": "^19.2.0",
@@ -220,10 +218,6 @@
 
     "@fontsource/dm-sans": ["@fontsource/dm-sans@5.2.8", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/dm-sans/-/dm-sans-5.2.8.tgz", {}, "sha512-tlovG42m9ESG28WiHpLq3F5umAlm64rv0RkqTbYowRn70e9OlRr5a3yTJhrhrY+k5lftR/OFJjPzOLQzk8EfCA=="],
 
-    "@fontsource/inter": ["@fontsource/inter@5.2.8", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/inter/-/inter-5.2.8.tgz", {}, "sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg=="],
-
-    "@fontsource/plus-jakarta-sans": ["@fontsource/plus-jakarta-sans@5.2.8", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/plus-jakarta-sans/-/plus-jakarta-sans-5.2.8.tgz", {}, "sha512-P5qE49fqdeD+7DXH1KBxmMPlB17LTz1zvBhFH0tFzfnYTKVJVyb0pR6plh0ZGXxcB+Oayb54FZZw3V42/DawTw=="],
-
     "@fontsource/space-grotesk": ["@fontsource/space-grotesk@5.2.10", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@fontsource/space-grotesk/-/space-grotesk-5.2.10.tgz", {}, "sha512-XNXEbT74OIITPqw2H6HXwPDp85fy43uxfBwFR5PU+9sLnjuLj12KlhVM9nZVN6q6dlKjkuN8JisW/OBxwxgUew=="],
 
     "@hookform/resolvers": ["@hookform/resolvers@5.2.2", "", { "dependencies": { "@standard-schema/utils": "^0.3.0" }, "peerDependencies": { "react-hook-form": "^7.55.0" } }, "sha512-A/IxlMLShx3KjV/HeTcTfaMxdwy690+L/ZADoeaTltLx+CVuzkeVIPuybK3jrRfw7YZnmdKsVVHAlEPIAEUNlA=="],
@@ -254,7 +248,7 @@
 
     "@lovable.dev/vite-plugin-hmr-gate": ["@lovable.dev/vite-plugin-hmr-gate@1.1.3", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@lovable.dev/vite-plugin-hmr-gate/-/vite-plugin-hmr-gate-1.1.3.tgz", { "peerDependencies": { "vite": ">=5.0.0 <9.0.0" } }, "sha512-edEZzJloDj2IO7lf380So7k1SiNeYDbFLqeLzuqsP8J1qSetKWqTBTR2gAfGxBlLXHZrlayb/dU8Y9S9AlqW0Q=="],
 
-    "@lovable.dev/vite-tanstack-config": ["@lovable.dev/vite-tanstack-config@2.7.4", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@lovable.dev/vite-tanstack-config/-/vite-tanstack-config-2.7.4.tgz", { "dependencies": { "@lovable.dev/vite-plugin-dev-server-bridge": "^1.1.1", "@lovable.dev/vite-plugin-hmr-gate": "^1.1.3", "@tanstack/devtools-vite": "^0.8.1", "lightningcss": "^1.30.0" }, "peerDependencies": { "@tailwindcss/vite": ">=4.0.0", "@tanstack/react-start": ">=1.100.0", "@vitejs/plugin-react": ">=4.0.0", "nitro": ">=3.0.260603-beta", "vite": ">=5.0.0 <9.0.0", "vite-tsconfig-paths": ">=6.0.0" }, "optionalPeers": ["nitro"] }, "sha512-0YnCUF+R3h0jeSRCo+HJoAHWkZxWaKF2ShFzIljWEpHr1MLF1j1PuxfjZgO3Wkd0kMmFjMlzwvFQ+xRv3yykdQ=="],
+    "@lovable.dev/vite-tanstack-config": ["@lovable.dev/vite-tanstack-config@2.7.6", "https://europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@lovable.dev/vite-tanstack-config/-/vite-tanstack-config-2.7.6.tgz", { "dependencies": { "@lovable.dev/vite-plugin-dev-server-bridge": "^1.1.1", "@lovable.dev/vite-plugin-hmr-gate": "^1.1.3", "@tanstack/devtools-vite": "^0.8.1", "lightningcss": "^1.30.0" }, "peerDependencies": { "@tailwindcss/vite": ">=4.0.0", "@tanstack/react-start": ">=1.100.0", "@vitejs/plugin-react": ">=4.0.0", "nitro": ">=3.0.260603-beta", "vite": ">=5.0.0 <9.0.0", "vite-tsconfig-paths": ">=6.0.0" }, "optionalPeers": ["nitro"] }, "sha512-OxmPom+MWV54Itezoapqa/T6zN8oSHap4kHG7mse4iiCMGGD+E4qa+q1SctacU6wEDkJiqJHhYPG+QEsSY3IUw=="],
 
     "@mendable/firecrawl-js": ["@mendable/firecrawl-js@4.30.0", "https://europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@mendable/firecrawl-js/-/firecrawl-js-4.30.0.tgz", { "dependencies": { "axios": "1.18.0", "firecrawl": "4.16.0", "typescript-event-target": "^1.1.1", "zod": "^3.23.8", "zod-to-json-schema": "^3.23.0" } }, "sha512-t8V0hhTFpWISFR7Gkn927aDHldcuCqyDx320dNji067O8KSTEOHnaN+PWIjeEX8Yvar7wuYq41LTqkHCiONNyQ=="],
 

@@ -90,7 +90,7 @@ function pickPreset(pathname: string): TransitionPreset {
 export function PageTransition({
   children,
   preset,
-  duration = 0.35,
+  duration = 0.18,
   ease = [0.22, 1, 0.36, 1],
   variants,
 }: PageTransitionProps) {
@@ -106,8 +106,10 @@ export function PageTransition({
 
   if (reduceMotion) return <>{children}</>;
 
+  // `mode="popLayout"` renderiza a nova rota imediatamente, sem esperar
+  // a animação de exit da anterior — elimina o delay percebido na navegação.
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={pathname}
         variants={active}
@@ -115,7 +117,6 @@ export function PageTransition({
         animate="animate"
         exit="exit"
         transition={transition}
-        style={{ willChange: "transform, opacity", transformOrigin: "center" }}
       >
         {children}
       </motion.div>
