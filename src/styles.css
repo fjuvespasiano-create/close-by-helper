@@ -41,8 +41,17 @@
   --color-warning: var(--warning);
   --font-sans: "DM Sans", system-ui, sans-serif;
   --font-display: "Space Grotesk", "DM Sans", system-ui, sans-serif;
-  --shadow-elevated: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 8px 24px -8px rgb(15 23 42 / 0.10);
-  --shadow-glow: 0 8px 32px -8px var(--primary);
+  --shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05), 0 1px 3px 0 rgb(15 23 42 / 0.04);
+  --shadow-md: 0 2px 4px -1px rgb(15 23 42 / 0.05), 0 4px 12px -2px rgb(15 23 42 / 0.08);
+  --shadow-lg: 0 4px 8px -2px rgb(15 23 42 / 0.06), 0 12px 28px -6px rgb(15 23 42 / 0.12);
+  --shadow-xl: 0 8px 16px -4px rgb(15 23 42 / 0.08), 0 24px 48px -12px rgb(15 23 42 / 0.18);
+  --shadow-elevated: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 10px 28px -10px rgb(15 23 42 / 0.14);
+  --shadow-glow: 0 8px 32px -8px color-mix(in oklch, var(--primary) 55%, transparent);
+  --shadow-accent-glow: 0 8px 28px -10px color-mix(in oklch, var(--accent) 60%, transparent);
+  --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  --gradient-accent: linear-gradient(135deg, var(--accent), color-mix(in oklch, var(--accent) 70%, var(--primary)));
+  --gradient-surface: linear-gradient(180deg, var(--background), var(--surface));
 }
 
 :root {
