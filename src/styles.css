@@ -155,7 +155,9 @@
   }
   /* Consistent, brand-tinted focus visible across all interactive elements. */
   :focus-visible {
-    outline: none;
+    outline: 2px solid color-mix(in oklch, var(--ring) 70%, transparent);
+    outline-offset: 2px;
+    border-radius: calc(var(--radius) - 6px);
   }
   /* Custom scrollbar — subtle, brand-consistent. */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
