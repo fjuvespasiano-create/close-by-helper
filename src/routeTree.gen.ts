@@ -62,6 +62,7 @@ import { Route as CidadesSlugRouteImport } from './routes/cidades.$slug'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminTurismoRouteImport } from './routes/admin.turismo'
+import { Route as AdminTransicoesRouteImport } from './routes/admin.transicoes'
 import { Route as AdminTextosRouteImport } from './routes/admin.textos'
 import { Route as AdminSolicitacoesRouteImport } from './routes/admin.solicitacoes'
 import { Route as AdminServicosPublicosRouteImport } from './routes/admin.servicos-publicos'
@@ -377,6 +378,11 @@ const AdminTurismoRoute = AdminTurismoRouteImport.update({
   path: '/turismo',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminTransicoesRoute = AdminTransicoesRouteImport.update({
+  id: '/transicoes',
+  path: '/transicoes',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminTextosRoute = AdminTextosRouteImport.update({
   id: '/textos',
   path: '/textos',
@@ -687,6 +693,7 @@ export interface FileRoutesByFullPath {
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
+  '/admin/transicoes': typeof AdminTransicoesRoute
   '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
@@ -787,6 +794,7 @@ export interface FileRoutesByTo {
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
+  '/admin/transicoes': typeof AdminTransicoesRoute
   '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
@@ -892,6 +900,7 @@ export interface FileRoutesById {
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
+  '/admin/transicoes': typeof AdminTransicoesRoute
   '/admin/turismo': typeof AdminTurismoRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
@@ -998,6 +1007,7 @@ export interface FileRouteTypes {
     | '/admin/servicos-publicos'
     | '/admin/solicitacoes'
     | '/admin/textos'
+    | '/admin/transicoes'
     | '/admin/turismo'
     | '/blog/$slug'
     | '/categoria/$slug'
@@ -1098,6 +1108,7 @@ export interface FileRouteTypes {
     | '/admin/servicos-publicos'
     | '/admin/solicitacoes'
     | '/admin/textos'
+    | '/admin/transicoes'
     | '/admin/turismo'
     | '/blog/$slug'
     | '/categoria/$slug'
@@ -1202,6 +1213,7 @@ export interface FileRouteTypes {
     | '/admin/servicos-publicos'
     | '/admin/solicitacoes'
     | '/admin/textos'
+    | '/admin/transicoes'
     | '/admin/turismo'
     | '/blog/$slug'
     | '/categoria/$slug'
@@ -1676,6 +1688,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTurismoRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/transicoes': {
+      id: '/admin/transicoes'
+      path: '/transicoes'
+      fullPath: '/admin/transicoes'
+      preLoaderRoute: typeof AdminTransicoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/textos': {
       id: '/admin/textos'
       path: '/textos'
@@ -2069,6 +2088,7 @@ interface AdminRouteChildren {
   AdminServicosPublicosRoute: typeof AdminServicosPublicosRoute
   AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
   AdminTextosRoute: typeof AdminTextosRoute
+  AdminTransicoesRoute: typeof AdminTransicoesRoute
   AdminTurismoRoute: typeof AdminTurismoRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -2100,6 +2120,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminServicosPublicosRoute: AdminServicosPublicosRoute,
   AdminSolicitacoesRoute: AdminSolicitacoesRoute,
   AdminTextosRoute: AdminTextosRoute,
+  AdminTransicoesRoute: AdminTransicoesRoute,
   AdminTurismoRoute: AdminTurismoRoute,
   AdminIndexRoute: AdminIndexRoute,
 }

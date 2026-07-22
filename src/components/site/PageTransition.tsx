@@ -1,6 +1,12 @@
 import { AnimatePresence, motion, useReducedMotion, type Transition, type Variants } from "framer-motion";
 import { useRouterState } from "@tanstack/react-router";
-import { type ReactNode, useMemo } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
+import {
+  CONFIG_EVENT,
+  loadTransitionConfig,
+  resolveEasing,
+  resolvePresetForPath,
+} from "@/lib/page-transition-config";
 
 export type TransitionPreset =
   | "fade"
@@ -12,20 +18,23 @@ export type TransitionPreset =
   | "zoom-out"
   | "flip-x"
   | "flip-y"
-  | "parallax";
+  | "parallax"
+  | "blur"
+  | "rotate"
+  | "curtain"
+  | "mask"
+  | "glide";
 
 export interface PageTransitionProps {
   children: ReactNode;
-  /** Preset ou variant customizado */
+  /** Sobrescreve o preset resolvido pela config global. */
   preset?: TransitionPreset;
   duration?: number;
-  /** ex: [0.22, 1, 0.36, 1] */
   ease?: Transition["ease"];
-  /** Sobrescreve o preset */
   variants?: Variants;
 }
 
-const PRESETS: Record<TransitionPreset, Variants> = {
+export const PRESETS: Record<TransitionPreset, Variants> = {
   fade: {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
@@ -76,38 +85,66 @@ const PRESETS: Record<TransitionPreset, Variants> = {
     animate: { opacity: 1, y: 0, scale: 1 },
     exit: { opacity: 0, y: -60, scale: 1.02 },
   },
+  blur: {
+    initial: { opacity: 0, filter: "blur(12px)" },
+    animate: { opacity: 1, filter: "blur(0px)" },
+    exit: { opacity: 0, filter: "blur(12px)" },
+  },
+  rotate: {
+    initial: { opacity: 0, rotate: -4, scale: 0.98 },
+    animate: { opacity: 1, rotate: 0, scale: 1 },
+    exit: { opacity: 0, rotate: 4, scale: 0.98 },
+  },
+  curtain: {
+    initial: { opacity: 0, clipPath: "inset(0 0 100% 0)" },
+    animate: { opacity: 1, clipPath: "inset(0 0 0% 0)" },
+    exit: { opacity: 0, clipPath: "inset(100% 0 0 0)" },
+  },
+  mask: {
+    initial: { opacity: 0, clipPath: "circle(0% at 50% 50%)" },
+    animate: { opacity: 1, clipPath: "circle(140% at 50% 50%)" },
+    exit: { opacity: 0, clipPath: "circle(0% at 50% 50%)" },
+  },
+  glide: {
+    initial: { opacity: 0, x: 80, skewX: 4 },
+    animate: { opacity: 1, x: 0, skewX: 0 },
+    exit: { opacity: 0, x: -80, skewX: -4 },
+  },
 };
-
-/** Escolhe preset por rota (personalizável) */
-function pickPreset(pathname: string): TransitionPreset {
-  if (pathname.startsWith("/admin")) return "fade";
-  if (pathname.startsWith("/representantes")) return "slide-up";
-  if (pathname.startsWith("/empregos")) return "slide-left";
-  if (pathname === "/") return "zoom-in";
-  return "fade";
-}
 
 export function PageTransition({
   children,
   preset,
-  duration = 0.18,
-  ease = [0.22, 1, 0.36, 1],
+  duration,
+  ease,
   variants,
 }: PageTransitionProps) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const reduceMotion = useReducedMotion();
+  const [cfg, setCfg] = useState(() => loadTransitionConfig());
 
-  const active = variants ?? PRESETS[preset ?? pickPreset(pathname)];
+  useEffect(() => {
+    const sync = () => setCfg(loadTransitionConfig());
+    window.addEventListener(CONFIG_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener(CONFIG_EVENT, sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
+
+  const resolvedPreset = preset ?? resolvePresetForPath(cfg, pathname);
+  const active = variants ?? PRESETS[resolvedPreset];
+  const finalDuration = duration ?? cfg.duration;
+  const finalEase = ease ?? resolveEasing(cfg.easing);
 
   const transition = useMemo<Transition>(
-    () => ({ duration: reduceMotion ? 0 : duration, ease }),
-    [duration, ease, reduceMotion],
+    () => ({ duration: reduceMotion ? 0 : finalDuration, ease: finalEase }),
+    [finalDuration, finalEase, reduceMotion],
   );
 
-  if (reduceMotion) return <>{children}</>;
+  if (reduceMotion || !cfg.enabled) return <>{children}</>;
 
-  // `mode="popLayout"` renderiza a nova rota imediatamente, sem esperar
-  // a animação de exit da anterior — elimina o delay percebido na navegação.
   return (
     <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
@@ -117,6 +154,7 @@ export function PageTransition({
         animate="animate"
         exit="exit"
         transition={transition}
+        style={{ willChange: "transform, opacity, filter, clip-path" }}
       >
         {children}
       </motion.div>
