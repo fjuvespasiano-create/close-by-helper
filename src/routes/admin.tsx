@@ -88,6 +88,7 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/solicitacoes", label: "Solicitações & Pedidos", icon: Inbox },
       { to: "/admin/ao-vivo", label: "Feed Ao Vivo", icon: Siren },
       { to: "/admin/backup", label: "Backup & Restauração", icon: DatabaseBackup },
+      { to: "/admin/transicoes", label: "Transições de página", icon: Sparkles },
       { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
     ],
   },
