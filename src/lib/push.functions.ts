@@ -14,7 +14,7 @@ const SubscribeSchema = z.object({
 
 export const subscribePush = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => SubscribeSchema.parse(raw))
+  .validator((raw: unknown) => SubscribeSchema.parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { error } = await supabase.from("push_subscriptions").upsert(
@@ -36,7 +36,7 @@ export const subscribePush = createServerFn({ method: "POST" })
 
 export const unsubscribePush = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ endpoint: z.string().url() }).parse(raw))
+  .validator((raw: unknown) => z.object({ endpoint: z.string().url() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await supabase.from("push_subscriptions").delete().eq("user_id", userId).eq("endpoint", data.endpoint);
@@ -69,7 +69,7 @@ export const getMyPreferences = createServerFn({ method: "GET" })
 
 export const savePreferences = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => PrefsSchema.parse(raw))
+  .validator((raw: unknown) => PrefsSchema.parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { error } = await supabase.from("notification_preferences").upsert(
@@ -83,7 +83,7 @@ export const savePreferences = createServerFn({ method: "POST" })
 // ---------- Inbox ----------
 export const listMyInbox = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z.object({
       tab: z.enum(["all", "unread", "read", "favorites", "archived"]).default("all"),
       q: z.string().optional(),
@@ -135,7 +135,7 @@ const InboxActionSchema = z.object({ id: z.number().int(), action: z.enum(["read
 
 export const inboxAction = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => InboxActionSchema.parse(raw))
+  .validator((raw: unknown) => InboxActionSchema.parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const now = new Date().toISOString();

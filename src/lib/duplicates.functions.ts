@@ -141,7 +141,7 @@ async function loadItems(supabase: ReturnType<typeof serverClient>, sources: Sou
 
 export const scanDuplicates = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d) => InputSchema.parse(d))
+  .validator((d) => InputSchema.parse(d))
   .handler(async ({ data, context }): Promise<ScanResult> => {
     const userId = (context as { userId?: string }).userId;
     if (!userId) throw new Response("Unauthorized", { status: 401 });

@@ -120,7 +120,7 @@ export const adminCreateBackup = createServerFn({ method: "POST" })
 
 export const adminGetBackupDownloadUrl = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d) => z.object({ name: z.string().min(1).max(200) }).parse(d))
+  .validator((d) => z.object({ name: z.string().min(1).max(200) }).parse(d))
   .handler(async ({ context, data }) => {
     await assertAdmin(context);
     const { data: signed, error } = await context.supabase.storage
@@ -132,7 +132,7 @@ export const adminGetBackupDownloadUrl = createServerFn({ method: "POST" })
 
 export const adminDeleteBackup = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d) => z.object({ name: z.string().min(1).max(200) }).parse(d))
+  .validator((d) => z.object({ name: z.string().min(1).max(200) }).parse(d))
   .handler(async ({ context, data }) => {
     await assertAdmin(context);
     const { error } = await context.supabase.storage.from(BUCKET).remove([data.name]);
@@ -151,7 +151,7 @@ const RestoreInput = z.object({
 
 export const adminRestoreBackup = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d) => RestoreInput.parse(d))
+  .validator((d) => RestoreInput.parse(d))
   .handler(async ({ context, data }) => {
     await assertAdmin(context);
     if (data.payload.schema_version !== SCHEMA_VERSION) {

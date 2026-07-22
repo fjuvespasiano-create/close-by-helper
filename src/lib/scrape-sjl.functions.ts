@@ -49,7 +49,7 @@ Ignore itens sem telefone/endereço/email. Priorize telefones de contato públic
 
 export const scrapeSjlContacts = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z.object({
       maxPages: z.number().int().min(1).max(40).default(15),
       keyword: z.string().max(80).default("telefone contato secretaria serviço"),
@@ -164,7 +164,7 @@ export const scrapeSjlContacts = createServerFn({ method: "POST" })
 
 export const importScrapedSjlContacts = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z.object({ contacts: z.array(ContactSchema).min(1).max(500) }).parse(raw),
   )
   .handler(async ({ data, context }) => {

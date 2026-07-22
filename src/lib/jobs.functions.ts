@@ -37,7 +37,7 @@ function escapeIlike(s: string) {
 }
 
 export const listJobs = createServerFn({ method: "GET" })
-  .inputValidator((raw: unknown) => ListInput.parse(raw))
+  .validator((raw: unknown) => ListInput.parse(raw))
   .handler(async ({ data }) => {
     const supabase = publicClient();
     const from = (data.page - 1) * data.pageSize;
@@ -82,7 +82,7 @@ export const listJobs = createServerFn({ method: "GET" })
   });
 
 export const getJob = createServerFn({ method: "GET" })
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data }) => {
     const supabase = publicClient();
     const { data: row, error } = await supabase
@@ -102,7 +102,7 @@ const PremiumListInput = z.object({
 });
 
 export const listPremiumJobs = createServerFn({ method: "GET" })
-  .inputValidator((raw: unknown) => PremiumListInput.parse(raw ?? {}))
+  .validator((raw: unknown) => PremiumListInput.parse(raw ?? {}))
   .handler(async ({ data }) => {
     const supabase = publicClient();
     const nowIso = new Date().toISOString();

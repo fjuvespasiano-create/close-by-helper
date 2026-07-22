@@ -53,7 +53,7 @@ function clientIp(): string | null {
 
 // PUBLIC: qualquer visitante pode enviar uma solicitação.
 export const createUserRequest = createServerFn({ method: "POST" })
-  .inputValidator((raw: unknown) => CreateSchema.parse(raw))
+  .validator((raw: unknown) => CreateSchema.parse(raw))
   .handler(async ({ data }) => {
     const supabase = serverClient();
     const { data: row, error } = await supabase
@@ -80,7 +80,7 @@ export const createUserRequest = createServerFn({ method: "POST" })
 // -------- ADMIN --------
 export const listUserRequests = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z
       .object({
         status: StatusEnum.nullish(),
@@ -133,7 +133,7 @@ export const listUserRequests = createServerFn({ method: "POST" })
 
 export const updateUserRequest = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z
       .object({
         id: z.string().uuid(),
@@ -166,7 +166,7 @@ export const updateUserRequest = createServerFn({ method: "POST" })
 
 export const deleteUserRequest = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });

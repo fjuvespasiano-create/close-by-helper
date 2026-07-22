@@ -52,7 +52,7 @@ async function ensureAdmin(supabase: SB, userId: string) {
 // ---------- Send now / schedule ----------
 export const sendPushNow = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => ComposeSchema.parse(raw))
+  .validator((raw: unknown) => ComposeSchema.parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await ensureAdmin(supabase, userId);
@@ -98,7 +98,7 @@ export const sendPushNow = createServerFn({ method: "POST" })
 // ---------- List ----------
 export const listAdminPush = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ limit: z.number().int().min(1).max(200).default(50) }).parse(raw ?? {}))
+  .validator((raw: unknown) => z.object({ limit: z.number().int().min(1).max(200).default(50) }).parse(raw ?? {}))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await ensureAdmin(supabase, userId);
@@ -113,7 +113,7 @@ export const listAdminPush = createServerFn({ method: "GET" })
 
 export const getAdminPush = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await ensureAdmin(supabase, userId);
@@ -136,7 +136,7 @@ export const getAdminPush = createServerFn({ method: "GET" })
 
 export const deleteAdminPush = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     await ensureAdmin(supabase, userId);
