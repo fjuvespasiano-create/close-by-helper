@@ -3,10 +3,12 @@ import { useRouterState } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import {
   CONFIG_EVENT,
+  DEFAULT_CONFIG,
   loadTransitionConfig,
   resolveEasing,
   resolvePresetForPath,
 } from "@/lib/page-transition-config";
+
 
 export type TransitionPreset =
   | "fade"
