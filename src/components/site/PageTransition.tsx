@@ -3,10 +3,12 @@ import { useRouterState } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import {
   CONFIG_EVENT,
+  DEFAULT_CONFIG,
   loadTransitionConfig,
   resolveEasing,
   resolvePresetForPath,
 } from "@/lib/page-transition-config";
+
 
 export type TransitionPreset =
   | "fade"
@@ -121,9 +123,13 @@ export function PageTransition({
 }: PageTransitionProps) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const reduceMotion = useReducedMotion();
-  const [cfg, setCfg] = useState(() => loadTransitionConfig());
+  // Sempre inicia com DEFAULT_CONFIG para não divergir entre SSR e a primeira
+  // renderização cliente. A config real (localStorage) só é carregada após a
+  // hidratação, dentro do useEffect abaixo.
+  const [cfg, setCfg] = useState(DEFAULT_CONFIG);
 
   useEffect(() => {
+    setCfg(loadTransitionConfig());
     const sync = () => setCfg(loadTransitionConfig());
     window.addEventListener(CONFIG_EVENT, sync);
     window.addEventListener("storage", sync);
@@ -132,6 +138,7 @@ export function PageTransition({
       window.removeEventListener("storage", sync);
     };
   }, []);
+
 
   const resolvedPreset = preset ?? resolvePresetForPath(cfg, pathname);
   const active = variants ?? PRESETS[resolvedPreset];
