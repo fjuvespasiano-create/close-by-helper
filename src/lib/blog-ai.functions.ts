@@ -34,7 +34,7 @@ function stripFence(t: string) {
 
 export const adminGenerateBlogPost = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => GenInput.parse(raw))
+  .validator((raw: unknown) => GenInput.parse(raw))
   .handler(async ({ data, context }): Promise<Draft> => {
     await assertAdmin(context);
 
@@ -152,7 +152,7 @@ const SaveInput = z.object({
 
 export const adminSaveAiPost = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => SaveInput.parse(raw))
+  .validator((raw: unknown) => SaveInput.parse(raw))
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
     const payload = {

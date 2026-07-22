@@ -6,7 +6,7 @@ import { z } from "zod";
 
 export const notifyNewPromotion = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z.object({ promotionId: z.string().uuid() }).parse(raw),
   )
   .handler(async ({ data, context }) => {

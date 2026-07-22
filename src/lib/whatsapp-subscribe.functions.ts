@@ -52,7 +52,7 @@ async function sendWelcome(phoneE164: string, name: string, cityName: string): P
 }
 
 export const subscribeWhatsapp = createServerFn({ method: "POST" })
-  .inputValidator((raw: unknown) => subscribeSchema.parse(raw))
+  .validator((raw: unknown) => subscribeSchema.parse(raw))
   .handler(async ({ data }) => {
     const phone = toE164BR(data.phone);
     const cityId = CITY_IDS[data.citySlug];

@@ -33,7 +33,7 @@ export const adminListJobSources = createServerFn({ method: "GET" })
 
 export const adminUpsertJobSource = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => SourceInput.parse(raw))
+  .validator((raw: unknown) => SourceInput.parse(raw))
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,7 +52,7 @@ export const adminUpsertJobSource = createServerFn({ method: "POST" })
 
 export const adminDeleteJobSource = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
     const { error } = await context.supabase.from("job_sources").delete().eq("id", data.id);
@@ -62,7 +62,7 @@ export const adminDeleteJobSource = createServerFn({ method: "POST" })
 
 export const adminRunJobSourceSync = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -72,7 +72,7 @@ export const adminRunJobSourceSync = createServerFn({ method: "POST" })
 
 export const adminListJobs = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({
+  .validator((raw: unknown) => z.object({
     q: z.string().max(120).optional(),
     source_id: z.string().uuid().optional(),
     is_active: z.enum(["all", "yes", "no"]).default("all"),
@@ -135,7 +135,7 @@ const ManualJobInput = z.object({
 
 export const adminUpsertJob = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => ManualJobInput.parse(raw))
+  .validator((raw: unknown) => ManualJobInput.parse(raw))
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
     const payload = { ...data, posted_at: new Date().toISOString(), external_id: data.external_id || `manual-${Date.now()}` };
@@ -151,7 +151,7 @@ export const adminUpsertJob = createServerFn({ method: "POST" })
 
 export const adminDeleteJob = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
     const { error } = await context.supabase.from("jobs").delete().eq("id", data.id);
@@ -161,7 +161,7 @@ export const adminDeleteJob = createServerFn({ method: "POST" })
 
 export const adminToggleJob = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid(), is_active: z.boolean() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid(), is_active: z.boolean() }).parse(raw))
   .handler(async ({ data, context }) => {
     await assertAdmin(context);
     const { error } = await context.supabase.from("jobs").update({ is_active: data.is_active }).eq("id", data.id);

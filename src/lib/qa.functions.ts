@@ -74,7 +74,7 @@ function fingerprintOf(input: {
 
 // PUBLIC: qualquer visitante pode enviar (RLS já garante).
 export const createQaTicket = createServerFn({ method: "POST" })
-  .inputValidator((raw: unknown) => CreateSchema.parse(raw))
+  .validator((raw: unknown) => CreateSchema.parse(raw))
   .handler(async ({ data }) => {
     const supabase = await serverClient();
     const ip = clientIp();
@@ -111,7 +111,7 @@ export const createQaTicket = createServerFn({ method: "POST" })
 // -------- ADMIN --------
 export const listQaTickets = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z
       .object({
         status: StatusEnum.nullish(),
@@ -168,7 +168,7 @@ export const listQaTickets = createServerFn({ method: "POST" })
 
 export const getQaTicket = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
+  .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
@@ -199,7 +199,7 @@ export const getQaTicket = createServerFn({ method: "POST" })
 
 export const updateQaTicket = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z
       .object({
         id: z.string().uuid(),
@@ -228,7 +228,7 @@ export const updateQaTicket = createServerFn({ method: "POST" })
 
 export const addQaComment = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z.object({ ticket_id: z.string().uuid(), body: z.string().trim().min(1).max(4000) }).parse(raw),
   )
   .handler(async ({ data, context }) => {

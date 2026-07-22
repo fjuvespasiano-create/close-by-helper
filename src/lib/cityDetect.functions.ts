@@ -12,7 +12,7 @@ function serverSupabase() {
 
 /** Reverse geocode GPS coords → nearest active city slug (via Google Maps gateway + DB haversine). */
 export const detectCityByGPS = createServerFn({ method: "POST" })
-  .inputValidator((data: { lat: number; lng: number }) => {
+  .validator((data: { lat: number; lng: number }) => {
     if (typeof data?.lat !== "number" || typeof data?.lng !== "number") {
       throw new Error("lat/lng required");
     }

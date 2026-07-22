@@ -22,7 +22,7 @@ const ListInput = z.object({
 });
 
 export const listProcurements = createServerFn({ method: "GET" })
-  .inputValidator((raw: unknown) => ListInput.parse(raw))
+  .validator((raw: unknown) => ListInput.parse(raw))
   .handler(async ({ data }) => {
     const supabase = publicClient();
 

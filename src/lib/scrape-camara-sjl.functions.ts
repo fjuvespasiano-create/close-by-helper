@@ -87,7 +87,7 @@ const KEYWORDS = ["vereador", "vereadores", "parlamentar", "camara", "mesa", "di
  */
 export const scrapeCamaraSjlReps = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z.object({
       maxPages: z.number().int().min(1).max(MAX_URLS).default(20),
       keyword: z.string().max(120).default("vereador parlamentar câmara mesa diretora"),
@@ -213,7 +213,7 @@ export const scrapeCamaraSjlReps = createServerFn({ method: "POST" })
  */
 export const importScrapedCamaraSjlReps = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((raw: unknown) =>
+  .validator((raw: unknown) =>
     z.object({ representatives: z.array(RepresentativeSchema).min(1).max(60) }).parse(raw),
   )
   .handler(async ({ data, context }) => {
