@@ -9,6 +9,7 @@ export function JobCard({ job }: { job: JobRow }) {
     <Link
       to="/empregos/$id"
       params={{ id: job.id }}
+      search={{}}
       className="group relative flex flex-col rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_20px_40px_-16px_rgb(15_23_42/0.22)]"
     >
       {job.is_premium && (
