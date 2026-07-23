@@ -46,7 +46,7 @@ function PremiumJobsPage() {
     <SiteLayout>
       <section className="border-b border-amber-500/20 bg-gradient-to-br from-amber-500/10 via-background to-background py-10">
         <div className="container mx-auto px-4">
-          <Link to="/empregos" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+          <Link to="/empregos" search={{ q: "", remote: "all", employment: "", experience: "", salaryMin: 0, sort: "recent", page: 1, city: "" }} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
             <ArrowLeft className="h-4 w-4" /> Todas as vagas
           </Link>
           <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
@@ -86,7 +86,7 @@ function PremiumJobsPage() {
             <p className="mt-2 text-sm text-muted-foreground">
               Novas oportunidades premium são publicadas semanalmente. Confira as vagas normais enquanto isso.
             </p>
-            <Link to="/empregos" className="mt-4 inline-block text-sm font-medium text-primary hover:underline">
+            <Link to="/empregos" search={{ q: "", remote: "all", employment: "", experience: "", salaryMin: 0, sort: "recent", page: 1, city: "" }} className="mt-4 inline-block text-sm font-medium text-primary hover:underline">
               Ver todas as vagas →
             </Link>
           </div>

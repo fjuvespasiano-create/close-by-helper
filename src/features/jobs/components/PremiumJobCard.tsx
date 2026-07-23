@@ -10,6 +10,7 @@ export function PremiumJobCard({ job }: { job: PremiumJobRow }) {
     <Link
       to="/empregos/$id"
       params={{ id: job.id }}
+      search={{}}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/5 via-card to-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/60 hover:shadow-[0_25px_50px_-12px_rgb(245_158_11/0.25)]"
     >
       <span className="absolute -top-2 left-4 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white shadow">

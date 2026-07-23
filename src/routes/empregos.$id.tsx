@@ -30,7 +30,7 @@ export const Route = createFileRoute("/empregos/$id")({
       <div className="container mx-auto max-w-md px-4 py-20 text-center">
         <h1 className="font-display text-2xl font-bold">Vaga não encontrada</h1>
         <p className="mt-2 text-sm text-muted-foreground">Esta vaga pode ter sido preenchida ou removida.</p>
-        <Link to="/empregos"><Button className="mt-6">Ver outras vagas</Button></Link>
+        <Link to="/empregos" search={{ q: "", remote: "all", employment: "", experience: "", salaryMin: 0, sort: "recent", page: 1, city: "" }}><Button className="mt-6">Ver outras vagas</Button></Link>
       </div>
     </SiteLayout>
   ),
@@ -66,7 +66,7 @@ function StandardLayout({ job }: { job: JobDetail }) {
   return (
     <SiteLayout>
       <article className="container mx-auto max-w-3xl px-4 py-10">
-        <Link to="/empregos" className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+        <Link to="/empregos" search={{ q: "", remote: "all", employment: "", experience: "", salaryMin: 0, sort: "recent", page: 1, city: "" }} className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-4 w-4" /> Todas as vagas
         </Link>
         <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
@@ -99,7 +99,7 @@ function PremiumLayout({ job }: { job: JobDetail }) {
     <SiteLayout>
       <div className="border-b border-amber-500/20 bg-gradient-to-br from-amber-500/5 via-background to-background">
         <div className="container mx-auto max-w-5xl px-4 pt-8">
-          <Link to="/empregos" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+          <Link to="/empregos" search={{ q: "", remote: "all", employment: "", experience: "", salaryMin: 0, sort: "recent", page: 1, city: "" }} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
             <ArrowLeft className="h-4 w-4" /> Todas as vagas
           </Link>
         </div>
@@ -249,7 +249,7 @@ function ApplyCTA({ job }: { job: JobDetail }) {
           <Button size="lg" className="gap-2">Candidatar-se <ExternalLink className="h-4 w-4" /></Button>
         </a>
       )}
-      <Link to="/empregos"><Button variant="outline" size="lg">Ver outras vagas</Button></Link>
+      <Link to="/empregos" search={{ q: "", remote: "all", employment: "", experience: "", salaryMin: 0, sort: "recent", page: 1, city: "" }}><Button variant="outline" size="lg">Ver outras vagas</Button></Link>
     </div>
   );
 }
