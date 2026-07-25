@@ -61,7 +61,7 @@ function PremiumJobsPage() {
                 Oportunidades premium com informações completas: requisitos, benefícios, faixa salarial e como a empresa trabalha.
               </p>
             </div>
-            <Select value={city || "all"} onValueChange={(v) => navigate({ search: (prev) => ({ ...prev, city: v === "all" ? "" : v }) })}>
+            <Select value={city || "all"} onValueChange={(v) => navigate({ search: { ...DEFAULT_SEARCH, city: v === "all" ? "" : v } })}>
               <SelectTrigger className="w-[220px]"><SelectValue placeholder="Cidade" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Todas as cidades</SelectItem>
