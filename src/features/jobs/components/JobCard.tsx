@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Building2, MapPin, Sparkles, Wifi } from "lucide-react";
 import type { JobRow } from "../types";
+import { DEFAULT_SEARCH } from "../constants";
 import { formatPostedDate, formatSalary } from "../format";
 
 export function JobCard({ job }: { job: JobRow }) {
@@ -9,7 +10,7 @@ export function JobCard({ job }: { job: JobRow }) {
     <Link
       to="/empregos/$id"
       params={{ id: job.id }}
-      search={(prev) => prev}
+      search={DEFAULT_SEARCH}
       className="group relative flex flex-col rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_20px_40px_-16px_rgb(15_23_42/0.22)]"
     >
       {job.is_premium && (
