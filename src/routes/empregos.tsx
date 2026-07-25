@@ -218,7 +218,7 @@ function EmpregosPage() {
               <h2 className="flex items-center gap-2 font-display text-xl font-bold">
                 <Sparkles className="h-5 w-5 text-amber-500" /> Vagas em destaque
               </h2>
-              <Link to="/empregos/premium" search={{ city: "" }} className="text-sm font-medium text-primary hover:underline">
+              <Link to="/empregos/premium" search={(prev) => ({ ...prev, city: "" })} className="text-sm font-medium text-primary hover:underline">
                 Ver todas →
               </Link>
             </div>

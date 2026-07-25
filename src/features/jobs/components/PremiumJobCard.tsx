@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Building2, Check, MapPin, Sparkles, Wifi } from "lucide-react";
 import type { PremiumJobRow } from "../types";
 import { formatPostedDate, formatSalary } from "../format";
+import { DEFAULT_SEARCH } from "../constants";
 
 export function PremiumJobCard({ job }: { job: PremiumJobRow }) {
   const salary = formatSalary(job.salary_min, job.salary_max, job.salary_currency);
