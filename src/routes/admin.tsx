@@ -25,6 +25,7 @@ type AdminPath =
   | "/admin/scraper-vespasiano" | "/admin/scraper-sjl"
   | "/admin/backup" | "/admin/ao-vivo"
   | "/admin/transicoes"
+  | "/admin/documentacao"
   | "/admin/configuracoes";
 
 type NavItem = { to: AdminPath; label: string; icon: typeof LayoutDashboard; exact?: boolean };
@@ -89,6 +90,7 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/ao-vivo", label: "Feed Ao Vivo", icon: Siren },
       { to: "/admin/backup", label: "Backup & Restauração", icon: DatabaseBackup },
       { to: "/admin/transicoes", label: "Transições de página", icon: Sparkles },
+      { to: "/admin/documentacao", label: "Documentação Técnica", icon: FileText },
       { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
     ],
   },

@@ -80,6 +80,7 @@ import { Route as AdminEmpresasRouteImport } from './routes/admin.empresas'
 import { Route as AdminEmpregosRouteImport } from './routes/admin.empregos'
 import { Route as AdminEmergenciaRouteImport } from './routes/admin.emergencia'
 import { Route as AdminDuplicadosRouteImport } from './routes/admin.duplicados'
+import { Route as AdminDocumentacaoRouteImport } from './routes/admin.documentacao'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
 import { Route as AdminCidadesRouteImport } from './routes/admin.cidades'
 import { Route as AdminCalendarioEditorialRouteImport } from './routes/admin.calendario-editorial'
@@ -468,6 +469,11 @@ const AdminDuplicadosRoute = AdminDuplicadosRouteImport.update({
   path: '/duplicados',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminDocumentacaoRoute = AdminDocumentacaoRouteImport.update({
+  id: '/documentacao',
+  path: '/documentacao',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
   id: '/configuracoes',
   path: '/configuracoes',
@@ -676,6 +682,7 @@ export interface FileRoutesByFullPath {
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/documentacao': typeof AdminDocumentacaoRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
   '/admin/emergencia': typeof AdminEmergenciaRoute
   '/admin/empregos': typeof AdminEmpregosRoute
@@ -778,6 +785,7 @@ export interface FileRoutesByTo {
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/documentacao': typeof AdminDocumentacaoRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
   '/admin/emergencia': typeof AdminEmergenciaRoute
   '/admin/empregos': typeof AdminEmpregosRoute
@@ -883,6 +891,7 @@ export interface FileRoutesById {
   '/admin/calendario-editorial': typeof AdminCalendarioEditorialRoute
   '/admin/cidades': typeof AdminCidadesRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/documentacao': typeof AdminDocumentacaoRoute
   '/admin/duplicados': typeof AdminDuplicadosRoute
   '/admin/emergencia': typeof AdminEmergenciaRoute
   '/admin/empregos': typeof AdminEmpregosRoute
@@ -990,6 +999,7 @@ export interface FileRouteTypes {
     | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
+    | '/admin/documentacao'
     | '/admin/duplicados'
     | '/admin/emergencia'
     | '/admin/empregos'
@@ -1092,6 +1102,7 @@ export interface FileRouteTypes {
     | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
+    | '/admin/documentacao'
     | '/admin/duplicados'
     | '/admin/emergencia'
     | '/admin/empregos'
@@ -1196,6 +1207,7 @@ export interface FileRouteTypes {
     | '/admin/calendario-editorial'
     | '/admin/cidades'
     | '/admin/configuracoes'
+    | '/admin/documentacao'
     | '/admin/duplicados'
     | '/admin/emergencia'
     | '/admin/empregos'
@@ -1814,6 +1826,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDuplicadosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/documentacao': {
+      id: '/admin/documentacao'
+      path: '/documentacao'
+      fullPath: '/admin/documentacao'
+      preLoaderRoute: typeof AdminDocumentacaoRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/configuracoes': {
       id: '/admin/configuracoes'
       path: '/configuracoes'
@@ -2071,6 +2090,7 @@ interface AdminRouteChildren {
   AdminCalendarioEditorialRoute: typeof AdminCalendarioEditorialRoute
   AdminCidadesRoute: typeof AdminCidadesRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
+  AdminDocumentacaoRoute: typeof AdminDocumentacaoRoute
   AdminDuplicadosRoute: typeof AdminDuplicadosRoute
   AdminEmergenciaRoute: typeof AdminEmergenciaRoute
   AdminEmpregosRoute: typeof AdminEmpregosRoute
@@ -2103,6 +2123,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCalendarioEditorialRoute: AdminCalendarioEditorialRoute,
   AdminCidadesRoute: AdminCidadesRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
+  AdminDocumentacaoRoute: AdminDocumentacaoRoute,
   AdminDuplicadosRoute: AdminDuplicadosRoute,
   AdminEmergenciaRoute: AdminEmergenciaRoute,
   AdminEmpregosRoute: AdminEmpregosRoute,
