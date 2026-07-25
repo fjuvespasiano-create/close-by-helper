@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { listPremiumJobs } from "@/lib/jobs.functions";
 import {
-  CITY_OPTIONS, PremiumJobCard, jobsKeys, type PremiumJobRow,
+  CITY_OPTIONS, DEFAULT_SEARCH, PremiumJobCard, jobsKeys, type PremiumJobRow,
 } from "@/features/jobs";
 
 const searchSchema = z.object({
@@ -61,7 +61,7 @@ function PremiumJobsPage() {
                 Oportunidades premium com informações completas: requisitos, benefícios, faixa salarial e como a empresa trabalha.
               </p>
             </div>
-            <Select value={city || "all"} onValueChange={(v) => navigate({ search: { city: v === "all" ? "" : v } })}>
+            <Select value={city || "all"} onValueChange={(v) => navigate({ search: { ...DEFAULT_SEARCH, city: v === "all" ? "" : v } })}>
               <SelectTrigger className="w-[220px]"><SelectValue placeholder="Cidade" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Todas as cidades</SelectItem>
