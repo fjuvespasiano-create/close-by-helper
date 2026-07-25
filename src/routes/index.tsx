@@ -296,7 +296,7 @@ function Home() {
             </div>
             <Link
               to="/auth"
-              className="group btn-shine focus-ring inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-semibold text-accent shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0"
+              className="btn-warm focus-ring group inline-flex items-center gap-2 rounded-full !bg-white !text-accent px-6 py-3.5 font-semibold shadow-lg"
             >
               Cadastrar meu negócio grátis <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
