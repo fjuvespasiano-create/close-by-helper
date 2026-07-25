@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { listPremiumJobs } from "@/lib/jobs.functions";
 import {
-  CITY_OPTIONS, PremiumJobCard, jobsKeys, type PremiumJobRow,
+  CITY_OPTIONS, DEFAULT_SEARCH, PremiumJobCard, jobsKeys, type PremiumJobRow,
 } from "@/features/jobs";
 
 const searchSchema = z.object({
