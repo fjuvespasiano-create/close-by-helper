@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
+import { assertAdmin as assertAdminHelper, type AdminContext } from "@/lib/auth/assert-admin";
 
 const CreateSchema = z.object({
   company_id: z.string().uuid(),
