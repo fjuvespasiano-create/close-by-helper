@@ -100,7 +100,7 @@ export const listCompanyClaimsAdmin = createServerFn({ method: "POST" })
   .validator((raw: unknown) => ListSchema.parse(raw ?? {}))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    await assertAdmin(context, userId);
+    await assertAdmin(context);
 
     let q = supabase
       .from("company_claims")
@@ -131,7 +131,7 @@ export const reviewCompanyClaim = createServerFn({ method: "POST" })
   .validator((raw: unknown) => ReviewSchema.parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    await assertAdmin(context, userId);
+    await assertAdmin(context);
     const { error } = await supabase
       .from("company_claims")
       .update({
@@ -150,7 +150,7 @@ export const deleteCompanyClaim = createServerFn({ method: "POST" })
   .validator((raw: unknown) => z.object({ id: z.string().uuid() }).parse(raw))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
-    await assertAdmin(context, userId);
+    await assertAdmin(context);
     const { error } = await supabase.from("company_claims").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
