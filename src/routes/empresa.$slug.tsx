@@ -417,8 +417,9 @@ function CompanyPage() {
               }}>
                 <Share2 className="mr-2 h-4 w-4" /> Compartilhar
               </Button>
-              <div className="flex justify-center pt-1">
+              <div className="flex flex-col items-center gap-2 pt-1">
                 <FavoriteButton companyId={company.id} className="relative" />
+                <ClaimCompanyButton companyId={company.id} companyName={company.name} />
               </div>
             </div>
           </div>
