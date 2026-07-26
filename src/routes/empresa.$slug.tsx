@@ -17,6 +17,7 @@ import { QuoteDialog } from "@/components/site/QuoteDialog";
 import { CompanyCard, toCompanyCardData } from "@/components/site/CompanyCard";
 import { companyBySlugQueryOptions, fetchCompanyReviews, fetchSimilarCompanies, fetchCitiesByIds } from "@/lib/queries";
 import { FavoriteButton } from "@/components/site/FavoriteButton";
+import { ClaimCompanyButton } from "@/components/site/ClaimCompanyButton";
 import { telUrl, waUrl } from "@/lib/format";
 import {
   QualityBars, CertificationsGrid, DifferentialsGrid, CoverageArea, SocialLinksExtra,
@@ -417,8 +418,9 @@ function CompanyPage() {
               }}>
                 <Share2 className="mr-2 h-4 w-4" /> Compartilhar
               </Button>
-              <div className="flex justify-center pt-1">
+              <div className="flex flex-col items-center gap-2 pt-1">
                 <FavoriteButton companyId={company.id} className="relative" />
+                <ClaimCompanyButton companyId={company.id} companyName={company.name} />
               </div>
             </div>
           </div>

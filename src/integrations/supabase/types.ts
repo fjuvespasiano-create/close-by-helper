@@ -680,6 +680,71 @@ export type Database = {
           },
         ]
       }
+      company_claims: {
+        Row: {
+          admin_notes: string | null
+          company_id: string
+          corporate_email: string | null
+          created_at: string
+          evidence_url: string | null
+          full_name: string
+          id: string
+          justification: string | null
+          phone: string | null
+          position: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          role_requested: Database["public"]["Enums"]["company_claim_role"]
+          status: Database["public"]["Enums"]["company_claim_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          company_id: string
+          corporate_email?: string | null
+          created_at?: string
+          evidence_url?: string | null
+          full_name: string
+          id?: string
+          justification?: string | null
+          phone?: string | null
+          position?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          role_requested?: Database["public"]["Enums"]["company_claim_role"]
+          status?: Database["public"]["Enums"]["company_claim_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          company_id?: string
+          corporate_email?: string | null
+          created_at?: string
+          evidence_url?: string | null
+          full_name?: string
+          id?: string
+          justification?: string | null
+          phone?: string | null
+          position?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          role_requested?: Database["public"]["Enums"]["company_claim_role"]
+          status?: Database["public"]["Enums"]["company_claim_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_claims_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       company_faqs: {
         Row: {
           answer: string
@@ -3484,6 +3549,8 @@ export type Database = {
         | "cancelled"
         | "completed"
         | "no_show"
+      company_claim_role: "owner" | "collaborator"
+      company_claim_status: "pending" | "approved" | "rejected"
       listing_condition: "novo" | "seminovo" | "usado"
       listing_status: "ativo" | "vendido" | "pausado" | "removido"
       post_type: "article" | "news" | "blog" | "promo" | "event"
@@ -3671,6 +3738,8 @@ export const Constants = {
         "completed",
         "no_show",
       ],
+      company_claim_role: ["owner", "collaborator"],
+      company_claim_status: ["pending", "approved", "rejected"],
       listing_condition: ["novo", "seminovo", "usado"],
       listing_status: ["ativo", "vendido", "pausado", "removido"],
       post_type: ["article", "news", "blog", "promo", "event"],

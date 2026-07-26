@@ -19,7 +19,7 @@ type AdminPath =
   | "/admin/cidades" | "/admin/planos" | "/admin/leads" | "/admin/blog" | "/admin/blog-ai"
   | "/admin/duplicados" | "/admin/eventos" | "/admin/menu" | "/admin/textos"
   | "/admin/push" | "/admin/empregos" | "/admin/turismo" | "/admin/qa"
-  | "/admin/solicitacoes"
+  | "/admin/solicitacoes" | "/admin/reivindicacoes"
   | "/admin/anuncios" | "/admin/analytics-anuncios" | "/admin/calendario-editorial"
   | "/admin/promocoes"
   | "/admin/scraper-vespasiano" | "/admin/scraper-sjl"
@@ -87,6 +87,7 @@ const GROUPS: NavGroup[] = [
     items: [
       { to: "/admin/qa", label: "Central de Qualidade", icon: Bug },
       { to: "/admin/solicitacoes", label: "Solicitações & Pedidos", icon: Inbox },
+      { to: "/admin/reivindicacoes", label: "Reivindicações de Empresas", icon: ShieldCheck },
       { to: "/admin/ao-vivo", label: "Feed Ao Vivo", icon: Siren },
       { to: "/admin/backup", label: "Backup & Restauração", icon: DatabaseBackup },
       { to: "/admin/transicoes", label: "Transições de página", icon: Sparkles },

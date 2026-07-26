@@ -43,6 +43,7 @@ import { Route as TransporteLinhasRouteImport } from './routes/transporte.linhas
 import { Route as RepresentantesRankingRouteImport } from './routes/representantes.ranking'
 import { Route as RepresentantesFeedRouteImport } from './routes/representantes.feed'
 import { Route as RepresentantesIdRouteImport } from './routes/representantes.$id'
+import { Route as PainelReivindicacoesRouteImport } from './routes/painel.reivindicacoes'
 import { Route as PainelRankingRouteImport } from './routes/painel.ranking'
 import { Route as PainelPromocoesRouteImport } from './routes/painel.promocoes'
 import { Route as PainelPerfilRouteImport } from './routes/painel.perfil'
@@ -69,6 +70,7 @@ import { Route as AdminServicosPublicosRouteImport } from './routes/admin.servic
 import { Route as AdminScraperVespasianoRouteImport } from './routes/admin.scraper-vespasiano'
 import { Route as AdminScraperSjlRouteImport } from './routes/admin.scraper-sjl'
 import { Route as AdminScraperCamaraSjlRouteImport } from './routes/admin.scraper-camara-sjl'
+import { Route as AdminReivindicacoesRouteImport } from './routes/admin.reivindicacoes'
 import { Route as AdminQaRouteImport } from './routes/admin.qa'
 import { Route as AdminPushRouteImport } from './routes/admin.push'
 import { Route as AdminPromocoesRouteImport } from './routes/admin.promocoes'
@@ -284,6 +286,11 @@ const RepresentantesIdRoute = RepresentantesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => RepresentantesRoute,
 } as any)
+const PainelReivindicacoesRoute = PainelReivindicacoesRouteImport.update({
+  id: '/reivindicacoes',
+  path: '/reivindicacoes',
+  getParentRoute: () => PainelRoute,
+} as any)
 const PainelRankingRoute = PainelRankingRouteImport.update({
   id: '/ranking',
   path: '/ranking',
@@ -412,6 +419,11 @@ const AdminScraperSjlRoute = AdminScraperSjlRouteImport.update({
 const AdminScraperCamaraSjlRoute = AdminScraperCamaraSjlRouteImport.update({
   id: '/scraper-camara-sjl',
   path: '/scraper-camara-sjl',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReivindicacoesRoute = AdminReivindicacoesRouteImport.update({
+  id: '/reivindicacoes',
+  path: '/reivindicacoes',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminQaRoute = AdminQaRouteImport.update({
@@ -694,6 +706,7 @@ export interface FileRoutesByFullPath {
   '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/push': typeof AdminPushRouteWithChildren
   '/admin/qa': typeof AdminQaRoute
+  '/admin/reivindicacoes': typeof AdminReivindicacoesRoute
   '/admin/scraper-camara-sjl': typeof AdminScraperCamaraSjlRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
@@ -720,6 +733,7 @@ export interface FileRoutesByFullPath {
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/painel/reivindicacoes': typeof PainelReivindicacoesRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
@@ -796,6 +810,7 @@ export interface FileRoutesByTo {
   '/admin/planos': typeof AdminPlanosRoute
   '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/qa': typeof AdminQaRoute
+  '/admin/reivindicacoes': typeof AdminReivindicacoesRoute
   '/admin/scraper-camara-sjl': typeof AdminScraperCamaraSjlRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
@@ -822,6 +837,7 @@ export interface FileRoutesByTo {
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/painel/reivindicacoes': typeof PainelReivindicacoesRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
@@ -903,6 +919,7 @@ export interface FileRoutesById {
   '/admin/promocoes': typeof AdminPromocoesRoute
   '/admin/push': typeof AdminPushRouteWithChildren
   '/admin/qa': typeof AdminQaRoute
+  '/admin/reivindicacoes': typeof AdminReivindicacoesRoute
   '/admin/scraper-camara-sjl': typeof AdminScraperCamaraSjlRoute
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
@@ -929,6 +946,7 @@ export interface FileRoutesById {
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/painel/reivindicacoes': typeof PainelReivindicacoesRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
@@ -1011,6 +1029,7 @@ export interface FileRouteTypes {
     | '/admin/promocoes'
     | '/admin/push'
     | '/admin/qa'
+    | '/admin/reivindicacoes'
     | '/admin/scraper-camara-sjl'
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
@@ -1037,6 +1056,7 @@ export interface FileRouteTypes {
     | '/painel/perfil'
     | '/painel/promocoes'
     | '/painel/ranking'
+    | '/painel/reivindicacoes'
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
@@ -1113,6 +1133,7 @@ export interface FileRouteTypes {
     | '/admin/planos'
     | '/admin/promocoes'
     | '/admin/qa'
+    | '/admin/reivindicacoes'
     | '/admin/scraper-camara-sjl'
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
@@ -1139,6 +1160,7 @@ export interface FileRouteTypes {
     | '/painel/perfil'
     | '/painel/promocoes'
     | '/painel/ranking'
+    | '/painel/reivindicacoes'
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
@@ -1219,6 +1241,7 @@ export interface FileRouteTypes {
     | '/admin/promocoes'
     | '/admin/push'
     | '/admin/qa'
+    | '/admin/reivindicacoes'
     | '/admin/scraper-camara-sjl'
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
@@ -1245,6 +1268,7 @@ export interface FileRouteTypes {
     | '/painel/perfil'
     | '/painel/promocoes'
     | '/painel/ranking'
+    | '/painel/reivindicacoes'
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
@@ -1567,6 +1591,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RepresentantesIdRouteImport
       parentRoute: typeof RepresentantesRoute
     }
+    '/painel/reivindicacoes': {
+      id: '/painel/reivindicacoes'
+      path: '/reivindicacoes'
+      fullPath: '/painel/reivindicacoes'
+      preLoaderRoute: typeof PainelReivindicacoesRouteImport
+      parentRoute: typeof PainelRoute
+    }
     '/painel/ranking': {
       id: '/painel/ranking'
       path: '/ranking'
@@ -1747,6 +1778,13 @@ declare module '@tanstack/react-router' {
       path: '/scraper-camara-sjl'
       fullPath: '/admin/scraper-camara-sjl'
       preLoaderRoute: typeof AdminScraperCamaraSjlRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reivindicacoes': {
+      id: '/admin/reivindicacoes'
+      path: '/reivindicacoes'
+      fullPath: '/admin/reivindicacoes'
+      preLoaderRoute: typeof AdminReivindicacoesRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/qa': {
@@ -2102,6 +2140,7 @@ interface AdminRouteChildren {
   AdminPromocoesRoute: typeof AdminPromocoesRoute
   AdminPushRoute: typeof AdminPushRouteWithChildren
   AdminQaRoute: typeof AdminQaRoute
+  AdminReivindicacoesRoute: typeof AdminReivindicacoesRoute
   AdminScraperCamaraSjlRoute: typeof AdminScraperCamaraSjlRoute
   AdminScraperSjlRoute: typeof AdminScraperSjlRoute
   AdminScraperVespasianoRoute: typeof AdminScraperVespasianoRoute
@@ -2135,6 +2174,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPromocoesRoute: AdminPromocoesRoute,
   AdminPushRoute: AdminPushRouteWithChildren,
   AdminQaRoute: AdminQaRoute,
+  AdminReivindicacoesRoute: AdminReivindicacoesRoute,
   AdminScraperCamaraSjlRoute: AdminScraperCamaraSjlRoute,
   AdminScraperSjlRoute: AdminScraperSjlRoute,
   AdminScraperVespasianoRoute: AdminScraperVespasianoRoute,
@@ -2224,6 +2264,7 @@ interface PainelRouteChildren {
   PainelPerfilRoute: typeof PainelPerfilRoute
   PainelPromocoesRoute: typeof PainelPromocoesRoute
   PainelRankingRoute: typeof PainelRankingRoute
+  PainelReivindicacoesRoute: typeof PainelReivindicacoesRoute
   PainelIndexRoute: typeof PainelIndexRoute
 }
 
@@ -2238,6 +2279,7 @@ const PainelRouteChildren: PainelRouteChildren = {
   PainelPerfilRoute: PainelPerfilRoute,
   PainelPromocoesRoute: PainelPromocoesRoute,
   PainelRankingRoute: PainelRankingRoute,
+  PainelReivindicacoesRoute: PainelReivindicacoesRoute,
   PainelIndexRoute: PainelIndexRoute,
 }
 

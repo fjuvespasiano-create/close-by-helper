@@ -4,16 +4,17 @@ import { useAdmin } from "@/hooks/use-admin";
 import { useUnreadMessagesCount } from "@/hooks/useUnreadMessages";
 import { Button } from "@/components/ui/button";
 import { PanelOnboardingWizard } from "@/components/panel/PanelOnboardingWizard";
-import { LayoutDashboard, Building2, Mail, Star, User, Heart, Bell, Trophy, Package, MessageCircle, BadgePercent } from "lucide-react";
+import { LayoutDashboard, Building2, Mail, Star, User, Heart, Bell, Trophy, Package, MessageCircle, BadgePercent, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/painel")({
   head: () => ({ meta: [{ title: "Meu painel — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
   component: PanelLayout,
 });
 
-const NAV: { to: "/painel" | "/painel/empresas" | "/painel/leads" | "/painel/avaliacoes" | "/painel/ranking" | "/painel/favoritos" | "/painel/notificacoes" | "/painel/perfil" | "/painel/anuncios" | "/painel/mensagens" | "/painel/promocoes"; label: string; icon: typeof LayoutDashboard; exact?: boolean }[] = [
+const NAV: { to: "/painel" | "/painel/empresas" | "/painel/leads" | "/painel/avaliacoes" | "/painel/ranking" | "/painel/favoritos" | "/painel/notificacoes" | "/painel/perfil" | "/painel/anuncios" | "/painel/mensagens" | "/painel/promocoes" | "/painel/reivindicacoes"; label: string; icon: typeof LayoutDashboard; exact?: boolean }[] = [
   { to: "/painel", label: "Visão geral", icon: LayoutDashboard, exact: true },
   { to: "/painel/empresas", label: "Minhas empresas", icon: Building2 },
+  { to: "/painel/reivindicacoes", label: "Reivindicações", icon: ShieldCheck },
   { to: "/painel/anuncios", label: "Meus anúncios", icon: Package },
   { to: "/painel/promocoes", label: "Promoções", icon: BadgePercent },
   { to: "/painel/mensagens", label: "Mensagens", icon: MessageCircle },
