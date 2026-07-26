@@ -43,6 +43,7 @@ import { Route as TransporteLinhasRouteImport } from './routes/transporte.linhas
 import { Route as RepresentantesRankingRouteImport } from './routes/representantes.ranking'
 import { Route as RepresentantesFeedRouteImport } from './routes/representantes.feed'
 import { Route as RepresentantesIdRouteImport } from './routes/representantes.$id'
+import { Route as PainelReivindicacoesRouteImport } from './routes/painel.reivindicacoes'
 import { Route as PainelRankingRouteImport } from './routes/painel.ranking'
 import { Route as PainelPromocoesRouteImport } from './routes/painel.promocoes'
 import { Route as PainelPerfilRouteImport } from './routes/painel.perfil'
@@ -284,6 +285,11 @@ const RepresentantesIdRoute = RepresentantesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => RepresentantesRoute,
+} as any)
+const PainelReivindicacoesRoute = PainelReivindicacoesRouteImport.update({
+  id: '/reivindicacoes',
+  path: '/reivindicacoes',
+  getParentRoute: () => PainelRoute,
 } as any)
 const PainelRankingRoute = PainelRankingRouteImport.update({
   id: '/ranking',
@@ -727,6 +733,7 @@ export interface FileRoutesByFullPath {
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/painel/reivindicacoes': typeof PainelReivindicacoesRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
@@ -830,6 +837,7 @@ export interface FileRoutesByTo {
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/painel/reivindicacoes': typeof PainelReivindicacoesRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
@@ -938,6 +946,7 @@ export interface FileRoutesById {
   '/painel/perfil': typeof PainelPerfilRoute
   '/painel/promocoes': typeof PainelPromocoesRoute
   '/painel/ranking': typeof PainelRankingRoute
+  '/painel/reivindicacoes': typeof PainelReivindicacoesRoute
   '/representantes/$id': typeof RepresentantesIdRoute
   '/representantes/feed': typeof RepresentantesFeedRoute
   '/representantes/ranking': typeof RepresentantesRankingRoute
@@ -1047,6 +1056,7 @@ export interface FileRouteTypes {
     | '/painel/perfil'
     | '/painel/promocoes'
     | '/painel/ranking'
+    | '/painel/reivindicacoes'
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
@@ -1150,6 +1160,7 @@ export interface FileRouteTypes {
     | '/painel/perfil'
     | '/painel/promocoes'
     | '/painel/ranking'
+    | '/painel/reivindicacoes'
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
@@ -1257,6 +1268,7 @@ export interface FileRouteTypes {
     | '/painel/perfil'
     | '/painel/promocoes'
     | '/painel/ranking'
+    | '/painel/reivindicacoes'
     | '/representantes/$id'
     | '/representantes/feed'
     | '/representantes/ranking'
@@ -1578,6 +1590,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/representantes/$id'
       preLoaderRoute: typeof RepresentantesIdRouteImport
       parentRoute: typeof RepresentantesRoute
+    }
+    '/painel/reivindicacoes': {
+      id: '/painel/reivindicacoes'
+      path: '/reivindicacoes'
+      fullPath: '/painel/reivindicacoes'
+      preLoaderRoute: typeof PainelReivindicacoesRouteImport
+      parentRoute: typeof PainelRoute
     }
     '/painel/ranking': {
       id: '/painel/ranking'
@@ -2245,6 +2264,7 @@ interface PainelRouteChildren {
   PainelPerfilRoute: typeof PainelPerfilRoute
   PainelPromocoesRoute: typeof PainelPromocoesRoute
   PainelRankingRoute: typeof PainelRankingRoute
+  PainelReivindicacoesRoute: typeof PainelReivindicacoesRoute
   PainelIndexRoute: typeof PainelIndexRoute
 }
 
@@ -2259,6 +2279,7 @@ const PainelRouteChildren: PainelRouteChildren = {
   PainelPerfilRoute: PainelPerfilRoute,
   PainelPromocoesRoute: PainelPromocoesRoute,
   PainelRankingRoute: PainelRankingRoute,
+  PainelReivindicacoesRoute: PainelReivindicacoesRoute,
   PainelIndexRoute: PainelIndexRoute,
 }
 
