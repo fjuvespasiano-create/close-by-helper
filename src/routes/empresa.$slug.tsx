@@ -17,6 +17,7 @@ import { QuoteDialog } from "@/components/site/QuoteDialog";
 import { CompanyCard, toCompanyCardData } from "@/components/site/CompanyCard";
 import { companyBySlugQueryOptions, fetchCompanyReviews, fetchSimilarCompanies, fetchCitiesByIds } from "@/lib/queries";
 import { FavoriteButton } from "@/components/site/FavoriteButton";
+import { ClaimCompanyButton } from "@/components/site/ClaimCompanyButton";
 import { telUrl, waUrl } from "@/lib/format";
 import {
   QualityBars, CertificationsGrid, DifferentialsGrid, CoverageArea, SocialLinksExtra,
