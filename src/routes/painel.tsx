@@ -4,7 +4,7 @@ import { useAdmin } from "@/hooks/use-admin";
 import { useUnreadMessagesCount } from "@/hooks/useUnreadMessages";
 import { Button } from "@/components/ui/button";
 import { PanelOnboardingWizard } from "@/components/panel/PanelOnboardingWizard";
-import { LayoutDashboard, Building2, Mail, Star, User, Heart, Bell, Trophy, Package, MessageCircle, BadgePercent } from "lucide-react";
+import { LayoutDashboard, Building2, Mail, Star, User, Heart, Bell, Trophy, Package, MessageCircle, BadgePercent, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/painel")({
   head: () => ({ meta: [{ title: "Meu painel — AgenddaAqui" }, { name: "robots", content: "noindex" }] }),
