@@ -193,8 +193,8 @@ function Home() {
               <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — toque uma vez e já liga.</div>
             </div>
           </div>
-          <div className="btn-shine inline-flex shrink-0 items-center gap-1.5 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-0.5 group-hover:shadow-md">
-            Abrir a lista <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          <div className="btn-cinema inline-flex shrink-0 items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm">
+            <span className="relative z-[2] inline-flex items-center gap-1.5">Abrir a lista <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" /></span>
           </div>
         </Link>
       </section>
