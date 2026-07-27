@@ -330,6 +330,150 @@
   &:active { transform: translateY(0); }
 }
 
+/* ============================================================
+   CINEMATIC INTERACTIONS (intensity 5/5 — Home)
+   ============================================================ */
+
+@property --conic-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes conic-spin {
+  to { --conic-angle: 360deg; }
+}
+
+@utility card-cinema {
+  position: relative;
+  isolation: isolate;
+  background: var(--gradient-warm-surface);
+  border: 1px solid color-mix(in oklch, var(--border) 85%, transparent);
+  border-radius: calc(var(--radius) + 0.35rem);
+  box-shadow: var(--shadow-warm);
+  transform: translateZ(0);
+  transition:
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 380ms ease,
+    border-color 380ms ease;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--conic-angle),
+      transparent 0deg,
+      color-mix(in oklch, var(--accent) 85%, transparent) 90deg,
+      transparent 180deg,
+      color-mix(in oklch, var(--primary) 75%, transparent) 270deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 380ms ease;
+    pointer-events: none;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      520px circle at 50% 0%,
+      color-mix(in oklch, var(--accent) 22%, transparent),
+      transparent 55%
+    );
+    opacity: 0;
+    transition: opacity 380ms ease;
+    pointer-events: none;
+  }
+  &:hover {
+    transform: translateY(-6px) scale(1.015);
+    box-shadow: var(--shadow-warm-lg);
+    border-color: color-mix(in oklch, var(--accent) 55%, var(--border));
+    animation: conic-spin 4s linear infinite;
+  }
+  &:hover::before,
+  &:hover::after { opacity: 1; }
+  &:active { transform: translateY(-2px) scale(0.995); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 8px 24px -8px color-mix(in oklch, var(--accent) 60%, transparent),
+      inset 0 1px 0 rgb(255 255 255 / 0.25);
+  }
+  50% {
+    box-shadow:
+      0 18px 42px -10px color-mix(in oklch, var(--accent) 80%, transparent),
+      inset 0 1px 0 rgb(255 255 255 / 0.32);
+  }
+}
+@keyframes bg-slide {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@utility btn-cinema {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--accent-foreground);
+  background: linear-gradient(
+    110deg,
+    var(--accent) 0%,
+    color-mix(in oklch, var(--accent) 65%, #ff8a3d) 35%,
+    color-mix(in oklch, var(--primary) 70%, var(--accent)) 65%,
+    var(--accent) 100%
+  );
+  background-size: 220% 100%;
+  animation: bg-slide 7s linear infinite, glow-pulse 3.2s ease-in-out infinite;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), filter 260ms ease;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.55), transparent);
+    transform: translateX(-120%) skewX(-18deg);
+    pointer-events: none;
+  }
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    filter: saturate(1.1) brightness(1.05);
+  }
+  &:hover::before { animation: shimmer-sweep 850ms ease; }
+  &:active { transform: translateY(0) scale(0.98); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@utility animate-float {
+  animation: float-y 4s ease-in-out infinite;
+}
+
+@keyframes reveal-blur {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); filter: blur(8px); }
+  to   { opacity: 1; transform: translateY(0) scale(1);       filter: blur(0); }
+}
+@utility animate-reveal {
+  animation: reveal-blur 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Slow drifting gradient blob backgrounds. */
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(30px, -20px) scale(1.1); }
+}
+@utility animate-drift {
+  animation: drift 12s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
