@@ -68,12 +68,12 @@ function CategoryCard({ category }: { category: Category }) {
     <Link
       to="/categoria/$slug"
       params={{ slug: category.slug }}
-      className="card-warm focus-ring group flex flex-col items-center gap-3 p-5 text-center"
+      className="card-cinema focus-ring group flex flex-col items-center gap-3 p-5 text-center"
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/15 to-accent/5 text-accent ring-1 ring-accent/20 transition-all duration-300 group-hover:scale-110 group-hover:from-accent group-hover:to-orange-500 group-hover:text-accent-foreground group-hover:ring-accent group-hover:shadow-[0_10px_24px_-10px_color-mix(in_oklch,var(--accent)_65%,transparent)]">
-        <CategoryIcon name={category.icon} className="h-6 w-6" />
+      <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/15 to-accent/5 text-accent ring-1 ring-accent/20 transition-all duration-500 group-hover:-rotate-6 group-hover:scale-110 group-hover:from-accent group-hover:to-orange-500 group-hover:text-accent-foreground group-hover:ring-accent group-hover:shadow-[0_12px_28px_-8px_color-mix(in_oklch,var(--accent)_70%,transparent)]">
+        <CategoryIcon name={category.icon} className="h-6 w-6 transition-transform duration-500 group-hover:scale-110" />
       </div>
-      <div className="text-sm font-semibold tracking-tight text-foreground">{category.name}</div>
+      <div className="text-sm font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-accent">{category.name}</div>
     </Link>
   );
 }
@@ -83,18 +83,19 @@ function PublicServiceCard({ slug, label, icon, description }: { slug: string; l
     <Link
       to="/servicos-publicos"
       search={{ cat: slug }}
-      className="card-warm focus-ring group flex items-start gap-3 p-4"
+      className="card-cinema focus-ring group flex items-start gap-3 p-4"
     >
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary ring-1 ring-primary/15 transition-all duration-300 group-hover:scale-110 group-hover:from-primary group-hover:to-primary-dark group-hover:text-primary-foreground group-hover:ring-primary/60">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary ring-1 ring-primary/15 transition-all duration-500 group-hover:-rotate-6 group-hover:scale-110 group-hover:from-primary group-hover:to-primary-dark group-hover:text-primary-foreground group-hover:ring-primary/60 group-hover:shadow-[0_10px_24px_-8px_color-mix(in_oklch,var(--primary)_60%,transparent)]">
         <CategoryIcon name={icon} className="h-5 w-5" />
       </div>
       <div className="min-w-0">
-        <div className="font-semibold text-foreground transition-colors group-hover:text-primary">{label}</div>
+        <div className="font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">{label}</div>
         <div className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{description}</div>
       </div>
     </Link>
   );
 }
+
 
 function Home() {
   const { city } = useSelectedCity();
@@ -192,7 +193,7 @@ function Home() {
               <div className="mt-0.5 text-sm text-muted-foreground">SAMU, Bombeiros, Polícia, hospitais e farmácias de plantão — toque uma vez e já liga.</div>
             </div>
           </div>
-          <div className="btn-shine inline-flex shrink-0 items-center gap-1.5 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-0.5 group-hover:shadow-md">
+          <div className="btn-shine inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-destructive to-red-600 px-5 py-2.5 text-sm font-semibold text-destructive-foreground shadow-[0_10px_28px_-10px_rgb(220_38_38/0.6)] transition-all duration-300 group-hover:translate-x-0.5 group-hover:scale-[1.03] group-hover:shadow-[0_16px_36px_-10px_rgb(220_38_38/0.75)]">
             Abrir a lista <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </Link>
@@ -285,8 +286,8 @@ function Home() {
       {/* CTA */}
       <section className="container mx-auto px-4 pb-20">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent via-orange-500 to-orange-600 p-8 text-accent-foreground shadow-[0_20px_60px_-20px_rgb(234_88_12/0.5)] md:p-14">
-          <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-white/15 blur-3xl" />
-          <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute -top-16 -right-16 h-64 w-64 animate-drift rounded-full bg-white/15 blur-3xl" />
+          <div className="absolute -bottom-20 -left-10 h-56 w-56 animate-drift rounded-full bg-white/10 blur-3xl [animation-delay:-4s]" />
           <div className="relative flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
             <div>
               <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Seu negócio na vitrine da cidade</h3>
@@ -296,9 +297,11 @@ function Home() {
             </div>
             <Link
               to="/auth"
-              className="btn-warm focus-ring group inline-flex items-center gap-2 rounded-full !bg-white !text-accent px-6 py-3.5 font-semibold shadow-lg"
+              className="focus-ring group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-7 py-3.5 font-semibold text-accent shadow-[0_12px_32px_-8px_rgb(0_0_0/0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_20px_44px_-10px_rgb(0_0_0/0.35)] active:scale-100"
             >
-              Cadastrar meu negócio grátis <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accent/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              <span className="relative">Cadastrar meu negócio grátis</span>
+              <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>
           </div>
         </div>
