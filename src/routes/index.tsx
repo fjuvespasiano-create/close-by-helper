@@ -68,12 +68,12 @@ function CategoryCard({ category }: { category: Category }) {
     <Link
       to="/categoria/$slug"
       params={{ slug: category.slug }}
-      className="card-warm focus-ring group flex flex-col items-center gap-3 p-5 text-center"
+      className="card-cinema focus-ring group flex flex-col items-center gap-3 p-5 text-center"
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/15 to-accent/5 text-accent ring-1 ring-accent/20 transition-all duration-300 group-hover:scale-110 group-hover:from-accent group-hover:to-orange-500 group-hover:text-accent-foreground group-hover:ring-accent group-hover:shadow-[0_10px_24px_-10px_color-mix(in_oklch,var(--accent)_65%,transparent)]">
-        <CategoryIcon name={category.icon} className="h-6 w-6" />
+      <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/15 to-accent/5 text-accent ring-1 ring-accent/20 transition-all duration-500 group-hover:-rotate-6 group-hover:scale-110 group-hover:from-accent group-hover:to-orange-500 group-hover:text-accent-foreground group-hover:ring-accent group-hover:shadow-[0_12px_28px_-8px_color-mix(in_oklch,var(--accent)_70%,transparent)]">
+        <CategoryIcon name={category.icon} className="h-6 w-6 transition-transform duration-500 group-hover:scale-110" />
       </div>
-      <div className="text-sm font-semibold tracking-tight text-foreground">{category.name}</div>
+      <div className="text-sm font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-accent">{category.name}</div>
     </Link>
   );
 }
@@ -83,18 +83,19 @@ function PublicServiceCard({ slug, label, icon, description }: { slug: string; l
     <Link
       to="/servicos-publicos"
       search={{ cat: slug }}
-      className="card-warm focus-ring group flex items-start gap-3 p-4"
+      className="card-cinema focus-ring group flex items-start gap-3 p-4"
     >
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary ring-1 ring-primary/15 transition-all duration-300 group-hover:scale-110 group-hover:from-primary group-hover:to-primary-dark group-hover:text-primary-foreground group-hover:ring-primary/60">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary ring-1 ring-primary/15 transition-all duration-500 group-hover:-rotate-6 group-hover:scale-110 group-hover:from-primary group-hover:to-primary-dark group-hover:text-primary-foreground group-hover:ring-primary/60 group-hover:shadow-[0_10px_24px_-8px_color-mix(in_oklch,var(--primary)_60%,transparent)]">
         <CategoryIcon name={icon} className="h-5 w-5" />
       </div>
       <div className="min-w-0">
-        <div className="font-semibold text-foreground transition-colors group-hover:text-primary">{label}</div>
+        <div className="font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">{label}</div>
         <div className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{description}</div>
       </div>
     </Link>
   );
 }
+
 
 function Home() {
   const { city } = useSelectedCity();
