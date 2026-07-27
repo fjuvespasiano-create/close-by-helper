@@ -286,8 +286,8 @@ function Home() {
       {/* CTA */}
       <section className="container mx-auto px-4 pb-20">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent via-orange-500 to-orange-600 p-8 text-accent-foreground shadow-[0_20px_60px_-20px_rgb(234_88_12/0.5)] md:p-14">
-          <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-white/15 blur-3xl" />
-          <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute -top-16 -right-16 h-64 w-64 animate-drift rounded-full bg-white/15 blur-3xl" />
+          <div className="absolute -bottom-20 -left-10 h-56 w-56 animate-drift rounded-full bg-white/10 blur-3xl [animation-delay:-4s]" />
           <div className="relative flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between">
             <div>
               <h3 className="font-display text-2xl font-bold leading-tight md:text-3xl">Seu negócio na vitrine da cidade</h3>
@@ -297,9 +297,11 @@ function Home() {
             </div>
             <Link
               to="/auth"
-              className="btn-warm focus-ring group inline-flex items-center gap-2 rounded-full !bg-white !text-accent px-6 py-3.5 font-semibold shadow-lg"
+              className="focus-ring group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-7 py-3.5 font-semibold text-accent shadow-[0_12px_32px_-8px_rgb(0_0_0/0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-[0_20px_44px_-10px_rgb(0_0_0/0.35)] active:scale-100"
             >
-              Cadastrar meu negócio grátis <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accent/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              <span className="relative">Cadastrar meu negócio grátis</span>
+              <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>
           </div>
         </div>
