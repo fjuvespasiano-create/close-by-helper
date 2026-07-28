@@ -16,6 +16,7 @@ export const DEFAULT_NAV_ITEMS: NavItem[] = [
   { to: "/transporte", label: "Transporte" },
   { to: "/empregos", label: "Empregos" },
   { to: "/promocoes", label: "Promoções" },
+  { to: "/ofertas-shopee", label: "Ofertas Shopee" },
 ];
 
 export async function fetchNavItems(): Promise<NavItem[]> {
