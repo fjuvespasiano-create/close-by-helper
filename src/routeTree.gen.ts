@@ -67,6 +67,7 @@ import { Route as AdminTurismoRouteImport } from './routes/admin.turismo'
 import { Route as AdminTransicoesRouteImport } from './routes/admin.transicoes'
 import { Route as AdminTextosRouteImport } from './routes/admin.textos'
 import { Route as AdminSolicitacoesRouteImport } from './routes/admin.solicitacoes'
+import { Route as AdminShopeeFeedsRouteImport } from './routes/admin.shopee-feeds'
 import { Route as AdminServicosPublicosRouteImport } from './routes/admin.servicos-publicos'
 import { Route as AdminScraperVespasianoRouteImport } from './routes/admin.scraper-vespasiano'
 import { Route as AdminScraperSjlRouteImport } from './routes/admin.scraper-sjl'
@@ -407,6 +408,11 @@ const AdminSolicitacoesRoute = AdminSolicitacoesRouteImport.update({
   path: '/solicitacoes',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminShopeeFeedsRoute = AdminShopeeFeedsRouteImport.update({
+  id: '/shopee-feeds',
+  path: '/shopee-feeds',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminServicosPublicosRoute = AdminServicosPublicosRouteImport.update({
   id: '/servicos-publicos',
   path: '/servicos-publicos',
@@ -718,6 +724,7 @@ export interface FileRoutesByFullPath {
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/shopee-feeds': typeof AdminShopeeFeedsRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
   '/admin/transicoes': typeof AdminTransicoesRoute
@@ -823,6 +830,7 @@ export interface FileRoutesByTo {
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/shopee-feeds': typeof AdminShopeeFeedsRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
   '/admin/transicoes': typeof AdminTransicoesRoute
@@ -933,6 +941,7 @@ export interface FileRoutesById {
   '/admin/scraper-sjl': typeof AdminScraperSjlRoute
   '/admin/scraper-vespasiano': typeof AdminScraperVespasianoRoute
   '/admin/servicos-publicos': typeof AdminServicosPublicosRoute
+  '/admin/shopee-feeds': typeof AdminShopeeFeedsRoute
   '/admin/solicitacoes': typeof AdminSolicitacoesRoute
   '/admin/textos': typeof AdminTextosRoute
   '/admin/transicoes': typeof AdminTransicoesRoute
@@ -1044,6 +1053,7 @@ export interface FileRouteTypes {
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
+    | '/admin/shopee-feeds'
     | '/admin/solicitacoes'
     | '/admin/textos'
     | '/admin/transicoes'
@@ -1149,6 +1159,7 @@ export interface FileRouteTypes {
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
+    | '/admin/shopee-feeds'
     | '/admin/solicitacoes'
     | '/admin/textos'
     | '/admin/transicoes'
@@ -1258,6 +1269,7 @@ export interface FileRouteTypes {
     | '/admin/scraper-sjl'
     | '/admin/scraper-vespasiano'
     | '/admin/servicos-publicos'
+    | '/admin/shopee-feeds'
     | '/admin/solicitacoes'
     | '/admin/textos'
     | '/admin/transicoes'
@@ -1772,6 +1784,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSolicitacoesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/shopee-feeds': {
+      id: '/admin/shopee-feeds'
+      path: '/shopee-feeds'
+      fullPath: '/admin/shopee-feeds'
+      preLoaderRoute: typeof AdminShopeeFeedsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/servicos-publicos': {
       id: '/admin/servicos-publicos'
       path: '/servicos-publicos'
@@ -2165,6 +2184,7 @@ interface AdminRouteChildren {
   AdminScraperSjlRoute: typeof AdminScraperSjlRoute
   AdminScraperVespasianoRoute: typeof AdminScraperVespasianoRoute
   AdminServicosPublicosRoute: typeof AdminServicosPublicosRoute
+  AdminShopeeFeedsRoute: typeof AdminShopeeFeedsRoute
   AdminSolicitacoesRoute: typeof AdminSolicitacoesRoute
   AdminTextosRoute: typeof AdminTextosRoute
   AdminTransicoesRoute: typeof AdminTransicoesRoute
@@ -2199,6 +2219,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminScraperSjlRoute: AdminScraperSjlRoute,
   AdminScraperVespasianoRoute: AdminScraperVespasianoRoute,
   AdminServicosPublicosRoute: AdminServicosPublicosRoute,
+  AdminShopeeFeedsRoute: AdminShopeeFeedsRoute,
   AdminSolicitacoesRoute: AdminSolicitacoesRoute,
   AdminTextosRoute: AdminTextosRoute,
   AdminTransicoesRoute: AdminTransicoesRoute,
