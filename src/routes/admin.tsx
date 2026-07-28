@@ -26,6 +26,7 @@ type AdminPath =
   | "/admin/backup" | "/admin/ao-vivo"
   | "/admin/transicoes"
   | "/admin/documentacao"
+  | "/admin/shopee-feeds"
   | "/admin/configuracoes";
 
 type NavItem = { to: AdminPath; label: string; icon: typeof LayoutDashboard; exact?: boolean };
@@ -73,6 +74,7 @@ const GROUPS: NavGroup[] = [
       { to: "/admin/anuncios", label: "Anúncios locais", icon: Megaphone },
       { to: "/admin/analytics-anuncios", label: "Analytics de Anúncios", icon: BarChart3 },
       { to: "/admin/push", label: "Notificações Push", icon: Bell },
+      { to: "/admin/shopee-feeds", label: "Feeds Shopee", icon: Download },
     ],
   },
   {
