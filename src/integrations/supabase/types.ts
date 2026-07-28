@@ -3167,6 +3167,81 @@ export type Database = {
           },
         ]
       }
+      shopee_products: {
+        Row: {
+          created_at: string
+          description: string | null
+          discount_percentage: number | null
+          global_category1: string | null
+          global_category2: string | null
+          global_catid1: string | null
+          global_catid2: string | null
+          global_item_attributes: string | null
+          id: string
+          image_link: string | null
+          image_link_3: string | null
+          imported_at: string
+          is_active: boolean
+          is_featured: boolean
+          item_rating: number | null
+          itemid: number
+          price: number | null
+          product_link: string
+          product_short_link: string | null
+          sale_price: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          discount_percentage?: number | null
+          global_category1?: string | null
+          global_category2?: string | null
+          global_catid1?: string | null
+          global_catid2?: string | null
+          global_item_attributes?: string | null
+          id?: string
+          image_link?: string | null
+          image_link_3?: string | null
+          imported_at?: string
+          is_active?: boolean
+          is_featured?: boolean
+          item_rating?: number | null
+          itemid: number
+          price?: number | null
+          product_link: string
+          product_short_link?: string | null
+          sale_price?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          discount_percentage?: number | null
+          global_category1?: string | null
+          global_category2?: string | null
+          global_catid1?: string | null
+          global_catid2?: string | null
+          global_item_attributes?: string | null
+          id?: string
+          image_link?: string | null
+          image_link_3?: string | null
+          imported_at?: string
+          is_active?: boolean
+          is_featured?: boolean
+          item_rating?: number | null
+          itemid?: number
+          price?: number | null
+          product_link?: string
+          product_short_link?: string | null
+          sale_price?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       shows: {
         Row: {
           artist_name: string
