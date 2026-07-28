@@ -9,6 +9,7 @@ import { CategoryIcon } from "@/components/site/CategoryIcon";
 import { CompanyCard, toCompanyCardData } from "@/components/site/CompanyCard";
 import { CitySwitch } from "@/components/site/CitySwitch";
 import { FeaturedCouponsCard } from "@/components/site/FeaturedCouponsCard";
+import { ShopeeFeaturedWidget } from "@/components/site/ShopeeFeaturedWidget";
 import { LiveFeedWidget } from "@/features/live-feed";
 import { useCityId } from "@/hooks/useCityId";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
@@ -282,6 +283,8 @@ function Home() {
           ))}
         </div>
       </section>
+
+      <ShopeeFeaturedWidget />
 
       {/* CTA */}
       <section className="container mx-auto px-4 pb-20">
