@@ -22,6 +22,7 @@ import { Route as RepresentantesRouteImport } from './routes/representantes'
 import { Route as PromocoesRouteImport } from './routes/promocoes'
 import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as PainelRouteImport } from './routes/painel'
+import { Route as OfertasShopeeRouteImport } from './routes/ofertas-shopee'
 import { Route as OQueFazerRouteImport } from './routes/o-que-fazer'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
@@ -179,6 +180,11 @@ const PlanosRoute = PlanosRouteImport.update({
 const PainelRoute = PainelRouteImport.update({
   id: '/painel',
   path: '/painel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfertasShopeeRoute = OfertasShopeeRouteImport.update({
+  id: '/ofertas-shopee',
+  path: '/ofertas-shopee',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OQueFazerRoute = OQueFazerRouteImport.update({
@@ -672,6 +678,7 @@ export interface FileRoutesByFullPath {
   '/favoritos': typeof FavoritosRoute
   '/marketplace': typeof MarketplaceRouteWithChildren
   '/o-que-fazer': typeof OQueFazerRoute
+  '/ofertas-shopee': typeof OfertasShopeeRoute
   '/painel': typeof PainelRouteWithChildren
   '/planos': typeof PlanosRoute
   '/promocoes': typeof PromocoesRoute
@@ -779,6 +786,7 @@ export interface FileRoutesByTo {
   '/favoritos': typeof FavoritosRoute
   '/marketplace': typeof MarketplaceRouteWithChildren
   '/o-que-fazer': typeof OQueFazerRoute
+  '/ofertas-shopee': typeof OfertasShopeeRoute
   '/planos': typeof PlanosRoute
   '/promocoes': typeof PromocoesRoute
   '/reputacao': typeof ReputacaoRoute
@@ -885,6 +893,7 @@ export interface FileRoutesById {
   '/favoritos': typeof FavoritosRoute
   '/marketplace': typeof MarketplaceRouteWithChildren
   '/o-que-fazer': typeof OQueFazerRoute
+  '/ofertas-shopee': typeof OfertasShopeeRoute
   '/painel': typeof PainelRouteWithChildren
   '/planos': typeof PlanosRoute
   '/promocoes': typeof PromocoesRoute
@@ -995,6 +1004,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/marketplace'
     | '/o-que-fazer'
+    | '/ofertas-shopee'
     | '/painel'
     | '/planos'
     | '/promocoes'
@@ -1102,6 +1112,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/marketplace'
     | '/o-que-fazer'
+    | '/ofertas-shopee'
     | '/planos'
     | '/promocoes'
     | '/reputacao'
@@ -1207,6 +1218,7 @@ export interface FileRouteTypes {
     | '/favoritos'
     | '/marketplace'
     | '/o-que-fazer'
+    | '/ofertas-shopee'
     | '/painel'
     | '/planos'
     | '/promocoes'
@@ -1316,6 +1328,7 @@ export interface RootRouteChildren {
   FavoritosRoute: typeof FavoritosRoute
   MarketplaceRoute: typeof MarketplaceRouteWithChildren
   OQueFazerRoute: typeof OQueFazerRoute
+  OfertasShopeeRoute: typeof OfertasShopeeRoute
   PainelRoute: typeof PainelRouteWithChildren
   PlanosRoute: typeof PlanosRoute
   PromocoesRoute: typeof PromocoesRoute
@@ -1442,6 +1455,13 @@ declare module '@tanstack/react-router' {
       path: '/painel'
       fullPath: '/painel'
       preLoaderRoute: typeof PainelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ofertas-shopee': {
+      id: '/ofertas-shopee'
+      path: '/ofertas-shopee'
+      fullPath: '/ofertas-shopee'
+      preLoaderRoute: typeof OfertasShopeeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/o-que-fazer': {
@@ -2329,6 +2349,7 @@ const rootRouteChildren: RootRouteChildren = {
   FavoritosRoute: FavoritosRoute,
   MarketplaceRoute: MarketplaceRouteWithChildren,
   OQueFazerRoute: OQueFazerRoute,
+  OfertasShopeeRoute: OfertasShopeeRoute,
   PainelRoute: PainelRouteWithChildren,
   PlanosRoute: PlanosRoute,
   PromocoesRoute: PromocoesRoute,
