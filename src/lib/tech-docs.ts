@@ -459,6 +459,7 @@ export const PUBLIC_ROUTES: RouteEntry[] = [
   { path: "/blog/$slug", file: "src/routes/blog.$slug.tsx", access: "public", description: "Post." },
   { path: "/promocoes", file: "src/routes/promocoes.tsx", access: "public", description: "Promoções." },
   { path: "/favoritos", file: "src/routes/favoritos.tsx", access: "public", description: "Favoritos." },
+  { path: "/ofertas-shopee", file: "src/routes/ofertas-shopee.tsx", access: "public", description: "Catálogo Shopee (busca+filtros+paginação)." },
 ];
 
 export const PANEL_ROUTES: RouteEntry[] = [
