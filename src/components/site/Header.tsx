@@ -285,6 +285,13 @@ export function Header() {
                 ) : null}
               </div>
             ) : null}
+            {!isAuthed ? (
+              <Link to="/cadastre-sua-empresa" className="mt-2 block" onClick={() => setOpen(false)}>
+                <Button size="sm" className="w-full gap-2 bg-accent text-accent-foreground hover:bg-accent/90">
+                  Cadastrar minha empresa grátis
+                </Button>
+              </Link>
+            ) : null}
             <div className="mt-2 flex gap-2 border-t border-border pt-3">
               <Link to="/favoritos" className="flex-1" onClick={() => setOpen(false)}>
                 <Button variant="outline" size="sm" className="w-full gap-2"><Heart className="h-4 w-4" /> Favoritos</Button>
