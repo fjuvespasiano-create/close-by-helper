@@ -245,6 +245,75 @@ export const FEATURES: Feature[] = [
     tables: ["system_settings"],
     files: ["src/lib/page-transition-config.ts", "src/components/site/PageTransition.tsx"],
   },
+  {
+    id: "shopee",
+    title: "Ofertas Shopee (Afiliados)",
+    description:
+      "Catálogo de 10.000 produtos importados via CSV do datafeed de afiliados (Shopee). Widget de destaques na home (top 24 por desconto + rating), página pública com busca/filtros/ordenação/paginação, links usam product_short_link com rel='noopener sponsored nofollow'. Página admin lista URLs dos datafeeds para re-download manual.",
+    routes: ["/ofertas-shopee", "/admin/shopee-feeds"],
+    tables: ["shopee_products"],
+    files: [
+      "src/lib/shopeeProducts.ts",
+      "src/components/site/ShopeeProductCard.tsx",
+      "src/components/site/ShopeeFeaturedWidget.tsx",
+      "src/routes/ofertas-shopee.tsx",
+      "src/routes/admin.shopee-feeds.tsx",
+    ],
+  },
+  {
+    id: "reivindicacoes",
+    title: "Reivindicação de Empresa",
+    description:
+      "Usuário reivindica propriedade de uma empresa não reclamada; anexa evidência no bucket claim-evidence; admin revisa em /admin/reivindicacoes; aprovação transfere owner_id via trigger company_claims_on_review e dispara notificação in-app.",
+    routes: ["/admin/reivindicacoes", "/painel/reivindicacoes"],
+    tables: ["company_claims"],
+    files: [
+      "src/lib/company-claims.functions.ts",
+      "src/components/site/ClaimCompanyButton.tsx",
+      "src/components/site/ClaimCompanyDialog.tsx",
+    ],
+  },
+];
+
+/**
+ * Arquitetura em camadas (leitura obrigatória para novos devs).
+ *
+ * 1) UI (src/components + src/routes)
+ *    - Componentes usam apenas tokens semânticos Tailwind e shadcn/ui.
+ *    - Rotas ficam em src/routes/ com file-based routing (dots = slashes).
+ *    - __root.tsx aplica providers globais: QueryClientProvider, ThemeProvider,
+ *      Toaster, PageTransition, error boundary.
+ *
+ * 2) Data fetching (TanStack Query)
+ *    - Toda leitura passa por queryKey estável (ver src/features/*/queries.ts).
+ *    - Realtime: hooks assinam canais Supabase e chamam invalidateQueries.
+ *    - staleTime por rota evita over-fetch em SSR + client.
+ *
+ * 3) Server functions (createServerFn) e Server routes
+ *    - App-internal → *.functions.ts com createServerFn (RPC tipado).
+ *    - Webhooks/cron/externos → src/routes/api/public/* (HTTP puro).
+ *    - Cron protegido por header x-cron-secret (checkCronAuth em cron-auth.server.ts).
+ *
+ * 4) Persistência (Supabase)
+ *    - RLS habilitado em 100% das tabelas em public.*.
+ *    - Roles em user_roles + função has_role() SECURITY DEFINER (evita recursão).
+ *    - Triggers para: onboarding admin automático, notificações admin,
+ *      reindexação de rating, limites de plano (promotions), auditoria QA.
+ *
+ * 5) Integrações externas
+ *    - Firecrawl (scrapers de sites municipais e câmara).
+ *    - Lovable AI Gateway (geração diária de blog).
+ *    - Web Push + FCM via VAPID (public/sw.js).
+ *    - WhatsApp bot standalone (whatsapp-bot/, Node local, opt-out via /api/public/hooks/whatsapp-opt-out).
+ *    - Shopee Afiliados (datafeed CSV, importado via COPY no Postgres).
+ */
+export const ARCHITECTURE_NOTES = [
+  "SSR: loaders isomórficos usam ensureQueryData; código server-only fica em *.server.ts e é dynamic-imported dentro do handler.",
+  "Nunca fazer fetch manual para .url de server function — sempre chamar via useServerFn ou import direto.",
+  "process.env é lido dentro do handler; import.meta.env.VITE_* no browser.",
+  "Segredos (SERVICE_ROLE, CRON_SECRET, VAPID_PRIVATE) só existem no runtime server.",
+  "Escrita de tabela pública: sempre precedida de GRANT explícito na mesma migration.",
+  "Client-side: cn() de @/lib/utils para classes condicionais; nunca cores hex/hard-coded.",
 ];
 
 export const API_ENDPOINTS: ApiEndpoint[] = [
