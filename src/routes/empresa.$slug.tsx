@@ -888,7 +888,7 @@ function CompanyPage() {
         </div>
 
         <InlineShopeeStrip
-          hint={company.category_slug ?? company.name?.split(" ")[0]}
+          hint={company.name?.split(" ")[0]}
           title="Complemente sua escolha"
           subtitle="Produtos relacionados a este segmento · links de parceiro"
         />
