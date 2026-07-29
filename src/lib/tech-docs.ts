@@ -418,6 +418,8 @@ export const ADMIN_ROUTES: RouteEntry[] = [
   { path: "/admin/transicoes", file: "src/routes/admin.transicoes.tsx", access: "admin", description: "Transições de página." },
   { path: "/admin/configuracoes", file: "src/routes/admin.configuracoes.tsx", access: "admin", description: "Configurações gerais." },
   { path: "/admin/documentacao", file: "src/routes/admin.documentacao.tsx", access: "admin", description: "Documentação técnica (esta página)." },
+  { path: "/admin/shopee-feeds", file: "src/routes/admin.shopee-feeds.tsx", access: "admin", description: "URLs dos datafeeds Shopee para download manual." },
+  { path: "/admin/reivindicacoes", file: "src/routes/admin.reivindicacoes.tsx", access: "admin", description: "Reivindicações de empresa (aprovar/rejeitar)." },
 ];
 
 export const PUBLIC_ROUTES: RouteEntry[] = [
