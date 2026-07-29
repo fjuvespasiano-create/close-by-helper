@@ -887,6 +887,12 @@ function CompanyPage() {
           </aside>
         </div>
 
+        <InlineShopeeStrip
+          hint={company.category_slug ?? company.name?.split(" ")[0]}
+          title="Complemente sua escolha"
+          subtitle="Produtos relacionados a este segmento · links de parceiro"
+        />
+
         {/* Bottom CTA banner */}
         <div className="my-12 rounded-2xl bg-gradient-to-r from-primary to-primary-dark p-8 text-center text-primary-foreground">
           <h3 className="font-display text-2xl font-bold">Gostou de {company.name}?</h3>
