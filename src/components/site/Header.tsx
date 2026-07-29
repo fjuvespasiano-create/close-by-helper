@@ -206,10 +206,10 @@ export function Header() {
               <Button variant="ghost" size="sm">{site.header.login_label}</Button>
             </Link>
           )}
-          <Link to="/planos">
+          <Link to="/cadastre-sua-empresa">
             <Button size="sm" className="btn-shine press-scale rounded-full bg-accent px-3 text-accent-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-accent/90 hover:shadow-md sm:px-4">
               <span className="sm:hidden">Anunciar</span>
-              <span className="hidden sm:inline">{site.header.cta_label}</span>
+              <span className="hidden sm:inline">Anunciar minha empresa</span>
             </Button>
           </Link>
           <Button
