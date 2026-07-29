@@ -382,6 +382,12 @@ function RoteiroTuristicoPage() {
               <Link to="/transporte">Como chegar de ônibus</Link>
             </Button>
           </div>
+
+          <InlineShopeeStrip
+            hint="camping"
+            title="Kit essencial pra sua aventura"
+            subtitle="Mochila, lanterna e mais · links de parceiro"
+          />
         </div>
       </section>
     </div>
