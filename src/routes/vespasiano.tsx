@@ -135,6 +135,13 @@ function VespasianoPage() {
           </div>
         )}
       </section>
+      <div className="container mx-auto px-4">
+        <InlineShopeeStrip
+          hint="casa"
+          title="Essenciais pra sua casa em Vespasiano"
+          subtitle="Utilidades e ofertas selecionadas · links de parceiro"
+        />
+      </div>
     </SiteLayout>
   );
 }

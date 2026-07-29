@@ -21,6 +21,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { InlineShopeeStrip } from "@/components/site/InlineShopeeStrip";
 import { supabase } from "@/integrations/supabase/client";
 import cavernaAsset from "@/assets/roteiro-caverna.jpg.asset.json";
 import gastronomiaAsset from "@/assets/roteiro-gastronomia.jpg.asset.json";
