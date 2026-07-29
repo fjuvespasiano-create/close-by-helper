@@ -380,6 +380,8 @@ export const TABLES: TableEntry[] = [
   { name: "plans_config / leads_planos", purpose: "Planos e leads de upsell.", rls: "SELECT público; ALL admin." },
   { name: "system_settings", purpose: "Config chave-valor (nav, transições).", rls: "SELECT is_public; ALL admin." },
   { name: "newsletter_subscribers / banners / procurements", purpose: "Outros conteúdos.", rls: "SELECT público." },
+  { name: "shopee_products", purpose: "Catálogo Shopee Afiliados (10k linhas, indexes por categoria/desconto/rating/fts).", rls: "SELECT público; ALL admin." },
+  { name: "company_claims", purpose: "Reivindicações de empresas com evidência em Storage.", rls: "INSERT autenticado; SELECT dono+admin; UPDATE admin." },
 ];
 
 export const ADMIN_ROUTES: RouteEntry[] = [
