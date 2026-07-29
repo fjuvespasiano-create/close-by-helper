@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Calendar, ChevronLeft } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { InlineShopeeStrip } from "@/components/site/InlineShopeeStrip";
 import { fetchBlogPostBySlug } from "@/lib/blog";
 
 const SITE = "https://ache-servico-perto.lovable.app";
