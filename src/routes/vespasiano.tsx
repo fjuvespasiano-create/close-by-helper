@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Clock, MapPin, Phone, Globe, ExternalLink } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { InlineShopeeStrip } from "@/components/site/InlineShopeeStrip";
 import { CategoryIcon } from "@/components/site/CategoryIcon";
 import { LiveFeedWidget } from "@/features/live-feed";
 import { useCityId } from "@/hooks/useCityId";
