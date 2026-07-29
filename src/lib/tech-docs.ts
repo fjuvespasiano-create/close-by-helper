@@ -480,6 +480,7 @@ export const PANEL_ROUTES: RouteEntry[] = [
   { path: "/painel/notificacoes/preferencias", file: "src/routes/painel.notificacoes.preferencias.tsx", access: "auth", description: "Preferências push." },
   { path: "/painel/favoritos", file: "src/routes/painel.favoritos.tsx", access: "auth", description: "Favoritos." },
   { path: "/painel/ranking", file: "src/routes/painel.ranking.tsx", access: "auth", description: "Ranking." },
+  { path: "/painel/reivindicacoes", file: "src/routes/painel.reivindicacoes.tsx", access: "auth", description: "Minhas reivindicações de empresa." },
 ];
 
 export const ENV_VARS = {
