@@ -29,6 +29,7 @@ import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as EmpregosRouteImport } from './routes/empregos'
 import { Route as EmergenciaRouteImport } from './routes/emergencia'
 import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as CadastreSuaEmpresaRouteImport } from './routes/cadastre-sua-empresa'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AoVivoRouteImport } from './routes/ao-vivo'
@@ -216,6 +217,11 @@ const EmergenciaRoute = EmergenciaRouteImport.update({
 const ContatoRoute = ContatoRouteImport.update({
   id: '/contato',
   path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastreSuaEmpresaRoute = CadastreSuaEmpresaRouteImport.update({
+  id: '/cadastre-sua-empresa',
+  path: '/cadastre-sua-empresa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuscarRoute = BuscarRouteImport.update({
@@ -678,6 +684,7 @@ export interface FileRoutesByFullPath {
   '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
+  '/cadastre-sua-empresa': typeof CadastreSuaEmpresaRoute
   '/contato': typeof ContatoRoute
   '/emergencia': typeof EmergenciaRoute
   '/empregos': typeof EmpregosRouteWithChildren
@@ -787,6 +794,7 @@ export interface FileRoutesByTo {
   '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
+  '/cadastre-sua-empresa': typeof CadastreSuaEmpresaRoute
   '/contato': typeof ContatoRoute
   '/emergencia': typeof EmergenciaRoute
   '/empregos': typeof EmpregosRouteWithChildren
@@ -895,6 +903,7 @@ export interface FileRoutesById {
   '/ao-vivo': typeof AoVivoRoute
   '/auth': typeof AuthRoute
   '/buscar': typeof BuscarRoute
+  '/cadastre-sua-empresa': typeof CadastreSuaEmpresaRoute
   '/contato': typeof ContatoRoute
   '/emergencia': typeof EmergenciaRoute
   '/empregos': typeof EmpregosRouteWithChildren
@@ -1007,6 +1016,7 @@ export interface FileRouteTypes {
     | '/ao-vivo'
     | '/auth'
     | '/buscar'
+    | '/cadastre-sua-empresa'
     | '/contato'
     | '/emergencia'
     | '/empregos'
@@ -1116,6 +1126,7 @@ export interface FileRouteTypes {
     | '/ao-vivo'
     | '/auth'
     | '/buscar'
+    | '/cadastre-sua-empresa'
     | '/contato'
     | '/emergencia'
     | '/empregos'
@@ -1223,6 +1234,7 @@ export interface FileRouteTypes {
     | '/ao-vivo'
     | '/auth'
     | '/buscar'
+    | '/cadastre-sua-empresa'
     | '/contato'
     | '/emergencia'
     | '/empregos'
@@ -1334,6 +1346,7 @@ export interface RootRouteChildren {
   AoVivoRoute: typeof AoVivoRoute
   AuthRoute: typeof AuthRoute
   BuscarRoute: typeof BuscarRoute
+  CadastreSuaEmpresaRoute: typeof CadastreSuaEmpresaRoute
   ContatoRoute: typeof ContatoRoute
   EmergenciaRoute: typeof EmergenciaRoute
   EmpregosRoute: typeof EmpregosRouteWithChildren
@@ -1516,6 +1529,13 @@ declare module '@tanstack/react-router' {
       path: '/contato'
       fullPath: '/contato'
       preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastre-sua-empresa': {
+      id: '/cadastre-sua-empresa'
+      path: '/cadastre-sua-empresa'
+      fullPath: '/cadastre-sua-empresa'
+      preLoaderRoute: typeof CadastreSuaEmpresaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/buscar': {
@@ -2364,6 +2384,7 @@ const rootRouteChildren: RootRouteChildren = {
   AoVivoRoute: AoVivoRoute,
   AuthRoute: AuthRoute,
   BuscarRoute: BuscarRoute,
+  CadastreSuaEmpresaRoute: CadastreSuaEmpresaRoute,
   ContatoRoute: ContatoRoute,
   EmergenciaRoute: EmergenciaRoute,
   EmpregosRoute: EmpregosRouteWithChildren,
