@@ -285,7 +285,7 @@ export const FEATURES: Feature[] = [
  *      Toaster, PageTransition, error boundary.
  *
  * 2) Data fetching (TanStack Query)
- *    - Toda leitura passa por queryKey estável (ver src/features/*/queries.ts).
+ *    - Toda leitura passa por queryKey estável (ver src/features/[feature]/queries.ts).
  *    - Realtime: hooks assinam canais Supabase e chamam invalidateQueries.
  *    - staleTime por rota evita over-fetch em SSR + client.
  *
