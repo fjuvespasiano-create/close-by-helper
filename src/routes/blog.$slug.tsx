@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Calendar, ChevronLeft } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { InlineShopeeStrip } from "@/components/site/InlineShopeeStrip";
 import { fetchBlogPostBySlug } from "@/lib/blog";
 
 const SITE = "https://ache-servico-perto.lovable.app";
@@ -92,6 +93,11 @@ function BlogPostPage() {
         <div className="prose prose-slate mt-2 max-w-none">
           {renderMarkdown(p.content ?? "")}
         </div>
+        <InlineShopeeStrip
+          hint={p.keywords?.[0]}
+          title="Leituras + produtos que combinam"
+          subtitle="Sugestões relacionadas a este artigo · links de parceiro"
+        />
         {p.keywords && p.keywords.length > 0 && (
           <div className="mt-10 flex flex-wrap gap-2 border-t border-border pt-6">
             {p.keywords.map((k: string) => (

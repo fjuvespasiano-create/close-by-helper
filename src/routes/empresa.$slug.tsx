@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { InlineShopeeStrip } from "@/components/site/InlineShopeeStrip";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ReviewsSection } from "@/components/site/ReviewsSection";
@@ -885,6 +886,12 @@ function CompanyPage() {
             </section>
           </aside>
         </div>
+
+        <InlineShopeeStrip
+          hint={company.name?.split(" ")[0]}
+          title="Complemente sua escolha"
+          subtitle="Produtos relacionados a este segmento · links de parceiro"
+        />
 
         {/* Bottom CTA banner */}
         <div className="my-12 rounded-2xl bg-gradient-to-r from-primary to-primary-dark p-8 text-center text-primary-foreground">
