@@ -93,6 +93,11 @@ function BlogPostPage() {
         <div className="prose prose-slate mt-2 max-w-none">
           {renderMarkdown(p.content ?? "")}
         </div>
+        <InlineShopeeStrip
+          hint={p.keywords?.[0]}
+          title="Leituras + produtos que combinam"
+          subtitle="Sugestões relacionadas a este artigo · links de parceiro"
+        />
         {p.keywords && p.keywords.length > 0 && (
           <div className="mt-10 flex flex-wrap gap-2 border-t border-border pt-6">
             {p.keywords.map((k: string) => (
