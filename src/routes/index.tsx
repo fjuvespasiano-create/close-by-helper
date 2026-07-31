@@ -241,7 +241,7 @@ function Home() {
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
               <h2 className="font-display text-2xl font-bold md:text-3xl">Empresas que a vizinhança recomenda</h2>
-              <p className="mt-1 text-muted-foreground">{(cats.data ?? []).length} categorias com quem atende de verdade em {cityName} — avaliadas por quem já contratou.</p>
+              <p className="mt-1 text-muted-foreground" suppressHydrationWarning>{(cats.data ?? []).length} categorias com quem atende de verdade em {cityName} — avaliadas por quem já contratou.</p>
             </div>
             <Link to="/buscar" className="group hidden items-center gap-1 text-sm font-medium text-primary hover:underline md:inline-flex">
               Ver todas <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

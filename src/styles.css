@@ -503,3 +503,320 @@ iframe[src*="lovable.dev/badge"] {
   height: 0 !important;
 }
 /* NEXUS-PRO:WATERMARK-HIDE:END */
+
+/* ============================================================
+   TEMAS SAZONAIS
+   O atributo data-season é aplicado no <html> por SeasonalTheme.tsx.
+   Cada tema só sobrescreve tokens semânticos — nenhum componente muda.
+   ============================================================ */
+
+html[data-season] {
+  transition: background-color 600ms ease;
+}
+
+/* Halloween — laranja abóbora sobre roxo profundo */
+html[data-season="halloween"] {
+  --primary: oklch(0.38 0.16 305);
+  --primary-dark: oklch(0.26 0.13 305);
+  --accent: oklch(0.72 0.20 55);
+  --ring: oklch(0.72 0.20 55);
+  --surface: oklch(0.96 0.02 305);
+  --season-glow: oklch(0.72 0.20 55);
+  --season-aura: radial-gradient(1000px 460px at 12% -8%, color-mix(in oklch, oklch(0.72 0.20 55) 26%, transparent), transparent 70%),
+    radial-gradient(860px 420px at 92% 4%, color-mix(in oklch, oklch(0.38 0.16 305) 32%, transparent), transparent 72%);
+}
+html[data-season="halloween"].dark { --surface: oklch(0.24 0.05 305); --card: oklch(0.23 0.05 305); --background: oklch(0.15 0.04 305); }
+
+/* Black Friday — grafite e âmbar metálico */
+html[data-season="black-friday"] {
+  --primary: oklch(0.24 0.01 260);
+  --primary-dark: oklch(0.16 0.01 260);
+  --accent: oklch(0.80 0.16 85);
+  --ring: oklch(0.80 0.16 85);
+  --surface: oklch(0.95 0.005 260);
+  --season-glow: oklch(0.80 0.16 85);
+  --season-aura: radial-gradient(1100px 480px at 50% -10%, color-mix(in oklch, oklch(0.80 0.16 85) 22%, transparent), transparent 70%);
+}
+
+/* Natal — verde pinheiro, vermelho e dourado */
+html[data-season="natal"] {
+  --primary: oklch(0.42 0.13 152);
+  --primary-dark: oklch(0.30 0.11 152);
+  --accent: oklch(0.56 0.20 27);
+  --ring: oklch(0.56 0.20 27);
+  --surface: oklch(0.97 0.015 152);
+  --season-glow: oklch(0.85 0.14 90);
+  --season-aura: radial-gradient(900px 440px at 8% -6%, color-mix(in oklch, oklch(0.42 0.13 152) 26%, transparent), transparent 70%),
+    radial-gradient(900px 440px at 94% 0%, color-mix(in oklch, oklch(0.56 0.20 27) 24%, transparent), transparent 70%);
+}
+html[data-season="natal"].dark { --surface: oklch(0.24 0.05 152); --card: oklch(0.23 0.05 152); --background: oklch(0.15 0.04 152); }
+
+/* Ano Novo — meia-noite com dourado champanhe */
+html[data-season="ano-novo"] {
+  --primary: oklch(0.30 0.10 268);
+  --primary-dark: oklch(0.20 0.08 268);
+  --accent: oklch(0.84 0.15 88);
+  --ring: oklch(0.84 0.15 88);
+  --surface: oklch(0.96 0.012 268);
+  --season-glow: oklch(0.88 0.14 92);
+  --season-aura: radial-gradient(1200px 520px at 50% -12%, color-mix(in oklch, oklch(0.84 0.15 88) 24%, transparent), transparent 72%),
+    radial-gradient(800px 400px at 10% 10%, color-mix(in oklch, oklch(0.30 0.10 268) 34%, transparent), transparent 70%);
+}
+html[data-season="ano-novo"].dark { --background: oklch(0.13 0.04 268); --surface: oklch(0.20 0.05 268); --card: oklch(0.20 0.05 268); }
+
+/* Ano Novo Lunar — vermelho imperial e ouro */
+html[data-season="ano-novo-lunar"] {
+  --primary: oklch(0.45 0.20 25);
+  --primary-dark: oklch(0.33 0.17 25);
+  --accent: oklch(0.82 0.15 82);
+  --ring: oklch(0.82 0.15 82);
+  --surface: oklch(0.97 0.02 30);
+  --season-glow: oklch(0.82 0.15 82);
+  --season-aura: radial-gradient(1000px 460px at 20% -8%, color-mix(in oklch, oklch(0.45 0.20 25) 30%, transparent), transparent 70%),
+    radial-gradient(760px 380px at 88% 2%, color-mix(in oklch, oklch(0.82 0.15 82) 26%, transparent), transparent 70%);
+}
+html[data-season="ano-novo-lunar"].dark { --surface: oklch(0.24 0.07 25); --card: oklch(0.23 0.07 25); --background: oklch(0.16 0.06 25); }
+
+/* Carnaval — multicor vibrante */
+html[data-season="carnaval"] {
+  --primary: oklch(0.52 0.24 330);
+  --primary-dark: oklch(0.40 0.22 330);
+  --accent: oklch(0.78 0.19 165);
+  --ring: oklch(0.78 0.19 165);
+  --surface: oklch(0.97 0.02 330);
+  --season-glow: oklch(0.80 0.20 90);
+  --season-aura: radial-gradient(760px 380px at 6% -6%, color-mix(in oklch, oklch(0.52 0.24 330) 30%, transparent), transparent 70%),
+    radial-gradient(760px 380px at 50% -10%, color-mix(in oklch, oklch(0.80 0.20 90) 26%, transparent), transparent 70%),
+    radial-gradient(760px 380px at 96% 0%, color-mix(in oklch, oklch(0.78 0.19 165) 28%, transparent), transparent 70%);
+}
+
+/* Sakura — rosa suave japonês */
+html[data-season="sakura"] {
+  --primary: oklch(0.58 0.14 350);
+  --primary-dark: oklch(0.44 0.14 350);
+  --accent: oklch(0.80 0.11 20);
+  --ring: oklch(0.80 0.11 20);
+  --surface: oklch(0.98 0.015 350);
+  --season-glow: oklch(0.85 0.09 350);
+  --season-aura: radial-gradient(1000px 460px at 15% -8%, color-mix(in oklch, oklch(0.80 0.11 350) 34%, transparent), transparent 72%),
+    radial-gradient(820px 400px at 90% 4%, color-mix(in oklch, oklch(0.88 0.06 20) 40%, transparent), transparent 72%);
+}
+html[data-season="sakura"].dark { --surface: oklch(0.24 0.05 350); --card: oklch(0.23 0.05 350); --background: oklch(0.16 0.04 350); }
+
+/* Páscoa — pastel primaveril */
+html[data-season="pascoa"] {
+  --primary: oklch(0.58 0.13 200);
+  --primary-dark: oklch(0.44 0.13 200);
+  --accent: oklch(0.82 0.14 100);
+  --ring: oklch(0.82 0.14 100);
+  --surface: oklch(0.98 0.02 200);
+  --season-glow: oklch(0.88 0.10 120);
+  --season-aura: radial-gradient(900px 420px at 12% -8%, color-mix(in oklch, oklch(0.82 0.12 200) 32%, transparent), transparent 72%),
+    radial-gradient(900px 420px at 88% 2%, color-mix(in oklch, oklch(0.88 0.12 120) 34%, transparent), transparent 72%);
+}
+
+/* Dia das Mães — rosa e lilás delicados */
+html[data-season="dia-das-maes"] {
+  --primary: oklch(0.50 0.17 340);
+  --primary-dark: oklch(0.38 0.16 340);
+  --accent: oklch(0.72 0.16 15);
+  --ring: oklch(0.72 0.16 15);
+  --surface: oklch(0.98 0.015 340);
+  --season-glow: oklch(0.80 0.14 350);
+  --season-aura: radial-gradient(980px 440px at 18% -8%, color-mix(in oklch, oklch(0.72 0.16 340) 28%, transparent), transparent 72%),
+    radial-gradient(820px 400px at 90% 4%, color-mix(in oklch, oklch(0.85 0.10 20) 36%, transparent), transparent 72%);
+}
+
+/* Namorados — vinho e rubi */
+html[data-season="namorados"] {
+  --primary: oklch(0.42 0.18 10);
+  --primary-dark: oklch(0.30 0.16 10);
+  --accent: oklch(0.66 0.21 18);
+  --ring: oklch(0.66 0.21 18);
+  --surface: oklch(0.97 0.02 10);
+  --season-glow: oklch(0.70 0.20 15);
+  --season-aura: radial-gradient(1000px 460px at 20% -8%, color-mix(in oklch, oklch(0.66 0.21 18) 26%, transparent), transparent 72%);
+}
+
+/* Festa Junina — bandeirinhas e fogueira */
+html[data-season="festa-junina"] {
+  --primary: oklch(0.48 0.16 45);
+  --primary-dark: oklch(0.34 0.14 45);
+  --accent: oklch(0.72 0.20 30);
+  --ring: oklch(0.72 0.20 30);
+  --surface: oklch(0.97 0.02 70);
+  --season-glow: oklch(0.82 0.17 75);
+  --season-aura: radial-gradient(920px 420px at 10% -8%, color-mix(in oklch, oklch(0.72 0.20 30) 28%, transparent), transparent 72%),
+    radial-gradient(920px 420px at 90% 0%, color-mix(in oklch, oklch(0.82 0.17 75) 30%, transparent), transparent 72%);
+}
+
+/* Dia dos Pais — azul profundo e prata */
+html[data-season="dia-dos-pais"] {
+  --primary: oklch(0.36 0.10 240);
+  --primary-dark: oklch(0.25 0.09 240);
+  --accent: oklch(0.70 0.13 220);
+  --ring: oklch(0.70 0.13 220);
+  --surface: oklch(0.96 0.01 240);
+  --season-glow: oklch(0.80 0.08 230);
+  --season-aura: radial-gradient(1000px 460px at 50% -10%, color-mix(in oklch, oklch(0.36 0.10 240) 26%, transparent), transparent 72%);
+}
+
+/* Outono — âmbar, cobre e ocre */
+html[data-season="outono"] {
+  --primary: oklch(0.42 0.11 60);
+  --primary-dark: oklch(0.31 0.10 60);
+  --accent: oklch(0.68 0.17 48);
+  --ring: oklch(0.68 0.17 48);
+  --surface: oklch(0.97 0.02 70);
+  --season-glow: oklch(0.78 0.15 65);
+  --season-aura: radial-gradient(1000px 460px at 15% -8%, color-mix(in oklch, oklch(0.68 0.17 48) 26%, transparent), transparent 72%),
+    radial-gradient(880px 420px at 92% 2%, color-mix(in oklch, oklch(0.78 0.15 65) 28%, transparent), transparent 72%);
+}
+
+/* --- Camada de brilho ambiente do tema (atrás do conteúdo) --- */
+.season-aura {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--season-aura, none);
+  opacity: 0.75;
+  animation: season-aura-breathe 14s ease-in-out infinite;
+}
+
+@keyframes season-aura-breathe {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.04); }
+}
+
+/* --- Partículas --- */
+.season-field {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+.season-particle {
+  position: absolute;
+  top: -8vh;
+  line-height: 1;
+  will-change: transform;
+  filter: drop-shadow(0 2px 6px color-mix(in oklch, var(--season-glow, var(--accent)) 55%, transparent));
+  animation-name: season-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes season-fall {
+  0% { transform: translate3d(0, -10vh, 0) rotate(0deg); }
+  100% { transform: translate3d(var(--drift, 0px), 112vh, 0) rotate(360deg); }
+}
+
+/* Morcegos do Halloween: voam na horizontal, com batida de asa */
+html[data-season="halloween"] .season-particle {
+  animation-name: season-fly;
+}
+@keyframes season-fly {
+  0% { transform: translate3d(-12vw, 10vh, 0) rotate(-8deg) scale(0.9); }
+  50% { transform: translate3d(50vw, 32vh, 0) rotate(8deg) scale(1.08); }
+  100% { transform: translate3d(112vw, 12vh, 0) rotate(-6deg) scale(0.9); }
+}
+
+/* Lanternas e fogos: sobem em vez de cair */
+html[data-season="ano-novo-lunar"] .season-particle,
+html[data-season="ano-novo"] .season-particle,
+html[data-season="dia-dos-pais"] .season-particle,
+html[data-season="black-friday"] .season-particle {
+  top: auto;
+  bottom: -8vh;
+  animation-name: season-rise;
+}
+@keyframes season-rise {
+  0% { transform: translate3d(0, 12vh, 0) scale(0.7); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate3d(var(--drift, 0px), -112vh, 0) scale(1.1); opacity: 0; }
+}
+
+/* Pétalas e folhas: queda com balanço lateral */
+html[data-season="sakura"] .season-particle,
+html[data-season="outono"] .season-particle {
+  animation-name: season-sway;
+}
+@keyframes season-sway {
+  0% { transform: translate3d(0, -10vh, 0) rotate(0deg); }
+  25% { transform: translate3d(calc(var(--drift, 0px) * 0.6), 22vh, 0) rotate(90deg); }
+  50% { transform: translate3d(calc(var(--drift, 0px) * -0.4), 52vh, 0) rotate(180deg); }
+  75% { transform: translate3d(calc(var(--drift, 0px) * 0.8), 82vh, 0) rotate(270deg); }
+  100% { transform: translate3d(var(--drift, 0px), 112vh, 0) rotate(360deg); }
+}
+
+/* Corações: pulsam enquanto sobem */
+html[data-season="namorados"] .season-particle,
+html[data-season="dia-das-maes"] .season-particle {
+  top: auto;
+  bottom: -8vh;
+  animation-name: season-float-heart;
+}
+@keyframes season-float-heart {
+  0% { transform: translate3d(0, 10vh, 0) scale(0.6); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translate3d(var(--drift, 0px), -110vh, 0) scale(1.15); opacity: 0; }
+}
+
+/* --- Faixa do tema --- */
+.season-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  z-index: 55;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: calc(100vw - 2rem);
+  transform: translateX(-50%);
+  padding: 0.5rem 0.75rem 0.5rem 0.9rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklch, var(--season-glow, var(--accent)) 45%, transparent);
+  background: color-mix(in oklch, var(--card) 88%, var(--season-glow, var(--accent)));
+  color: var(--card-foreground);
+  font-size: 0.8125rem;
+  box-shadow: 0 12px 36px -14px color-mix(in oklch, var(--season-glow, var(--accent)) 70%, transparent);
+  backdrop-filter: blur(10px);
+  animation: season-banner-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes season-banner-in {
+  from { opacity: 0; transform: translate(-50%, 20px) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.season-banner-glyph {
+  font-size: 1rem;
+  animation: season-glyph-pulse 2.4s ease-in-out infinite;
+}
+@keyframes season-glyph-pulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.18) rotate(-6deg); }
+}
+
+.season-banner-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.season-banner-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 9999px;
+  color: var(--muted-foreground);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+.season-banner-close:hover { background: var(--muted); color: var(--foreground); }
+
+@media (prefers-reduced-motion: reduce) {
+  .season-field { display: none; }
+  .season-aura, .season-banner, .season-banner-glyph { animation: none; }
+}
