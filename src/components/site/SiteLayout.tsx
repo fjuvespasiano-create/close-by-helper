@@ -64,8 +64,12 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <Footer />
       <ClientOnly fallback={null}>
+        <Suspense fallback={null}>
+          <SeasonalTheme />
+        </Suspense>
         <DeferredOverlays />
       </ClientOnly>
     </div>
   );
 }
+
