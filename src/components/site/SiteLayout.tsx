@@ -12,6 +12,11 @@ const PWAInstallPrompt = lazy(() =>
 const AdModal = lazy(() =>
   import("./AdModal").then((m) => ({ default: m.AdModal })),
 );
+// Tema sazonal depende da data do visitante → só pode montar no cliente.
+const SeasonalTheme = lazy(() =>
+  import("./SeasonalTheme").then((m) => ({ default: m.SeasonalTheme })),
+);
+
 
 
 /**
