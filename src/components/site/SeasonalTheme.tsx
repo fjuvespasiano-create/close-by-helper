@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import {
   getActiveTheme,
@@ -136,7 +137,9 @@ export function SeasonalTheme() {
     }
   };
 
-  return (
+  // Ancestrais com `transform` (PageTransition) quebram `position: fixed`,
+  // então a camada sazonal é montada direto no <body> via portal.
+  return createPortal(
     <>
       <div className="season-aura" aria-hidden="true" />
       {motionOk && <ParticleField theme={theme} />}
@@ -159,6 +162,7 @@ export function SeasonalTheme() {
           </button>
         </div>
       )}
-    </>
+    </>,
+    document.body,
   );
 }
