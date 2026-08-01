@@ -101,7 +101,7 @@ function AnalyticsAnunciosPage() {
           .limit(20000),
         supabase
           .from("analytics_events")
-          .select("name,entity_id,created_at")
+          .select("name,entity_id,meta,created_at")
           .eq("entity_type", "ad_campaign")
           .gte("created_at", prevStart)
           .lt("created_at", prevEnd)
