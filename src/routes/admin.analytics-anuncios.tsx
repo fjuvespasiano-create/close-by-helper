@@ -143,14 +143,17 @@ function AnalyticsAnunciosPage() {
     [campaigns, cityFilter, placementFilter],
   );
   const allowedIds = useMemo(() => new Set(filteredCampaigns.map((c) => c.id)), [filteredCampaigns]);
+  // Eventos sem entity_id não pertencem a nenhuma campanha: incluí-los inflava
+  // os totais mesmo com filtro de cidade/canal ativo.
   const scopedEvents = useMemo(
-    () => events.filter((e) => !e.entity_id || allowedIds.has(e.entity_id)),
+    () => events.filter((e) => !!e.entity_id && allowedIds.has(e.entity_id)),
     [events, allowedIds],
   );
   const scopedPrev = useMemo(
-    () => prevEvents.filter((e) => !e.entity_id || allowedIds.has(e.entity_id)),
+    () => prevEvents.filter((e) => !!e.entity_id && allowedIds.has(e.entity_id)),
     [prevEvents, allowedIds],
   );
+
 
 
   // Overview metrics
