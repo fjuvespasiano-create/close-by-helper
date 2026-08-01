@@ -48,13 +48,24 @@ function daysAgo(n: number) {
 }
 
 function fmtDay(d: Date) {
-  return d.toISOString().slice(0, 10);
+  // Usa data LOCAL (não UTC): eventos após 21h em UTC-3 cairiam no dia seguinte
+  // se usássemos toISOString(), quebrando a série diária.
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function dayKeyOf(iso: string) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso.slice(0, 10) : fmtDay(d);
 }
 
 function fmtBr(d: string) {
   const [y, m, day] = d.split("-");
   return `${day}/${m}/${y.slice(2)}`;
 }
+
 
 function AnalyticsAnunciosPage() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
