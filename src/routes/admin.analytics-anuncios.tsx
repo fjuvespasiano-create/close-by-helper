@@ -454,23 +454,30 @@ function AnalyticsAnunciosPage() {
 
             <div>
               <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-slate-500">Origem do público</h4>
-              <div className="h-52 w-full">
-                <ResponsiveContainer>
-                  <BarChart
-                    data={[
-                      { device: "Celular", pct: Number(report.mobilePct.toFixed(1)) },
-                      { device: "Computador", pct: Number(report.desktopPct.toFixed(1)) },
-                    ]}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                    <XAxis dataKey="device" stroke="#64748b" fontSize={12} />
-                    <YAxis stroke="#64748b" fontSize={12} unit="%" />
-                    <Tooltip formatter={(v: number) => `${v}%`} />
-                    <Bar dataKey="pct" fill="#0ea5e9" radius={[6, 6, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+              {report.hasDeviceData ? (
+                <div className="h-52 w-full">
+                  <ResponsiveContainer>
+                    <BarChart
+                      data={[
+                        { device: "Celular", pct: Number(report.mobilePct.toFixed(1)) },
+                        { device: "Computador", pct: Number(report.desktopPct.toFixed(1)) },
+                      ]}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="device" stroke="#64748b" fontSize={12} />
+                      <YAxis stroke="#64748b" fontSize={12} unit="%" />
+                      <Tooltip formatter={(v: number) => `${v}%`} />
+                      <Bar dataKey="pct" fill="#0ea5e9" radius={[6, 6, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : (
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+                  Ainda não há dados de dispositivo para este período.
+                </div>
+              )}
             </div>
+
 
             <footer className="rounded-lg bg-slate-50 p-4 text-sm text-slate-700">
               <strong>Próximo passo:</strong> com base nesses {report.clicks.toLocaleString("pt-BR")} cliques,
