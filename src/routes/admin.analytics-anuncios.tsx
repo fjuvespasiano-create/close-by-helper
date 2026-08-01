@@ -198,7 +198,9 @@ function AnalyticsAnunciosPage() {
     if (!selectedId) return null;
     const campaign = campaigns.find((c) => c.id === selectedId);
     if (!campaign) return null;
-    const filtered = scopedEvents.filter((e) => e.entity_id === selectedId);
+    // Usa `events` (e não `scopedEvents`): o seletor lista TODAS as campanhas,
+    // então um filtro de cidade/canal ativo zerava o relatório escolhido.
+    const filtered = events.filter((e) => e.entity_id === selectedId);
     const impressions = filtered.filter((e) => e.name === "ad_impression").length;
     const clicks = filtered.filter((e) => e.name === "ad_click").length;
     const ctr = impressions ? (clicks / impressions) * 100 : 0;
@@ -208,15 +210,14 @@ function AnalyticsAnunciosPage() {
     for (let i = rangeDays - 1; i >= 0; i--) days.push(fmtDay(daysAgo(i)));
     const seriesMap = new Map(days.map((d) => [d, { day: d, impressions: 0, clicks: 0 }]));
     for (const e of filtered) {
-      const d = e.created_at.slice(0, 10);
-      const s = seriesMap.get(d);
+      const s = seriesMap.get(dayKeyOf(e.created_at));
       if (!s) continue;
       if (e.name === "ad_impression") s.impressions++;
       else if (e.name === "ad_click") s.clicks++;
     }
     const series = Array.from(seriesMap.values()).map((s) => ({ ...s, label: fmtBr(s.day) }));
 
-    // Device split (clicks)
+    // Device split (impressões + cliques)
     let mobile = 0;
     let desktop = 0;
     for (const e of filtered) {
@@ -228,8 +229,9 @@ function AnalyticsAnunciosPage() {
     const mobilePct = totalDev ? (mobile / totalDev) * 100 : 0;
     const desktopPct = totalDev ? (desktop / totalDev) * 100 : 0;
 
-    return { campaign, impressions, clicks, ctr, series, mobilePct, desktopPct };
-  }, [selectedId, scopedEvents, campaigns, rangeDays]);
+    return { campaign, impressions, clicks, ctr, series, mobilePct, desktopPct, hasDeviceData: totalDev > 0 };
+  }, [selectedId, events, campaigns, rangeDays]);
+
 
   async function exportPdf() {
     if (!reportRef.current || !report) return;
