@@ -48,13 +48,24 @@ function daysAgo(n: number) {
 }
 
 function fmtDay(d: Date) {
-  return d.toISOString().slice(0, 10);
+  // Usa data LOCAL (não UTC): eventos após 21h em UTC-3 cairiam no dia seguinte
+  // se usássemos toISOString(), quebrando a série diária.
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function dayKeyOf(iso: string) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso.slice(0, 10) : fmtDay(d);
 }
 
 function fmtBr(d: string) {
   const [y, m, day] = d.split("-");
   return `${day}/${m}/${y.slice(2)}`;
 }
+
 
 function AnalyticsAnunciosPage() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -90,7 +101,7 @@ function AnalyticsAnunciosPage() {
           .limit(20000),
         supabase
           .from("analytics_events")
-          .select("name,entity_id,created_at")
+          .select("name,entity_id,meta,created_at")
           .eq("entity_type", "ad_campaign")
           .gte("created_at", prevStart)
           .lt("created_at", prevEnd)
@@ -132,14 +143,17 @@ function AnalyticsAnunciosPage() {
     [campaigns, cityFilter, placementFilter],
   );
   const allowedIds = useMemo(() => new Set(filteredCampaigns.map((c) => c.id)), [filteredCampaigns]);
+  // Eventos sem entity_id não pertencem a nenhuma campanha: incluí-los inflava
+  // os totais mesmo com filtro de cidade/canal ativo.
   const scopedEvents = useMemo(
-    () => events.filter((e) => !e.entity_id || allowedIds.has(e.entity_id)),
+    () => events.filter((e) => !!e.entity_id && allowedIds.has(e.entity_id)),
     [events, allowedIds],
   );
   const scopedPrev = useMemo(
-    () => prevEvents.filter((e) => !e.entity_id || allowedIds.has(e.entity_id)),
+    () => prevEvents.filter((e) => !!e.entity_id && allowedIds.has(e.entity_id)),
     [prevEvents, allowedIds],
   );
+
 
 
   // Overview metrics
@@ -184,7 +198,9 @@ function AnalyticsAnunciosPage() {
     if (!selectedId) return null;
     const campaign = campaigns.find((c) => c.id === selectedId);
     if (!campaign) return null;
-    const filtered = scopedEvents.filter((e) => e.entity_id === selectedId);
+    // Usa `events` (e não `scopedEvents`): o seletor lista TODAS as campanhas,
+    // então um filtro de cidade/canal ativo zerava o relatório escolhido.
+    const filtered = events.filter((e) => e.entity_id === selectedId);
     const impressions = filtered.filter((e) => e.name === "ad_impression").length;
     const clicks = filtered.filter((e) => e.name === "ad_click").length;
     const ctr = impressions ? (clicks / impressions) * 100 : 0;
@@ -194,15 +210,14 @@ function AnalyticsAnunciosPage() {
     for (let i = rangeDays - 1; i >= 0; i--) days.push(fmtDay(daysAgo(i)));
     const seriesMap = new Map(days.map((d) => [d, { day: d, impressions: 0, clicks: 0 }]));
     for (const e of filtered) {
-      const d = e.created_at.slice(0, 10);
-      const s = seriesMap.get(d);
+      const s = seriesMap.get(dayKeyOf(e.created_at));
       if (!s) continue;
       if (e.name === "ad_impression") s.impressions++;
       else if (e.name === "ad_click") s.clicks++;
     }
     const series = Array.from(seriesMap.values()).map((s) => ({ ...s, label: fmtBr(s.day) }));
 
-    // Device split (clicks)
+    // Device split (impressões + cliques)
     let mobile = 0;
     let desktop = 0;
     for (const e of filtered) {
@@ -214,8 +229,9 @@ function AnalyticsAnunciosPage() {
     const mobilePct = totalDev ? (mobile / totalDev) * 100 : 0;
     const desktopPct = totalDev ? (desktop / totalDev) * 100 : 0;
 
-    return { campaign, impressions, clicks, ctr, series, mobilePct, desktopPct };
-  }, [selectedId, scopedEvents, campaigns, rangeDays]);
+    return { campaign, impressions, clicks, ctr, series, mobilePct, desktopPct, hasDeviceData: totalDev > 0 };
+  }, [selectedId, events, campaigns, rangeDays]);
+
 
   async function exportPdf() {
     if (!reportRef.current || !report) return;
@@ -438,23 +454,30 @@ function AnalyticsAnunciosPage() {
 
             <div>
               <h4 className="mb-2 text-sm font-semibold uppercase tracking-wider text-slate-500">Origem do público</h4>
-              <div className="h-52 w-full">
-                <ResponsiveContainer>
-                  <BarChart
-                    data={[
-                      { device: "Celular", pct: Number(report.mobilePct.toFixed(1)) },
-                      { device: "Computador", pct: Number(report.desktopPct.toFixed(1)) },
-                    ]}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                    <XAxis dataKey="device" stroke="#64748b" fontSize={12} />
-                    <YAxis stroke="#64748b" fontSize={12} unit="%" />
-                    <Tooltip formatter={(v: number) => `${v}%`} />
-                    <Bar dataKey="pct" fill="#0ea5e9" radius={[6, 6, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+              {report.hasDeviceData ? (
+                <div className="h-52 w-full">
+                  <ResponsiveContainer>
+                    <BarChart
+                      data={[
+                        { device: "Celular", pct: Number(report.mobilePct.toFixed(1)) },
+                        { device: "Computador", pct: Number(report.desktopPct.toFixed(1)) },
+                      ]}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="device" stroke="#64748b" fontSize={12} />
+                      <YAxis stroke="#64748b" fontSize={12} unit="%" />
+                      <Tooltip formatter={(v: number) => `${v}%`} />
+                      <Bar dataKey="pct" fill="#0ea5e9" radius={[6, 6, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : (
+                <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+                  Ainda não há dados de dispositivo para este período.
+                </div>
+              )}
             </div>
+
 
             <footer className="rounded-lg bg-slate-50 p-4 text-sm text-slate-700">
               <strong>Próximo passo:</strong> com base nesses {report.clicks.toLocaleString("pt-BR")} cliques,
