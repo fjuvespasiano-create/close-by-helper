@@ -140,8 +140,12 @@ async function buildSitemap() {
 }
 
 async function main() {
-  console.log("→ Build estático (SPA, sem SSR)...");
-  run("bun", ["run", "vite", "build"], { STATIC_BUILD: "1" });
+  if (process.env.SKIP_BUILD === "1") {
+    console.log("→ SKIP_BUILD=1: reaproveitando o build existente.");
+  } else {
+    console.log("→ Build estático (SPA, sem SSR)...");
+    run("bunx", ["vite", "build"], { STATIC_BUILD: "1" });
+  }
 
   const clientDir = findClientDir();
   console.log(`→ Arquivos do cliente: ${clientDir}`);

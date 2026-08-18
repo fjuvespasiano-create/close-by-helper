@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-dIob5GyK.js";import{t}from"./SiteLayout-dsopLFYP.js";var n=e(),r=()=>(0,n.jsx)(t,{children:(0,n.jsx)(`div`,{className:`container py-12 text-center text-muted-foreground`,children:`Não foi possível carregar este representante.`})});export{r as errorComponent};
