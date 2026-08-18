@@ -1,0 +1,1 @@
+import{t as e}from"./useQuery-CZFluKop.js";import{K as t}from"./index-BHVF0nxj.js";function n(n){return e({queryKey:[`city-id`,n],enabled:!!n,staleTime:3600*1e3,queryFn:()=>t(n)})}export{n as t};

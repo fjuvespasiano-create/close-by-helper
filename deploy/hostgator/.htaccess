@@ -1,0 +1,85 @@
+# ==========================================================================
+# AgenddaAqui — configuração Apache para hospedagem compartilhada (HostGator)
+# Coloque este arquivo na RAIZ do public_html, junto com o index.html.
+# ==========================================================================
+
+Options -MultiViews
+DirectoryIndex index.html
+
+# ---------- HTTPS + www (ajuste o domínio) --------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Força HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Não reescreve arquivos/pastas que existem de verdade
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Qualquer outra URL cai no app (SPA): /blog/algo, /empresa/x, etc.
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ---------- Compressão ----------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---------- Cache ---------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Assets com hash no nome: cache longo
+  <FilesMatch "\.(js|css|woff2|woff|ttf|otf|eot)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|avif|svg|ico)$">
+    ExpiresDefault "access plus 6 months"
+  </FilesMatch>
+
+  # HTML e service worker: sempre revalidar
+  <FilesMatch "^(index\.html|sw\.js|manifest\.webmanifest|offline\.html)$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ---------- Tipos MIME ----------------------------------------------------
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType image/svg+xml .svg
+  AddType font/woff2 .woff2
+  AddType application/wasm .wasm
+</IfModule>
+
+# ---------- Segurança básica ---------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(self), microphone=(), camera=()"
+  # O service worker precisa poder controlar toda a raiz
+  <FilesMatch "sw\.js$">
+    Header set Service-Worker-Allowed "/"
+  </FilesMatch>
+</IfModule>
+
+# Bloqueia arquivos sensíveis que por acaso subam junto
+<FilesMatch "^(\.env.*|.*\.ts|.*\.tsx|package\.json|bun\.lockb|.*\.map)$">
+  Require all denied
+</FilesMatch>
+
+ErrorDocument 404 /index.html

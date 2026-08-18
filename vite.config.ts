@@ -6,10 +6,22 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// STATIC_BUILD=1 → build SPA (sem SSR) para hospedagem sem Node (HostGator/Apache).
+// Sem a variável, o build normal com SSR continua igual (preview/publish do Lovable).
+const isStaticBuild = process.env.STATIC_BUILD === "1";
+
 export default defineConfig({
-  tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
-    server: { entry: "server" },
-  },
+  // No build estático não há servidor de produção: nitro é desnecessário.
+  ...(isStaticBuild ? { nitro: false as const } : {}),
+  tanstackStart: isStaticBuild
+    ? {
+        // Build estático: sem wrapper de SSR (não há servidor em produção).
+        spa: { enabled: true },
+        prerender: { enabled: true, crawlLinks: false },
+      }
+    : {
+        // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
+        // nitro/vite builds from this
+        server: { entry: "server" },
+      },
 });
