@@ -70,8 +70,10 @@ function CadastreSuaEmpresa() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  const primaryHref = isAuthed ? "/painel/empresas/nova" : "/auth?redirect=%2Fpainel%2Fempresas%2Fnova";
-  const secondaryHref = isAuthed ? "/painel/perfil" : "/auth?redirect=%2Fpainel%2Fperfil";
+  const primaryHref = isAuthed ? "/painel/empresas/nova" : "/auth";
+  const primarySearch = (isAuthed ? undefined : { redirect: "/painel/empresas/nova" }) as never;
+  const secondaryHref = isAuthed ? "/painel/perfil" : "/auth";
+  const secondarySearch = (isAuthed ? undefined : { redirect: "/painel/perfil" }) as never;
 
   return (
     <SiteLayout>
@@ -92,13 +94,13 @@ function CadastreSuaEmpresa() {
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
-              <Link to={primaryHref}>
+              <Link to={primaryHref} search={primarySearch}>
                 <Button size="lg" className="btn-shine press-scale gap-2 rounded-full px-6">
                   <Building2 className="h-5 w-5" /> Cadastrar minha empresa grátis
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Link to={secondaryHref}>
+              <Link to={secondaryHref} search={secondarySearch}>
                 <Button size="lg" variant="outline" className="gap-2 rounded-full px-6">
                   <UserPlus className="h-5 w-5" /> Só criar meu perfil
                 </Button>
@@ -250,7 +252,7 @@ function CadastreSuaEmpresa() {
             Cadastre-se grátis e apareça para quem já está pronto para comprar na sua região.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link to={primaryHref}>
+            <Link to={primaryHref} search={primarySearch}>
               <Button size="lg" variant="secondary" className="gap-2 rounded-full px-6">
                 <Building2 className="h-5 w-5" /> Cadastrar minha empresa
               </Button>
