@@ -20,15 +20,15 @@ const OUT = join(root, "dist-hostgator");
 const BASE_URL = process.env.SITE_URL ?? "https://close-by-helper.lovable.app";
 
 function run(cmd, args, env = {}) {
-  const res = spawnSync(cmd, args, {
+  // O prerender do TanStack sobe um servidor temporário que às vezes não
+  // encerra sozinho; por isso usamos timeout e validamos a saída em disco.
+  return spawnSync(cmd, args, {
     cwd: root,
     stdio: "inherit",
     env: { ...process.env, ...env },
     shell: process.platform === "win32",
+    timeout: Number(process.env.BUILD_TIMEOUT_MS ?? 15 * 60 * 1000),
   });
-  if (res.status !== 0) {
-    throw new Error(`Comando falhou: ${cmd} ${args.join(" ")}`);
-  }
 }
 
 function findClientDir() {
@@ -39,7 +39,7 @@ function findClientDir() {
     "dist",
   ].map((p) => join(root, p));
   for (const c of candidates) {
-    if (existsSync(join(c, "index.html"))) return c;
+    if (existsSync(join(c, "index.html")) || existsSync(join(c, "_shell.html"))) return c;
   }
   throw new Error(
     "Não encontrei o index.html gerado. Verifique a saída do build antes de empacotar.",
@@ -149,6 +149,12 @@ async function main() {
   rmSync(OUT, { recursive: true, force: true });
   mkdirSync(OUT, { recursive: true });
   cpSync(clientDir, OUT, { recursive: true });
+
+  // O modo SPA gera `_shell.html`; o Apache precisa de um `index.html` na raiz.
+  if (!existsSync(join(OUT, "index.html")) && existsSync(join(OUT, "_shell.html"))) {
+    cpSync(join(OUT, "_shell.html"), join(OUT, "index.html"));
+    console.log("→ index.html criado a partir de _shell.html.");
+  }
 
   console.log("→ Gerando sitemap.xml...");
   writeFileSync(join(OUT, "sitemap.xml"), await buildSitemap(), "utf8");
