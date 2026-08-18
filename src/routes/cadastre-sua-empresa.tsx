@@ -70,8 +70,10 @@ function CadastreSuaEmpresa() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  const primaryHref = isAuthed ? "/painel/empresas/nova" : "/auth?redirect=%2Fpainel%2Fempresas%2Fnova";
-  const secondaryHref = isAuthed ? "/painel/perfil" : "/auth?redirect=%2Fpainel%2Fperfil";
+  const primaryHref = isAuthed ? "/painel/empresas/nova" : "/auth";
+  const primarySearch = (isAuthed ? undefined : { redirect: "/painel/empresas/nova" }) as never;
+  const secondaryHref = isAuthed ? "/painel/perfil" : "/auth";
+  const secondarySearch = (isAuthed ? undefined : { redirect: "/painel/perfil" }) as never;
 
   return (
     <SiteLayout>
