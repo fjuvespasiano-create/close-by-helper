@@ -11,6 +11,8 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 const isStaticBuild = process.env.STATIC_BUILD === "1";
 
 export default defineConfig({
+  // No build estático não há servidor de produção: nitro é desnecessário.
+  ...(isStaticBuild ? { nitro: false as const } : {}),
   tanstackStart: isStaticBuild
     ? {
         // Build estático: sem wrapper de SSR (não há servidor em produção).
