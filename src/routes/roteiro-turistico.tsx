@@ -23,12 +23,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { InlineShopeeStrip } from "@/components/site/InlineShopeeStrip";
 import { supabase } from "@/integrations/supabase/client";
-import cavernaAsset from "@/assets/roteiro-caverna.jpg.asset.json";
-import gastronomiaAsset from "@/assets/roteiro-gastronomia.jpg.asset.json";
-import ecoturismoAsset from "@/assets/roteiro-ecoturismo.jpg.asset.json";
-const cavernaImg = cavernaAsset.url;
-const gastronomiaImg = gastronomiaAsset.url;
-const ecoturismoImg = ecoturismoAsset.url;
+import { cavernaImg, gastronomiaImg, ecoturismoImg } from "@/lib/roteiro-images";
 
 export const Route = createFileRoute("/roteiro-turistico")({
   head: () => ({
