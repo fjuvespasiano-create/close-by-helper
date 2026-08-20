@@ -203,10 +203,11 @@ function Home() {
       {/* AGORA NA CIDADE */}
       <AgoraWidget />
 
-      {/* LIVE FEED */}
+      {/* ÚLTIMAS NOTÍCIAS DA CIDADE */}
       <section className="container mx-auto px-4">
-        <LiveFeedForHome />
+        <CityNewsWidget />
       </section>
+
 
 
       {/* REPRESENTANTES */}
