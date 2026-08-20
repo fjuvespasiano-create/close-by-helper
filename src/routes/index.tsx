@@ -10,8 +10,8 @@ import { CompanyCard, toCompanyCardData } from "@/components/site/CompanyCard";
 import { CitySwitch } from "@/components/site/CitySwitch";
 import { FeaturedCouponsCard } from "@/components/site/FeaturedCouponsCard";
 import { ShopeeFeaturedWidget } from "@/components/site/ShopeeFeaturedWidget";
-import { LiveFeedWidget } from "@/features/live-feed";
-import { useCityId } from "@/hooks/useCityId";
+import { CityNewsWidget } from "@/components/site/CityNewsWidget";
+
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { categoriesQueryOptions, featuredCompaniesQueryOptions } from "@/lib/queries";
 import { PUBLIC_SERVICE_CATEGORIES } from "@/lib/publicServices";
@@ -203,10 +203,11 @@ function Home() {
       {/* AGORA NA CIDADE */}
       <AgoraWidget />
 
-      {/* LIVE FEED */}
+      {/* ÚLTIMAS NOTÍCIAS DA CIDADE */}
       <section className="container mx-auto px-4">
-        <LiveFeedForHome />
+        <CityNewsWidget />
       </section>
+
 
 
       {/* REPRESENTANTES */}
@@ -313,9 +314,6 @@ function Home() {
   );
 }
 
-function LiveFeedForHome() {
-  const { city } = useSelectedCity();
-  const { data: cityId } = useCityId(city ?? null);
-  return <LiveFeedWidget cityId={cityId ?? null} title="Ao vivo na sua cidade" />;
-}
+
+
 
